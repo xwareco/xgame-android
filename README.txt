@@ -1,1 +1,0 @@
-Maintaned by Aly Moanes

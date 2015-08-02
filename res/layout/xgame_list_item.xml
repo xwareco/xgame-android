@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1ea463" 
+    android:id="@+id/TT">
+
+   <TableRow android:weightSum="100">
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="50dp"
+            android:layout_height="50dp" 
+            android:layout_weight="19"
+            android:contentDescription="@string/game_cnt"/>
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:textColor="@android:color/white"
+            android:textStyle="bold|italic"
+            android:textSize="15sp"
+            android:layout_weight="80"/>
+        
+       
+
+    </TableRow>
+
+</TableLayout>
