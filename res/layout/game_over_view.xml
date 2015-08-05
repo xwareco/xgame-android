@@ -27,7 +27,7 @@
         android:textColor="#ffffff"
         android:textSize="25sp"
         android:textStyle="bold|italic"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="180dp"
         android:background="#1ea463"
         android:text="@string/plyagn" />
 

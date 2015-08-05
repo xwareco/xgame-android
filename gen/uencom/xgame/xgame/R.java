@@ -1391,21 +1391,22 @@ containing a value of this type.
         public static final int laybg=0x7f0200aa;
         public static final int laybg2=0x7f0200ab;
         public static final int listbg=0x7f0200ac;
-        public static final int login=0x7f0200ad;
-        public static final int logo=0x7f0200ae;
-        public static final int mp3=0x7f0200af;
-        public static final int next2=0x7f0200b0;
-        public static final int powered_by_google_dark=0x7f0200b1;
-        public static final int powered_by_google_light=0x7f0200b2;
-        public static final int pre2=0x7f0200b3;
-        public static final int refresh=0x7f0200b4;
-        public static final int register=0x7f0200b5;
-        public static final int registerbg=0x7f0200b6;
-        public static final int sb=0x7f0200b7;
-        public static final int select=0x7f0200b8;
-        public static final int select2=0x7f0200b9;
-        public static final int speakers=0x7f0200ba;
-        public static final int xgamelogo=0x7f0200bb;
+        public static final int loading2=0x7f0200ad;
+        public static final int login=0x7f0200ae;
+        public static final int logo=0x7f0200af;
+        public static final int mp3=0x7f0200b0;
+        public static final int next2=0x7f0200b1;
+        public static final int powered_by_google_dark=0x7f0200b2;
+        public static final int powered_by_google_light=0x7f0200b3;
+        public static final int pre2=0x7f0200b4;
+        public static final int refresh=0x7f0200b5;
+        public static final int register=0x7f0200b6;
+        public static final int registerbg=0x7f0200b7;
+        public static final int sb=0x7f0200b8;
+        public static final int select=0x7f0200b9;
+        public static final int select2=0x7f0200ba;
+        public static final int speakers=0x7f0200bb;
+        public static final int xgamelogo=0x7f0200bc;
     }
     public static final class id {
         public static final int TT=0x7f080061;

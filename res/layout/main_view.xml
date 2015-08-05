@@ -37,7 +37,7 @@
         android:layout_gravity="center_horizontal"
         android:contentDescription="@string/img_cnt_desc"
         android:layout_marginTop="20dp"
-        android:src="@drawable/cat" />
+        android:src="@drawable/loading2" />
 
     <LinearLayout
     android:layout_width="match_parent"

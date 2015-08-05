@@ -28,6 +28,7 @@ public class User extends AsyncTask<String, Void, Void> {
 
 	private String email;
 	private String password;
+	private String urlPrefix;
 	String res = "NULL";
 	@SuppressWarnings("unused")
 	private int id;
@@ -37,6 +38,7 @@ public class User extends AsyncTask<String, Void, Void> {
 		ctx = c;
 		this.email = mail;
 		this.password = pass;
+		urlPrefix = "http://xgameapp.com/api/v1/";
 	}
 
 	public String getName() {
@@ -44,7 +46,7 @@ public class User extends AsyncTask<String, Void, Void> {
 	}
 
 	public boolean register() {
-		String url = "http://xgameapp.com/api/v1/register";
+		String url = urlPrefix + "register";
 		
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost request = null;
@@ -93,7 +95,7 @@ public class User extends AsyncTask<String, Void, Void> {
 
 
 	public boolean sendUserMessage(String msg) {
-		String url = "http://xgameapp.com/api/v1/sendUserMessage";
+		String url = urlPrefix + "sendUserMessage";
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost request = null;
 		SharedPreferences appSharedPrefs = null;
@@ -131,7 +133,7 @@ public class User extends AsyncTask<String, Void, Void> {
 	}
 
 	public void loadUserMessages(String userId) {
-		String url = "http://xgameapp.com/api/v1/loadUserMessages";
+		String url = urlPrefix + "loadUserMessages";
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost request = null;
 		SharedPreferences appSharedPrefs = null;
@@ -190,7 +192,7 @@ public class User extends AsyncTask<String, Void, Void> {
 	}
 
 	public void addUserScore(String gameName, String score) {
-		String url = "http://xgameapp.com/api/v1/addUserScore";
+		String url = urlPrefix + "addUserScore";
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost request = null;
 		SharedPreferences appSharedPrefs = null;

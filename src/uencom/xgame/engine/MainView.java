@@ -12,9 +12,11 @@ import com.google.gson.reflect.TypeToken;
 
 import uencom.xgame.gestures.HandGestures;
 import uencom.xgame.web.GameCategory;
+import uencom.xgame.web.Installer;
 import uencom.xgame.xgame.R;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -40,7 +42,8 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 	HandGestures HG;
 	SpinnerAdapter adapter;
 	ActionBar bar;
-	//xGameAPI api;
+
+	// xGameAPI api;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +51,8 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 		list = (ListView) findViewById(R.id.listView1);
 		Intent I = getIntent();
 		String catJson = I.getStringExtra("catJSON");
-		//System.out.println(catJson);
-		//new User(this, "AlyMoanes@yahoo.com", "456789").execute("register");
+		// System.out.println(catJson);
+		// new User(this, "AlyMoanes@yahoo.com", "456789").execute("register");
 		Gson g = new Gson();
 		java.lang.reflect.Type type = new TypeToken<ArrayList<GameCategory>>() {
 		}.getType();
@@ -70,9 +73,32 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 		header.setText(categories.get(currentIndex).getName());
 		footer = (TextView) findViewById(R.id.textView1);
 		mainImage = (ImageView) findViewById(R.id.imageView1);
-		Animation a = AnimationUtils.loadAnimation(this, R.anim.transition1);
-		a.setDuration(1000);
-		mainImage.startAnimation(a);
+		Thread t = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				try{
+				final Drawable logo = categories.get(currentIndex).setCategoryLogo();
+				if (logo != null) {
+					runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							mainImage.setImageDrawable(logo);
+							
+						}
+					});
+					
+				}
+			}
+				finally
+				{
+					Animation a = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.transition1);
+					a.setDuration(1000);
+					mainImage.startAnimation(a);
+				}
+			}
+		});t.start();
 		pre = (ImageView) findViewById(R.id.imageView2);
 		select = (ImageView) findViewById(R.id.imageView3);
 		next = (ImageView) findViewById(R.id.imageView4);
@@ -96,9 +122,35 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 							.size() - 1;
 
 				if (cat == true)
-					if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
-						// mainImage.setImageResource(categories[currentIndex]);
+					if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+						Thread t = new Thread(new Runnable() {
+							
+							@Override
+							public void run() {
+								try{
+								final Drawable logo = categories.get(currentIndex).setCategoryLogo();
+								if (logo != null) {
+									runOnUiThread(new Runnable() {
+										
+										@Override
+										public void run() {
+											mainImage.setImageDrawable(logo);
+											
+										}
+									});
+									
+								}
+							}
+								finally
+								{
+									Animation a = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.transition1);
+									a.setDuration(1000);
+									mainImage.startAnimation(a);
+								}
+							}
+						});t.start();
 						setNames();
+					}
 			}
 
 		});
@@ -117,8 +169,35 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 
 				if (cat == true)
 					if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
-						// mainImage.setImageResource(categories[currentIndex]);
-						setNames();
+						{
+						Thread t = new Thread(new Runnable() {
+							
+							@Override
+							public void run() {
+								try{
+								final Drawable logo = categories.get(currentIndex).setCategoryLogo();
+								if (logo != null) {
+									runOnUiThread(new Runnable() {
+										
+										@Override
+										public void run() {
+											mainImage.setImageDrawable(logo);
+											
+										}
+									});
+									
+								}
+							}
+								finally
+								{
+									Animation a = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.transition1);
+									a.setDuration(1000);
+									mainImage.startAnimation(a);
+								}
+							}
+						});t.start();
+						}
+				setNames();
 			}
 		});
 
@@ -150,8 +229,8 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				Intent I = new Intent(getApplicationContext(),
-						DownlodView.class);
+				//new Installer(getApplicationContext()).execute("");
+				Intent I = new Intent(getApplicationContext() , GameOver.class);
 				startActivity(I);
 
 			}

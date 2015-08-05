@@ -26,10 +26,14 @@ public class xGameAPI {
 
 	private ArrayList<GameCategory> categories;
 	private static Context ctx;
+	private String urlPrefix;
+	private static String authUrlPrefix;
 
 	public xGameAPI(Context c) {
 		categories = new ArrayList<GameCategory>();
 		ctx = c;
+		urlPrefix = "http://xgameapp.com/api/v1/";
+		authUrlPrefix = "http://xgameapp.com/oauth/";
 	}
 
 	public ArrayList<GameCategory> getCategoriesAndGames() {
@@ -39,9 +43,8 @@ public class xGameAPI {
 		// OS0hDcGVwyCKcnVaoP9rXAWq7Cpy5H0MAQjGISOW
 
 		// Data definition
-		String url = "http://xgameapp.com/api/v1/getCategoriesAndGames";
+		String url = urlPrefix + "getCategoriesAndGames";
 		String result = makeApiCall(url, "cat", "");
-        System.out.println(result);
 		// Parsing Json result
 		if (result != "NULL") {
 			try {
@@ -154,7 +157,7 @@ public class xGameAPI {
 	public static String getNewToken() {
 
 		// Data definition
-		String AuthLayerUrl = "http://xgameapp.com/oauth/access_token";
+		String AuthLayerUrl = authUrlPrefix + "access_token";
 		final TelephonyManager tm = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
 		HttpClient httpclient = new DefaultHttpClient();
 		ResponseHandler<String> handler = new BasicResponseHandler();
@@ -186,7 +189,7 @@ public class xGameAPI {
 
 	public HashMap<String, String> loadGameScoreBoard(String gameName) {
 		// Data definition
-		String url = "http://xgameapp.com/api/v1/loadGameScoreBoard";
+		String url = urlPrefix + "loadGameScoreBoard";
 		String result = makeApiCall(url, "board", gameName);
 		HashMap<String, String> scoreBoard = new HashMap<String, String>();
 		try {
