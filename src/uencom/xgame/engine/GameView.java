@@ -12,13 +12,13 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.accessibility.AccessibilityManager;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class GameView extends SherlockActivity {
 
-	ImageView home, how, play;
+	Button play;
 	HandGestures HG;
 	AccessibilityManager manager;
 	LinearLayout main;
@@ -26,9 +26,7 @@ public class GameView extends SherlockActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.game_view);
-		home = (ImageView) findViewById(R.id.imageView2);
-		how = (ImageView) findViewById(R.id.imageView3);
-		play = (ImageView) findViewById(R.id.imageView4);
+		play = (Button) findViewById(R.id.button1);
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		setOnclicks();
@@ -46,25 +44,6 @@ public class GameView extends SherlockActivity {
 
 	private void setOnclicks() {
 
-		home.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				Intent I = new Intent(getApplicationContext(), MainView.class);
-				startActivity(I);
-
-			}
-		});
-
-		how.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				Intent I = new Intent(getApplicationContext(), MainView.class);
-				startActivity(I);
-
-			}
-		});
 
 		play.setOnClickListener(new View.OnClickListener() {
 

@@ -41,7 +41,7 @@ public class xGameAPI {
 		// Data definition
 		String url = "http://xgameapp.com/api/v1/getCategoriesAndGames";
 		String result = makeApiCall(url, "cat", "");
-
+        System.out.println(result);
 		// Parsing Json result
 		if (result != "NULL") {
 			try {
@@ -93,6 +93,7 @@ public class xGameAPI {
 						.getDefaultSharedPreferences(ctx);
 				Editor prefsEditor = appSharedPrefs.edit();
 				String Auth = appSharedPrefs.getString("access_token", "");
+				//System.out.println(Auth);
 				prefsEditor.commit();
 				request.addHeader("Authorization", Auth);
 				request.addHeader("Content-Type",
@@ -100,12 +101,18 @@ public class xGameAPI {
 				request.addHeader("Accept", "application/json");
 				result = httpclient.execute(request, handler);
 			} catch (Exception e) {
-
+				
+				if(e.getMessage().contains("Unauthorized") || e.getMessage().contains("Bad Request"))
+				{
 				String newToken = getNewToken();
+				System.out.println("New Token: " + newToken);
 				request.setHeader("Authorization", newToken);
 				Editor prefEditor2 = appSharedPrefs.edit();
 				prefEditor2.putString("access_token", newToken);
 				prefEditor2.commit();
+				}
+				else
+				e.printStackTrace();
 			}
 		}
 
@@ -129,10 +136,12 @@ public class xGameAPI {
 			} catch (Exception e) {
 
 				String newToken = getNewToken();
+				//System.out.println(newToken);
 				request.setHeader("Authorization", newToken);
 				Editor prefEditor2 = appSharedPrefs.edit();
 				prefEditor2.putString("access_token", newToken);
 				prefEditor2.commit();
+				e.printStackTrace();
 			}
 		}
 
@@ -154,10 +163,10 @@ public class xGameAPI {
 		try {
 			// API method parameters
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
-			//nameValuePairs.add(new BasicNameValuePair("username", "b@c.com"));
-			//nameValuePairs.add(new BasicNameValuePair("password", "asdasd"));
+			nameValuePairs.add(new BasicNameValuePair("username", "b@c.com"));
+			nameValuePairs.add(new BasicNameValuePair("password", "asdasd"));
 			nameValuePairs.add(new BasicNameValuePair("grant_type", "client_credentials"));
-			nameValuePairs.add(new BasicNameValuePair("client_id", "1"));
+			nameValuePairs.add(new BasicNameValuePair("client_id", "!@#"));
 			nameValuePairs.add(new BasicNameValuePair("client_secret", "asdasd"));
 			nameValuePairs.add(new BasicNameValuePair("device_id", tm.getDeviceId()));
 			HttpPost request = new HttpPost(new URI(AuthLayerUrl));
@@ -167,7 +176,7 @@ public class xGameAPI {
 			result = httpclient.execute(request, handler);
 			JSONObject obj = new JSONObject(result);
 			Final = obj.getString("access_token");
-
+            //System.out.println(Final);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

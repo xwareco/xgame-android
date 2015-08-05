@@ -12,12 +12,13 @@ import com.google.gson.reflect.TypeToken;
 
 import uencom.xgame.gestures.HandGestures;
 import uencom.xgame.web.GameCategory;
-import uencom.xgame.web.User;
 import uencom.xgame.xgame.R;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -47,7 +48,8 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 		list = (ListView) findViewById(R.id.listView1);
 		Intent I = getIntent();
 		String catJson = I.getStringExtra("catJSON");
-		new User(this, "AlyMoanes@yahoo.com", "456789").execute("register");
+		//System.out.println(catJson);
+		//new User(this, "AlyMoanes@yahoo.com", "456789").execute("register");
 		Gson g = new Gson();
 		java.lang.reflect.Type type = new TypeToken<ArrayList<GameCategory>>() {
 		}.getType();
@@ -68,6 +70,9 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 		header.setText(categories.get(currentIndex).getName());
 		footer = (TextView) findViewById(R.id.textView1);
 		mainImage = (ImageView) findViewById(R.id.imageView1);
+		Animation a = AnimationUtils.loadAnimation(this, R.anim.transition1);
+		a.setDuration(1000);
+		mainImage.startAnimation(a);
 		pre = (ImageView) findViewById(R.id.imageView2);
 		select = (ImageView) findViewById(R.id.imageView3);
 		next = (ImageView) findViewById(R.id.imageView4);

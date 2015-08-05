@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 //import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,9 +31,9 @@ public class xGameList extends ArrayAdapter<Game> {
 		LayoutInflater inflater = context.getLayoutInflater();
 		View rowView = inflater.inflate(R.layout.xgame_list_item, null, true);
 		TextView txtTitle = (TextView) rowView.findViewById(R.id.text);
-		//ImageView gameIcon = (ImageView) rowView.findViewById(R.id.img);
+		ImageView gameIcon = (ImageView) rowView.findViewById(R.id.img);
 		txtTitle.setText(games.get(position).getName());
-		//gameIcon.c(games.get(position).getImgPath());
+		gameIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ctbi));
 		return rowView;
 	}
 

@@ -3,7 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:background="#1ea463">
+    android:background="@drawable/bg"
+    android:weightSum="100">
+    
+     <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_weight="33"
+        android:contentDescription=""
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:visibility="gone"
+        android:src="@drawable/refresh" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_weight="34"
+        android:contentDescription=""
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:visibility="gone"
+        android:src="@drawable/error" />
 
     <ProgressBar
         android:id="@+id/progressBar1"
@@ -12,6 +33,7 @@
         android:layout_height="fill_parent"
         android:layout_gravity="center_vertical|center_horizontal"
         android:layout_weight="20" 
+        android:visibility="gone"
         />
 
     <TextView
@@ -22,7 +44,17 @@
         android:layout_gravity="center_horizontal"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/white"
-        android:layout_weight="80"
+        android:layout_weight="20"
+        android:textStyle="bold|italic"
+        android:visibility="gone"
         android:textSize="30sp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="20"
+        android:visibility="visible"
+        android:src="@drawable/xgamelogo" />
 
 </LinearLayout>

@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/action_contactUs"
-        android:icon="@drawable/cont4"
+        android:icon="@drawable/contact"
         android:showAsAction="always"
         android:title="@string/cont"/>
     
