@@ -1,21 +1,38 @@
 package uencom.xgame.web;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+
+import uencom.xgame.engine.GameView;
+import uencom.xgame.xgame.R;
+
+import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Installer extends AsyncTask<String, String, String> {
 
 	private DownloadManager dm;
-	private Context ctx;
+	private Activity ctx;
+	private String location;
+	private TextView status;
 	@SuppressWarnings("unused")
 	private long downloadReference;
-	public Installer(Context c)
+	public Installer(Activity c , String path)
 	{
 		ctx = c;
+		this.location = path;
+		status = (TextView)c.findViewById(R.id.textView2);
 	}
 	@Override
 	protected void onPreExecute() {
@@ -24,18 +41,37 @@ public class Installer extends AsyncTask<String, String, String> {
 	}
 	@Override
 	protected String doInBackground(String... arg0) {
-		download(arg0[0]);
-		install(Environment.DIRECTORY_DOWNLOADS + "/game.zip");
+		//download(arg0[0]);
+		install(Environment.getExternalStorageDirectory() + "/test.zip");
 		return null;
 	}
 	@Override
 	protected void onPostExecute(String result) {
-		// TODO Auto-generated method stub
+		 ctx.runOnUiThread(new Runnable() {
+				
+				@Override
+				public void run() {
+					 status.setText("Installation complete");
+					 Intent I = new Intent(ctx.getApplicationContext() , GameView.class);
+					 ctx.finish();
+					 ctx.startActivity(I);
+					
+				}
+			});  
 		super.onPostExecute(result);
 	}
 	
 	private void download(String url)
 	{
+		ctx.runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				status.setText("Download started");
+				
+			}
+		});
+		
 		dm = (DownloadManager)ctx.getSystemService(Context.DOWNLOAD_SERVICE);
 		   Uri Download_Uri = Uri.parse(url);
 		   DownloadManager.Request request = new DownloadManager.Request(Download_Uri);
@@ -53,11 +89,62 @@ public class Installer extends AsyncTask<String, String, String> {
 		 
 		   //Enqueue a new download and same the referenceId
 		   downloadReference = dm.enqueue(request);
+		   ctx.runOnUiThread(new Runnable() {
+				
+				@Override
+				public void run() {
+					status.setText("Download completed");
+					
+				}
+			});
+		   
 	}
 	
 	public void install(String path)
 	{
+		 ctx.runOnUiThread(new Runnable() {
+				
+				@Override
+				public void run() {
+					status.setText("Installing..");
+					
+				}
+			});
 		
+		//_dirChecker("");
+		 try  { 
+		      FileInputStream fin = new FileInputStream(path); 
+		      ZipInputStream zin = new ZipInputStream(fin); 
+		      ZipEntry ze = null; 
+		      while ((ze = zin.getNextEntry()) != null) { 
+
+		       
+		 
+		        if(ze.isDirectory()) { 
+		          _dirChecker(ze.getName()); 
+		        } else { 
+		          FileOutputStream fout = new FileOutputStream(this.location + ze.getName()); 
+		          for (int c = zin.read(); c != -1; c = zin.read()) { 
+		            fout.write(c); 
+		          } 
+		 
+		          zin.closeEntry(); 
+		          fout.close(); 
+		        } 
+		         
+		      } 
+		      zin.close(); 
+		    } catch(Exception e) { 
+		      Log.e("Decompress", "unzip", e); 
+		    } 
 	}
+	
+	private void _dirChecker(String dir) { 
+	    File f = new File(location + dir); 
+	 
+	    if(!f.isDirectory()) { 
+	      f.mkdirs(); 
+	    } 
+	  } 
 
 }

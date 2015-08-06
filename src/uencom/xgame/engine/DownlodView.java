@@ -2,28 +2,32 @@ package uencom.xgame.engine;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuInflater;
+
+import uencom.xgame.web.Installer;
 import uencom.xgame.xgame.R;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.os.Environment;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class DownlodView extends SherlockActivity {
-	LinearLayout layout;
-
+	TextView gamename , status;
+    LinearLayout lay;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.download_view);
-		layout = (LinearLayout) findViewById(R.id.layout);
-		layout.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-
-				Intent I = new Intent(getApplicationContext(), GameView.class);
-				startActivity(I);
-			}
-		});
+		gamename = (TextView)findViewById(R.id.textView1);
+		status = (TextView)findViewById(R.id.textView2);
+		lay = (LinearLayout)findViewById(R.id.layout);
+		Animation a = AnimationUtils.loadAnimation(this, R.anim.transition5);
+		lay.startAnimation(a);
+		gamename.setText(getIntent().getStringExtra("gamename"));
+		String unzipLocation = Environment
+				.getExternalStorageDirectory().toString()
+				+ "/xGame/Games/";
+		new Installer(this, unzipLocation).execute("");
 		super.onCreate(savedInstanceState);
 	}
 

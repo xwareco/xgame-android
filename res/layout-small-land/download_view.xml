@@ -3,19 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" 
-    android:background="#1ea463"
-    android:id="@+id/layout"
+    android:background="@drawable/bg"
+    android:id="@+id/layout2"
     android:weightSum="100">
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="193dp"
+        android:background="@drawable/laybg"
+        android:orientation="vertical"
+        android:weightSum="100" >
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/down"
+        android:text=""
         android:textStyle="bold|italic"
-        android:textSize="25sp"
+        android:textSize="30sp"
         android:textColor="@android:color/white"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_gravity="center_horizontal"
         android:textAppearance="?android:attr/textAppearanceLarge" 
         android:layout_weight="15"/>
@@ -23,11 +31,11 @@
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_height="wrap_content"
-        android:text="@string/name"
+        android:text="@string/down"
         android:textStyle="bold|italic"
-        android:textSize="25sp"
+        android:textSize="30sp"
         android:textColor="@android:color/white"
         android:layout_gravity="center_horizontal"
         android:layout_weight="15"
@@ -35,34 +43,11 @@
 
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_weight="20"
-        android:contentDescription="@string/game"
-        android:src="@drawable/mp3" />
-    
-    <TextView
-        android:id="@+id/textView3"
         android:layout_width="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
-        android:text="@string/percent"
-        android:textStyle="bold|italic"
-        android:textSize="30sp"
-        android:textColor="@android:color/white"
+        android:layout_weight="70"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="10"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-    
-
-    <ProgressBar
-        android:id="@+id/progressBar1"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="40"
-        android:progress="50"
-        android:layout_marginTop="5dp"
-        android:contentDescription="@string/progress" />
-
+        android:contentDescription="@string/game"
+        android:src="@drawable/icon" />
+</LinearLayout>
 </LinearLayout>

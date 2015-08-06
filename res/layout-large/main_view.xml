@@ -2,9 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1ea463"
+    android:background="@drawable/bg"
     android:orientation="vertical" >
 
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/laybg"
+    android:orientation="vertical" >
+    
     <ListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"
@@ -17,26 +23,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="25dp"
         android:text="@string/tv_cat"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/white"
-        android:textSize="50sp"
+        android:textSize="60sp"
         android:textStyle="bold|italic" />
 
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="400dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
         android:contentDescription="@string/img_cnt_desc"
-        android:src="@drawable/headphones" />
+        android:layout_marginTop="20dp"
+        android:src="@drawable/loading2" />
 
     <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="30dp"
+    android:layout_marginTop="20dp"
     android:gravity="center_horizontal"
     android:orientation="horizontal" >
     
@@ -69,11 +75,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="15dp"
-        android:text="@string/MainViewTitle"
+        android:layout_marginTop="25dp"
+        android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/white"
-        android:textSize="45sp"
+        android:textSize="50sp"
         android:textStyle="bold|italic" />
+    </LinearLayout>
     
 </LinearLayout>

@@ -3,7 +3,14 @@
     android:id="@+id/gameLay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1ea463"
+    android:background="@drawable/bg"
+    android:orientation="vertical" >
+    
+    <LinearLayout
+    android:id="@+id/gameLay2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/laybg"
     android:orientation="vertical" >
 
     <TextView
@@ -11,61 +18,47 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="25dp"
         android:text="@string/name"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/white"
-        android:textSize="70sp"
+        android:textSize="100sp"
         android:textStyle="bold|italic" />
 
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="700dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:contentDescription="@string/game"
-        android:src="@drawable/mp3" />
+        android:src="@drawable/ctbi" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal" >
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:contentDescription="@string/play"
-            android:src="@drawable/pre2" />
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:contentDescription="@string/how"
-            android:src="@drawable/how" />
-
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:contentDescription="@string/home"
-            android:src="@drawable/next2" />
-    </LinearLayout>
+    
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="25dp"
         android:text="@string/app_name"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/white"
-        android:textSize="70sp"
+        android:textSize="100sp"
         android:textStyle="bold|italic" />
 
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#ffffff"
+        android:textSize="100sp"
+        android:textStyle="bold|italic"
+        android:layout_marginTop="20dp"
+        android:background="#1ea463"
+        android:text="@string/play" />
+
+</LinearLayout>
 </LinearLayout>

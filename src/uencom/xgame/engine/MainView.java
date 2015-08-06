@@ -1,5 +1,6 @@
 package uencom.xgame.engine;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -9,15 +10,14 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import uencom.xgame.gestures.HandGestures;
 import uencom.xgame.web.GameCategory;
-import uencom.xgame.web.Installer;
 import uencom.xgame.xgame.R;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -74,31 +74,32 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 		footer = (TextView) findViewById(R.id.textView1);
 		mainImage = (ImageView) findViewById(R.id.imageView1);
 		Thread t = new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
-				try{
-				final Drawable logo = categories.get(currentIndex).setCategoryLogo();
-				if (logo != null) {
-					runOnUiThread(new Runnable() {
-						
-						@Override
-						public void run() {
-							mainImage.setImageDrawable(logo);
-							
-						}
-					});
-					
-				}
-			}
-				finally
-				{
-					Animation a = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.transition1);
+				try {
+					final Drawable logo = categories.get(currentIndex)
+							.setCategoryLogo();
+					if (logo != null) {
+						runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								mainImage.setImageDrawable(logo);
+
+							}
+						});
+
+					}
+				} finally {
+					Animation a = AnimationUtils.loadAnimation(
+							getApplicationContext(), R.anim.transition1);
 					a.setDuration(1000);
 					mainImage.startAnimation(a);
 				}
 			}
-		});t.start();
+		});
+		t.start();
 		pre = (ImageView) findViewById(R.id.imageView2);
 		select = (ImageView) findViewById(R.id.imageView3);
 		next = (ImageView) findViewById(R.id.imageView4);
@@ -124,31 +125,34 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 				if (cat == true)
 					if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 						Thread t = new Thread(new Runnable() {
-							
+
 							@Override
 							public void run() {
-								try{
-								final Drawable logo = categories.get(currentIndex).setCategoryLogo();
-								if (logo != null) {
-									runOnUiThread(new Runnable() {
-										
-										@Override
-										public void run() {
-											mainImage.setImageDrawable(logo);
-											
-										}
-									});
-									
-								}
-							}
-								finally
-								{
-									Animation a = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.transition1);
+								try {
+									final Drawable logo = categories.get(
+											currentIndex).setCategoryLogo();
+									if (logo != null) {
+										runOnUiThread(new Runnable() {
+
+											@Override
+											public void run() {
+												mainImage
+														.setImageDrawable(logo);
+
+											}
+										});
+
+									}
+								} finally {
+									Animation a = AnimationUtils.loadAnimation(
+											getApplicationContext(),
+											R.anim.transition1);
 									a.setDuration(1000);
 									mainImage.startAnimation(a);
 								}
 							}
-						});t.start();
+						});
+						t.start();
 						setNames();
 					}
 			}
@@ -168,35 +172,37 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 					currentIndex = 0;
 
 				if (cat == true)
-					if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
-						{
+					if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 						Thread t = new Thread(new Runnable() {
-							
+
 							@Override
 							public void run() {
-								try{
-								final Drawable logo = categories.get(currentIndex).setCategoryLogo();
-								if (logo != null) {
-									runOnUiThread(new Runnable() {
-										
-										@Override
-										public void run() {
-											mainImage.setImageDrawable(logo);
-											
-										}
-									});
-									
-								}
-							}
-								finally
-								{
-									Animation a = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.transition1);
+								try {
+									final Drawable logo = categories.get(
+											currentIndex).setCategoryLogo();
+									if (logo != null) {
+										runOnUiThread(new Runnable() {
+
+											@Override
+											public void run() {
+												mainImage
+														.setImageDrawable(logo);
+
+											}
+										});
+
+									}
+								} finally {
+									Animation a = AnimationUtils.loadAnimation(
+											getApplicationContext(),
+											R.anim.transition1);
 									a.setDuration(1000);
 									mainImage.startAnimation(a);
 								}
 							}
-						});t.start();
-						}
+						});
+						t.start();
+					}
 				setNames();
 			}
 		});
@@ -229,10 +235,36 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				//new Installer(getApplicationContext()).execute("");
-				Intent I = new Intent(getApplicationContext() , GameOver.class);
-				startActivity(I);
+				checkDirs();
+				String ifGameExistsLocation = Environment
+						.getExternalStorageDirectory().toString()
+						+ "/xGame/Games/"
+						+ categories.get(currentIndex).getGames().get(arg2)
+								.getName();
+				
+				//System.out.println(unzipLocation);
+				if(!new File(ifGameExistsLocation).exists())
+				{
+					
+					  Intent I = new Intent(getApplicationContext() , DownlodView.class);
+					  I.putExtra("gamename", categories.get(currentIndex).getGames().get(arg2).getName());
+					  startActivity(I);
+					 
+				}
+				
+				else Toast.makeText(getApplicationContext(), "The game is installed", Toast.LENGTH_LONG).show();
+				
 
+			}
+
+			private void checkDirs() {
+				String path1;
+				path1 = Environment.getExternalStorageDirectory()
+						+ "/xGame/Games";
+				File f = new File(path1);
+				if (!f.isDirectory()) {
+					f.mkdirs();
+				}
 			}
 		});
 
