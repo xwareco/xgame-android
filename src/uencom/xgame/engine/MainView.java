@@ -34,6 +34,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 	ImageView mainImage, next, pre, select;
 	ArrayList<GameCategory> categories;
 	boolean cat;
+	private static final String IMAGE_PREFIX = "http://xgameapp.com/games/";
 	// String[] games = { "Catch The Beep", "Snake" };
 	// Integer[] images = { R.drawable.beep, R.drawable.beep };
 	ListView list;
@@ -241,19 +242,40 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 						+ "/xGame/Games/"
 						+ categories.get(currentIndex).getGames().get(arg2)
 								.getName();
-				
-				//System.out.println(unzipLocation);
-				if(!new File(ifGameExistsLocation).exists())
-				{
-					
-					  Intent I = new Intent(getApplicationContext() , DownlodView.class);
-					  I.putExtra("gamename", categories.get(currentIndex).getGames().get(arg2).getName());
-					  startActivity(I);
-					 
+
+				// System.out.println(unzipLocation);
+				if (!new File(ifGameExistsLocation).exists()) {
+
+					Intent I = new Intent(getApplicationContext(),
+							DownlodView.class);
+					I.putExtra("gamename", categories.get(currentIndex)
+							.getGames().get(arg2).getName());
+					final String url = IMAGE_PREFIX
+							+ categories.get(currentIndex).getGames().get(arg2)
+									.getName()
+							+ "/"
+							+ categories.get(currentIndex).getGames().get(arg2)
+									.getImgPath();
+					I.putExtra("URL", url);
+					startActivity(I);
+
 				}
-				
-				else Toast.makeText(getApplicationContext(), "The game is installed", Toast.LENGTH_LONG).show();
-				
+
+				else {
+					Intent I = new Intent(getApplicationContext(),
+							GameView.class);
+					I.putExtra("Folder", ifGameExistsLocation);
+					I.putExtra("Name", categories.get(currentIndex).getGames()
+							.get(arg2).getName());
+					I.putExtra("Logo",
+							IMAGE_PREFIX
+									+ categories.get(currentIndex).getGames()
+											.get(arg2).getName()
+									+ "/"
+									+ categories.get(currentIndex).getGames()
+											.get(arg2).getImgPath());
+					startActivity(I);
+				}
 
 			}
 

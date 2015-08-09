@@ -36,7 +36,7 @@ public class State implements IstateActions {
 	private Class<?> stateClass;
 	private Map<String, String> functionsAndTransitions;
 	private ArrayList<IStateListener> listeners;
-	@SuppressWarnings("unused")
+
 	private boolean up, down, right, left, tap, doubleTap, longTouch;
 	private String transDetected;
 
@@ -52,7 +52,7 @@ public class State implements IstateActions {
 		listeners = new ArrayList<IStateListener>();
 		functionsAndTransitions = new HashMap<String, String>();
 		transDetected = "NoTransitionDetected";
-		
+
 	}
 
 	public void addToMap(String key, String Value) {
@@ -127,7 +127,7 @@ public class State implements IstateActions {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        path = Path;
+		path = Path;
 	}
 
 	public void setTransDetected(String transDetected) {
@@ -138,25 +138,23 @@ public class State implements IstateActions {
 		return transDetected;
 	}
 
-	private Intent Call(String method, LinearLayout lay , Intent I) {
+	private Intent Call(String method, LinearLayout lay, Intent I) {
 		try {
 			if (method.equals("Exit")) {
 				Object myObject = stateClass.getConstructor().newInstance();
 				Method Exit = myObject.getClass().getMethod("onStateExit",
-						new Class[] { Context.class , Intent.class });
-				Exit.invoke(myObject, ctx , I);
-			}
-			else if (method.equals("Entry")) {
+						new Class[] { Context.class, Intent.class });
+				Exit.invoke(myObject, ctx, I);
+			} else if (method.equals("Entry")) {
 				Object myObject = stateClass.getConstructor().newInstance();
 				Method Entry = myObject.getClass().getMethod("onStateEntry",
-						new Class[] { LinearLayout.class  , Intent.class});
-				Entry.invoke(myObject, lay , I);
-			}
-			else if (method.equals("Loop")) {
+						new Class[] { LinearLayout.class, Intent.class });
+				Entry.invoke(myObject, lay, I);
+			} else if (method.equals("Loop")) {
 				Object myObject = stateClass.getConstructor().newInstance();
 				Method Loop = myObject.getClass().getMethod("loopBack",
-						new Class[] { Context.class  , Intent.class});
-				I = (Intent) Loop.invoke(myObject, ctx , I);
+						new Class[] { Context.class, Intent.class });
+				I = (Intent) Loop.invoke(myObject, ctx, I);
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -165,22 +163,22 @@ public class State implements IstateActions {
 	}
 
 	@Override
-	public void onStateEntry(LinearLayout layout , Intent I) {
+	public void onStateEntry(LinearLayout layout, Intent I) {
 		layout.setBackground(Drawable.createFromPath(imgPath));
 		gameTextView.setText(text);
-		Call("Entry", layout , I);
+		Call("Entry", layout, I);
 
 	}
 
 	@Override
-	public Intent loopBack(Context c , Intent I) {
-		return Call("Loop", gameLayout , I);
+	public Intent loopBack(Context c, Intent I) {
+		return Call("Loop", gameLayout, I);
 
 	}
 
 	@Override
-	public void onStateExit(Context c , Intent I) {
-		Call("Exit", gameLayout , I);
+	public void onStateExit(Context c, Intent I) {
+		Call("Exit", gameLayout, I);
 	}
 
 	public HandGestures setHandGesture(HandGestures H) {
@@ -190,6 +188,14 @@ public class State implements IstateActions {
 			left = true;
 		if (functionsAndTransitions.containsKey("SwipeDown"))
 			down = true;
+		if (functionsAndTransitions.containsKey("SwipeUp"))
+			up = true;
+		if (functionsAndTransitions.containsKey("SingleTap"))
+			tap = true;
+		if (functionsAndTransitions.containsKey("DoubleTap"))
+			doubleTap = true;
+		if (functionsAndTransitions.containsKey("LongPress"))
+			longTouch = true;
 		H = new HandGestures(this.ctx) {
 			@Override
 			public void onSwipeRight() {
@@ -198,6 +204,7 @@ public class State implements IstateActions {
 				fireStateEvent();
 				super.onSwipeRight();
 			}
+
 			@Override
 			public void onSwipeleft() {
 				if (left == true)
@@ -205,12 +212,45 @@ public class State implements IstateActions {
 				fireStateEvent();
 				super.onSwipeleft();
 			}
+
 			@Override
 			public void onSwipeDown() {
 				if (down == true)
 					transDetected = functionsAndTransitions.get("SwipeDown");
 				fireStateEvent();
 				super.onSwipeDown();
+			}
+
+			@Override
+			public void onSwipeUp() {
+				if (up == true)
+				transDetected = functionsAndTransitions.get("SwipeUp");
+				fireStateEvent();
+				super.onSwipeUp();
+			}
+
+			@Override
+			public void onTapOnce() {
+				if (tap == true)
+					transDetected = functionsAndTransitions.get("SingleTap");
+				fireStateEvent();
+				super.onTapOnce();
+			}
+
+			@Override
+			public void onTapTwice() {
+				if (doubleTap == true)
+				transDetected = functionsAndTransitions.get("DoubleTap");
+				fireStateEvent();
+				super.onTapTwice();
+			}
+
+			@Override
+			public void onLongTouch() {
+				if(longTouch == true)
+				transDetected = functionsAndTransitions.get("LongPress");
+				fireStateEvent();
+				super.onLongTouch();
 			}
 		};
 		return H;

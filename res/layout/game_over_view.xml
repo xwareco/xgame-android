@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gameover"
     android:orientation="vertical" >
+   
     
     <LinearLayout
         android:id="@+id/gslay"
@@ -21,6 +22,33 @@
             android:contentDescription="@string/sb"
             android:src="@drawable/gamescores" />
 </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:layout_marginTop="100dp"
+        android:id="@+id/scoreLay"
+        android:background="@drawable/bggs"
+        
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+           android:gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text=""
+            android:textSize="25sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold|italic"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+        </LinearLayout>
+
     <Button
          android:id="@+id/button1"
         android:layout_width="fill_parent"
@@ -29,7 +57,7 @@
         android:textColor="#ffffff"
         android:textSize="30sp"
         android:textStyle="bold|italic"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="104dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:background="#1ea463"
@@ -43,10 +71,11 @@
         android:textColor="#ffffff"
         android:textSize="30sp"
         android:textStyle="bold|italic"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
          android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:background="#1ea463"
+        android:layout_marginBottom="5dp"
         android:text="@string/home" />
     
 </LinearLayout>

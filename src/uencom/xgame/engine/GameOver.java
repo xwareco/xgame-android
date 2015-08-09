@@ -9,6 +9,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -18,16 +20,24 @@ import com.actionbarsherlock.view.MenuItem;
 public class GameOver extends SherlockActivity {
 	ImageView login;
 	Button home , playAgain;
-	LinearLayout gamescore;
+	LinearLayout gamescore ,scorelay;
+	TextView score;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.game_over_view);
 		login = (ImageView)findViewById(R.id.imageView3);
+		score = (TextView)findViewById(R.id.textView1);
 		home = (Button)findViewById(R.id.button2);
 		playAgain = (Button)findViewById(R.id.button1);
 		gamescore = (LinearLayout)findViewById(R.id.gslay);
+		scorelay = (LinearLayout)findViewById(R.id.scoreLay);
 		Animation a = AnimationUtils.loadAnimation(this, R.anim.transition4);
+		Animation b = AnimationUtils.loadAnimation(this, R.anim.transition6);
+		int Score = getIntent().getIntExtra("Score" , 0);
+		int per = (Score/19)*100;
 		gamescore.startAnimation(a);
+		score.setText("Your score is: " + String.valueOf(Score) + "(" + per + "%)");
+		scorelay.startAnimation(b);
 		ActionBar actionBar = getSupportActionBar();
 	    actionBar.setDisplayHomeAsUpEnabled(true);
 		login.setOnClickListener(new View.OnClickListener() {

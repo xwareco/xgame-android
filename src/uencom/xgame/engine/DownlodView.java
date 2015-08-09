@@ -13,21 +13,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class DownlodView extends SherlockActivity {
-	TextView gamename , status;
-    LinearLayout lay;
+	TextView gamename, status;
+	LinearLayout lay;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.download_view);
-		gamename = (TextView)findViewById(R.id.textView1);
-		status = (TextView)findViewById(R.id.textView2);
-		lay = (LinearLayout)findViewById(R.id.layout);
+		gamename = (TextView) findViewById(R.id.textView1);
+		status = (TextView) findViewById(R.id.textView2);
+		lay = (LinearLayout) findViewById(R.id.layout);
 		Animation a = AnimationUtils.loadAnimation(this, R.anim.transition5);
 		lay.startAnimation(a);
 		gamename.setText(getIntent().getStringExtra("gamename"));
-		String unzipLocation = Environment
-				.getExternalStorageDirectory().toString()
-				+ "/xGame/Games/";
-		new Installer(this, unzipLocation).execute("");
+		String unzipLocation = Environment.getExternalStorageDirectory()
+				.toString() + "/xGame/Games/";
+		new Installer(this, unzipLocation, getIntent().getStringExtra("URL"),
+				getIntent().getStringExtra("gamename")).execute("");
 		super.onCreate(savedInstanceState);
 	}
 
@@ -37,11 +38,12 @@ public class DownlodView extends SherlockActivity {
 		finish();
 		super.onPause();
 	}
+
 	@Override
 	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
-		
+
 		MenuInflater inflater = getSupportMenuInflater();
-	    inflater.inflate(R.menu.actionbar, menu);
-	    return true;
+		inflater.inflate(R.menu.actionbar, menu);
+		return true;
 	}
 }

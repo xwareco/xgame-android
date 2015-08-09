@@ -26,13 +26,16 @@ public class Installer extends AsyncTask<String, String, String> {
 	private Activity ctx;
 	private String location;
 	private TextView status;
+	private String logoUrl;
+	private String gameName;
 	@SuppressWarnings("unused")
 	private long downloadReference;
-	public Installer(Activity c , String path)
+	public Installer(Activity c , String path , String logoUrl , String name)
 	{
 		ctx = c;
 		this.location = path;
 		status = (TextView)c.findViewById(R.id.textView2);
+		this.logoUrl = logoUrl;
 	}
 	@Override
 	protected void onPreExecute() {
@@ -42,7 +45,7 @@ public class Installer extends AsyncTask<String, String, String> {
 	@Override
 	protected String doInBackground(String... arg0) {
 		//download(arg0[0]);
-		install(Environment.getExternalStorageDirectory() + "/test.zip");
+		install(Environment.getExternalStorageDirectory() + "/catch_the_peeb.xgame");
 		return null;
 	}
 	@Override
@@ -53,6 +56,9 @@ public class Installer extends AsyncTask<String, String, String> {
 				public void run() {
 					 status.setText("Installation complete");
 					 Intent I = new Intent(ctx.getApplicationContext() , GameView.class);
+					 I.putExtra("Logo", logoUrl);
+					 I.putExtra("Name", gameName);
+					 I.putExtra("Folder", location);
 					 ctx.finish();
 					 ctx.startActivity(I);
 					
