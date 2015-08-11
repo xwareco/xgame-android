@@ -1,7 +1,6 @@
 package uencom.xgame.demos;
 
 
-import uencom.xgame.engine.xGameParser;
 import uencom.xgame.xgame.R;
 import android.app.Activity;
 import android.content.Intent;
@@ -56,7 +55,7 @@ public class DemosLauncher extends Activity implements OnClickListener {
 			break;
 
 		case R.id.button5:
-			Intent I5 = new Intent(this, xGameParser.class);
+			Intent I5 = new Intent(this, XMLDemo.class);
 			startActivity(I5);
 			break;
 		}

@@ -48,8 +48,8 @@ public class Installer extends AsyncTask<String, String, String> {
 	protected String doInBackground(String... arg0) {
 
 		download(arg0[0]);
-		install(Environment.getExternalStorageDirectory()
-				+ "/xGame/Games/" + "null");
+		install(Environment.getExternalStorageDirectory() + "/xGame/Games/"
+				+ "null");
 		return null;
 	}
 
@@ -59,13 +59,15 @@ public class Installer extends AsyncTask<String, String, String> {
 
 			@Override
 			public void run() {
-				if(f.exists())f.delete();
+				if (f.exists())
+					f.delete();
 				status.setText("Installation complete");
 				Intent I = new Intent(ctx.getApplicationContext(),
 						GameView.class);
 				I.putExtra("Logo", logoUrl);
 				I.putExtra("Name", gameName);
-				I.putExtra("Folder", unzipLocation + "/" + ctx.getIntent().getStringExtra("gamename"));
+				I.putExtra("Folder", unzipLocation
+						+ ctx.getIntent().getStringExtra("gamename"));
 				ctx.finish();
 				ctx.startActivity(I);
 
@@ -94,11 +96,11 @@ public class Installer extends AsyncTask<String, String, String> {
 
 			// download the file
 			input = connection.getInputStream();
-		    f = new File(Environment.getExternalStorageDirectory()
-							+ "/xGame/Games/"
-							+ ctx.getIntent().getStringExtra(
-									"gamename" + ".xgame"));
-			if(!f.exists())f.createNewFile();
+			f = new File(Environment.getExternalStorageDirectory()
+					+ "/xGame/Games/"
+					+ ctx.getIntent().getStringExtra("gamename" + ".xgame"));
+			if (!f.exists())
+				f.createNewFile();
 			output = new FileOutputStream(f);
 
 			byte data[] = new byte[4096];
@@ -107,7 +109,7 @@ public class Installer extends AsyncTask<String, String, String> {
 
 				output.write(data, 0, count);
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -142,9 +144,12 @@ public class Installer extends AsyncTask<String, String, String> {
 
 			}
 		});
+		File f = new File(unzipLocation
+				+ ctx.getIntent().getStringExtra("gamename"));
 
 		// _dirChecker("");
 		try {
+			f.mkdir();
 			FileInputStream fin = new FileInputStream(path);
 			ZipInputStream zin = new ZipInputStream(fin);
 			ZipEntry ze = null;
@@ -154,7 +159,7 @@ public class Installer extends AsyncTask<String, String, String> {
 					_dirChecker(ze.getName());
 				} else {
 					FileOutputStream fout = new FileOutputStream(
-							this.unzipLocation + ze.getName());
+							this.unzipLocation + ctx.getIntent().getStringExtra("gamename") + "/" + ze.getName());
 					for (int c = zin.read(); c != -1; c = zin.read()) {
 						fout.write(c);
 					}
@@ -171,7 +176,7 @@ public class Installer extends AsyncTask<String, String, String> {
 	}
 
 	private void _dirChecker(String dir) {
-		File f = new File(unzipLocation + dir);
+		File f = new File(unzipLocation + ctx.getIntent().getStringExtra("gamename") + dir);
 
 		if (!f.isDirectory()) {
 			f.mkdirs();

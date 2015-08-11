@@ -11,7 +11,6 @@ public abstract class HandGestures implements
 	// Variables
 	private GestureDetectorCompat mDetector;
 	private boolean right = false;
-
 	public boolean isRight() {
 		return right;
 	}
@@ -42,39 +41,37 @@ public abstract class HandGestures implements
 
 	@Override
 	public boolean onDown(MotionEvent e) {
-
+		System.out.println("Iam here!!");
 		return true;
 	}
 
 	@Override
 	public boolean onFling(MotionEvent event1, MotionEvent event2,
 			float velocityX, float velocityY) {
-
-		if (event1 != null && event2 != null) {
-			// calculate the change in X position within the fling gesture
-			float horizontalDiff = event2.getX() - event1.getX();
-			// calculate the change in Y position within the fling gesture
-			float verticalDiff = event2.getY() - event1.getY();
-			float absHDiff = Math.abs(horizontalDiff);
-			float absVDiff = Math.abs(verticalDiff);
-			float absVelocityX = Math.abs(velocityX);
-			float absVelocityY = Math.abs(velocityY);
-			if (absHDiff > absVDiff && absHDiff > flingMin
-					&& absVelocityX > velocityMin) {
-				// swipe right or left
-
-				if (horizontalDiff > 0)
-					right = true;
-				else
-					left = true;
-			} else if (absHDiff < absVDiff && absVDiff > flingMin
-					&& absVelocityY > velocityMin) {
-				// swipe up or down
-				if (verticalDiff > 0)
-					down = true;
-				else
-					up = true;
-			}
+		System.out.println("Flinging");
+		// calculate the change in X position within the fling gesture
+		float horizontalDiff = event2.getX() - event1.getX();
+		// calculate the change in Y position within the fling gesture
+		float verticalDiff = event2.getY() - event1.getY();
+		float absHDiff = Math.abs(horizontalDiff);
+		float absVDiff = Math.abs(verticalDiff);
+		float absVelocityX = Math.abs(velocityX);
+		float absVelocityY = Math.abs(velocityY);
+		if (absHDiff > absVDiff && absHDiff > flingMin
+				&& absVelocityX > velocityMin) {
+			// swipe right or left
+			
+			if (horizontalDiff > 0)
+				right = true;
+			else
+				left = true;
+		} else if (absHDiff < absVDiff && absVDiff > flingMin
+				&& absVelocityY > velocityMin) {
+			// swipe up or down
+			if (verticalDiff > 0)
+				down = true;
+			else
+				up = true;
 		}
 		return callUserMethods();
 
@@ -112,18 +109,19 @@ public abstract class HandGestures implements
 	@Override
 	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
 			float distanceY) {
-
+		System.out.println("Iam here!!");
 		return false;
 	}
 
 	@Override
 	public void onShowPress(MotionEvent e) {
+		System.out.println("Iam here!!");
 
 	}
 
 	@Override
 	public boolean onSingleTapUp(MotionEvent e) {
-
+		System.out.println("Iam here!!");
 		return false;
 	}
 

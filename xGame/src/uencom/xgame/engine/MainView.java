@@ -34,7 +34,9 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 	ImageView mainImage, next, pre, select;
 	ArrayList<GameCategory> categories;
 	boolean cat;
-	private static final String IMAGE_PREFIX = " http://xgameapp.com/games/";
+	// http://192.168.1.102/xgame-app/public/
+	//http://xgameapp.com/games/
+	private static final String IMAGE_PREFIX = "http://192.168.1.102/xgame-app/public/games/";
 	// String[] games = { "Catch The Beep", "Snake" };
 	// Integer[] images = { R.drawable.beep, R.drawable.beep };
 	ListView list;
@@ -266,7 +268,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 									.getImgPath();
 					final String downUrl = IMAGE_PREFIX
 							+ categories.get(currentIndex).getGames().get(arg2)
-									.getName()
+									.getName() + "/" + categories.get(currentIndex).getGames().get(arg2).getName()
 							+ ".xgame";
 					I.putExtra("URL", logUrl);
 					I.putExtra("Download", downUrl);

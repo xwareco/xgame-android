@@ -110,7 +110,8 @@ public class XmlParser {
 			tempState.setClassName(parser.getAttributeValue(1));
 			tempState.setClassLoader(path);
 		} else if (name.equals("Image")) {
-			tempState.setImgPath(path + "/Images" + "/" + parser.getAttributeValue(0));
+			tempState.setImgPath(path + "/Images" + "/"
+					+ parser.getAttributeValue(0));
 		}
 
 		else if (name.equals("SwipeRight")) {
@@ -127,12 +128,21 @@ public class XmlParser {
 			tempState.addToMap("DoubleTap", parser.getAttributeValue(0));
 		} else if (name.equals("LongPress")) {
 			tempState.addToMap("LongPress", parser.getAttributeValue(0));
+		} else if (name.equals("ZSimpleRight")) {
+			tempState.addToMap("ZSimpleRight", parser.getAttributeValue(0));
+		} else if (name.equals("ZSimpleLeft")) {
+			tempState.addToMap("ZSimpleLeft", parser.getAttributeValue(0));
+		} else if (name.equals("ZHugeRight")) {
+			tempState.addToMap("ZHugeRight", parser.getAttributeValue(0));
+		} else if (name.equals("ZHugeLeft")) {
+			tempState.addToMap("ZHugeLeft", parser.getAttributeValue(0));
 		}
 
 		else if (name.equals("Transitions"))
 			transitionsList = new ArrayList<Transition>();
 		else if (name.equals("Transition")) {
-			tempTransition = new Transition(environmentVariables.get("APK_FILE_NAME"));
+			tempTransition = new Transition(
+					environmentVariables.get("APK_FILE_NAME"));
 			tempTransition.setId(parser.getAttributeValue(0));
 			tempTransition.setClassName(parser.getAttributeValue(1));
 			tempTransition.setCtx(ctx);

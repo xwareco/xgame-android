@@ -31,7 +31,7 @@
         <activity android:name="uencom.xgame.demos.SensorsDemo"></activity>
         <service android:name="uencom.xgame.sensors.AddressFetcher"></service>
         <activity android:name="uencom.xgame.demos.TTSDemo"></activity>
-        <activity android:name="uencom.xgame.engine.xGameParser"></activity>
+        <activity android:name="uencom.xgame.demos.XMLDemo"></activity>
         <activity android:name="uencom.xgame.demos.Splash"></activity>
         <activity android:name="uencom.xgame.engine.MainView"></activity>
         <activity android:name="uencom.xgame.engine.DownlodView"

@@ -9,6 +9,7 @@ import android.hardware.SensorEvent;
 import android.location.Location;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SensorsDemo extends Activity {
 
@@ -61,20 +62,69 @@ public class SensorsDemo extends Activity {
 	}
 
 	private void initAcc() {
-		Acc = new Accelerometer(this) {
+		Acc = new Accelerometer(this, 2000f, 2000f, 2000f) {
 			@Override
-			public void onAccelerometerChanged(SensorEvent sensorEvent) {
-
-				float x = sensorEvent.values[0];
-				float y = sensorEvent.values[1];
-				float z = sensorEvent.values[2];
-
-				ACC_TV.setText("Accelerometer Data=> X position: " + x
-						+ " Y position: " + y + " Z position: " + z);
-				super.onAccelerometerChanged(sensorEvent);
+			public void onXGoodLeft() {
+				Toast.makeText(getApplicationContext(), "Good left turn", Toast.LENGTH_LONG).show();
+				
 			}
-		};
+			@Override
+			public void onXGoodRight() {
+				Toast.makeText(getApplicationContext(), "Good right turn", Toast.LENGTH_LONG).show();
+				
+			}
+			@Override
+			public void onXHugeLeft() {
+				Toast.makeText(getApplicationContext(), "Huge left turn", Toast.LENGTH_LONG).show();
+				
+			}
+			@Override
+			public void onXHugeRight() {
+				Toast.makeText(getApplicationContext(), "Huge Right turn", Toast.LENGTH_LONG).show();
+				
+			}
+			@Override
+			public void onZGoodLeft() {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void onZGoodRight() {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void onZHugeRight() {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void onZHugeLeft() {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void onYGoodDown() {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void onYGoodUp() {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void onYHugeUp() {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void onYHugeDown() {
+				// TODO Auto-generated method stub
+				
+			}
 
+		};
 	}
 
 	private void initGyro() {

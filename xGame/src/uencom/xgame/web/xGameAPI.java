@@ -45,6 +45,7 @@ public class xGameAPI {
 		// Data definition
 		String url = urlPrefix + "getCategoriesAndGames";
 		String result = makeApiCall(url, "cat", "");
+		
 		// Parsing Json result
 		if (result != "NULL") {
 			try {
@@ -64,7 +65,7 @@ public class xGameAPI {
 						g.setId(obj.getString("id"));
 						g.setName(obj.getString("title"));
 						g.setImgPath(obj.getString("logo"));
-						g.setUrl(obj.getString("apk"));
+						//g.setUrl(obj.getString("apk"));
 						gamesList.add(g);
 					}
 					category.setGames(gamesList);

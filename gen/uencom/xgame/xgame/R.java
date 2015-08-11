@@ -14,7 +14,6 @@ public final class R {
         public static final int transition3=0x7f040002;
         public static final int transition4=0x7f040003;
         public static final int transition5=0x7f040004;
-        public static final int transition6=0x7f040005;
     }
     public static final class array {
         public static final int nav_actions=0x7f0d0000;
@@ -1410,7 +1409,7 @@ containing a value of this type.
         public static final int xgamelogo=0x7f0200bc;
     }
     public static final class id {
-        public static final int TT=0x7f080062;
+        public static final int TT=0x7f080061;
         public static final int abs__action_bar=0x7f080038;
         public static final int abs__action_bar_container=0x7f080037;
         public static final int abs__action_bar_subtitle=0x7f080029;
@@ -1450,7 +1449,7 @@ containing a value of this type.
         public static final int abs__textButton=0x7f08002b;
         public static final int abs__title=0x7f080033;
         public static final int abs__up=0x7f080002;
-        public static final int action_contactUs=0x7f080066;
+        public static final int action_contactUs=0x7f080065;
         public static final int adjust_height=0x7f080007;
         public static final int adjust_width=0x7f080008;
         public static final int book_now=0x7f080018;
@@ -1466,11 +1465,11 @@ containing a value of this type.
         public static final int classic=0x7f08001c;
         public static final int disableHome=0x7f080022;
         public static final int donate_with_google=0x7f08001b;
-        public static final int editText1=0x7f08005b;
-        public static final int editText2=0x7f08005d;
+        public static final int editText1=0x7f08005a;
+        public static final int editText2=0x7f08005c;
         public static final int edit_query=0x7f08003e;
-        public static final int gameLay=0x7f080057;
-        public static final int gameLay2=0x7f080058;
+        public static final int gameLay=0x7f080056;
+        public static final int gameLay2=0x7f080057;
         public static final int grayscale=0x7f08001d;
         public static final int gslay=0x7f080054;
         public static final int holo_dark=0x7f08000e;
@@ -1478,26 +1477,25 @@ containing a value of this type.
         public static final int homeAsUp=0x7f080023;
         public static final int hybrid=0x7f08000a;
         public static final int imageView1=0x7f080053;
-        public static final int imageView2=0x7f08005a;
+        public static final int imageView2=0x7f080059;
         public static final int imageView3=0x7f080055;
-        public static final int imageView4=0x7f08005f;
-        public static final int img=0x7f080063;
-        public static final int lLayout=0x7f080065;
+        public static final int imageView4=0x7f08005e;
+        public static final int img=0x7f080062;
+        public static final int lLayout=0x7f080064;
         public static final int layout=0x7f080050;
         public static final int layout2=0x7f08004f;
         public static final int listMode=0x7f080020;
-        public static final int listView1=0x7f08005e;
-        public static final int mainlayout=0x7f080059;
+        public static final int listView1=0x7f08005d;
+        public static final int mainlayout=0x7f080058;
         public static final int match_parent=0x7f080016;
         public static final int monochrome=0x7f08001e;
         public static final int none=0x7f080009;
         public static final int normal=0x7f08000b;
         public static final int production=0x7f080010;
-        public static final int progressBar1=0x7f080061;
-        public static final int reglay=0x7f080060;
+        public static final int progressBar1=0x7f080060;
+        public static final int reglay=0x7f08005f;
         public static final int sandbox=0x7f080011;
         public static final int satellite=0x7f08000c;
-        public static final int scoreLay=0x7f080056;
         public static final int selectionDetails=0x7f080015;
         public static final int showCustom=0x7f080024;
         public static final int showHome=0x7f080025;
@@ -1507,10 +1505,10 @@ containing a value of this type.
         public static final int tabMode=0x7f080021;
         public static final int terrain=0x7f08000d;
         public static final int test=0x7f080013;
-        public static final int text=0x7f080064;
+        public static final int text=0x7f080063;
         public static final int textView1=0x7f080051;
         public static final int textView2=0x7f080052;
-        public static final int textView3=0x7f08005c;
+        public static final int textView3=0x7f08005b;
         public static final int useLogo=0x7f080027;
         public static final int wrap_content=0x7f080017;
     }

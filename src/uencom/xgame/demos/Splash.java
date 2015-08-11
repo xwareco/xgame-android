@@ -1,6 +1,5 @@
 package uencom.xgame.demos;
 
-import uencom.xgame.engine.xGameParser;
 import uencom.xgame.xgame.R;
 import android.app.Activity;
 import android.content.Intent;
@@ -17,7 +16,7 @@ public class Splash extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.xgamesplash);
 		introPlayer = MediaPlayer.create(this, R.raw.getready);
-		messagingIntent = new Intent(this, xGameParser.class);
+		messagingIntent = new Intent(this, XMLDemo.class);
 		messagingIntent.putExtra("Folder", Environment.getExternalStorageDirectory()
 				.toString() + "/catch_the_peeb");
 		introPlayer.start();

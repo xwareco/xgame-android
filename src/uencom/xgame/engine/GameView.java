@@ -1,33 +1,25 @@
 package uencom.xgame.engine;
 
-import java.io.InputStream;
-import java.net.URL;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+
 import uencom.xgame.gestures.HandGestures;
 import uencom.xgame.xgame.R;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.accessibility.AccessibilityManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class GameView extends SherlockActivity {
 
 	Button play;
 	HandGestures HG;
-	ImageView gameImg;
-	TextView gameName;
 	AccessibilityManager manager;
 	LinearLayout main;
 
@@ -35,54 +27,6 @@ public class GameView extends SherlockActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.game_view);
 		play = (Button) findViewById(R.id.button1);
-		play.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				Intent I = new Intent(getApplicationContext() , xGameParser.class);
-				I.putExtra("Folder", getIntent().getStringExtra("Folder"));
-				startActivity(I);
-				
-			}
-		});
-		String x= getIntent().getStringExtra("Folder");
-		String y = getIntent().getStringExtra("Name");
-		String z = getIntent().getStringExtra("Logo");
-		System.out.println(x + " " + y + " " + z);
-		gameImg = (ImageView)findViewById(R.id.imageView1);
-		gameName = (TextView)findViewById(R.id.textView1);
-		gameName.setText(getIntent().getStringExtra("Name"));
-		Thread t = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					InputStream is = new URL(getIntent().getStringExtra("Logo")).openStream();
-					final Drawable logo = Drawable.createFromStream(is, "src");
-					if (logo != null) {
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								gameImg.setImageDrawable(logo);
-
-							}
-						});
-
-					}
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				 finally {
-					Animation a = AnimationUtils.loadAnimation(
-							getApplicationContext(), R.anim.transition1);
-					a.setDuration(1000);
-					gameImg.startAnimation(a);
-				}
-			}
-		});
-		t.start();
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		setOnclicks();
@@ -105,8 +49,7 @@ public class GameView extends SherlockActivity {
 
 			@Override
 			public void onClick(View arg0) {
-				Intent I = new Intent(getApplicationContext(), xGameParser.class);
-				I.putExtra("Folder", getIntent().getStringExtra("Folder"));
+				Intent I = new Intent(getApplicationContext(), GameOver.class);
 				startActivity(I);
 
 			}
