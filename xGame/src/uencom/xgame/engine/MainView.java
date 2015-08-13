@@ -223,8 +223,11 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 			@Override
 			public void onClick(View arg0) {
 				if (cat == true) {
+					Intent I = new Intent(getApplicationContext() , xGameParser.class);
+					I.putExtra("Folder", Environment.getExternalStorageDirectory() + "/xGame/Games/car_racer");
+					startActivity(I);
 					cat = false;
-					list.setVisibility(View.VISIBLE);
+					/*list.setVisibility(View.VISIBLE);
 					if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 						mainImage.setVisibility(View.GONE);
 					}
@@ -235,7 +238,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 					pre.setVisibility(View.GONE);
 					next.setVisibility(View.GONE);
 					select.setVisibility(View.GONE);
-					bar.setSelectedNavigationItem(2);
+					bar.setSelectedNavigationItem(2);*/
 				}
 
 			}
@@ -277,6 +280,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 				}
 
 				else {
+					
 					Intent I = new Intent(getApplicationContext(),
 							GameView.class);
 					I.putExtra("Folder", ifGameExistsLocation);

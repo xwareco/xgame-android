@@ -3,8 +3,8 @@ package uencom.xgame.engine;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import uencom.xgame.interfaces.IStateListener;
+import uencom.xgame.sensors.Accelerometer;
 import uencom.xgame.xgame.R;
 import uencom.xgame.xml.State;
 import uencom.xgame.xml.StateEvent;
@@ -14,6 +14,7 @@ import uencom.xgame.gestures.HandGestures;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
@@ -30,6 +31,9 @@ public class xGameParser extends Activity implements IStateListener {
 	State s0, s1, currentState;
 	Transition t01, t10;
 	HandGestures stateGesture, engineGesture;
+	String SCREEN_ORIENTATION;
+	int GAME_COUNT;
+	Accelerometer stateAccelerometer;
 	String apkFileName = "";
 	boolean gameOver;
 	String gameFolder;
@@ -61,9 +65,13 @@ public class xGameParser extends Activity implements IStateListener {
 					@Override
 					public void run() {
 						if (gameOver == false) {
+							gameIntent.putExtra("Count", gameIntent.getIntExtra("Count", 0));
+							gameIntent.putExtra("Score", gameIntent.getIntExtra("Score", 0));
 							gameIntent = currentState.loopBack(
 									getApplicationContext(), gameIntent);
-							if (gameIntent.getIntExtra("Count", 0) == 20) {
+							System.out.println(gameIntent.getIntExtra("Count", 0));
+							System.out.println(gameIntent.getIntExtra("Score", 0));
+							if (gameIntent.getIntExtra("Count", 0) >= GAME_COUNT) {
 								gameOver = true;
 							}
 							if (gameIntent.getStringExtra("Action") == "NONE") {
@@ -84,13 +92,17 @@ public class xGameParser extends Activity implements IStateListener {
 												gameIntent);
 									}
 								});
-								stateGesture = currentState.setHandGesture(stateGesture);
-								currentState.setTransDetected("NoTransitionDetected");
+								stateGesture = currentState
+										.setHandGesture(stateGesture);
+								stateAccelerometer = currentState
+										.setAccelerometerGestures(stateAccelerometer);
+								currentState
+										.setTransDetected("NoTransitionDetected");
 							}
-						}
-						else {
+						} else {
 							int score = gameIntent.getIntExtra("Score", 0);
-							Intent gameOverActivity = new Intent(getApplicationContext() , GameOver.class);
+							Intent gameOverActivity = new Intent(
+									getApplicationContext(), GameOver.class);
 							gameOverActivity.putExtra("Score", score);
 							startActivity(gameOverActivity);
 							finish();
@@ -104,7 +116,26 @@ public class xGameParser extends Activity implements IStateListener {
 	private void startTheGame() {
 		parser.parse();
 		states = parser.getStatesList();
+
+		/*
+		 * for (int i = 0; i < states.size(); i++) { Iterator<?> it =
+		 * states.get(i).getFunctionsAndTransitions().entrySet() .iterator();
+		 * System.out.println("State: " + states.get(i).getId()); while
+		 * (it.hasNext()) { Map.Entry pair = (Map.Entry) it.next();
+		 * System.out.println(pair.getKey() + " = " + pair.getValue()); } }
+		 * finish();
+		 */
+
 		trans = parser.getTransitionsList();
+		if (parser.environmentVariables.get("ORIENTATION").equals("Landscape")) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+			System.out.println("Landscape view");
+		} else {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			System.out.println("Portrait view");
+		}
+		GAME_COUNT = Integer.parseInt(parser.environmentVariables
+				.get("GAME_COUNT"));
 		for (int i = 0; i < states.size(); i++)
 			states.get(i).addStateListener(this);
 
@@ -127,6 +158,7 @@ public class xGameParser extends Activity implements IStateListener {
 	@SuppressLint("NewApi")
 	private void initViewAndGameDate() {
 		data = (TextView) findViewById(R.id.textView1);
+		SCREEN_ORIENTATION = "Portrait";
 		engineIntent = getIntent();
 		gameScore = 0;
 		counterTime = 0;
@@ -135,15 +167,15 @@ public class xGameParser extends Activity implements IStateListener {
 		states = new ArrayList<State>();
 		gameOver = false;
 		gameLayout.setOnHoverListener(new OnHoverListener() {
-			
+
 			@Override
 			public boolean onHover(View v, MotionEvent event) {
-				
+
 				return onTouchEvent(event);
 			}
 		});
 		gameFolder = engineIntent.getStringExtra("Folder");
-		
+
 		parser = new XmlParser(getApplicationContext(), gameFolder, gameLayout);
 		engineGesture = new HandGestures(this) {
 			@Override
@@ -181,8 +213,10 @@ public class xGameParser extends Activity implements IStateListener {
 	public State stateFromTransition(Transition t) {
 
 		for (int i = 0; i < states.size(); i++) {
-			if (t.getTo() == states.get(i).getId())
+			if (t.getTo().equals(states.get(i).getId())) {
+
 				return states.get(i);
+			}
 		}
 		return null;
 	}
@@ -191,6 +225,8 @@ public class xGameParser extends Activity implements IStateListener {
 	protected void onPause() {
 		loopTimerTask.cancel();
 		loopTimer.cancel();
+		if (stateAccelerometer != null)
+			stateAccelerometer.onAccelerometerPause();
 		super.onPause();
 	}
 
@@ -198,12 +234,48 @@ public class xGameParser extends Activity implements IStateListener {
 	public void transRecieved(StateEvent event) {
 		String detectedTransitionId = event.getTransDetected();
 		if (!detectedTransitionId.equals("NoTransitionDetected")) {
-			//System.out.println(detectedTransitionId);
-			for (int i = 0; i < trans.size(); i++) {
-				if (trans.get(i).getId() == detectedTransitionId
-						&& trans.get(i).isConditionActivated(gameIntent) == true) {
-					
 
+			for (int i = 0; i < trans.size(); i++) {
+				if (trans.get(i).getId().equals(detectedTransitionId)
+						&& trans.get(i).isConditionActivated(gameIntent) == true) {
+
+					runOnUiThread(new Runnable() {
+						public void run() {
+
+							currentState.onStateExit(getApplicationContext(),
+									gameIntent);
+
+						}
+					});
+					currentState = stateFromTransition(trans.get(i));
+					runOnUiThread(new Runnable() {
+						public void run() {
+							currentState.onStateEntry(gameLayout, gameIntent);
+
+						}
+					});
+					stateGesture = currentState.setHandGesture(stateGesture);
+					stateAccelerometer = currentState
+							.setAccelerometerGestures(stateAccelerometer);
+					currentState.setTransDetected("NoTransitionDetected");
+					currentState.setTransDetectedAcc("NoTransitionDetected");
+
+				}
+			}
+		}
+
+	}
+
+	@Override
+	public void transRecievedAcc(StateEvent event) {
+		String detectedTransitionId = event.getTransDetected();
+		if (!detectedTransitionId.equals("NoTransitionDetected")) {
+
+			for (int i = 0; i < trans.size(); i++) {
+				if (trans.get(i).getId().equals(detectedTransitionId)
+						&& trans.get(i).isConditionActivated(gameIntent) == true) {
+
+					// currentState.lock();
 					runOnUiThread(new Runnable() {
 						public void run() {
 
@@ -217,10 +289,12 @@ public class xGameParser extends Activity implements IStateListener {
 						public void run() {
 
 							currentState.onStateEntry(gameLayout, gameIntent);
+
 						}
 					});
-					stateGesture = currentState.setHandGesture(stateGesture);
-					currentState.setTransDetected("NoTransitionDetected");
+					stateAccelerometer = currentState
+							.setAccelerometerGestures(stateAccelerometer);
+					currentState.setTransDetectedAcc("NoTransitionDetected");
 
 				}
 			}

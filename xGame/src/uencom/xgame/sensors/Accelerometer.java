@@ -12,9 +12,9 @@ public abstract class Accelerometer implements SensorEventListener {
 	private Sensor accelerometerSensor;
 	private SensorManager manager;
 	private long last_update;
-	private float xMin , yMin , zMin , xMax , yMax, zMax , lastX , lastY , lastZ;
+	private float xMin, yMin, xMax, yMax, lastX, lastY;
 
-	public Accelerometer(Context ctx , float x , float y , float z) {
+	public Accelerometer(Context ctx, float x, float y, float z) {
 		// initialize everything
 		manager = (SensorManager) ctx.getSystemService(Context.SENSOR_SERVICE);
 		accelerometerSensor = manager
@@ -23,14 +23,11 @@ public abstract class Accelerometer implements SensorEventListener {
 				SensorManager.SENSOR_DELAY_NORMAL);
 		last_update = 0;
 		xMin = 0;
-		yMin = 0;
-		zMin = 0;
+		yMin = -75f;
 		xMax = x;
 		yMax = y;
-		zMax = z;
 		lastX = 0;
 		lastY = 0;
-		lastZ = 0;
 	}
 
 	@Override
@@ -45,30 +42,34 @@ public abstract class Accelerometer implements SensorEventListener {
 		if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
 			// onAccelerometerChanged(sensorEvent);
 			float x = sensorEvent.values[0];
-			float y = sensorEvent.values[1];
-			float z = sensorEvent.values[2];
+			float y = sensorEvent.values[1] * 10;
+			//System.out.println(y);
+			// float z = sensorEvent.values[2];
 			long curTime = System.currentTimeMillis();
 
 			if ((curTime - last_update) > 100) {
-				
-				if(x <= xMin)onXHugeLeft();
-				else if(x >= xMax)onXHugeRight();
-				else if(x > lastX && x < xMax)onXGoodRight();
-				else if(x < lastX && x > xMin)onXGoodLeft();
-				
-				if(y <= yMin)onYHugeDown();
-				else if(y >= yMax)onYHugeUp();
-				else if(y > lastY && x < yMax)onYGoodUp();
-				else if(y < lastY && x > yMin)onYGoodDown();
-				
-				if(z <= zMin)onZHugeLeft();
-				else if(z >= zMax)onZHugeRight();
-				else if(z > lastZ && x < zMax)onZGoodRight();
-				else if(z < lastZ && x > zMin)onZGoodLeft();
-				
+				if (x <= xMin)
+					onXHugeLeft();
+				else if (x >= xMax)
+					onXHugeRight();
+				else if (x > lastX && x < xMax)
+					onXGoodRight();
+				else if (x < lastX && x > xMin)
+					onXGoodLeft();
+
+				if (y <= yMin) {
+					onYHugeLeft();
+
+				} else if (y >= yMax) {
+					onYHugeRight();
+				} else if (y > lastY && x < yMax)
+					onYGoodRight();
+				else if (y < lastY && x > yMin)
+					onYGoodLeft();
+
 				lastX = x;
 				lastY = y;
-				lastZ = z;
+				last_update = curTime;
 			}
 		}
 
@@ -82,13 +83,13 @@ public abstract class Accelerometer implements SensorEventListener {
 
 	public abstract void onZHugeLeft();
 
-	public abstract void onYGoodDown();
+	public abstract void onYGoodLeft();
 
-	public abstract void onYGoodUp();
+	public abstract void onYGoodRight();
 
-	public abstract void onYHugeUp();
+	public abstract void onYHugeRight();
 
-	public abstract void onYHugeDown();
+	public abstract void onYHugeLeft();
 
 	public abstract void onXGoodLeft();
 

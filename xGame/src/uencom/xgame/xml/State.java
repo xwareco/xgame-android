@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.Map;
 import uencom.xgame.interfaces.IStateListener;
 import uencom.xgame.interfaces.IstateActions;
+import uencom.xgame.sensors.Accelerometer;
 import uencom.xgame.gestures.HandGestures;
 import dalvik.system.DexClassLoader;
 import android.annotation.SuppressLint;
@@ -36,9 +37,10 @@ public class State implements IstateActions {
 	private Class<?> stateClass;
 	private Map<String, String> functionsAndTransitions;
 	private ArrayList<IStateListener> listeners;
-
-	private boolean up, down, right, left, tap, doubleTap, longTouch;
-	private String transDetected;
+	private boolean up, down, right, left, tap, doubleTap, longTouch, zSimpleR,
+			zSimpleL, zHugeR, zHugeL, ySimpleR, ySimpleL, yHugeR, yHugeL,
+			xSimpleR, xSimpleL, xHugeR, xHugeL;
+	private String transDetected, transDetectedAcc;
 
 	public State(String apk) {
 		up = false;
@@ -49,10 +51,31 @@ public class State implements IstateActions {
 		doubleTap = false;
 		longTouch = false;
 		apkFileName = apk;
+		zSimpleL = false;
+		zSimpleR = false;
+		zHugeL = false;
+		zHugeR = false;
+		ySimpleL = false;
+		ySimpleR = false;
+		yHugeL = false;
+		yHugeR = false;
+		xSimpleL = false;
+		xSimpleR = false;
+		xHugeL = false;
+		xHugeR = false;
 		listeners = new ArrayList<IStateListener>();
 		functionsAndTransitions = new HashMap<String, String>();
 		transDetected = "NoTransitionDetected";
+		transDetectedAcc = "NoTransitionDetected";
 
+	}
+
+	public Map<String, String> getFunctionsAndTransitions() {
+		return functionsAndTransitions;
+	}
+
+	public void setTransDetectedAcc(String transDetectedAcc) {
+		this.transDetectedAcc = transDetectedAcc;
 	}
 
 	public void addToMap(String key, String Value) {
@@ -165,6 +188,7 @@ public class State implements IstateActions {
 	@Override
 	public void onStateEntry(LinearLayout layout, Intent I) {
 		layout.setBackground(Drawable.createFromPath(imgPath));
+		gameTextView.setTextColor(Color.WHITE);
 		gameTextView.setText(text);
 		Call("Entry", layout, I);
 
@@ -224,7 +248,7 @@ public class State implements IstateActions {
 			@Override
 			public void onSwipeUp() {
 				if (up == true)
-				transDetected = functionsAndTransitions.get("SwipeUp");
+					transDetected = functionsAndTransitions.get("SwipeUp");
 				fireStateEvent();
 				super.onSwipeUp();
 			}
@@ -240,20 +264,172 @@ public class State implements IstateActions {
 			@Override
 			public void onTapTwice() {
 				if (doubleTap == true)
-				transDetected = functionsAndTransitions.get("DoubleTap");
+					transDetected = functionsAndTransitions.get("DoubleTap");
 				fireStateEvent();
 				super.onTapTwice();
 			}
 
 			@Override
 			public void onLongTouch() {
-				if(longTouch == true)
-				transDetected = functionsAndTransitions.get("LongPress");
+				if (longTouch == true)
+					transDetected = functionsAndTransitions.get("LongPress");
 				fireStateEvent();
 				super.onLongTouch();
 			}
 		};
 		return H;
+	}
+
+	public Accelerometer setAccelerometerGestures(Accelerometer acc) {
+		if (functionsAndTransitions.containsKey("ZGoodRight"))
+			zSimpleR = true;
+		if (functionsAndTransitions.containsKey("ZGoodLeft"))
+			zSimpleL = true;
+		if (functionsAndTransitions.containsKey("ZHugeRight"))
+			zHugeR = true;
+		if (functionsAndTransitions.containsKey("ZHugeLeft"))
+			zHugeL = true;
+		if (functionsAndTransitions.containsKey("YGoodRight"))
+			ySimpleR = true;
+		if (functionsAndTransitions.containsKey("YGoodLeft"))
+			ySimpleL = true;
+		if (functionsAndTransitions.containsKey("YHugeRight"))
+			yHugeR = true;
+		if (functionsAndTransitions.containsKey("YHugeLeft"))
+			yHugeL = true;
+
+		if (functionsAndTransitions.containsKey("XGoodRight"))
+			xSimpleR = true;
+		if (functionsAndTransitions.containsKey("XGoodLeft"))
+			xSimpleL = true;
+		if (functionsAndTransitions.containsKey("XHugeRight"))
+			xHugeR = true;
+		if (functionsAndTransitions.containsKey("XHugeLeft"))
+			xHugeL = true;
+
+		acc = new Accelerometer(this.ctx, 0, 75f, 0) {
+
+			@Override
+			public void onZHugeRight() {
+				if (zHugeR == true)
+					transDetectedAcc = functionsAndTransitions
+							.get("ZHugeRight");
+				fireStateEventAcc();
+				// System.out.println("Huge right");
+			}
+
+			@Override
+			public void onZHugeLeft() {
+				if (zHugeL == true)
+					transDetectedAcc = functionsAndTransitions.get("ZHugeLeft");
+				fireStateEventAcc();
+				// System.out.println("Huge left");
+			}
+
+			@Override
+			public void onZGoodRight() {
+				if (zSimpleR == true)
+					transDetectedAcc = functionsAndTransitions
+							.get("ZSimpleRight");
+				fireStateEventAcc();
+				// System.out.println("Simple right");
+			}
+
+			@Override
+			public void onZGoodLeft() {
+				if (zSimpleL == true)
+					transDetectedAcc = functionsAndTransitions
+							.get("ZSimpleLeft");
+				fireStateEventAcc();
+				// System.out.println("Simple left");
+			}
+
+			@Override
+			public void onYHugeRight() {
+				System.out.println(yHugeR);
+				if (yHugeR == true) {
+					transDetectedAcc = functionsAndTransitions
+							.get("YHugeRight");
+				}
+					fireStateEventAcc();
+					//yHugeR = false;
+				
+				// System.out.println("Huge right Y");
+
+			}
+
+			@Override
+			public void onYHugeLeft() {
+				if (yHugeL == true) {
+					transDetectedAcc = functionsAndTransitions.get("YHugeLeft");
+					fireStateEventAcc();
+					yHugeL = false;
+				}
+				// System.out.println("Huge left Y");
+
+			}
+
+			@Override
+			public void onYGoodRight() {
+				if (ySimpleR == true) {
+					transDetectedAcc = functionsAndTransitions
+							.get("YGoodRight");
+					fireStateEventAcc();
+					ySimpleR = false;
+				}
+				// System.out.println("Simple right Y");
+
+			}
+
+			@Override
+			public void onYGoodLeft() {
+				if (ySimpleL == true) {
+					transDetectedAcc = functionsAndTransitions.get("YGoodLeft");
+					fireStateEventAcc();
+					ySimpleL = false;
+				}
+				// System.out.println("Simple left Y");
+
+			}
+
+			@Override
+			public void onXHugeRight() {
+				if (xHugeR == true)
+					transDetectedAcc = functionsAndTransitions
+							.get("XHugeRight");
+				fireStateEventAcc();
+				// System.out.println("Huge right X");
+			}
+
+			@Override
+			public void onXHugeLeft() {
+				if (xHugeL == true)
+					transDetectedAcc = functionsAndTransitions.get("XHugeLeft");
+				fireStateEventAcc();
+				// System.out.println("Huge left X");
+
+			}
+
+			@Override
+			public void onXGoodRight() {
+				if (xSimpleR == true)
+					transDetectedAcc = functionsAndTransitions
+							.get("XGoodRight");
+				fireStateEventAcc();
+				// System.out.println("Simple right X");
+
+			}
+
+			@Override
+			public void onXGoodLeft() {
+				if (xSimpleL == true)
+					transDetectedAcc = functionsAndTransitions.get("XGoodLeft");
+				fireStateEventAcc();
+				// System.out.println("Simple left X");
+
+			}
+		};
+		return acc;
 	}
 
 	public synchronized void addStateListener(IStateListener l) {
@@ -271,5 +447,15 @@ public class State implements IstateActions {
 			((IStateListener) iter.next()).transRecieved(state);
 		}
 	}
+
+	private synchronized void fireStateEventAcc() {
+		StateEvent state = new StateEvent(this, transDetectedAcc);
+		Iterator<?> iter = ((ArrayList<IStateListener>) listeners).iterator();
+		while (iter.hasNext()) {
+			((IStateListener) iter.next()).transRecievedAcc(state);
+		}
+		setTransDetectedAcc("NoTransitionDetected");
+	}
+
 
 }

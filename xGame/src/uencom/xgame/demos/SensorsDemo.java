@@ -1,4 +1,4 @@
-package uencom.xgame.demos;
+/*package uencom.xgame.demos;
 
 import uencom.xgame.sensors.Accelerometer;
 import uencom.xgame.sensors.GPS;
@@ -144,3 +144,4 @@ public class SensorsDemo extends Activity {
 
 	}
 }
+*/

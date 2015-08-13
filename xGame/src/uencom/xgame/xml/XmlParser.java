@@ -128,14 +128,30 @@ public class XmlParser {
 			tempState.addToMap("DoubleTap", parser.getAttributeValue(0));
 		} else if (name.equals("LongPress")) {
 			tempState.addToMap("LongPress", parser.getAttributeValue(0));
-		} else if (name.equals("ZSimpleRight")) {
-			tempState.addToMap("ZSimpleRight", parser.getAttributeValue(0));
-		} else if (name.equals("ZSimpleLeft")) {
-			tempState.addToMap("ZSimpleLeft", parser.getAttributeValue(0));
+		} else if (name.equals("ZGoodRight")) {
+			tempState.addToMap("ZGoodRight", parser.getAttributeValue(0));
+		} else if (name.equals("ZGoodLeft")) {
+			tempState.addToMap("ZGoodLeft", parser.getAttributeValue(0));
 		} else if (name.equals("ZHugeRight")) {
 			tempState.addToMap("ZHugeRight", parser.getAttributeValue(0));
 		} else if (name.equals("ZHugeLeft")) {
 			tempState.addToMap("ZHugeLeft", parser.getAttributeValue(0));
+		} else if (name.equals("YGoodRight")) {
+			tempState.addToMap("YGoodRight", parser.getAttributeValue(0));
+		} else if (name.equals("YGoodLeft")) {
+			tempState.addToMap("YGoodLeft", parser.getAttributeValue(0));
+		} else if (name.equals("YHugeRight")) {
+			tempState.addToMap("YHugeRight", parser.getAttributeValue(0));
+		} else if (name.equals("YHugeLeft")) {
+			tempState.addToMap("YHugeLeft", parser.getAttributeValue(0));
+		} else if (name.equals("XGoodRight")) {
+			tempState.addToMap("XGoodRight", parser.getAttributeValue(0));
+		} else if (name.equals("XGoodLeft")) {
+			tempState.addToMap("XGoodLeft", parser.getAttributeValue(0));
+		} else if (name.equals("XHugeRight")) {
+			tempState.addToMap("XHugeRight", parser.getAttributeValue(0));
+		} else if (name.equals("XHugeLeft")) {
+			tempState.addToMap("XHugeLeft", parser.getAttributeValue(0));
 		}
 
 		else if (name.equals("Transitions"))

@@ -182,5 +182,10 @@ public class HeadPhone {
 	public void setRightLevel(float level) {
 		rightLevel = level;
 	}
+	
+	public boolean isPlaying()
+	{
+		return mediaPlayer.isPlaying();
+	}
 
 }

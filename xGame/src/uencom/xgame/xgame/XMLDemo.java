@@ -211,4 +211,10 @@ public class XMLDemo extends Activity implements IStateListener {
 		}
 
 	}
+
+	@Override
+	public void transRecievedAcc(StateEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
 }
