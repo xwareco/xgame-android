@@ -11,7 +11,7 @@ import android.content.Intent;
 import android.os.Environment;
 import android.widget.LinearLayout;
 import uencom.xgame.interfaces.IstateActions;
-//import uencom.xgame.sensors.Accelerometer;
+import uencom.xgame.sensors.Accelerometer;
 import uencom.xgame.sound.HeadPhone;
 
 public class S1 implements IstateActions {
@@ -19,7 +19,6 @@ public class S1 implements IstateActions {
 	@Override
 	public void onStateEntry(LinearLayout layout, Intent I) {
 		ArrayList<Obstacle> trackObstacles;
-		//Accelerometer inStateAcc;
 		// Generate obstacles
 		trackObstacles = generateObstacles(I);
 		Gson g = new Gson();
@@ -33,7 +32,6 @@ public class S1 implements IstateActions {
 			System.out.println(trackObstacles.get(i).getLocation());
 			System.out.println("======================");
 		}
-		// init Accelerometer
 
 	}
 
@@ -50,7 +48,7 @@ public class S1 implements IstateActions {
 			// generate obs type
 			Obstacle obs = new Obstacle();
 			Random r = new Random();
-			int tempType = r.nextInt(3);
+			int tempType = r.nextInt(4);
 			if (tempType == 0)
 				obs.setType("turnleft");
 			else if (tempType == 1)
@@ -73,6 +71,7 @@ public class S1 implements IstateActions {
 		return res;
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public Intent loopBack(Context c, Intent I) {
 		int startTime = (int) System.currentTimeMillis();
@@ -86,6 +85,25 @@ public class S1 implements IstateActions {
 			HP.play(Path, 0);
 		}
 		Obstacle nearestObs = getNearestObstacle(I);
+		// init Accelerometer
+		boolean right = false;
+		boolean left = false;
+		boolean any = false;
+		String obsType = nearestObs.getType();
+		if (obsType.equals("turnleft")) {
+			// stop current play & play sound
+			left = true;
+		}
+		if (obsType.equals("turnright")) {
+			// stop current play & play sound
+			right = true;
+		}
+		if (obsType.equals("cow") || obsType.equals("girl")) {
+			// stop current play & play sound
+			any = true;
+		}
+
+		Accelerometer inStateAcc = initAcc(c, right, left, any);
 		if (nearestObs != null)
 			System.out.println("Nesarest obstacle is: "
 					+ nearestObs.getLocation() + " &" + nearestObs.getType());
@@ -105,6 +123,87 @@ public class S1 implements IstateActions {
 		return I;
 	}
 
+	private Accelerometer initAcc(final Context c, final boolean right,
+			final boolean left, final boolean any) {
+		Accelerometer Acc = new Accelerometer(c, 0, 75f, 0) {
+
+			@Override
+			public void onZHugeRight() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onZHugeLeft() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onZGoodRight() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onZGoodLeft() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onYHugeRight() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onYHugeLeft() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onYGoodRight() {
+				if (right == true || any == true)
+					new HeadPhone(c).stopCurrentPlay();
+
+			}
+
+			@Override
+			public void onYGoodLeft() {
+				if (left == true || any == true)
+					new HeadPhone(c).stopCurrentPlay();
+
+			}
+
+			@Override
+			public void onXHugeRight() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onXHugeLeft() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onXGoodRight() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onXGoodLeft() {
+				// TODO Auto-generated method stub
+
+			}
+		};
+		return Acc;
+	}
+
 	private Obstacle getNearestObstacle(Intent I) {
 		Obstacle result = null;
 		String obsJson = I.getStringExtra("obs");
@@ -113,11 +212,13 @@ public class S1 implements IstateActions {
 		}.getType();
 		ArrayList<Obstacle> trackObstacles = g.fromJson(obsJson,
 				(java.lang.reflect.Type) type);
-		int currentLocation = I.getIntExtra("Count", 0) + 10;
+		int currentLocation = I.getIntExtra("Count", 0);
 		if (trackObstacles != null) {
-			System.out.println("Iam here!!");
+
 			for (int i = 0; i < trackObstacles.size(); i++) {
-				if (trackObstacles.get(i).getLocation() - currentLocation == 10)
+				if (trackObstacles.get(i).getLocation() - currentLocation <= 10
+						&& trackObstacles.get(i).getLocation()
+								- currentLocation >= 0)
 					result = trackObstacles.get(i);
 			}
 		}
