@@ -3,23 +3,28 @@ package com.example.car_racer;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
 import android.widget.LinearLayout;
 import uencom.xgame.interfaces.IstateActions;
-import uencom.xgame.sensors.Accelerometer;
+//import uencom.xgame.sensors.Accelerometer;
 import uencom.xgame.sound.HeadPhone;
 
 public class S1 implements IstateActions {
 
-	ArrayList<Obstacle> trackObstacles;
-	Accelerometer inStateAcc;
-
 	@Override
 	public void onStateEntry(LinearLayout layout, Intent I) {
+		ArrayList<Obstacle> trackObstacles;
+		//Accelerometer inStateAcc;
 		// Generate obstacles
-		generateObstacles(I);
+		trackObstacles = generateObstacles(I);
+		Gson g = new Gson();
+		String obsJson = g.toJson(trackObstacles);
+		I.putExtra("obs", obsJson);
 		System.out.println(trackObstacles.size() + "Obstacle(s)");
 		for (int i = 0; i < trackObstacles.size(); i++) {
 			System.out.println("==Obstacle==");
@@ -32,12 +37,12 @@ public class S1 implements IstateActions {
 
 	}
 
-	private void generateObstacles(Intent I) {
+	private ArrayList<Obstacle> generateObstacles(Intent I) {
 
 		// define obstacles number
 		int currentLocation = I.getIntExtra("Count", 0) + 10;
 		int numOfObstacles = (190 - currentLocation) / 4;
-		trackObstacles = new ArrayList<Obstacle>(numOfObstacles);
+		ArrayList<Obstacle> res = new ArrayList<Obstacle>(numOfObstacles);
 
 		// generate based on type and location
 		Obstacle lastObs = null;
@@ -62,10 +67,10 @@ public class S1 implements IstateActions {
 
 				obs.setLocation(lastObs.getLocation() + 20);
 			}
-			trackObstacles.add(obs);
+			res.add(obs);
 			lastObs = obs;
 		}
-
+		return res;
 	}
 
 	@Override
@@ -102,6 +107,12 @@ public class S1 implements IstateActions {
 
 	private Obstacle getNearestObstacle(Intent I) {
 		Obstacle result = null;
+		String obsJson = I.getStringExtra("obs");
+		Gson g = new Gson();
+		java.lang.reflect.Type type = new TypeToken<ArrayList<Obstacle>>() {
+		}.getType();
+		ArrayList<Obstacle> trackObstacles = g.fromJson(obsJson,
+				(java.lang.reflect.Type) type);
 		int currentLocation = I.getIntExtra("Count", 0) + 10;
 		if (trackObstacles != null) {
 			System.out.println("Iam here!!");

@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+<<<<<<< HEAD
+=======
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+>>>>>>> 76aa0d8657ef0160c8ff4a418e83696bd36af0ff
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/xGame"/>
+<<<<<<< HEAD
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
+=======
+>>>>>>> 76aa0d8657ef0160c8ff4a418e83696bd36af0ff
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
