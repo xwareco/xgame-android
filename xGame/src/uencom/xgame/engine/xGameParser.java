@@ -149,7 +149,7 @@ public class xGameParser extends Activity implements IStateListener {
 			gameIntent = new Intent();
 			gameIntent.putExtra("Count", counterTime);
 			definetheTask();
-			loopTimer.schedule(loopTimerTask, 0, 1500);
+			loopTimer.schedule(loopTimerTask, 0, 3000);
 			currentState.onStateEntry(gameLayout, gameIntent);
 		}
 

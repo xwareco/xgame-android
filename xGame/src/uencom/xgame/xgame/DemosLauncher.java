@@ -1,4 +1,4 @@
-package uencom.xgame.xgame;
+/*package uencom.xgame.xgame;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -58,3 +58,4 @@ public class DemosLauncher extends Activity implements OnClickListener {
 	}
 
 }
+*/

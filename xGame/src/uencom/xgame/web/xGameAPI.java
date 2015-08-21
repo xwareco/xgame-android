@@ -108,6 +108,7 @@ public class xGameAPI {
 				
 				if(e.getMessage().contains("Unauthorized") || e.getMessage().contains("Bad Request"))
 				{
+					e.printStackTrace();
 				String newToken = getNewToken();
 				System.out.println("New Token: " + newToken);
 				request.setHeader("Authorization", newToken);

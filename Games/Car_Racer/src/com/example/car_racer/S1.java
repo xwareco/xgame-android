@@ -75,39 +75,98 @@ public class S1 implements IstateActions {
 	@Override
 	public Intent loopBack(Context c, Intent I) {
 		int startTime = (int) System.currentTimeMillis();
+		System.out.println("Iam called!!");
 		String Path = Environment.getExternalStorageDirectory().toString()
-				+ "/xGame/Games/car_racer/Sound/car_running.wma";
+				+ "/xGame/Games/car_racer/Sound/car_running.mp3";
+		int currVPos = I.getIntExtra("Count", 0);
+		System.out.println("Count: " + currVPos);
+		int penaltyTime = 0;
 		HeadPhone HP = new HeadPhone(c);
 		HP.setLeftLevel(1);
 		HP.setRightLevel(1);
-		if (HP.detectHeadPhones() == true && HP.isPlaying() == false) {
-			HP.stopCurrentPlay();
+		if (HP.detectHeadPhones() == true) {
+			// HP.stopCurrentPlay();
 			HP.play(Path, 0);
 		}
-		Obstacle nearestObs = getNearestObstacle(I);
+		Obstacle nearestObs = getOrRemoveNearestObstacle(I, 0, 0);
 		// init Accelerometer
 		boolean right = false;
 		boolean left = false;
 		boolean any = false;
-		String obsType = nearestObs.getType();
-		if (obsType.equals("turnleft")) {
-			// stop current play & play sound
-			left = true;
-		}
-		if (obsType.equals("turnright")) {
-			// stop current play & play sound
-			right = true;
-		}
-		if (obsType.equals("cow") || obsType.equals("girl")) {
-			// stop current play & play sound
-			any = true;
-		}
+		if (nearestObs != null) {
+			System.out.println("Obs is ready!!");
+			String obsType = nearestObs.getType();
+			if (obsType.equals("turnleft")) {
+				System.out.println("left");
+				// stop current play & play sound
+				String Path2 = Environment.getExternalStorageDirectory()
+						.toString() + "/xGame/Games/car_racer/Sound/turn.mp3";
 
-		Accelerometer inStateAcc = initAcc(c, right, left, any);
-		if (nearestObs != null)
-			System.out.println("Nesarest obstacle is: "
-					+ nearestObs.getLocation() + " &" + nearestObs.getType());
-		int currVPos = I.getIntExtra("Count", 0);
+				if (HP.detectHeadPhones() == true) {
+					// HP.stopCurrentPlay();
+					HP.setLeftLevel(1);
+					HP.setRightLevel(0);
+					HP.play(Path2, 0);
+				}
+				left = true;
+			} else if (obsType.equals("turnright")) {
+				System.out.println("right");
+				// stop current play & play sound
+				String Path2 = Environment.getExternalStorageDirectory()
+						.toString() + "/xGame/Games/car_racer/Sound/turn.mp3";
+
+				if (HP.detectHeadPhones() == true) {
+					// HP.stopCurrentPlay();
+					HP.setLeftLevel(0);
+					HP.setRightLevel(1);
+					HP.play(Path2, 0);
+				}
+				right = true;
+			} else if (obsType.equals("cow")) {
+				System.out.println("cow");
+				// stop current play & play sound
+				String Path2 = Environment.getExternalStorageDirectory()
+						.toString() + "/xGame/Games/car_racer/Sound/cow.mp3";
+
+				if (HP.detectHeadPhones() == true) {
+					// HP.stopCurrentPlay();
+					HP.setLeftLevel(1);
+					HP.setRightLevel(1);
+					HP.play(Path2, 0);
+				}
+				any = true;
+			} else if (obsType.equals("girl")) {
+				System.out.println("girl");
+				// stop current play & play sound
+				String Path2 = Environment.getExternalStorageDirectory()
+						.toString() + "/xGame/Games/car_racer/Sound/girl.mp3";
+
+				if (HP.detectHeadPhones() == true) {
+					// HP.stopCurrentPlay();
+					HP.setLeftLevel(1);
+					HP.setRightLevel(1);
+					HP.play(Path2, 0);
+				}
+				any = true;
+			}
+			int index = I.getIntExtra("NearInd", 0);
+			Accelerometer inStateAcc = initAcc(c, right, left, any, index, I);
+			System.out.println("Nearest: " + nearestObs.getLocation() + "cur: "
+					+ currVPos);
+			System.out.println("R: " + right);
+			System.out.println("L: " + left);
+			System.out.println("A: " + any);
+			if (currVPos == nearestObs.getLocation()
+					&& (right == true || left == true || any == true)) {
+				if (nearestObs.getType().equals("cow")
+						|| nearestObs.getType().equals("girl"))
+					currVPos = 300;
+				else if (nearestObs.getType().equals("turnleft")
+						|| nearestObs.getType().equals("turnright"))
+					penaltyTime = 50;
+			}
+
+		}
 		int scoreSoFar = I.getIntExtra("Scroe", 0);
 		System.out.println("ScoreBefore = " + scoreSoFar);
 		int newScoreSoFar;
@@ -115,7 +174,7 @@ public class S1 implements IstateActions {
 		currVPos++;
 		int endTime = (int) System.currentTimeMillis();
 		duration = endTime - startTime;
-		newScoreSoFar = scoreSoFar + duration;
+		newScoreSoFar = (scoreSoFar + duration) - penaltyTime;
 		System.out.println("Score = " + newScoreSoFar);
 		I.putExtra("Action", "");
 		I.putExtra("Count", currVPos);
@@ -124,7 +183,8 @@ public class S1 implements IstateActions {
 	}
 
 	private Accelerometer initAcc(final Context c, final boolean right,
-			final boolean left, final boolean any) {
+			final boolean left, final boolean any, final int obsInd,
+			final Intent I) {
 		Accelerometer Acc = new Accelerometer(c, 0, 75f, 0) {
 
 			@Override
@@ -165,15 +225,21 @@ public class S1 implements IstateActions {
 
 			@Override
 			public void onYGoodRight() {
-				if (right == true || any == true)
-					new HeadPhone(c).stopCurrentPlay();
+				if (right == true || any == true) {
+					getOrRemoveNearestObstacle(I, obsInd, 1);
+					System.out.println("right turn acc");
+
+				}
 
 			}
 
 			@Override
 			public void onYGoodLeft() {
-				if (left == true || any == true)
-					new HeadPhone(c).stopCurrentPlay();
+				if (left == true || any == true) {
+					getOrRemoveNearestObstacle(I, obsInd, 1);
+					System.out.println("left turn acc");
+
+				}
 
 			}
 
@@ -204,7 +270,7 @@ public class S1 implements IstateActions {
 		return Acc;
 	}
 
-	private Obstacle getNearestObstacle(Intent I) {
+	private Obstacle getOrRemoveNearestObstacle(Intent I, int index, int flag) {
 		Obstacle result = null;
 		String obsJson = I.getStringExtra("obs");
 		Gson g = new Gson();
@@ -212,15 +278,22 @@ public class S1 implements IstateActions {
 		}.getType();
 		ArrayList<Obstacle> trackObstacles = g.fromJson(obsJson,
 				(java.lang.reflect.Type) type);
-		int currentLocation = I.getIntExtra("Count", 0);
-		if (trackObstacles != null) {
+		if (flag == 0) {
+			int currentLocation = I.getIntExtra("Count", 0);
+			if (trackObstacles != null) {
 
-			for (int i = 0; i < trackObstacles.size(); i++) {
-				if (trackObstacles.get(i).getLocation() - currentLocation <= 10
-						&& trackObstacles.get(i).getLocation()
-								- currentLocation >= 0)
-					result = trackObstacles.get(i);
+				for (int i = 0; i < trackObstacles.size(); i++) {
+					if (trackObstacles.get(i).getLocation() - currentLocation <= 5) {
+						result = trackObstacles.get(i);
+						I.putExtra("NearInd", i);
+					}
+
+				}
 			}
+		} else {
+			trackObstacles.remove(index);
+			String newObsJson = g.toJson(trackObstacles);
+			I.putExtra("obs", newObsJson);
 		}
 		return result;
 	}

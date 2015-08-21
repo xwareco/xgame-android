@@ -26,8 +26,8 @@ public abstract class Accelerometer implements SensorEventListener {
 		yMin = -75f;
 		xMax = x;
 		yMax = y;
-		lastX = 0;
-		lastY = 0;
+		lastX = 100;
+		lastY = 100;
 	}
 
 	@Override
@@ -62,9 +62,10 @@ public abstract class Accelerometer implements SensorEventListener {
 
 				} else if (y >= yMax) {
 					onYHugeRight();
-				} else if (y > lastY && x < yMax)
+				} else if ((y - lastY) >= 5 && x < yMax){
 					onYGoodRight();
-				else if (y < lastY && x > yMin)
+				}
+				else if ((lastY - y) >= 5 && x > yMin)
 					onYGoodLeft();
 
 				lastX = x;

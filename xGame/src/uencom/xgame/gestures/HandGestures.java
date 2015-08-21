@@ -1,7 +1,6 @@
 package uencom.xgame.gestures;
 
 import android.content.Context;
-import android.support.v4.view.GestureDetectorCompat;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
@@ -9,7 +8,7 @@ public abstract class HandGestures implements
 		GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
 
 	// Variables
-	private GestureDetectorCompat mDetector;
+	private GestureDetector mDetector;
 	private boolean right = false;
 
 	public boolean isRight() {
@@ -156,7 +155,7 @@ public abstract class HandGestures implements
 	}
 
 	public HandGestures(Context ctx) {
-		mDetector = new GestureDetectorCompat(ctx, this);
+		mDetector = new GestureDetector(ctx, this);
 		// Set the gesture detector as the double tap
 		// listener.
 		mDetector.setOnDoubleTapListener(this);

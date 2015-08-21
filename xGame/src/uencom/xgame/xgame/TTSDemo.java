@@ -1,4 +1,4 @@
-package uencom.xgame.xgame;
+/*package uencom.xgame.xgame;
 
 import uencom.xgame.sound.TTS;
 import android.app.Activity;
@@ -73,3 +73,4 @@ public class TTSDemo extends Activity implements OnClickListener,
 	}
 
 }
+*/

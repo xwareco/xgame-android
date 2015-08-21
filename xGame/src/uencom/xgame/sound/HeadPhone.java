@@ -4,9 +4,10 @@ import java.io.File;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnErrorListener;
 import android.net.Uri;
 
-public class HeadPhone {
+public class HeadPhone implements OnErrorListener{
 
 	// properties
 	private float leftLevel;
@@ -26,6 +27,7 @@ public class HeadPhone {
 		currentPosition2 = 0;
 		totalTime = 0;
 		mediaPlayer = new MediaPlayer();
+		mediaPlayer.setOnErrorListener(this);
 	}
 
 	// methods
@@ -186,6 +188,12 @@ public class HeadPhone {
 	public boolean isPlaying()
 	{
 		return mediaPlayer.isPlaying();
+	}
+
+	@Override
+	public boolean onError(MediaPlayer mp, int what, int extra) {
+		mp.reset();
+		return false;
 	}
 
 }

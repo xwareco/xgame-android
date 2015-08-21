@@ -1,4 +1,4 @@
-package uencom.xgame.demos;
+/*package uencom.xgame.demos;
 
 import uencom.xgame.sound.TTS;
 import uencom.xgame.xgame.R;
@@ -74,3 +74,4 @@ public class TTSDemo extends Activity implements OnClickListener,
 	}
 
 }
+*/

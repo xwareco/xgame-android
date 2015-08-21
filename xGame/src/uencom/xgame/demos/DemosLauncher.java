@@ -1,4 +1,4 @@
-package uencom.xgame.demos;
+/*package uencom.xgame.demos;
 
 
 import uencom.xgame.engine.xGameParser;
@@ -45,10 +45,10 @@ public class DemosLauncher extends Activity implements OnClickListener {
 			startActivity(I2);
 			break;
 
-		/*case R.id.button3:
+		case R.id.button3:
 			Intent I3 = new Intent(this, SensorsDemo.class);
 			startActivity(I3);
-			break;*/
+			break;
 
 		case R.id.button4:
 			Intent I4 = new Intent(this, TTSDemo.class);
@@ -64,3 +64,4 @@ public class DemosLauncher extends Activity implements OnClickListener {
 	}
 
 }
+*/

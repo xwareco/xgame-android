@@ -19,6 +19,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
@@ -52,6 +53,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.main_view);
 		list = (ListView) findViewById(R.id.listView1);
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		Intent I = getIntent();
 		String catJson = I.getStringExtra("catJSON");
 		// System.out.println(catJson);
@@ -88,6 +90,8 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 
 							@Override
 							public void run() {
+								mainImage.getLayoutParams().height = 256;
+								mainImage.getLayoutParams().width = 256;
 								mainImage.setImageDrawable(logo);
 
 							}
