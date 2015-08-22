@@ -64,6 +64,7 @@ public class xGameAPI {
 						JSONObject obj = games.getJSONObject(j);
 						g.setId(obj.getString("id"));
 						g.setName(obj.getString("title"));
+						g.setFileName(obj.getString("file"));
 						g.setImgPath(obj.getString("logo"));
 						//g.setUrl(obj.getString("apk"));
 						gamesList.add(g);

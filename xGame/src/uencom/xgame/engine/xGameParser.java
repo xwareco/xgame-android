@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.View.OnHoverListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -50,6 +51,7 @@ public class xGameParser extends Activity implements IStateListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.xmldemo);
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		initViewAndGameDate();
 		startTheGame();
 		super.onCreate(savedInstanceState);

@@ -19,7 +19,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
@@ -37,7 +36,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 	boolean cat;
 	// http://192.168.1.102/xgame-app/public/
 	//http://xgameapp.com/games/
-	private static final String IMAGE_PREFIX = "http://192.168.1.102/xgame-app/public/games/";
+	private static final String IMAGE_PREFIX = "http://xgameapp.com/games/";
 	// String[] games = { "Catch The Beep", "Snake" };
 	// Integer[] images = { R.drawable.beep, R.drawable.beep };
 	ListView list;
@@ -53,7 +52,6 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.main_view);
 		list = (ListView) findViewById(R.id.listView1);
-		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		Intent I = getIntent();
 		String catJson = I.getStringExtra("catJSON");
 		// System.out.println(catJson);
@@ -227,11 +225,11 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 			@Override
 			public void onClick(View arg0) {
 				if (cat == true) {
-					Intent I = new Intent(getApplicationContext() , xGameParser.class);
+					/*Intent I = new Intent(getApplicationContext() , xGameParser.class);
 					I.putExtra("Folder", Environment.getExternalStorageDirectory() + "/xGame/Games/car_racer");
-					startActivity(I);
+					startActivity(I);*/
 					cat = false;
-					/*list.setVisibility(View.VISIBLE);
+					list.setVisibility(View.VISIBLE);
 					if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 						mainImage.setVisibility(View.GONE);
 					}
@@ -242,7 +240,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 					pre.setVisibility(View.GONE);
 					next.setVisibility(View.GONE);
 					select.setVisibility(View.GONE);
-					bar.setSelectedNavigationItem(2);*/
+					bar.setSelectedNavigationItem(2);
 				}
 
 			}

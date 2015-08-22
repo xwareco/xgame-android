@@ -7,7 +7,7 @@
     
     <LinearLayout 
     android:layout_width="wrap_content"
-    android:layout_height="140dp"
+    android:layout_height="200dp"
     android:background="@drawable/bggs"
     android:id="@+id/gslay"
     android:layout_gravity="center_horizontal"
@@ -16,12 +16,36 @@
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="552dp"
-        android:layout_height="140dp"
+        android:layout_height="200dp"
         android:layout_gravity="center_horizontal"
         android:contentDescription="@string/sb"
         android:src="@drawable/gamescores" />
 
 </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/scoreLay"
+        android:layout_width="fill_parent"
+        android:layout_height="95dp"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/bggs"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/white"
+            android:textSize="25sp"
+            android:textStyle="bold|italic" />
+    </LinearLayout>
     <Button
          android:id="@+id/button1"
         android:layout_width="fill_parent"
@@ -30,7 +54,7 @@
         android:textColor="#ffffff"
         android:textSize="60sp"
         android:textStyle="bold|italic"
-        android:layout_marginTop="380dp"
+        android:layout_marginTop="120dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:background="#1ea463"

@@ -3,6 +3,7 @@ package uencom.xgame.web;
 public class Game {
 
 	private String name;
+	private String fileName;
 	private String id;
 	private String url;
 	private String imgPath;
@@ -38,5 +39,15 @@ public class Game {
 	public void setId(String id) {
 		this.id = id;
 	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	
+	
 
 }
