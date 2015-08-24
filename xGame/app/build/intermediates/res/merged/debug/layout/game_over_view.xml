@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gameover"
+    android:orientation="vertical" >
+   
+    
+    <LinearLayout
+        android:id="@+id/gslay"
+        android:layout_width="237dp"
+        android:layout_height="106dp"
+        android:background="@drawable/bggs"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical" >
+
+    <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/sb"
+            android:src="@drawable/gamescores" />
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_marginTop="100dp"
+        android:id="@+id/scoreLay"
+        android:background="@drawable/bggs"
+        
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+           android:gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text=""
+            android:textSize="25sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold|italic"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+        </LinearLayout>
+
+    <Button
+         android:id="@+id/button1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#ffffff"
+        android:textSize="30sp"
+        android:textStyle="bold|italic"
+        android:layout_marginTop="104dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:contentDescription="@string/plyagn"
+        android:background="#1ea463"
+        android:text="@string/plyagn" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#ffffff"
+        android:textSize="30sp"
+        android:textStyle="bold|italic"
+        android:layout_marginTop="5dp"
+         android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:contentDescription="@string/home"
+        android:background="#1ea463"
+        android:layout_marginBottom="5dp"
+        android:text="@string/home" />
+    
+</LinearLayout><!-- From: file:/home/aly/StudioProjects/xGame/app/src/main/res/layout/game_over_view.xml -->
