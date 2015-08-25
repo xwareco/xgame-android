@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- From: file:/home/aly/StudioProjects/xGame/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/home/aly/Desktop/xWare/Repo/xGame/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string-array name="nav_actions">
         <item>xGame</item>
         <item>About Us</item>
         <item/>
     </string-array>
-    <!-- From: file:/home/aly/StudioProjects/xGame/app/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values/values.xml -->
+    <!-- From: file:/home/aly/Desktop/xWare/Repo/xGame/app/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values/values.xml -->
     <eat-comment/>
     <attr format="reference|color" name="background"/>
     <attr format="reference|color" name="backgroundSplit"/>
@@ -58,7 +58,7 @@
     <item name="abs__progress_horizontal" type="id"/>
     <item name="abs__up" type="id"/>
     <integer name="abs__max_action_buttons">2</integer>
-    <!-- From: file:/home/aly/StudioProjects/xGame/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/home/aly/Desktop/xWare/Repo/xGame/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="ACC_TV">If you moved the device the Accelerometer data will be shown</string>
     <string name="ButtonOne">Speech &amp; Sound Demo</string>
@@ -73,7 +73,7 @@
     <string name="TTS">Start</string>
     <string name="XMLdata">XML Data Read:</string>
     <string name="about">About Us</string>
-    <!-- From: file:/home/aly/StudioProjects/xGame/app/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values/values.xml -->
+    <!-- From: file:/home/aly/Desktop/xWare/Repo/xGame/app/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values/values.xml -->
     <eat-comment/>
     <string name="abs__action_bar_home_description">Navigate home</string>
     <string name="abs__action_bar_up_description">Navigate up</string>
@@ -88,7 +88,7 @@
     <string name="abs__searchview_description_voice">Voice search</string>
     <string name="abs__shareactionprovider_share_with">Share with</string>
     <string name="abs__shareactionprovider_share_with_application">Share with <ns1:g example="Bluetooth" id="application_name">%s</ns1:g></string>
-    <!-- From: file:/home/aly/StudioProjects/xGame/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/home/aly/Desktop/xWare/Repo/xGame/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="app_name">xGame</string>
     <string name="button2">Gestures demo</string>
@@ -124,7 +124,7 @@
     <string name="sel_btn">Select This Category</string>
     <string name="tv_cat">xGame Categories</string>
     <string name="usr">User Name:</string>
-    <!-- From: file:/home/aly/StudioProjects/xGame/app/src/main/res/values/styles.xml -->
+    <!-- From: file:/home/aly/Desktop/xWare/Repo/xGame/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--
@@ -136,7 +136,7 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
-    <!-- From: file:/home/aly/StudioProjects/xGame/app/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values/values.xml -->
+    <!-- From: file:/home/aly/Desktop/xWare/Repo/xGame/app/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values/values.xml -->
     <eat-comment/>
     <style name="Sherlock.__TextAppearance.Small" parent="Widget">
         <item name="android:textSize">14sp</item>

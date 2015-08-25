@@ -26,7 +26,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="56dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="125dp"
         android:id="@+id/scoreLay"
         android:background="@drawable/bggs"
         

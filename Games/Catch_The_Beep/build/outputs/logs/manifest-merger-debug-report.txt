@@ -1,0 +1,29 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/aly/Desktop/xWare/Repo/Games/CatchTheBeep/AndroidManifest.xml:1:1-17:12
+	package
+		ADDED from /home/aly/Desktop/xWare/Repo/Games/CatchTheBeep/AndroidManifest.xml:2:5-41
+	android:versionName
+		ADDED from /home/aly/Desktop/xWare/Repo/Games/CatchTheBeep/AndroidManifest.xml:4:5-30
+	android:versionCode
+		ADDED from /home/aly/Desktop/xWare/Repo/Games/CatchTheBeep/AndroidManifest.xml:3:5-28
+		INJECTED from /home/aly/Desktop/xWare/Repo/Games/CatchTheBeep/AndroidManifest.xml
+		INJECTED from /home/aly/Desktop/xWare/Repo/Games/CatchTheBeep/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/aly/Desktop/xWare/Repo/Games/CatchTheBeep/AndroidManifest.xml:1:11-69
+uses-sdk
+ADDED from /home/aly/Desktop/xWare/Repo/Games/CatchTheBeep/AndroidManifest.xml:6:5-8:41
+	android:targetSdkVersion
+		ADDED from /home/aly/Desktop/xWare/Repo/Games/CatchTheBeep/AndroidManifest.xml:8:9-38
+	android:minSdkVersion
+		ADDED from /home/aly/Desktop/xWare/Repo/Games/CatchTheBeep/AndroidManifest.xml:7:9-34
+application
+ADDED from /home/aly/Desktop/xWare/Repo/Games/CatchTheBeep/AndroidManifest.xml:10:5-15:19
+	android:label
+		ADDED from /home/aly/Desktop/xWare/Repo/Games/CatchTheBeep/AndroidManifest.xml:13:9-41
+	android:allowBackup
+		ADDED from /home/aly/Desktop/xWare/Repo/Games/CatchTheBeep/AndroidManifest.xml:11:9-35
+	android:icon
+		ADDED from /home/aly/Desktop/xWare/Repo/Games/CatchTheBeep/AndroidManifest.xml:12:9-45
+	android:theme
+		ADDED from /home/aly/Desktop/xWare/Repo/Games/CatchTheBeep/AndroidManifest.xml:14:9-40

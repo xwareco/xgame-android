@@ -13,7 +13,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.accessibility.AccessibilityManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -28,7 +27,6 @@ public class GameView extends SherlockActivity {
 	HandGestures HG;
 	ImageView gameImg;
 	TextView gameName;
-	AccessibilityManager manager;
 	LinearLayout main;
 
 	@Override
@@ -73,7 +71,7 @@ public class GameView extends SherlockActivity {
 
 					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 				 finally {
@@ -115,7 +113,7 @@ public class GameView extends SherlockActivity {
 
 			@Override
 			public void onClick(View arg0) {
-				Intent I = new Intent(getApplicationContext(), xGameParser.class);
+				Intent I = new Intent(getApplicationContext(), GameOver.class);
 				I.putExtra("Folder", getIntent().getStringExtra("Folder"));
 				startActivity(I);
 

@@ -26,7 +26,7 @@
         android:id="@+id/scoreLay"
         android:layout_width="fill_parent"
         android:layout_height="45dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="35dp"
         android:background="@drawable/bggs"
         android:orientation="vertical" >
 

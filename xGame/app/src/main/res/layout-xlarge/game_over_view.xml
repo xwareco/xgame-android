@@ -20,6 +20,29 @@
             android:contentDescription="@string/sb"
             android:src="@drawable/gamescores" />
 </LinearLayout>
+    <LinearLayout
+        android:id="@+id/scoreLay"
+        android:layout_width="fill_parent"
+        android:layout_height="95dp"
+        android:layout_marginTop="280dp"
+        android:background="@drawable/bggs"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/white"
+            android:textSize="25sp"
+            android:textStyle="bold|italic" />
+    </LinearLayout>
     <Button
          android:id="@+id/button1"
         android:layout_width="fill_parent"
@@ -28,7 +51,7 @@
         android:textColor="#ffffff"
         android:textSize="90sp"
         android:textStyle="bold|italic"
-        android:layout_marginTop="680dp"
+        android:layout_marginTop="260dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:background="#1ea463"

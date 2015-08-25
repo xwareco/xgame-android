@@ -3,9 +3,9 @@
      <translate 
          android:fromXDelta="100%p"
          android:toXDelta="-100%p"
-         android:duration="200"
+         android:duration="6000"
          android:repeatCount="infinite"
      />
 
 </set>
-<!-- From: file:/home/aly/StudioProjects/xGame/app/src/main/res/anim/transition6.xml -->
+<!-- From: file:/home/aly/Desktop/xWare/Repo/xGame/app/src/main/res/anim/transition6.xml -->
