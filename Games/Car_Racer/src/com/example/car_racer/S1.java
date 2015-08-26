@@ -77,7 +77,7 @@ public class S1 implements IstateActions {
 		int startTime = (int) System.currentTimeMillis();
 		System.out.println("Iam called!!");
 		String Path = Environment.getExternalStorageDirectory().toString()
-				+ "/xGame/Games/car_racer/Sound/car_running.mp3";
+				+ "/xGame/Games/Car Racer/Sound/car_running.mp3";
 		int currVPos = I.getIntExtra("Count", 0);
 		System.out.println("Count: " + currVPos);
 		int penaltyTime = 0;
@@ -100,7 +100,7 @@ public class S1 implements IstateActions {
 				System.out.println("left");
 				// stop current play & play sound
 				String Path2 = Environment.getExternalStorageDirectory()
-						.toString() + "/xGame/Games/car_racer/Sound/turn.mp3";
+						.toString() + "/xGame/Games/Car Racer/Sound/turn.mp3";
 
 				if (HP.detectHeadPhones() == true) {
 					// HP.stopCurrentPlay();
@@ -113,7 +113,7 @@ public class S1 implements IstateActions {
 				System.out.println("right");
 				// stop current play & play sound
 				String Path2 = Environment.getExternalStorageDirectory()
-						.toString() + "/xGame/Games/car_racer/Sound/turn.mp3";
+						.toString() + "/xGame/Games/Car Racer/Sound/turn.mp3";
 
 				if (HP.detectHeadPhones() == true) {
 					// HP.stopCurrentPlay();
@@ -126,7 +126,7 @@ public class S1 implements IstateActions {
 				System.out.println("cow");
 				// stop current play & play sound
 				String Path2 = Environment.getExternalStorageDirectory()
-						.toString() + "/xGame/Games/car_racer/Sound/cow.mp3";
+						.toString() + "/xGame/Games/Car Racer/Sound/cow.mp3";
 
 				if (HP.detectHeadPhones() == true) {
 					// HP.stopCurrentPlay();
@@ -139,7 +139,7 @@ public class S1 implements IstateActions {
 				System.out.println("girl");
 				// stop current play & play sound
 				String Path2 = Environment.getExternalStorageDirectory()
-						.toString() + "/xGame/Games/car_racer/Sound/girl.mp3";
+						.toString() + "/xGame/Games/Car Racer/Sound/girl.mp3";
 
 				if (HP.detectHeadPhones() == true) {
 					// HP.stopCurrentPlay();

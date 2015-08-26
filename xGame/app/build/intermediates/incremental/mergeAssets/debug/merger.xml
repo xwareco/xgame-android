@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="4.4.0"><source path="/home/aly/Desktop/xWare/Repo/xGame/app/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/assets"/></dataSet><dataSet config="main"><source path="/home/aly/Desktop/xWare/Repo/xGame/app/src/main/assets"><file name="myxml.xml" path="/home/aly/Desktop/xWare/Repo/xGame/app/src/main/assets/myxml.xml"/></source></dataSet><dataSet config="debug"><source path="/home/aly/Desktop/xWare/Repo/xGame/app/src/debug/assets"/></dataSet></merger>
