@@ -22,7 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 @SuppressWarnings("serial")
-public class Server extends AsyncTask<String, Void, String> implements
+public class Server extends AsyncTask<String, String, String> implements
 		Serializable {
 
 	ArrayList<GameCategory> categories;
@@ -51,7 +51,14 @@ public class Server extends AsyncTask<String, Void, String> implements
 		if (arg0[0].equalsIgnoreCase("cat"))
 			categories = api.getCategories();
 		else if (arg0[0].equalsIgnoreCase("game")) {
-			games = api.getGames(arg0[1]);
+			games = api.getGames(arg0[1],"10",arg0[2]);
+			Gson g = new Gson();
+			String gamesJSON = g.toJson(games);
+			System.out.println("Iam In!!!");
+			appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+			Editor prefEditor2 = appSharedPrefs.edit();
+			prefEditor2.putString("games", gamesJSON);
+			prefEditor2.commit();
 			res = "games";
 		}
 		return res;
@@ -59,6 +66,7 @@ public class Server extends AsyncTask<String, Void, String> implements
 
 	@Override
 	protected void onPostExecute(String result) {
+		System.out.println(result);
 		if (result.equalsIgnoreCase("cat")) {
 			Gson g = new Gson();
 			String catStr = g.toJson(categories);
@@ -82,12 +90,7 @@ public class Server extends AsyncTask<String, Void, String> implements
 				label.setText("Error conecting to xGame.");
 			}
 		} else {
-			Gson g = new Gson();
-			String gamesJSON = g.toJson(games);
-			appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-			Editor prefEditor2 = appSharedPrefs.edit();
-			prefEditor2.putString("games", gamesJSON);
-			prefEditor2.commit();
+			
 		}
 		super.onPostExecute(result);
 	}

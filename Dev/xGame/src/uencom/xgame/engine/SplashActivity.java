@@ -37,7 +37,7 @@ public class SplashActivity extends Activity {
 				refresh.setVisibility(View.GONE);
 				label.setGravity(Gravity.CENTER_HORIZONTAL);
 				label.setText("Loading data");
-				new Server(getApplicationContext() , label , logo , error , refresh ,bar).execute();
+				new Server(getApplicationContext() , label , logo , error , refresh ,bar).execute("cat");
 			}
 		});
 		bar = (ProgressBar)findViewById(R.id.progressBar1);
@@ -63,7 +63,7 @@ public class SplashActivity extends Activity {
 				logo.setVisibility(View.GONE);
 				label.setVisibility(View.VISIBLE);
 				bar.setVisibility(View.VISIBLE);
-				new Server(getApplicationContext() , label , logo , error , refresh ,bar).execute();
+				new Server(getApplicationContext() , label , logo , error , refresh ,bar).execute("cat");
 			}
 		});
 		

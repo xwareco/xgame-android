@@ -7,6 +7,7 @@ public class Game {
 	private String id;
 	private String url;
 	private String imgPath;
+	private String category_id;
 
 	public String getName() {
 		return name;
@@ -46,6 +47,14 @@ public class Game {
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+
+	public String getCategory_id() {
+		return category_id;
+	}
+
+	public void setCategory_id(String category_id) {
+		this.category_id = category_id;
 	}
 	
 	

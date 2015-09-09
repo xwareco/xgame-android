@@ -1,6 +1,8 @@
 package uencom.xgame.engine.web;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,12 +11,16 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import uencom.xgame.jsonconverters.BoardJsonParameterConverter;
+import uencom.xgame.jsonconverters.GamesJsonParameterConverter;
 
 import com.google.gson.Gson;
 
@@ -35,56 +41,11 @@ public class xGameAPI {
 	public xGameAPI(Context c) {
 		categories = new ArrayList<GameCategory>();
 		ctx = c;
-		urlPrefix = "http://xgameapp.com/api/v1/";
+		urlPrefix = "http://xgameapp.com/api/v2/";
 		authUrlPrefix = "http://xgameapp.com/oauth/";
 		inputJSONConverter = new Gson();
 
 	}
-
-	/*public ArrayList<GameCategory> getCategoriesAndGames() {
-
-		// http://192.168.1.102/xgame-app/public/api/v1/getCategoriesAndGames
-		// http://xgameapp.com/api/v1/getCategoriesAndGames
-		// OS0hDcGVwyCKcnVaoP9rXAWq7Cpy5H0MAQjGISOW
-
-		// Data definition
-		String url = urlPrefix + "getCategoriesAndGames";
-		String result = makeApiCall(url, "cat", "");
-
-		// Parsing Json result
-		if (result != "NULL") {
-			try {
-				JSONArray jsonArr = new JSONArray(result);
-				for (int i = 0; i < jsonArr.length(); i++) {
-					JSONObject cat = jsonArr.getJSONObject(i);
-					GameCategory category = new GameCategory();
-					category.setId(cat.getString("id"));
-					category.setName(cat.getString("category_name"));
-					category.setImgPath(cat.getString("category_image"));
-
-					JSONArray games = cat.getJSONArray("games");
-					ArrayList<Game> gamesList = new ArrayList<Game>();
-					for (int j = 0; j < games.length(); j++) {
-						Game g = new Game();
-						JSONObject obj = games.getJSONObject(j);
-						g.setId(obj.getString("id"));
-						g.setName(obj.getString("title"));
-						g.setFileName(obj.getString("file"));
-						g.setImgPath(obj.getString("logo"));
-						// g.setUrl(obj.getString("apk"));
-						gamesList.add(g);
-					}
-					category.setGames(gamesList);
-					categories.add(category);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-		}
-
-		return categories;
-	}*/
 
 	public ArrayList<GameCategory> getCategories() {
 		// Data definition
@@ -111,11 +72,22 @@ public class xGameAPI {
 		return categories;
 	}
 
-	public ArrayList<Game> getGames(String catId) {
+	// req_data={"category_id":"1","limit":"5","my_last_game":"0"}
+	// http://xgameapp.com/api/v2/getCategoryGames?req_data={"category_id":"1","limit":"10","my_last_game":"0"}
+	public ArrayList<Game> getGames(String catId, String limit, String last_id) {
 		// Data definition
-		String catIdJSON = inputJSONConverter.toJson(catId);
-		String url = urlPrefix + "getGames";
-		String result = makeApiCall(url, "game", catIdJSON);
+		GamesJsonParameterConverter JPC = new GamesJsonParameterConverter(catId, limit,
+				last_id);
+		String paramsJSON = inputJSONConverter.toJson(JPC);
+		String urlEncodedParams = null;
+		try {
+			 urlEncodedParams = URLEncoder.encode(paramsJSON, "utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String url = urlPrefix + "getCategoryGames?req_data=" + urlEncodedParams;
+		String result = makeApiCall(url, "game", "");
 		ArrayList<Game> games = new ArrayList<Game>();
 		if (result != "NULL") {
 			try {
@@ -127,6 +99,7 @@ public class xGameAPI {
 					g.setName(obj.getString("title"));
 					g.setFileName(obj.getString("file"));
 					g.setImgPath(obj.getString("logo"));
+					g.setCategory_id(obj.getString("category_id"));
 					games.add(g);
 				}
 			} catch (Exception e) {
@@ -143,12 +116,12 @@ public class xGameAPI {
 		HttpClient httpclient = new DefaultHttpClient();
 		ResponseHandler<String> handler = new BasicResponseHandler();
 		String result = "NULL";
-		HttpPost request = null;
+		HttpGet request = null;
 		SharedPreferences appSharedPrefs = null;
 		// Request&Response
 		if (TAG.equalsIgnoreCase("Cat")) {
 			try {
-				request = new HttpPost(new URI(url));
+				request = new HttpGet(new URI(url));
 				// Authentication Layer
 				appSharedPrefs = PreferenceManager
 						.getDefaultSharedPreferences(ctx);
@@ -157,8 +130,7 @@ public class xGameAPI {
 				// System.out.println(Auth);
 				prefsEditor.commit();
 				request.addHeader("Authorization", Auth);
-				request.addHeader("Content-Type",
-						"application/json");
+				request.addHeader("Content-Type", "application/json");
 				request.addHeader("Accept", "application/json");
 				result = httpclient.execute(request, handler);
 			} catch (Exception e) {
@@ -179,7 +151,7 @@ public class xGameAPI {
 
 		else if (TAG.equalsIgnoreCase("game")) {
 			try {
-				request = new HttpPost(new URI(url));
+				request = new HttpGet(new URI(url));
 				// Authentication Layer
 				appSharedPrefs = PreferenceManager
 						.getDefaultSharedPreferences(ctx);
@@ -188,11 +160,12 @@ public class xGameAPI {
 				// System.out.println(Auth);
 				prefsEditor.commit();
 				request.addHeader("Authorization", Auth);
-				request.addHeader("Content-Type",
-						"application/json");
+				request.addHeader("Content-Type", "application/json");
 				request.addHeader("Accept", "application/json");
-				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-				nameValuePairs.add(new BasicNameValuePair("game_id", gameName));
+				// List<NameValuePair> nameValuePairs = new
+				// ArrayList<NameValuePair>();
+				// nameValuePairs.add(new BasicNameValuePair("game_id",
+				// gameName));
 				result = httpclient.execute(request, handler);
 			} catch (Exception e) {
 
@@ -212,7 +185,7 @@ public class xGameAPI {
 
 		else if (TAG.equalsIgnoreCase("board")) {
 			try {
-				request = new HttpPost(new URI(url));
+				request = new HttpGet(new URI(url));
 				// Authentication Layer
 				appSharedPrefs = PreferenceManager
 						.getDefaultSharedPreferences(ctx);
@@ -220,12 +193,11 @@ public class xGameAPI {
 				String Auth = appSharedPrefs.getString("access_token", "");
 				prefsEditor.commit();
 				request.addHeader("Authorization", Auth);
-				request.addHeader("Content-Type",
-						"application/json");
+				request.addHeader("Content-Type", "application/json");
 				request.addHeader("Accept", "application/json");
 				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 				nameValuePairs.add(new BasicNameValuePair("game_id", gameName));
-				request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+				// request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 				result = httpclient.execute(request, handler);
 			} catch (Exception e) {
 
@@ -271,8 +243,7 @@ public class xGameAPI {
 					inputJSONConverter.toJson(tm.getDeviceId())));
 			HttpPost request = new HttpPost(new URI(AuthLayerUrl));
 			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-			request.addHeader("Content-Type",
-					"application/json");
+			request.addHeader("Content-Type", "application/json");
 			request.addHeader("Accept", "application/json");
 			result = httpclient.execute(request, handler);
 			JSONObject obj = new JSONObject(result);
@@ -285,10 +256,18 @@ public class xGameAPI {
 
 	}
 
-	public HashMap<String, String> loadGameScoreBoard(String gameName) {
+	public HashMap<String, String> loadGameScoreBoard(String gameID) {
 		// Data definition
-        String gameIdJSON = inputJSONConverter.toJson(gameName);
-		String url = urlPrefix + "loadGameScoreBoard";
+		BoardJsonParameterConverter BJC = new BoardJsonParameterConverter(gameID);
+		String gameIdJSON = inputJSONConverter.toJson(BJC);
+		String urlEncodedParam = null;
+		try {
+			 urlEncodedParam = URLEncoder.encode(gameIdJSON, "utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String url = urlPrefix + "loadGameScoreBoard?req_data=" + urlEncodedParam;
 		String result = makeApiCall(url, "board", gameIdJSON);
 		HashMap<String, String> scoreBoard = new HashMap<String, String>();
 		try {

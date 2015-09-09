@@ -158,11 +158,18 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 
 									}
 								} finally {
-									Animation a = AnimationUtils.loadAnimation(
+									final Animation a = AnimationUtils.loadAnimation(
 											getApplicationContext(),
 											R.anim.transition1);
 									a.setDuration(1000);
-									mainImage.startAnimation(a);
+									runOnUiThread(new Runnable() {
+
+										@Override
+										public void run() {
+											mainImage.startAnimation(a);
+
+										}
+									});
 								}
 							}
 						});
@@ -207,11 +214,19 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 
 									}
 								} finally {
-									Animation a = AnimationUtils.loadAnimation(
+									final Animation a = AnimationUtils.loadAnimation(
 											getApplicationContext(),
 											R.anim.transition1);
 									a.setDuration(1000);
-									mainImage.startAnimation(a);
+									runOnUiThread(new Runnable() {
+
+										@Override
+										public void run() {
+											mainImage.startAnimation(a);
+
+										}
+									});
+
 								}
 							}
 						});
@@ -233,6 +248,9 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 					 * "/xGame/Games/car_racer"); startActivity(I);
 					 */
 					cat = false;
+					new Server(getApplicationContext(), null, null, null, null,
+							null).execute("game", categories.get(currentIndex)
+							.getId(), "0");
 					SharedPreferences appSharedPrefs = PreferenceManager
 							.getDefaultSharedPreferences(getApplicationContext());
 					Editor prefsEditor = appSharedPrefs.edit();

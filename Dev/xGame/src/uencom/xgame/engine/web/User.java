@@ -1,22 +1,21 @@
 package uencom.xgame.engine.web;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
+import uencom.xgame.jsonconverters.LoadUserMessagesJsonParameter;
+import uencom.xgame.jsonconverters.RegisterJsonParameterConverter;
+import uencom.xgame.jsonconverters.ScoreJsonParameterConverter;
+import uencom.xgame.jsonconverters.SendUserJsonParameterConverter;
 import com.google.gson.Gson;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -30,6 +29,8 @@ public class User extends AsyncTask<String, Void, Void> {
 	private String password;
 	private String urlPrefix;
 	private Gson inputJSONConverter;
+	HttpClient httpclient = new DefaultHttpClient();
+	HttpGet request = null;
 	String res = "NULL";
 	@SuppressWarnings("unused")
 	private int id;
@@ -40,7 +41,7 @@ public class User extends AsyncTask<String, Void, Void> {
 		this.email = mail;
 		this.inputJSONConverter = new Gson();
 		this.password = pass;
-		urlPrefix = "http://xgameapp.com/api/v1/";
+		urlPrefix = "http://xgameapp.com/api/v2/";
 	}
 
 	public String getName() {
@@ -48,16 +49,26 @@ public class User extends AsyncTask<String, Void, Void> {
 	}
 
 	public boolean register() {
-		String url = urlPrefix + "register";
+		final TelephonyManager tm = (TelephonyManager) ctx
+				.getSystemService(Context.TELEPHONY_SERVICE);
+		RegisterJsonParameterConverter RJC = new RegisterJsonParameterConverter(
+				"password", email, password, tm.getDeviceId());
+		String JsonParams = inputJSONConverter.toJson(RJC);
+		String urlEncodedParams = null;
+		try {
+			urlEncodedParams = URLEncoder.encode(JsonParams, "utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String url = urlPrefix + "register?req_data=" + urlEncodedParams;
 
-		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost request = null;
 		SharedPreferences appSharedPrefs = null;
 		ResponseHandler<String> handler = new BasicResponseHandler();
 		String result = "NULL";
 
 		try {
-			request = new HttpPost(new URI(url));
+			request = new HttpGet(new URI(url));
 			// Authentication Layer
 			appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 			Editor prefsEditor = appSharedPrefs.edit();
@@ -66,21 +77,6 @@ public class User extends AsyncTask<String, Void, Void> {
 			request.addHeader("Authorization", Auth);
 			request.addHeader("Content-Type", "application/json");
 			request.addHeader("Accept", "application/json");
-
-			// API method parameters
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-			final TelephonyManager tm = (TelephonyManager) ctx
-					.getSystemService(Context.TELEPHONY_SERVICE);
-			nameValuePairs.add(new BasicNameValuePair("grant_type",
-					inputJSONConverter.toJson("password")));
-			nameValuePairs.add(new BasicNameValuePair("email",
-					inputJSONConverter.toJson(email)));
-			nameValuePairs.add(new BasicNameValuePair("password",
-					inputJSONConverter.toJson(password)));
-			nameValuePairs.add(new BasicNameValuePair("device_id",
-					inputJSONConverter.toJson(tm.getDeviceId())));
-			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
 			result = httpclient.execute(request, handler);
 			res = result;
 			System.out.println("Iam in!!");
@@ -100,14 +96,22 @@ public class User extends AsyncTask<String, Void, Void> {
 	}
 
 	public boolean sendUserMessage(String msg) {
-		String url = urlPrefix + "sendUserMessage";
-		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost request = null;
+		SendUserJsonParameterConverter SUJC = new SendUserJsonParameterConverter(
+				msg);
+		String JsonParams = inputJSONConverter.toJson(SUJC);
+		String urlEncodedParams = null;
+		try {
+			urlEncodedParams = URLEncoder.encode(JsonParams, "utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String url = urlPrefix + "sendUserMessage?req_data=" + urlEncodedParams;
 		SharedPreferences appSharedPrefs = null;
 		ResponseHandler<String> handler = new BasicResponseHandler();
 		String result = "NULL";
 		try {
-			request = new HttpPost(new URI(url));
+			request = new HttpGet(new URI(url));
 			// Authentication Layer
 			appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 			Editor prefsEditor = appSharedPrefs.edit();
@@ -116,13 +120,6 @@ public class User extends AsyncTask<String, Void, Void> {
 			request.addHeader("Authorization", Auth);
 			request.addHeader("Content-Type", "application/json");
 			request.addHeader("Accept", "application/json");
-			// API method parameters
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-			nameValuePairs.add(new BasicNameValuePair("user_id",
-					inputJSONConverter.toJson("2")));
-			nameValuePairs.add(new BasicNameValuePair("body",
-					inputJSONConverter.toJson(msg)));
-			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			result = httpclient.execute(request, handler);
 			JSONObject obj = new JSONObject(result);
 			String state = obj.getString("status");
@@ -139,15 +136,24 @@ public class User extends AsyncTask<String, Void, Void> {
 	}
 
 	public void loadUserMessages(String userId) {
-		String url = urlPrefix + "loadUserMessages";
-		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost request = null;
+		LoadUserMessagesJsonParameter LUMJC = new LoadUserMessagesJsonParameter(
+				userId);
+		String JsonParams = inputJSONConverter.toJson(LUMJC);
+		String urlEncodedParams = null;
+		try {
+			urlEncodedParams = URLEncoder.encode(JsonParams, "utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String url = urlPrefix + "loadUserMessages?req_data="
+				+ urlEncodedParams;
 		SharedPreferences appSharedPrefs = null;
 		ArrayList<Message> userMessages;
 		ResponseHandler<String> handler = new BasicResponseHandler();
 		String result = "NULL";
 		try {
-			request = new HttpPost(new URI(url));
+			request = new HttpGet(new URI(url));
 			// Authentication Layer
 			appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 			Editor prefsEditor = appSharedPrefs.edit();
@@ -156,11 +162,6 @@ public class User extends AsyncTask<String, Void, Void> {
 			request.addHeader("Authorization", Auth);
 			request.addHeader("Content-Type", "application/json");
 			request.addHeader("Accept", "application/json");
-			// API method parameters
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-			nameValuePairs.add(new BasicNameValuePair("user_id",
-					inputJSONConverter.toJson("2")));
-			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			result = httpclient.execute(request, handler);
 		} catch (Exception e) {
 			String newToken = xGameAPI.getNewToken();
@@ -197,16 +198,24 @@ public class User extends AsyncTask<String, Void, Void> {
 		return;
 	}
 
-	public void addUserScore(String gameName, String score) {
-		String url = urlPrefix + "addUserScore";
-		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost request = null;
+	public void addUserScore(String userId, String gameID, String score) {
+		ScoreJsonParameterConverter SJC = new ScoreJsonParameterConverter(
+				userId, gameID, score);
+		String JsonParams = inputJSONConverter.toJson(SJC);
+		String urlEncodedParams = null;
+		try {
+			urlEncodedParams = URLEncoder.encode(JsonParams, "utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String url = urlPrefix + "addUserScore?req_data=" + urlEncodedParams;
 		SharedPreferences appSharedPrefs = null;
 		ResponseHandler<String> handler = new BasicResponseHandler();
 		@SuppressWarnings("unused")
 		String result = "NULL";
 		try {
-			request = new HttpPost(new URI(url));
+			request = new HttpGet(new URI(url));
 			// Authentication Layer
 			appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 			Editor prefsEditor = appSharedPrefs.edit();
@@ -215,15 +224,6 @@ public class User extends AsyncTask<String, Void, Void> {
 			request.addHeader("Authorization", Auth);
 			request.addHeader("Content-Type", "application/json");
 			request.addHeader("Accept", "application/json");
-			// API method parameters
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-			nameValuePairs.add(new BasicNameValuePair("user_id",
-					inputJSONConverter.toJson("2")));
-			nameValuePairs.add(new BasicNameValuePair("game_id",
-					inputJSONConverter.toJson(gameName)));
-			nameValuePairs.add(new BasicNameValuePair("score",
-					inputJSONConverter.toJson(score)));
-			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			result = httpclient.execute(request, handler);
 		} catch (Exception e) {
 			String newToken = xGameAPI.getNewToken();
@@ -238,15 +238,13 @@ public class User extends AsyncTask<String, Void, Void> {
 	@Override
 	protected Void doInBackground(String... params) {
 		if (params[0] == "add") {
-			addUserScore("1", "300");
+
 		} else if (params[0] == "msg") {
-			sendUserMessage("This is the first user message!");
+
 		} else if (params[0] == "load") {
-			loadUserMessages("2");
+
 		} else if (params[0] == "register") {
-			boolean x = register();
-			if (x == true)
-				System.out.println("Registered!");
+
 		}
 		return null;
 	}
