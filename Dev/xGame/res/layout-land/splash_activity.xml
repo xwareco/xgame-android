@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@drawable/bg"
+    android:weightSum="100">
+    
+     <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_weight="33"
+        android:contentDescription="@string/refresh"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:visibility="gone"
+        android:src="@drawable/refresh" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_weight="34"
+        android:contentDescription="@string/error"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:visibility="gone"
+        android:src="@drawable/error" />
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_weight="20" 
+        android:contentDescription="@string/bar"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:text="@string/loading"
+        android:layout_gravity="center_horizontal"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/white"
+        android:layout_weight="20"
+        android:textStyle="bold|italic"
+        android:visibility="gone"
+        android:textSize="30sp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="20"
+        android:visibility="visible"
+        android:contentDescription="@string/welcome"
+        android:src="@drawable/xgamelogo" />
+
+</LinearLayout>

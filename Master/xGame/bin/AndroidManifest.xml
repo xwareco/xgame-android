@@ -1,0 +1,54 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="uencom.xgame.xgame"
+    android:versionCode="1"
+    android:versionName="1.0" >
+    
+    <meta-data android:name="com.google.android.gms.version"
+     />
+
+    <uses-sdk
+        android:minSdkVersion="17"
+        android:targetSdkVersion="19" />
+    
+    <supports-screens android:requiresSmallestWidthDp="600" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        
+        <activity android:name="uencom.xgame.demos.DemosLauncher">
+           
+        </activity>
+        <activity android:name="uencom.xgame.demos.SpeechandSoundDemo"></activity>
+        <activity android:name="uencom.xgame.demos.GesturesDemo"></activity>
+        <activity android:name="uencom.xgame.demos.SensorsDemo"></activity>
+        <service android:name="uencom.xgame.sensors.AddressFetcher"></service>
+        <activity android:name="uencom.xgame.demos.TTSDemo"></activity>
+        <activity android:name="uencom.xgame.engine.xGameParser"></activity>
+        <activity android:name="uencom.xgame.demos.Splash"></activity>
+        <activity android:name="uencom.xgame.engine.MainView"></activity>
+        <activity android:name="uencom.xgame.engine.DownlodView"
+            android:theme="@android:style/Theme.Holo.Light.Dialog"></activity>
+        <activity android:name="uencom.xgame.engine.GameView"></activity>
+        <activity android:name="uencom.xgame.engine.GameOver"></activity>
+        <activity android:name="uencom.xgame.engine.LoginOrRegister"></activity>
+        <activity android:name="uencom.xgame.engine.Login"></activity>
+        <activity android:name="uencom.xgame.engine.Register"></activity>
+        <activity android:name="uencom.xgame.engine.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        
+        
+    </application>
+
+</manifest>
