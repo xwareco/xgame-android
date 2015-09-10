@@ -1065,18 +1065,19 @@ containing a value of this type.
         public static final int game_over_view=0x7f030017;
         public static final int game_view=0x7f030018;
         public static final int gesturesdemo=0x7f030019;
-        public static final int login_view=0x7f03001a;
-        public static final int main_view=0x7f03001b;
-        public static final int register_view=0x7f03001c;
-        public static final int sensorsdemo=0x7f03001d;
-        public static final int sherlock_spinner_dropdown_item=0x7f03001e;
-        public static final int sherlock_spinner_item=0x7f03001f;
-        public static final int speechandsounddemo=0x7f030020;
-        public static final int splash_activity=0x7f030021;
-        public static final int ttsdemo=0x7f030022;
-        public static final int xgame_list_item=0x7f030023;
-        public static final int xgamesplash=0x7f030024;
-        public static final int xmldemo=0x7f030025;
+        public static final int headphonetest=0x7f03001a;
+        public static final int login_view=0x7f03001b;
+        public static final int main_view=0x7f03001c;
+        public static final int register_view=0x7f03001d;
+        public static final int sensorsdemo=0x7f03001e;
+        public static final int sherlock_spinner_dropdown_item=0x7f03001f;
+        public static final int sherlock_spinner_item=0x7f030020;
+        public static final int speechandsounddemo=0x7f030021;
+        public static final int splash_activity=0x7f030022;
+        public static final int ttsdemo=0x7f030023;
+        public static final int xgame_list_item=0x7f030024;
+        public static final int xgamesplash=0x7f030025;
+        public static final int xmldemo=0x7f030026;
     }
     public static final class menu {
         public static final int actionbar=0x7f0e0000;
@@ -1162,6 +1163,7 @@ containing a value of this type.
         public static final int how=0x7f0b002c;
         public static final int img_cnt_desc=0x7f0b0020;
         public static final int langugeSelect=0x7f0b001d;
+        public static final int lefttest=0x7f0b0044;
         public static final int loading=0x7f0b003a;
         public static final int log=0x7f0b0031;
         public static final int logbtn=0x7f0b0033;
@@ -1177,8 +1179,10 @@ containing a value of this type.
         public static final int refresh=0x7f0b003f;
         public static final int reg=0x7f0b0032;
         public static final int regbtn=0x7f0b0034;
+        public static final int righttest=0x7f0b0043;
         public static final int sb=0x7f0b002f;
         public static final int sel_btn=0x7f0b0024;
+        public static final int test=0x7f0b0042;
         public static final int tv_cat=0x7f0b0021;
         public static final int usr=0x7f0b0036;
         public static final int welcome=0x7f0b003e;

@@ -7,7 +7,7 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnErrorListener;
 import android.net.Uri;
 
-public class HeadPhone implements OnErrorListener{
+public class HeadPhone implements OnErrorListener {
 
 	// properties
 	private float leftLevel;
@@ -30,6 +30,17 @@ public class HeadPhone implements OnErrorListener{
 		mediaPlayer.setOnErrorListener(this);
 	}
 
+	public HeadPhone(Context ctx, int resId) {
+		context = ctx;
+		leftLevel = 0;
+		rightLevel = 0;
+		currentPosition = 0;
+		currentPosition2 = 0;
+		totalTime = 0;
+		mediaPlayer = MediaPlayer.create(context, resId);
+		mediaPlayer.setOnErrorListener(this);
+	}
+
 	// methods
 	public void play(String path, int flag) {
 
@@ -38,8 +49,11 @@ public class HeadPhone implements OnErrorListener{
 				stopCurrentPlay();
 		}
 
-		mediaPlayer = MediaPlayer.create(context, Uri.fromFile(new File(path)));
-		totalTime = mediaPlayer.getDuration();
+		if (flag != 4) {
+			mediaPlayer = MediaPlayer.create(context,
+					Uri.fromFile(new File(path)));
+			totalTime = mediaPlayer.getDuration();
+		}
 
 		if (flag == 0) {
 			playOnce();
@@ -55,6 +69,11 @@ public class HeadPhone implements OnErrorListener{
 
 		else if (flag == 3) {
 			playLeftToRight();
+		}
+
+		else if (flag == 4) {
+			playOnce();
+
 		}
 
 	}
@@ -184,9 +203,8 @@ public class HeadPhone implements OnErrorListener{
 	public void setRightLevel(float level) {
 		rightLevel = level;
 	}
-	
-	public boolean isPlaying()
-	{
+
+	public boolean isPlaying() {
 		return mediaPlayer.isPlaying();
 	}
 

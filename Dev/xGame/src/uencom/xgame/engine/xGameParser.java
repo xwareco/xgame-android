@@ -118,16 +118,6 @@ public class xGameParser extends Activity implements IStateListener {
 	private void startTheGame() {
 		parser.parse();
 		states = parser.getStatesList();
-
-		/*
-		 * for (int i = 0; i < states.size(); i++) { Iterator<?> it =
-		 * states.get(i).getFunctionsAndTransitions().entrySet() .iterator();
-		 * System.out.println("State: " + states.get(i).getId()); while
-		 * (it.hasNext()) { Map.Entry pair = (Map.Entry) it.next();
-		 * System.out.println(pair.getKey() + " = " + pair.getValue()); } }
-		 * finish();
-		 */
-
 		trans = parser.getTransitionsList();
 		if (parser.environmentVariables.get("ORIENTATION").equals("Landscape")) {
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);

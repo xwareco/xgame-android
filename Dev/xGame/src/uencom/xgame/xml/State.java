@@ -187,7 +187,10 @@ public class State implements IstateActions {
 
 	@Override
 	public void onStateEntry(LinearLayout layout, Intent I) {
-		layout.setBackground(Drawable.createFromPath(imgPath));
+		if (!this.id.equals("S0"))
+			layout.setBackground(Drawable.createFromPath(imgPath));
+		else
+			layout.setBackgroundColor(Color.GREEN);
 		gameTextView.setTextColor(Color.WHITE);
 		gameTextView.setText(text);
 		Call("Entry", layout, I);
@@ -351,9 +354,9 @@ public class State implements IstateActions {
 					transDetectedAcc = functionsAndTransitions
 							.get("YHugeRight");
 				}
-					fireStateEventAcc();
-					//yHugeR = false;
-				
+				fireStateEventAcc();
+				// yHugeR = false;
+
 				// System.out.println("Huge right Y");
 
 			}
@@ -456,6 +459,5 @@ public class State implements IstateActions {
 		}
 		setTransDetectedAcc("NoTransitionDetected");
 	}
-
 
 }
