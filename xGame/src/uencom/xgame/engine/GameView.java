@@ -78,7 +78,7 @@ public class GameView extends SherlockActivity {
 				}
 				 finally {
 					final Animation a = AnimationUtils.loadAnimation(
-							getApplicationContext(), R.anim.transition1);
+							getApplicationContext(), R.anim.fadein);
 					a.setDuration(1000);
 					runOnUiThread(new Runnable() {
 						

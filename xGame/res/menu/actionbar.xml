@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/action_contactUs"
-        android:icon="@drawable/contact"
+        android:icon="@drawable/env"
         android:showAsAction="always"
         android:title="@string/cont"/>
     
@@ -13,5 +13,6 @@
         android:showAsAction="always"
         android:title="@string/about"
         />-->
+    <item android:id="@+id/action_testhead" android:title="@string/HeadTest" android:icon="@drawable/head"></item>
 
 </menu>

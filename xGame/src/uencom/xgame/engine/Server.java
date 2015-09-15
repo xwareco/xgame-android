@@ -2,9 +2,7 @@ package uencom.xgame.engine;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
 import com.google.gson.Gson;
-
 import uencom.xgame.engine.web.Game;
 import uencom.xgame.engine.web.GameCategory;
 import uencom.xgame.engine.web.xGameAPI;
@@ -15,9 +13,10 @@ import android.content.SharedPreferences.Editor;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -30,19 +29,22 @@ public class Server extends AsyncTask<String, String, String> implements
 	SharedPreferences appSharedPrefs;
 	xGameAPI api;
 	Context ctx;
-	TextView label;
-	ImageView logo, error, refresh;
+	ImageView refresh;
+	TextView loading, connError;
 	ProgressBar bar;
+	LinearLayout trans;
+	ListView gamesView;
 
-	public Server(Context C, TextView tv, ImageView imgv, ImageView imgv2,
-			ImageView imgv3, ProgressBar b) {
+	public Server(Context C, ImageView imgv, TextView tv1, TextView tv2,
+			ProgressBar b, LinearLayout lay, ListView lv) {
 		ctx = C;
 		api = new xGameAPI(ctx);
-		label = tv;
-		logo = imgv;
-		error = imgv2;
-		refresh = imgv3;
+		refresh = imgv;
+		loading = tv1;
+		connError = tv2;
 		bar = b;
+		trans = lay;
+		gamesView = lv;
 	}
 
 	@Override
@@ -51,7 +53,7 @@ public class Server extends AsyncTask<String, String, String> implements
 		if (arg0[0].equalsIgnoreCase("cat"))
 			categories = api.getCategories();
 		else if (arg0[0].equalsIgnoreCase("game")) {
-			games = api.getGames(arg0[1],"10",arg0[2]);
+			games = api.getGames(arg0[1], "10", arg0[2]);
 			Gson g = new Gson();
 			String gamesJSON = g.toJson(games);
 			System.out.println("Iam In!!!");
@@ -83,14 +85,18 @@ public class Server extends AsyncTask<String, String, String> implements
 				mp = MediaPlayer.create(ctx, uencom.xgame.xgame.R.raw.failed);
 				mp.start();
 				bar.setVisibility(View.GONE);
-				logo.setVisibility(View.GONE);
-				error.setVisibility(View.VISIBLE);
+				loading.setVisibility(View.GONE);
+				connError.setVisibility(View.VISIBLE);
 				refresh.setVisibility(View.VISIBLE);
-				label.setGravity(Gravity.CENTER_HORIZONTAL);
-				label.setText("Error conecting to xGame.");
 			}
 		} else {
-			
+			if (bar != null && loading != null && trans != null
+					&& gamesView != null) {
+				bar.setVisibility(View.GONE);
+				loading.setVisibility(View.GONE);
+				trans.setVisibility(View.GONE);
+				gamesView.setVisibility(View.VISIBLE);
+			}
 		}
 		super.onPostExecute(result);
 	}

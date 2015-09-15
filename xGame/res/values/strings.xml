@@ -52,7 +52,8 @@
     <string name="game_cnt">The game icon</string>
     <string name="down_cnt">Download</string>
     <string name="LoginOrReegister">Login  |  Register</string>
-    <string name="loading">Loading Data</string>
+    <string name="loading">Loading ..</string>
+    <string name="conerror">Connection Error</string>
     <string name="plyagn">Play again</string>
     <string name="ent_name">Enter your name here</string>
     <string name="ent_pass">Enter your password here</string>
@@ -62,4 +63,6 @@
     <string name="bar">Loading your games</string>
     <string name="test">This is to test the proper postioning of your headphones,Please press the button named Right to test the Right headphone, and press the button named Left to test the Left headphone, Whenever you would like to finish this test swipe down on your screen.</string>
     <string name="righttest">Right</string>
-    <string name="lefttest">Left</string></resources>
+    <string name="lefttest">Left</string>
+    <string name="cats">Categories</string>
+    <string name="HeadTest">Test your headphones</string></resources>

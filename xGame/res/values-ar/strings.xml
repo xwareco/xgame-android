@@ -53,6 +53,7 @@
     <string name="down_cnt">Download</string>
     <string name="LoginOrReegister">Login  |  Register</string>
     <string name="loading">جاري تحميل البيانات</string>
+    <string name="conerror">خطأ في اﻻتصال</string>
     <string name="plyagn">إلعب مرة أخرى</string>
     <string name="ent_name">أدخل اسمك </string>
     <string name="ent_pass">أدخل كلمة المرور الخاصة بك</string>

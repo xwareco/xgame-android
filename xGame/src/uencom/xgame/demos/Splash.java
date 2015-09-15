@@ -28,7 +28,7 @@ public class Splash extends Activity {
 
 				startActivity(messagingIntent);
 				finish();
-				overridePendingTransition(R.anim.transition1, R.anim.transition2);
+				overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 			}
 		}, 8500);
 		super.onCreate(savedInstanceState);
