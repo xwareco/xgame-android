@@ -33,6 +33,7 @@ public class SplashActivity extends Activity {
 		setContentView(R.layout.splash_activity);
 		connerror = (TextView) findViewById(R.id.textView1);
 		loading = (TextView) findViewById(R.id.textView2);
+		bar = (ProgressBar) findViewById(R.id.progressBar1);
 		arabic = Typeface.createFromAsset(getAssets(),
 				"fonts/Kharabeesh Font.ttf");
 		english = Typeface.createFromAsset(getAssets(),
@@ -62,7 +63,7 @@ public class SplashActivity extends Activity {
 
 			}
 		});
-		bar = (ProgressBar) findViewById(R.id.progressBar1);
+		
 		final Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fadein);
 		fadeIn.setAnimationListener(new AnimationListener() {
 			

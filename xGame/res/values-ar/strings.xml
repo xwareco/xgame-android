@@ -63,4 +63,7 @@
     <string name="bar">Loading your games</string>
     <string name="test">سوف يقوم التطبيق الآن باختبار الوضع المناسب لسماعات الأذن, اضغط على زر "يمين" ﻻختبار السماعة اليمنى, اضغط على زر "يسار" ﻻختبار السماعة اليسرى, حينما تنهي اﻻختبار قم بالسحب على الشاشة لأسفل.</string>
     <string name="righttest">يمين</string>
-    <string name="lefttest">يسار</string></resources>
+    <string name="lefttest">يسار</string>
+    <string name="cats">الفئات</string>
+    <string name="HeadTest">إختبر سماعاتك</string>
+    <string name="drawer_open">الخيارات</string></resources>

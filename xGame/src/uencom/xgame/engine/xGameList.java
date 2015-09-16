@@ -16,6 +16,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Typeface;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,12 +32,14 @@ public class xGameList extends ArrayAdapter<Game> {
 	private final Activity context;
 	ArrayList<Game> games;
 	TableRow item;
+	Typeface font;
 	private static final String IMAGE_PREFIX = "http://xgameapp.com/games/";
 
 	public xGameList(Activity context, ArrayList<Game> games) {
 		super(context, R.layout.xgame_list_item, games);
 		this.context = context;
 		this.games = games;
+		font = Typeface.createFromAsset(context.getAssets(), "fonts/DJB Stinky Marker.ttf");
 		item = (TableRow)context.findViewById(R.id.TR);
 		// UNIVERSAL IMAGE LOADER SETUP
 		DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
@@ -57,9 +60,12 @@ public class xGameList extends ArrayAdapter<Game> {
 	public View getView(int position, View view, ViewGroup parent) {
 		LayoutInflater inflater = context.getLayoutInflater();
 		View rowView = inflater.inflate(R.layout.xgame_list_item, null, true);
-		if(position%2 == 0)item.setBackgroundResource(drawable.even);
-		else item.setBackgroundResource(drawable.odd);
+		//rowView.getLayoutParams().width = LayoutParams.WRAP_CONTENT;
+		//rowView.getLayoutParams().height = LayoutParams.WRAP_CONTENT;
+		if(position%2 == 0)rowView.setBackgroundResource(drawable.even);
+		else rowView.setBackgroundResource(drawable.odd);
 		TextView txtTitle = (TextView) rowView.findViewById(R.id.text);
+		txtTitle.setTypeface(font);
 		final ImageView gameIcon = (ImageView) rowView.findViewById(R.id.img);
 		if (position != games.size()) {
 			txtTitle.setText(games.get(position).getName());

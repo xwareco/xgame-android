@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import uencom.xgame.engine.web.Game;
 import uencom.xgame.engine.web.GameCategory;
 import uencom.xgame.engine.web.xGameAPI;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -54,6 +55,7 @@ public class Server extends AsyncTask<String, String, String> implements
 			categories = api.getCategories();
 		else if (arg0[0].equalsIgnoreCase("game")) {
 			games = api.getGames(arg0[1], "10", arg0[2]);
+			System.out.println(games.get(0).getName());
 			Gson g = new Gson();
 			String gamesJSON = g.toJson(games);
 			System.out.println("Iam In!!!");
@@ -90,12 +92,20 @@ public class Server extends AsyncTask<String, String, String> implements
 				refresh.setVisibility(View.VISIBLE);
 			}
 		} else {
+			System.out.println("Iam here!!");
 			if (bar != null && loading != null && trans != null
 					&& gamesView != null) {
+
 				bar.setVisibility(View.GONE);
 				loading.setVisibility(View.GONE);
 				trans.setVisibility(View.GONE);
-				gamesView.setVisibility(View.VISIBLE);
+				if (games != null) {
+
+					Activity act = (Activity) ctx;
+					xGameList xgameAdapter = new xGameList(act, games);
+					gamesView.setAdapter(xgameAdapter);
+					gamesView.setVisibility(View.VISIBLE);
+				}
 			}
 		}
 		super.onPostExecute(result);

@@ -65,4 +65,6 @@
     <string name="righttest">Right</string>
     <string name="lefttest">Left</string>
     <string name="cats">Categories</string>
-    <string name="HeadTest">Test your headphones</string></resources>
+    <string name="HeadTest">Test your headphones</string>
+    <string name="drawer_open">Options</string>
+    </resources>
