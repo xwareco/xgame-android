@@ -42,13 +42,6 @@
     <string name="regbtn">Register</string>
     <string name="pwd">Password:</string>
     <string name="usr">User Name:</string>
-
-    <string-array name="nav_actions">
-        <item>xGame</item>
-        <item>About Us</item>
-        <item></item>
-    </string-array>
-
     <string name="game_cnt">The game icon</string>
     <string name="down_cnt">Download</string>
     <string name="LoginOrReegister">Login  |  Register</string>
@@ -67,4 +60,7 @@
     <string name="cats">Categories</string>
     <string name="HeadTest">Test your headphones</string>
     <string name="drawer_open">Options</string>
-    </resources>
+    <string name="offline">play offline</string>
+    <string name="offlinestate">You are offline now</string>
+    <string name="type">Type your message ..</string>
+    <string name="send">send message</string></resources>

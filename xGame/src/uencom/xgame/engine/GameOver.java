@@ -1,14 +1,16 @@
 package uencom.xgame.engine;
 
+import java.util.Locale;
+
 import uencom.xgame.xgame.R;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -17,58 +19,30 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public class GameOver extends SherlockActivity {
-	ImageView login;
-	Button home, playAgain;
-	LinearLayout gamescore, scorelay;
-	TextView score;
+	
+	ImageView gamescore, tryAgain;
+	TextView gameName;
+	Typeface english;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.game_over_view);
-		login = (ImageView) findViewById(R.id.imageView3);
-		score = (TextView) findViewById(R.id.textView1);
-		home = (Button) findViewById(R.id.button2);
-		playAgain = (Button) findViewById(R.id.button1);
-		gamescore = (LinearLayout) findViewById(R.id.gslay);
-		scorelay = (LinearLayout) findViewById(R.id.scoreLay);
+		english = Typeface.createFromAsset(getAssets(),
+				"fonts/DJB Stinky Marker.ttf");
+		Locale current = getResources().getConfiguration().locale;
+		gameName = (TextView) findViewById(R.id.textView1);
+		if (current.getDisplayLanguage().equals("English")) {
+			gameName.setTypeface(english);
+		}
+		gamescore = (ImageView) findViewById(R.id.imageView3);
+		tryAgain = (ImageView) findViewById(R.id.imageView2);
 		Animation a = AnimationUtils.loadAnimation(this, R.anim.transition4);
-		Animation b = AnimationUtils.loadAnimation(this, R.anim.transition6);
-		int Score = getIntent().getIntExtra("Score", 0);
-		int per = (Score / 19) * 100;
+		//int Score = getIntent().getIntExtra("Score", 0);
 		gamescore.startAnimation(a);
-		score.setText("Your score is: " + String.valueOf(Score) + "(" + per
-				+ "%)");
-		scorelay.startAnimation(b);
+		gameName.setText(getIntent().getStringExtra("gamename"));
 		ActionBar actionBar = getSupportActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
-		login.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// Login,Register activity open
-				Intent I = new Intent(getApplicationContext(), Register.class);
-				startActivity(I);
-			}
-		});
-		home.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				Intent I = new Intent(getApplicationContext(),
-						SplashActivity.class);
-				startActivity(I);
-
-			}
-		});
+		actionBar.setDisplayShowTitleEnabled(true);
 		super.onCreate(savedInstanceState);
-		playAgain.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
-			}
-		});
 	}
 
 	@Override
@@ -97,5 +71,12 @@ public class GameOver extends SherlockActivity {
 	protected void onPause() {
 		finish();
 		super.onPause();
+	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		// TODO Auto-generated method stub
+		super.onConfigurationChanged(newConfig);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}
 }

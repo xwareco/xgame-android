@@ -106,6 +106,7 @@ public class xGameParser extends Activity implements IStateListener {
 							Intent gameOverActivity = new Intent(
 									getApplicationContext(), GameOver.class);
 							gameOverActivity.putExtra("Score", score);
+							gameOverActivity.putExtra("gamename", getIntent().getStringExtra("gamename"));
 							startActivity(gameOverActivity);
 							finish();
 						}

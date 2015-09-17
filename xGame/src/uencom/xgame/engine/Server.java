@@ -1,7 +1,9 @@
 package uencom.xgame.engine;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import com.google.gson.Gson;
 import uencom.xgame.engine.web.Game;
 import uencom.xgame.engine.web.GameCategory;
@@ -13,6 +15,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,17 +33,18 @@ public class Server extends AsyncTask<String, String, String> implements
 	SharedPreferences appSharedPrefs;
 	xGameAPI api;
 	Context ctx;
-	ImageView refresh;
+	ImageView refresh, offline;
 	TextView loading, connError;
 	ProgressBar bar;
 	LinearLayout trans;
 	ListView gamesView;
 
-	public Server(Context C, ImageView imgv, TextView tv1, TextView tv2,
-			ProgressBar b, LinearLayout lay, ListView lv) {
+	public Server(Context C, ImageView imgv, ImageView imgv2, TextView tv1,
+			TextView tv2, ProgressBar b, LinearLayout lay, ListView lv) {
 		ctx = C;
 		api = new xGameAPI(ctx);
 		refresh = imgv;
+		offline = imgv2;
 		loading = tv1;
 		connError = tv2;
 		bar = b;
@@ -86,6 +90,11 @@ public class Server extends AsyncTask<String, String, String> implements
 			} else {
 				mp = MediaPlayer.create(ctx, uencom.xgame.xgame.R.raw.failed);
 				mp.start();
+				offlinexGameList xgameAdapter = isOfflineGameExists();
+				if (xgameAdapter != null) {
+					offline.setVisibility(View.VISIBLE);
+					gamesView.setAdapter(xgameAdapter);
+				}
 				bar.setVisibility(View.GONE);
 				loading.setVisibility(View.GONE);
 				connError.setVisibility(View.VISIBLE);
@@ -111,4 +120,56 @@ public class Server extends AsyncTask<String, String, String> implements
 		super.onPostExecute(result);
 	}
 
+	private offlinexGameList isOfflineGameExists() {
+		offlinexGameList res = null;
+		ArrayList<String> offGames = new ArrayList<String>();
+		String searchLocation = Environment.getExternalStorageDirectory()
+				+ "/xGame/games/";
+		File gamesFolder = new File(searchLocation);
+		ArrayList<File> folderContents = new ArrayList<File>(
+				Arrays.asList(gamesFolder.listFiles()));
+
+		for (int i = 0; i < folderContents.size(); i++) {
+			File mainGameFolder = folderContents.get(i);
+			ArrayList<File> game = new ArrayList<File>(
+					Arrays.asList(mainGameFolder.listFiles()));
+			boolean xmlFileExists = false, imagesFoldeNotEmpty = false, soundFoldeNotEmpty = false, sourceFoldeNotEmpty = false;
+			String xmlFileName = "App.xml";
+			for (int j = 0; j < game.size(); j++) {
+				if (game.get(j).getName().equals(xmlFileName))
+					xmlFileExists = true;
+				else if (game.get(j).getName().equals("Images")
+						&& game.get(j).isDirectory()
+						&& game.get(j).list().length > 0)
+					imagesFoldeNotEmpty = true;
+				else if (game.get(j).getName().equals("Sound")
+						&& game.get(j).isDirectory()
+						&& game.get(j).list().length > 0)
+					soundFoldeNotEmpty = true;
+				else if (game.get(j).getName().equals("Source")
+						&& game.get(j).isDirectory()
+						&& game.get(j).list().length > 0)
+					sourceFoldeNotEmpty = true;
+			}
+			
+
+			if (xmlFileExists && imagesFoldeNotEmpty && soundFoldeNotEmpty
+					&& sourceFoldeNotEmpty) {
+				offGames.add(mainGameFolder.getName());
+			}
+			
+			else 
+			{
+				mainGameFolder.delete();
+			}
+
+			if (i == folderContents.size() - 1 && offGames.size() > 0) {
+				res = new offlinexGameList((Activity) ctx, offGames);
+
+			}
+		}
+		
+
+		return res;
+	}
 }

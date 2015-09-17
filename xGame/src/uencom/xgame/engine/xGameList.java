@@ -60,8 +60,6 @@ public class xGameList extends ArrayAdapter<Game> {
 	public View getView(int position, View view, ViewGroup parent) {
 		LayoutInflater inflater = context.getLayoutInflater();
 		View rowView = inflater.inflate(R.layout.xgame_list_item, null, true);
-		//rowView.getLayoutParams().width = LayoutParams.WRAP_CONTENT;
-		//rowView.getLayoutParams().height = LayoutParams.WRAP_CONTENT;
 		if(position%2 == 0)rowView.setBackgroundResource(drawable.even);
 		else rowView.setBackgroundResource(drawable.odd);
 		TextView txtTitle = (TextView) rowView.findViewById(R.id.text);
@@ -83,7 +81,7 @@ public class xGameList extends ArrayAdapter<Game> {
 					+ games.get(position).getImgPath();
 			imageLoader.displayImage(url, gameIcon, options);
 		} else {
-			new Server(context, null,null,null, null , null , null).execute("game", games.get(0)
+			new Server(context, null,null,null,null, null , null , null).execute("game", games.get(0)
 					.getCategory_id(), games.get(games.size() - 1).getId());
 			SharedPreferences appSharedPrefs = PreferenceManager
 					.getDefaultSharedPreferences(context);

@@ -12,35 +12,43 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import uencom.xgame.engine.GameView;
-import uencom.xgame.xgame.R;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class Installer extends AsyncTask<String, String, String> {
 
-	private Activity ctx;
-	private String unzipLocation;
-	private TextView status;
+	private static Activity ctx;
+	private static String unzipLocation;
 	private String logoUrl;
-	private String gameName;
-	private File f;
+	private static String gameName;
+	private static File f;
+	ProgressDialog barProgressDialog;
+	Handler updateBarHandler;
 
 	public Installer(Activity c, String unzip, String logoUrl, String name) {
 		ctx = c;
-		this.unzipLocation = unzip;
-		status = (TextView) c.findViewById(R.id.textView2);
+		unzipLocation = unzip;
 		this.logoUrl = logoUrl;
+		gameName = name;
+		updateBarHandler = new Handler();
 	}
 
 	@Override
 	protected void onPreExecute() {
-		Toast.makeText(ctx, "Downloading Game", Toast.LENGTH_LONG).show();
+		barProgressDialog = new ProgressDialog(ctx);
+		barProgressDialog.setTitle("Downloading " + gameName + " ...");
+		barProgressDialog.setMessage("Download in progress ...");
+		barProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		barProgressDialog.setProgress(0);
+		barProgressDialog.setMax(100);
+		barProgressDialog.show();
+
 		super.onPreExecute();
 	}
 
@@ -49,43 +57,34 @@ public class Installer extends AsyncTask<String, String, String> {
 
 		download(arg0[0]);
 		install(Environment.getExternalStorageDirectory() + "/xGame/Games/"
-				+ "null");
+				+ gameName + ".xgame");
+
 		return null;
 	}
 
 	@Override
 	protected void onPostExecute(String result) {
-		ctx.runOnUiThread(new Runnable() {
+		barProgressDialog.dismiss();
+		if (f.exists())
+			f.delete();
 
-			@Override
-			public void run() {
-				if (f.exists())
-					f.delete();
-				status.setText("Installation complete");
-				Intent I = new Intent(ctx.getApplicationContext(),
-						GameView.class);
-				I.putExtra("Logo", logoUrl);
-				I.putExtra("Name", gameName);
-				I.putExtra("Folder", unzipLocation
-						+ ctx.getIntent().getStringExtra("gamename"));
-				ctx.finish();
-				ctx.startActivity(I);
-
-			}
-		});
+		Intent I = new Intent(ctx.getApplicationContext(), GameView.class);
+		I.putExtra("Logo", logoUrl);
+		I.putExtra("Name", gameName);
+		I.putExtra("Folder", unzipLocation + gameName);
+		ctx.finish();
+		ctx.startActivity(I);
 		super.onPostExecute(result);
 	}
 
-	private void download(String url) {
-		ctx.runOnUiThread(new Runnable() {
+	public void download(String url) {
 
-			@Override
+		updateBarHandler.post(new Runnable() {
+
 			public void run() {
-				status.setText("Download started");
-
+				barProgressDialog.setMessage("Fetching game url ...");
 			}
 		});
-
 		InputStream input = null;
 		OutputStream output = null;
 		HttpURLConnection connection = null;
@@ -93,22 +92,60 @@ public class Installer extends AsyncTask<String, String, String> {
 			URL downUrl = new URL(url);
 			connection = (HttpURLConnection) downUrl.openConnection();
 			connection.connect();
+			updateBarHandler.post(new Runnable() {
 
+				public void run() {
+
+					barProgressDialog.incrementProgressBy(20);
+
+				}
+
+			});
 			// download the file
+			updateBarHandler.post(new Runnable() {
+
+				public void run() {
+					barProgressDialog.setMessage("Receiving data ...");
+				}
+			});
 			input = connection.getInputStream();
 			f = new File(Environment.getExternalStorageDirectory()
-					+ "/xGame/Games/"
-					+ ctx.getIntent().getStringExtra("gamename" + ".xgame"));
+					+ "/xGame/Games/" + gameName + ".xgame");
 			if (!f.exists())
 				f.createNewFile();
-			output = new FileOutputStream(f);
+			updateBarHandler.post(new Runnable() {
 
+				public void run() {
+
+					barProgressDialog.incrementProgressBy(20);
+
+				}
+
+			});
+			output = new FileOutputStream(f);
+			updateBarHandler.post(new Runnable() {
+
+				public void run() {
+					barProgressDialog
+							.setMessage("Finalizing your Download ...");
+				}
+			});
 			byte data[] = new byte[4096];
 			int count;
 			while ((count = input.read(data)) != -1) {
 
 				output.write(data, 0, count);
 			}
+			updateBarHandler.post(new Runnable() {
+
+				public void run() {
+
+					barProgressDialog.incrementProgressBy(10);
+
+				}
+
+			});
+			System.out.println("download complete");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -124,42 +161,57 @@ public class Installer extends AsyncTask<String, String, String> {
 			if (connection != null)
 				connection.disconnect();
 		}
-		ctx.runOnUiThread(new Runnable() {
-
-			@Override
-			public void run() {
-				status.setText("Download completed");
-
-			}
-		});
 
 	}
 
 	public void install(String path) {
-		ctx.runOnUiThread(new Runnable() {
 
-			@Override
+		updateBarHandler.post(new Runnable() {
+
 			public void run() {
-				status.setText("Installing..");
-
+				barProgressDialog.setMessage("Installing ...");
 			}
 		});
-		File f = new File(unzipLocation
-				+ ctx.getIntent().getStringExtra("gamename"));
+		File f = new File(unzipLocation + gameName);
+		updateBarHandler.post(new Runnable() {
 
+			public void run() {
+
+				barProgressDialog.incrementProgressBy(20);
+
+			}
+
+		});
 		// _dirChecker("");
 		try {
 			f.mkdir();
 			FileInputStream fin = new FileInputStream(path);
 			ZipInputStream zin = new ZipInputStream(fin);
-			ZipEntry ze = null;
+			ZipEntry ze;
+			updateBarHandler.post(new Runnable() {
+
+				public void run() {
+
+					barProgressDialog.incrementProgressBy(20);
+
+				}
+
+			});
+			updateBarHandler.post(new Runnable() {
+
+				public void run() {
+					barProgressDialog.setMessage("Extracting Game Data ...");
+				}
+			});
 			while ((ze = zin.getNextEntry()) != null) {
 
 				if (ze.isDirectory()) {
 					_dirChecker(ze.getName());
+					System.out.println(ze.getName());
 				} else {
-					FileOutputStream fout = new FileOutputStream(
-							this.unzipLocation + ctx.getIntent().getStringExtra("gamename") + "/" + ze.getName());
+					System.out.println(ze.getName());
+					FileOutputStream fout = new FileOutputStream(unzipLocation
+							+ gameName + "/" + ze.getName());
 					for (int c = zin.read(); c != -1; c = zin.read()) {
 						fout.write(c);
 					}
@@ -170,13 +222,28 @@ public class Installer extends AsyncTask<String, String, String> {
 
 			}
 			zin.close();
+			updateBarHandler.post(new Runnable() {
+
+				public void run() {
+					barProgressDialog.setMessage("Saving ...");
+				}
+			});
+			updateBarHandler.post(new Runnable() {
+
+				public void run() {
+
+					barProgressDialog.incrementProgressBy(10);
+
+				}
+
+			});
 		} catch (Exception e) {
 			Log.e("Decompress", "unzip", e);
 		}
 	}
 
-	private void _dirChecker(String dir) {
-		File f = new File(unzipLocation + ctx.getIntent().getStringExtra("gamename") + "/" +  dir);
+	private static void _dirChecker(String dir) {
+		File f = new File(unzipLocation + gameName + "/" + dir);
 
 		if (!f.isDirectory()) {
 			f.mkdirs();

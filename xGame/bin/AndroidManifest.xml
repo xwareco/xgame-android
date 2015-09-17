@@ -35,28 +35,42 @@
 
         <activity android:name="uencom.xgame.demos.TTSDemo" >
         </activity>
-        <activity android:name="uencom.xgame.engine.xGameParser" >
-        </activity>
+        <activity android:name="uencom.xgame.engine.xGameParser" ></activity>
         <activity android:name="uencom.xgame.demos.Splash" >
         </activity>
-        <activity android:name="uencom.xgame.engine.MainView" >
+        <activity android:name="uencom.xgame.engine.MainView" 
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait">
         </activity>
-        <activity
-            android:name="uencom.xgame.engine.DownlodView"
-            android:theme="@android:style/Theme.Holo.Light.Dialog" >
+        <activity android:name="uencom.xgame.engine.GameView" 
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name="uencom.xgame.engine.GameView" >
+        <activity android:name="uencom.xgame.engine.GameOver"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="uencom.xgame.engine.GameOver" >
+        <activity android:name="uencom.xgame.engine.LoginOrRegister"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="uencom.xgame.engine.LoginOrRegister" >
+        <activity android:name="uencom.xgame.engine.Login" 
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name="uencom.xgame.engine.Login" >
+        <activity android:name="uencom.xgame.engine.Register" 
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name="uencom.xgame.engine.Register" >
-        </activity>
-        <activity android:name="uencom.xgame.engine.HeadphoneTester" >
-        </activity>
+        <activity android:name="uencom.xgame.engine.HeadphoneTester" 
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name="uencom.xgame.engine.ContactUs" 
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name="uencom.xgame.engine.AboutUs" 
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="uencom.xgame.engine.SplashActivity"
             android:configChanges="orientation|keyboardHidden"
