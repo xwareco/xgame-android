@@ -54,7 +54,7 @@
     <string name="refresh">Refresh button</string>
     <string name="error">Error</string>
     <string name="bar">Loading your games</string>
-    <string name="test">This is to test the proper postioning of your headphones,Please press the button named Right to test the Right headphone, and press the button named Left to test the Left headphone, Whenever you would like to finish this test swipe down on your screen.</string>
+    <string name="test">This is to test the proper postioning of your headphones, Please tap anywhere on the screen to start the test, you will hear a sound in your right headphone, Then tap the screen again to hear the sound in your left headphone, whenever you complete the test swipe down to quit.</string>
     <string name="righttest">Right</string>
     <string name="lefttest">Left</string>
     <string name="cats">Categories</string>

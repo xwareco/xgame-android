@@ -54,11 +54,13 @@
     <string name="refresh">Refresh button</string>
     <string name="error">خطأ</string>
     <string name="bar">Loading your games</string>
-    <string name="test">سوف يقوم التطبيق الآن باختبار الوضع المناسب لسماعات الأذن, اضغط على زر "يمين" ﻻختبار السماعة اليمنى, اضغط على زر "يسار" ﻻختبار السماعة اليسرى, حينما تنهي اﻻختبار قم بالسحب على الشاشة لأسفل.</string>
+    <string name="test">سوف يقوم التطبيق الآن باختبار الوضع المناسب لسماعات الأذن, اضغط على الشاشة مرة واحدة لبدء اﻻختبار, أو اسحب ﻻسفل ﻻنهاء اﻻختبار".</string>
     <string name="righttest">يمين</string>
     <string name="lefttest">يسار</string>
     <string name="cats">الفئات</string>
     <string name="HeadTest">إختبر سماعاتك</string>
     <string name="drawer_open">الخيارات</string>
     <string name="offlinestate">انت اﻻن غير متصل باﻻنترنت</string>
+     <string name="offline">play offline</string>
+     <string name="send">إرسال</string>
     <string name="type">اكتب رسالتك ..</string></resources>

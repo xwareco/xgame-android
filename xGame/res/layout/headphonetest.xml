@@ -18,39 +18,4 @@
         android:textColor="@android:color/white"
         android:textSize="25sp"
         android:textStyle="bold|italic" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="90dp"
-        android:orientation="horizontal"
-        android:weightSum="100" >
-
-        <Button
-            android:id="@+id/button1"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="50"
-            android:background="#1ea463"
-            android:text="@string/lefttest"
-            android:textColor="@android:color/white"
-            android:textSize="30sp"
-            android:textStyle="bold|italic" />
-
-        <Button
-            android:id="@+id/button2"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:layout_weight="50"
-            android:background="#1ea463"
-            android:text="@string/righttest"
-            android:textColor="@android:color/white"
-            android:textSize="30sp"
-            android:textStyle="bold|italic" />
-        </LinearLayout>
     </LinearLayout>

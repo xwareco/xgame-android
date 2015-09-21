@@ -134,7 +134,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 		proBar = (ProgressBar) findViewById(R.id.progressBar2);
 		mainImage = (ImageView) findViewById(R.id.catImg);
 		trans = (LinearLayout) findViewById(R.id.translay);
-		Thread t = new Thread(new Runnable() {
+		/*Thread t = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
@@ -175,10 +175,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 						@Override
 						public void onAnimationEnd(Animation arg0) {
 							// TODO Auto-generated method stub
-							new Server(MainView.this, null, null, loading,
-									null, proBar, trans, list).execute("game",
-									categories.get(currentIndex).getId(),
-									String.valueOf(0));
+							
 						}
 					});
 					runOnUiThread(new Runnable() {
@@ -193,10 +190,13 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 				}
 			}
 		});
-		t.start();
+		t.start();*/
 		pre = (ImageView) findViewById(R.id.leftArrow);
 		next = (ImageView) findViewById(R.id.rightArrow);
-
+		new Server(MainView.this, null, null, loading,
+				null, proBar, trans, list).execute("game",
+				categories.get(currentIndex).getId(),
+				String.valueOf(0));
 		initonClicks();
 		super.onCreate(savedInstanceState);
 	}

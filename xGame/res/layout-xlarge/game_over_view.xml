@@ -2,76 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gameover"
+    android:background="@drawable/lstbg"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/gslay"
+    <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
-        android:layout_height="260dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/bggs"
-        android:orientation="vertical" >
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="fill_parent"
-            android:layout_height="260dp"
-            android:layout_gravity="center_horizontal"
-            android:contentDescription="@string/sb"
-            android:src="@drawable/gamescores" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/scoreLay"
-        android:layout_width="fill_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="260dp"
-        android:background="@drawable/bggs"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:text=""
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@android:color/white"
-            android:textSize="25sp"
-            android:textStyle="bold|italic" />
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="250dp"
-        android:background="#1ea463"
-        android:text="@string/plyagn"
-        android:textColor="#ffffff"
-        android:textSize="90sp"
-        android:textStyle="bold|italic" />
+        android:text=""
+        android:textStyle="bold|italic"
+        android:textColor="#0f540f"
+        android:layout_gravity="center"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <Button
-        android:id="@+id/button2"
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:src="@drawable/gamescores" />
+
+    <ImageView
+        android:id="@+id/imageView1"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="10dp"
-        android:background="#1ea463"
-        android:text="@string/home"
-        android:textColor="#ffffff"
-        android:textSize="90sp"
-        android:textStyle="bold|italic" />
+        android:layout_marginTop="20dp"
+        android:layout_height="240dp"
+        android:src="@drawable/gaov" />
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:src="@drawable/tryagain" />
+    
 </LinearLayout>

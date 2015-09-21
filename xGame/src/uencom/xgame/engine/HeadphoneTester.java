@@ -11,30 +11,23 @@ import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class HeadphoneTester extends Activity implements OnClickListener {
-	Button right, left;
+public class HeadphoneTester extends Activity {
 	HandGestures activityGesture;
     TextView instrcts;
     Typeface arabic , english;
     Animation fadeIn;
+    String whichHeadPhoneToTest = "right";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.headphonetest);
-		right = (Button) findViewById(R.id.button1);
-		left = (Button) findViewById(R.id.button2);
 		instrcts = (TextView)findViewById(R.id.textView1);
 		fadeIn = AnimationUtils.loadAnimation(this, R.anim.fadein);
 		instrcts.startAnimation(fadeIn);
-		right.setOnClickListener(this);
-		left.setOnClickListener(this);
 		arabic = Typeface.createFromAsset(getAssets(),
 				"fonts/Kharabeesh Font.ttf");
 		english = Typeface.createFromAsset(getAssets(),
@@ -51,44 +44,42 @@ public class HeadphoneTester extends Activity implements OnClickListener {
 				finish();
 				super.onSwipeDown();
 			}
+			@Override
+			public void onTapOnce() {
+				HeadPhone hp = new HeadPhone(getApplicationContext(),
+						R.raw.gameover);
+				if (whichHeadPhoneToTest.equalsIgnoreCase("right")) {
+					whichHeadPhoneToTest = "left";
+					if (hp.detectHeadPhones() == true) {
+						hp.setLeftLevel(0);
+						hp.setRightLevel(1);
+						hp.play("", 4);
+
+					} else
+						Toast.makeText(
+								getApplicationContext(),
+								"No wired headphone detected, Please contect your headphones",
+								Toast.LENGTH_LONG).show();
+				}
+				else if(whichHeadPhoneToTest.equalsIgnoreCase("left"))
+				{
+					if (hp.detectHeadPhones() == true) {
+						hp.setLeftLevel(1);
+						hp.setRightLevel(0);
+						hp.play("", 4);
+					} else
+						Toast.makeText(
+								getApplicationContext(),
+								"No wired headphone detected, Please contect your headphones",
+								Toast.LENGTH_LONG).show();
+					whichHeadPhoneToTest = "right";
+				}
+				super.onTapOnce();
+			}
 		};
 		super.onCreate(savedInstanceState);
 	}
 
-	@Override
-	public void onClick(View arg0) {
-		// TODO Auto-generated method stub
-		switch (arg0.getId()) {
-		case R.id.button1:
-			HeadPhone hp = new HeadPhone(getApplicationContext(),
-					R.raw.gameover);
-			if (hp.detectHeadPhones() == true) {
-				hp.setLeftLevel(1);
-				hp.setRightLevel(0);
-				hp.play("", 4);
-			} else
-				Toast.makeText(
-						getApplicationContext(),
-						"No wired headphone detected, Please contect your headphones",
-						Toast.LENGTH_LONG).show();
-
-			break;
-
-		case R.id.button2:
-			HeadPhone hp2 = new HeadPhone(getApplicationContext(),
-					R.raw.gameover);
-			if (hp2.detectHeadPhones() == true) {
-				hp2.setLeftLevel(0);
-				hp2.setRightLevel(1);
-				hp2.play("", 4);
-			} else
-				Toast.makeText(
-						getApplicationContext(),
-						"No wired headphone detected, Please contect your headphones",
-						Toast.LENGTH_LONG).show();
-			break;
-		}
-	}
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		activityGesture.OnTouchEvent(event);

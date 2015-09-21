@@ -44,6 +44,8 @@ public class Installer extends AsyncTask<String, String, String> {
 		barProgressDialog = new ProgressDialog(ctx);
 		barProgressDialog.setTitle("Downloading " + gameName + " ...");
 		barProgressDialog.setMessage("Download in progress ...");
+		barProgressDialog.setCancelable(false);
+		barProgressDialog.setCanceledOnTouchOutside(false);
 		barProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		barProgressDialog.setProgress(0);
 		barProgressDialog.setMax(100);
@@ -83,6 +85,7 @@ public class Installer extends AsyncTask<String, String, String> {
 
 			public void run() {
 				barProgressDialog.setMessage("Fetching game url ...");
+				barProgressDialog.incrementProgressBy(5);
 			}
 		});
 		InputStream input = null;
@@ -92,20 +95,12 @@ public class Installer extends AsyncTask<String, String, String> {
 			URL downUrl = new URL(url);
 			connection = (HttpURLConnection) downUrl.openConnection();
 			connection.connect();
-			updateBarHandler.post(new Runnable() {
-
-				public void run() {
-
-					barProgressDialog.incrementProgressBy(20);
-
-				}
-
-			});
 			// download the file
 			updateBarHandler.post(new Runnable() {
 
 				public void run() {
 					barProgressDialog.setMessage("Receiving data ...");
+					barProgressDialog.incrementProgressBy(5);
 				}
 			});
 			input = connection.getInputStream();
@@ -113,15 +108,7 @@ public class Installer extends AsyncTask<String, String, String> {
 					+ "/xGame/Games/" + gameName + ".xgame");
 			if (!f.exists())
 				f.createNewFile();
-			updateBarHandler.post(new Runnable() {
-
-				public void run() {
-
-					barProgressDialog.incrementProgressBy(20);
-
-				}
-
-			});
+			
 			output = new FileOutputStream(f);
 			updateBarHandler.post(new Runnable() {
 
@@ -140,7 +127,7 @@ public class Installer extends AsyncTask<String, String, String> {
 
 				public void run() {
 
-					barProgressDialog.incrementProgressBy(10);
+					barProgressDialog.incrementProgressBy(30);
 
 				}
 
@@ -177,7 +164,7 @@ public class Installer extends AsyncTask<String, String, String> {
 
 			public void run() {
 
-				barProgressDialog.incrementProgressBy(20);
+				barProgressDialog.incrementProgressBy(10);
 
 			}
 
@@ -186,13 +173,13 @@ public class Installer extends AsyncTask<String, String, String> {
 		try {
 			f.mkdir();
 			FileInputStream fin = new FileInputStream(path);
-			ZipInputStream zin = new ZipInputStream(fin);
+			final ZipInputStream zin = new ZipInputStream(fin);
 			ZipEntry ze;
 			updateBarHandler.post(new Runnable() {
 
 				public void run() {
 
-					barProgressDialog.incrementProgressBy(20);
+					barProgressDialog.incrementProgressBy(10);
 
 				}
 
@@ -201,15 +188,21 @@ public class Installer extends AsyncTask<String, String, String> {
 
 				public void run() {
 					barProgressDialog.setMessage("Extracting Game Data ...");
+
 				}
 			});
 			while ((ze = zin.getNextEntry()) != null) {
 
 				if (ze.isDirectory()) {
 					_dirChecker(ze.getName());
-					System.out.println(ze.getName());
 				} else {
-					System.out.println(ze.getName());
+					
+					updateBarHandler.post(new Runnable() {
+
+						public void run() {
+							barProgressDialog.incrementProgressBy(3);
+						}
+					});
 					FileOutputStream fout = new FileOutputStream(unzipLocation
 							+ gameName + "/" + ze.getName());
 					for (int c = zin.read(); c != -1; c = zin.read()) {
@@ -227,15 +220,6 @@ public class Installer extends AsyncTask<String, String, String> {
 				public void run() {
 					barProgressDialog.setMessage("Saving ...");
 				}
-			});
-			updateBarHandler.post(new Runnable() {
-
-				public void run() {
-
-					barProgressDialog.incrementProgressBy(10);
-
-				}
-
 			});
 		} catch (Exception e) {
 			Log.e("Decompress", "unzip", e);

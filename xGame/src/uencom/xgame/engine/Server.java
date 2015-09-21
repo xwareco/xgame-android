@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -54,20 +55,24 @@ public class Server extends AsyncTask<String, String, String> implements
 
 	@Override
 	protected String doInBackground(String... arg0) {
-		String res = "cat";
-		if (arg0[0].equalsIgnoreCase("cat"))
-			categories = api.getCategories();
-		else if (arg0[0].equalsIgnoreCase("game")) {
-			games = api.getGames(arg0[1], "10", arg0[2]);
-			System.out.println(games.get(0).getName());
-			Gson g = new Gson();
-			String gamesJSON = g.toJson(games);
-			System.out.println("Iam In!!!");
-			appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-			Editor prefEditor2 = appSharedPrefs.edit();
-			prefEditor2.putString("games", gamesJSON);
-			prefEditor2.commit();
-			res = "games";
+		String res = "off";
+		if (isOnline() == true) {
+			res = "cat";
+			if (arg0[0].equalsIgnoreCase("cat"))
+				categories = api.getCategories();
+			else if (arg0[0].equalsIgnoreCase("game")) {
+				games = api.getGames(arg0[1], "10", arg0[2]);
+				System.out.println(games.get(0).getName());
+				Gson g = new Gson();
+				String gamesJSON = g.toJson(games);
+				System.out.println("Iam In!!!");
+				appSharedPrefs = PreferenceManager
+						.getDefaultSharedPreferences(ctx);
+				Editor prefEditor2 = appSharedPrefs.edit();
+				prefEditor2.putString("games", gamesJSON);
+				prefEditor2.commit();
+				res = "games";
+			}
 		}
 		return res;
 	}
@@ -75,10 +80,10 @@ public class Server extends AsyncTask<String, String, String> implements
 	@Override
 	protected void onPostExecute(String result) {
 		System.out.println(result);
+		MediaPlayer mp;
 		if (result.equalsIgnoreCase("cat")) {
 			Gson g = new Gson();
 			String catStr = g.toJson(categories);
-			MediaPlayer mp;
 			// System.out.println(catStr);
 			if (!catStr.equals("[]")) {
 				Intent I = new Intent(ctx, MainView.class);
@@ -100,6 +105,18 @@ public class Server extends AsyncTask<String, String, String> implements
 				connError.setVisibility(View.VISIBLE);
 				refresh.setVisibility(View.VISIBLE);
 			}
+		} else if (result.equalsIgnoreCase("off")) {
+			mp = MediaPlayer.create(ctx, uencom.xgame.xgame.R.raw.failed);
+			mp.start();
+			offlinexGameList xgameAdapter = isOfflineGameExists();
+			if (xgameAdapter != null) {
+				offline.setVisibility(View.VISIBLE);
+				gamesView.setAdapter(xgameAdapter);
+			}
+			bar.setVisibility(View.GONE);
+			loading.setVisibility(View.GONE);
+			connError.setVisibility(View.VISIBLE);
+			refresh.setVisibility(View.VISIBLE);
 		} else {
 			System.out.println("Iam here!!");
 			if (bar != null && loading != null && trans != null
@@ -151,15 +168,13 @@ public class Server extends AsyncTask<String, String, String> implements
 						&& game.get(j).list().length > 0)
 					sourceFoldeNotEmpty = true;
 			}
-			
 
 			if (xmlFileExists && imagesFoldeNotEmpty && soundFoldeNotEmpty
 					&& sourceFoldeNotEmpty) {
 				offGames.add(mainGameFolder.getName());
 			}
-			
-			else 
-			{
+
+			else {
 				mainGameFolder.delete();
 			}
 
@@ -168,8 +183,15 @@ public class Server extends AsyncTask<String, String, String> implements
 
 			}
 		}
-		
 
 		return res;
+	}
+
+	public boolean isOnline() {
+		ConnectivityManager cm = (ConnectivityManager) ctx
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+		return cm.getActiveNetworkInfo() != null
+				&& cm.getActiveNetworkInfo().isConnectedOrConnecting();
 	}
 }

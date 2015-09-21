@@ -76,17 +76,18 @@ public class xGameAPI {
 	// http://xgameapp.com/api/v2/getCategoryGames?req_data={"category_id":"1","limit":"10","my_last_game":"0"}
 	public ArrayList<Game> getGames(String catId, String limit, String last_id) {
 		// Data definition
-		GamesJsonParameterConverter JPC = new GamesJsonParameterConverter(catId, limit,
-				last_id);
+		GamesJsonParameterConverter JPC = new GamesJsonParameterConverter(
+				catId, limit, last_id);
 		String paramsJSON = inputJSONConverter.toJson(JPC);
 		String urlEncodedParams = null;
 		try {
-			 urlEncodedParams = URLEncoder.encode(paramsJSON, "utf-8");
+			urlEncodedParams = URLEncoder.encode(paramsJSON, "utf-8");
 		} catch (UnsupportedEncodingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		String url = urlPrefix + "getCategoryGames?req_data=" + urlEncodedParams;
+		String url = urlPrefix + "getCategoryGames?req_data="
+				+ urlEncodedParams;
 		String result = makeApiCall(url, "game", "");
 		ArrayList<Game> games = new ArrayList<Game>();
 		if (result != "NULL") {
@@ -127,7 +128,7 @@ public class xGameAPI {
 						.getDefaultSharedPreferences(ctx);
 				Editor prefsEditor = appSharedPrefs.edit();
 				String Auth = appSharedPrefs.getString("access_token", "");
-				// System.out.println(Auth);
+				System.out.println("OLD TOK: " + Auth);
 				prefsEditor.commit();
 				request.addHeader("Authorization", Auth);
 				request.addHeader("Content-Type", "application/json");
@@ -219,55 +220,51 @@ public class xGameAPI {
 
 	public static String getNewToken() {
 		// Data definition
-		String AuthLayerUrl = authUrlPrefix + "access_token";
-		final TelephonyManager tm = (TelephonyManager) ctx
-				.getSystemService(Context.TELEPHONY_SERVICE);
-		HttpClient httpclient = new DefaultHttpClient();
-		ResponseHandler<String> handler = new BasicResponseHandler();
-		String result = "NULL";
-		String Final = "";
-		try {
-			// API method parameters
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
-			nameValuePairs.add(new BasicNameValuePair("username",
-					inputJSONConverter.toJson("b@c.com")));
-			nameValuePairs.add(new BasicNameValuePair("password",
-					inputJSONConverter.toJson("asdasd")));
-			nameValuePairs.add(new BasicNameValuePair("grant_type",
-					inputJSONConverter.toJson("client_credentials")));
-			nameValuePairs.add(new BasicNameValuePair("client_id",
-					inputJSONConverter.toJson("!@#")));
-			nameValuePairs.add(new BasicNameValuePair("client_secret",
-					inputJSONConverter.toJson("asdasd")));
-			nameValuePairs.add(new BasicNameValuePair("device_id",
-					inputJSONConverter.toJson(tm.getDeviceId())));
-			HttpPost request = new HttpPost(new URI(AuthLayerUrl));
-			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-			request.addHeader("Content-Type", "application/json");
-			request.addHeader("Accept", "application/json");
-			result = httpclient.execute(request, handler);
-			JSONObject obj = new JSONObject(result);
-			Final = obj.getString("access_token");
-			// System.out.println(Final);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+				String AuthLayerUrl = authUrlPrefix + "access_token";
+				final TelephonyManager tm = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
+				HttpClient httpclient = new DefaultHttpClient();
+				ResponseHandler<String> handler = new BasicResponseHandler();
+				String result = "NULL";
+				String Final = "";
+				try {
+					// API method parameters
+					List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
+					nameValuePairs.add(new BasicNameValuePair("username", "b@c.com"));
+					nameValuePairs.add(new BasicNameValuePair("password", "asdasd"));
+					nameValuePairs.add(new BasicNameValuePair("grant_type", "client_credentials"));
+					nameValuePairs.add(new BasicNameValuePair("client_id", "!@#"));
+					nameValuePairs.add(new BasicNameValuePair("client_secret", "asdasd"));
+					nameValuePairs.add(new BasicNameValuePair("device_id", tm.getDeviceId()));
+					HttpPost request = new HttpPost(new URI(AuthLayerUrl));
+					request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+					request.addHeader("Content-Type","application/x-www-form-urlencoded");
+					request.addHeader("Accept", "application/json");
+					result = httpclient.execute(request, handler);
+					JSONObject obj = new JSONObject(result);
+					Final = obj.getString("access_token");
+		            //System.out.println(Final);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
 		return Final;
 
 	}
 
 	public HashMap<String, String> loadGameScoreBoard(String gameID) {
 		// Data definition
-		BoardJsonParameterConverter BJC = new BoardJsonParameterConverter(gameID);
+		BoardJsonParameterConverter BJC = new BoardJsonParameterConverter(
+				gameID);
 		String gameIdJSON = inputJSONConverter.toJson(BJC);
 		String urlEncodedParam = null;
 		try {
-			 urlEncodedParam = URLEncoder.encode(gameIdJSON, "utf-8");
+			urlEncodedParam = URLEncoder.encode(gameIdJSON, "utf-8");
 		} catch (UnsupportedEncodingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		String url = urlPrefix + "loadGameScoreBoard?req_data=" + urlEncodedParam;
+		String url = urlPrefix + "loadGameScoreBoard?req_data="
+				+ urlEncodedParam;
 		String result = makeApiCall(url, "board", gameIdJSON);
 		HashMap<String, String> scoreBoard = new HashMap<String, String>();
 		try {
