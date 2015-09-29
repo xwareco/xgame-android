@@ -10,6 +10,7 @@ import uencom.xgame.xml.State;
 import uencom.xgame.xml.StateEvent;
 import uencom.xgame.xml.Transition;
 import uencom.xgame.xml.XmlParser;
+import uencom.xgame.engine.views.GameOver;
 import uencom.xgame.gestures.HandGestures;
 import android.annotation.SuppressLint;
 import android.app.Activity;

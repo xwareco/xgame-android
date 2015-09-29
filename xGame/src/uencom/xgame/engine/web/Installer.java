@@ -10,16 +10,18 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-
-import uencom.xgame.engine.GameView;
-
+import uencom.xgame.engine.offlinexGameList;
+import uencom.xgame.engine.onDeviceGameChecker;
+import uencom.xgame.engine.views.GameView;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 public class Installer extends AsyncTask<String, String, String> {
 
@@ -57,6 +59,7 @@ public class Installer extends AsyncTask<String, String, String> {
 	@Override
 	protected String doInBackground(String... arg0) {
 
+		checkForCorruptDownload();
 		download(arg0[0]);
 		install(Environment.getExternalStorageDirectory() + "/xGame/Games/"
 				+ gameName + ".xgame");
@@ -85,7 +88,7 @@ public class Installer extends AsyncTask<String, String, String> {
 
 			public void run() {
 				barProgressDialog.setMessage("Fetching game url ...");
-				barProgressDialog.incrementProgressBy(5);
+				barProgressDialog.incrementProgressBy(4);
 			}
 		});
 		InputStream input = null;
@@ -108,7 +111,7 @@ public class Installer extends AsyncTask<String, String, String> {
 					+ "/xGame/Games/" + gameName + ".xgame");
 			if (!f.exists())
 				f.createNewFile();
-			
+
 			output = new FileOutputStream(f);
 			updateBarHandler.post(new Runnable() {
 
@@ -196,7 +199,7 @@ public class Installer extends AsyncTask<String, String, String> {
 				if (ze.isDirectory()) {
 					_dirChecker(ze.getName());
 				} else {
-					
+
 					updateBarHandler.post(new Runnable() {
 
 						public void run() {
@@ -232,6 +235,32 @@ public class Installer extends AsyncTask<String, String, String> {
 		if (!f.isDirectory()) {
 			f.mkdirs();
 		}
+	}
+
+	private void checkForCorruptDownload() {
+		Looper.prepare();
+		updateBarHandler.post(new Runnable() {
+
+			public void run() {
+				barProgressDialog
+						.setMessage("Checking for invalid installation files ..");
+			}
+		});
+		onDeviceGameChecker checkInstallations = new onDeviceGameChecker(ctx);
+		offlinexGameList currentInstallations = checkInstallations
+				.isOfflineGameExists(gameName);
+		if (currentInstallations == null) {
+			Toast.makeText(
+					ctx,
+					"A corrupted download found for this game and deleted successfully",
+					Toast.LENGTH_LONG).show();
+		}
+		updateBarHandler.post(new Runnable() {
+
+			public void run() {
+				barProgressDialog.incrementProgressBy(1);
+			}
+		});
 	}
 
 }

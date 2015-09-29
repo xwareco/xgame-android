@@ -1,5 +1,6 @@
 package uencom.xgame.engine.web;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLEncoder;
@@ -8,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -145,6 +147,15 @@ public class xGameAPI {
 					Editor prefEditor2 = appSharedPrefs.edit();
 					prefEditor2.putString("access_token", newToken);
 					prefEditor2.commit();
+					try {
+						result = httpclient.execute(request, handler);
+					} catch (ClientProtocolException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				} else
 					e.printStackTrace();
 			}

@@ -10,6 +10,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import uencom.xgame.engine.web.Game;
+import uencom.xgame.engine.web.Server;
 import uencom.xgame.xgame.R;
 import uencom.xgame.xgame.R.drawable;
 import android.annotation.SuppressLint;
