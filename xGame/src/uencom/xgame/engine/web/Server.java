@@ -3,10 +3,10 @@ package uencom.xgame.engine.web;
 import java.io.Serializable;
 import java.util.ArrayList;
 import com.google.gson.Gson;
-
 import uencom.xgame.engine.offlinexGameList;
 import uencom.xgame.engine.onDeviceGameChecker;
 import uencom.xgame.engine.xGameList;
+import uencom.xgame.engine.xGameParser;
 import uencom.xgame.engine.views.MainView;
 import android.app.Activity;
 import android.content.Context;
@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageView;
@@ -37,6 +38,7 @@ public class Server extends AsyncTask<String, String, String> implements
 	ProgressBar bar;
 	LinearLayout trans;
 	ListView gamesView;
+	String testFolder;
 	onDeviceGameChecker checkInstallations;
 
 	public Server(Context C, ImageView imgv, ImageView imgv2, TextView tv1,
@@ -51,6 +53,7 @@ public class Server extends AsyncTask<String, String, String> implements
 		trans = lay;
 		gamesView = lv;
 		checkInstallations = new onDeviceGameChecker(ctx);
+		testFolder = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/Goal";
 	}
 
 	@Override
@@ -73,6 +76,8 @@ public class Server extends AsyncTask<String, String, String> implements
 				prefEditor2.commit();
 				res = "games";
 			}
+			else if(arg0[0].equalsIgnoreCase("test"))
+				res = "test";
 		}
 		return res;
 	}
@@ -117,7 +122,14 @@ public class Server extends AsyncTask<String, String, String> implements
 			loading.setVisibility(View.GONE);
 			connError.setVisibility(View.VISIBLE);
 			refresh.setVisibility(View.VISIBLE);
-		} else {
+		} else if(result.equalsIgnoreCase("test"))
+		{
+			Intent I = new Intent(ctx , xGameParser.class);
+			I.putExtra("Folder", testFolder);
+			I.putExtra("gamename","Goal");
+			ctx.startActivity(I);
+		}
+		else {
 			System.out.println("Iam here!!");
 			if (bar != null && loading != null && trans != null
 					&& gamesView != null) {

@@ -355,7 +355,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 					onDeviceGameChecker installations = new onDeviceGameChecker(
 							MainView.this);
 					if (installations.isOfflineGameExists(games.get(arg2)
-							.getName()) != null) {
+							.getName()) == null) {
 						Intent I = new Intent(getApplicationContext(),
 								GameView.class);
 						I.putExtra("Folder", ifGameExistsLocation);

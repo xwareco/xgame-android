@@ -29,6 +29,7 @@ public class HeadPhone implements OnErrorListener {
 		mediaPlayer = new MediaPlayer();
 		mediaPlayer.setOnErrorListener(this);
 	}
+	
 
 	public HeadPhone(Context ctx, int resId) {
 		context = ctx;
