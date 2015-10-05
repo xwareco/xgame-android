@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EnvironmentVariables>
+	<EnvironmentVariable Name="PLAYER_ID" Value="1"></EnvironmentVariable>
+	<EnvironmentVariable Name="PLAYER_NAME" Value="BODNO2"></EnvironmentVariable>
+	<EnvironmentVariable Name="TOTAL_GAME_LEVELS" Value="1"></EnvironmentVariable>
+	<EnvironmentVariable Name="CURRENT_LEVEL" Value="1"></EnvironmentVariable>
+	<EnvironmentVariable Name="CURRENT_SCORE" Value="0"></EnvironmentVariable>	
+	<EnvironmentVariable Name="CURRENT_STATE" Value="S0"></EnvironmentVariable>
+        <EnvironmentVariable Name="APK_FILE_NAME" Value="GOAL.apk"></EnvironmentVariable>
+        <EnvironmentVariable Name="ORIENTATION" Value="Portrait"></EnvironmentVariable>
+	<EnvironmentVariable Name="GAME_COUNT" Value="30"></EnvironmentVariable>
+	
+</EnvironmentVariables>
+<States>
+	<State id="S0" actions="com.example.goal.S0">
+		<Description>A guide state.Guiding the user how to play the game</Description>
+		<Display>
+			<Text> How to play goal game</Text>
+			<Image src="S0_Image.png"></Image>
+		</Display>
+		
+		<Listeners>
+			<Listener sensor="touch">
+				<Gesture>
+					<SwipeLeft trans="t-0-1"></SwipeLeft>
+				</Gesture>
+			</Listener>
+		</Listeners>
+	</State>
+        <State id="S1" actions="com.example.goal.S1">
+		<Description>The start state. Also, the main state in our game. It plays the sound.</Description>
+		<Display>
+			<Text> Listen in your headphone and swipe </Text>
+			<Image src="S1_Image.png"></Image>
+		</Display>
+		
+		<Listeners>
+			<Listener sensor="touch">
+				<Gesture>
+					<SwipeRight trans="t-1-2R"></SwipeRight>
+				</Gesture>
+				<Gesture>
+					<SwipeLeft trans="t-1-2L"></SwipeLeft>
+				</Gesture>
+                                
+			</Listener>
+		</Listeners>
+	</State>
+	<State id="S2" actions="com.example.goal.S2">
+		<Description>Indicates a user swiped right.</Description>
+		<Display>
+			<Text> You score goal</Text>
+			<Image src="S2_Image.png"></Image>
+		</Display>
+		
+	</State>
+		</States>
+<Transitions>
+	<Transition id="t-0-1" condition="com.example.goal.T01" from="S0" to="S1"></Transition>
+	<Transition id="t-1-2R" condition="com.example.goal.T12R" from="S1" to="S2"></Transition>
+	<Transition id="t-1-2L" condition="com.example.goal.T12L" from="S1" to="S2">
+</Transition>
+       
+</Transitions>
