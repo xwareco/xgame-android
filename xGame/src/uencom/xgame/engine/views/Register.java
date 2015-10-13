@@ -41,7 +41,6 @@ public class Register extends SherlockActivity {
 		english = Typeface.createFromAsset(getAssets(),
 				"fonts/DJB Stinky Marker.ttf");
 		Locale current = getResources().getConfiguration().locale;
-		
 	    reg = (LinearLayout)findViewById(R.id.reglay);
 	    name = (EditText)findViewById(R.id.editText1);
 	    pass = (EditText)findViewById(R.id.editText2);

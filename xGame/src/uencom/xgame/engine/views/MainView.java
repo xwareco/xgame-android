@@ -21,6 +21,7 @@ import uencom.xgame.engine.web.Server;
 import uencom.xgame.xgame.R;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
@@ -323,7 +324,6 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 						.getExternalStorageDirectory().toString()
 						+ "/xGame/Games/" + games.get(arg2).getName();
 
-				 
 				if (!new File(ifGameExistsLocation).exists()) {
 
 					final String logUrl = IMAGE_PREFIX
@@ -384,22 +384,22 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 										.substring(
 												0,
 												games.get(arg2).getFileName()
-														.lastIndexOf('.')) + "/"
-								+ games.get(arg2).getImgPath();
+														.lastIndexOf('.'))
+								+ "/" + games.get(arg2).getImgPath();
 						final String downUrl = IMAGE_PREFIX
 								+ games.get(arg2)
 										.getFileName()
 										.substring(
 												0,
 												games.get(arg2).getFileName()
-														.lastIndexOf('.')) + "/"
-								+ games.get(arg2).getFileName();
+														.lastIndexOf('.'))
+								+ "/" + games.get(arg2).getFileName();
 						String unzipLocation = Environment
 								.getExternalStorageDirectory().toString()
 								+ "/xGame/Games/";
 
-						new Installer(MainView.this, unzipLocation, logUrl, games
-								.get(arg2).getName()).execute(downUrl);
+						new Installer(MainView.this, unzipLocation, logUrl,
+								games.get(arg2).getName()).execute(downUrl);
 					}
 				}
 
@@ -492,11 +492,36 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 			I = new Intent(this, Register.class);
 		else if (position == 2)
 			I = new Intent(this, AboutUs.class);// about
-		else if (position == 3)
-			I = new Intent(this, ContactUs.class);// contact
-		// Close the drawer
-		// mDrawerLayout.closeDrawer(mDrawerPane);
-		startActivity(I);
+		else if (position == 3) {
+			SharedPreferences appSharedPrefs = PreferenceManager
+					.getDefaultSharedPreferences(getApplicationContext());
+			Editor prefsEditor = appSharedPrefs.edit();
+			String uID = appSharedPrefs.getString("uID", "");
+			String uName = appSharedPrefs.getString("uName", "");
+			System.out.println(uID + " " + uName);
+			if (!uID.equals("") && !uName.equals(""))
+			{
+				Toast.makeText(
+						getApplicationContext(),
+						"Welcome " + uName + " ,We are very glad to hear your feedback",
+						Toast.LENGTH_LONG).show();
+				I = new Intent(this, ContactUs.class);// contact
+				I.putExtra("ID", uID);
+				I.putExtra("Name", uName);
+				prefsEditor.commit();
+			}
+			else
+			{
+				I = new Intent(this, Register.class);
+				Toast.makeText(
+						getApplicationContext(),
+						"You need to register first before you can contact us",
+						Toast.LENGTH_LONG).show();
+			}
+			// Close the drawer
+			// mDrawerLayout.closeDrawer(mDrawerPane);
+			startActivity(I);
+		}
 
 	}
 

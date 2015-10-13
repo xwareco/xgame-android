@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
@@ -20,8 +21,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
+import android.widget.Toast;
 
 public class User extends AsyncTask<String, Void, Void> {
 
@@ -31,7 +34,9 @@ public class User extends AsyncTask<String, Void, Void> {
 	private Gson inputJSONConverter;
 	HttpClient httpclient = new DefaultHttpClient();
 	HttpGet request = null;
+	HttpPost postRequest = null;
 	String res = "NULL";
+	Handler updateHandler;
 	@SuppressWarnings("unused")
 	private int id;
 	private Context ctx;
@@ -41,6 +46,7 @@ public class User extends AsyncTask<String, Void, Void> {
 		this.email = mail;
 		this.inputJSONConverter = new Gson();
 		this.password = pass;
+		updateHandler = new Handler();
 		urlPrefix = "http://xgameapp.com/api/v2/";
 	}
 
@@ -62,32 +68,61 @@ public class User extends AsyncTask<String, Void, Void> {
 			e1.printStackTrace();
 		}
 		String url = urlPrefix + "register?req_data=" + urlEncodedParams;
-
+        System.out.println(url);
 		SharedPreferences appSharedPrefs = null;
 		ResponseHandler<String> handler = new BasicResponseHandler();
 		String result = "NULL";
 
 		try {
-			request = new HttpGet(new URI(url));
+			postRequest = new HttpPost(new URI(url));
 			// Authentication Layer
 			appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 			Editor prefsEditor = appSharedPrefs.edit();
 			String Auth = appSharedPrefs.getString("access_token", "");
 			prefsEditor.commit();
-			request.addHeader("Authorization", Auth);
-			request.addHeader("Content-Type", "application/json");
-			request.addHeader("Accept", "application/json");
-			result = httpclient.execute(request, handler);
+			postRequest.addHeader("Authorization", Auth);
+			postRequest.addHeader("Content-Type", "application/json");
+			postRequest.addHeader("Accept", "application/json");
+			result = httpclient.execute(postRequest, handler);
 			res = result;
 			System.out.println("Iam in!!");
 			JSONObject obj = new JSONObject(result);
 			String state = obj.getString("status");
+			final String msg = obj.getString("message");
 			if (state == "true")
+			{
+				 appSharedPrefs = PreferenceManager
+						.getDefaultSharedPreferences(ctx);
+				 prefsEditor = appSharedPrefs.edit();
+				 prefsEditor.putString("uID", "0");
+				 prefsEditor.putString("uName", email);
+				 prefsEditor.commit();
+				updateHandler.post(new Runnable() {
+					
+					@Override
+					public void run() {
+						Toast.makeText(ctx, "Successfullly Registered", Toast.LENGTH_LONG).show();
+						
+					}
+				});
 				return true;
+			}
+			else
+			{
+				updateHandler.post(new Runnable() {
+					
+					@Override
+					public void run() {
+						Toast.makeText(ctx, "Failed to register," + msg, Toast.LENGTH_LONG).show();
+						
+					}
+				});
+				
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			String newToken = xGameAPI.getNewToken();
-			request.setHeader("Authorization", newToken);
+			postRequest.setHeader("Authorization", newToken);
 			Editor prefEditor2 = appSharedPrefs.edit();
 			prefEditor2.putString("access_token", newToken);
 			prefEditor2.commit();
@@ -244,7 +279,7 @@ public class User extends AsyncTask<String, Void, Void> {
 		} else if (params[0] == "load") {
 
 		} else if (params[0] == "register") {
-
+            register();
 		}
 		return null;
 	}
