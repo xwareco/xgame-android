@@ -21,7 +21,7 @@ public class S1 implements IstateActions {
 		int count = I.getIntExtra("Count", 0);
 		// Enemy sound will be played..length more than 20 secs.
 		String Path = Environment.getExternalStorageDirectory().toString()
-				+ "/xGame/Games/hunt_the_duck/Sound/beep.mp3";
+				+ "/xGame/Games/hunt_the_duck/Sound/duck.mp3";
 		System.out.println(Path);
 		HeadPhone HP = new HeadPhone(c);
 		Random r = new Random();
@@ -57,6 +57,13 @@ public class S1 implements IstateActions {
 		int Score = I.getIntExtra("Score", 0);
 		Score++;
 		I.putExtra("Score", Score);
+		String Path = Environment.getExternalStorageDirectory().toString()
+				+ "/xGame/Games/hunt_the_duck/Sound/shoot.mp3";
+		System.out.println(Path);
+		HeadPhone HP = new HeadPhone(c);
+		HP.setLeftLevel(1);
+		HP.setRightLevel(1);
+		HP.play(Path, 0);
 
 	}
 
