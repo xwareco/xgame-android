@@ -22,7 +22,7 @@ public class S1 implements IstateActions {
 		// TODO Auto-generated method stub
 		int count = I.getIntExtra("Count", 0);
 		count++;
-		String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/Tennis/Sound/beep.mp3";
+		String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/Tennis/Sound/ball hit.mp3";
 		HeadPhone HP = new HeadPhone(c);
 		Random r = new Random();
 		int num = r.nextInt(3);
@@ -30,7 +30,7 @@ public class S1 implements IstateActions {
 		
 		if (num == 0) {
 			swipeAction = "Right";
-                        HP.setLeftLevel(0);
+              HP.setLeftLevel(0);
 		      HP.setRightLevel(1);
 		      if (HP.detectHeadPhones() == true)
 			  HP.play(Path, 0);
@@ -38,7 +38,7 @@ public class S1 implements IstateActions {
 
 		} else if (num == 1) {
 			swipeAction = "Left";
-                    HP.setLeftLevel(1);
+            HP.setLeftLevel(1);
 		    HP.setRightLevel(0);
 		    if (HP.detectHeadPhones() == true)
 			HP.play(Path, 0);
@@ -47,8 +47,8 @@ public class S1 implements IstateActions {
 		{
 			swipeAction = "SingleTap";
 			HP.setLeftLevel(1);
-		        HP.setRightLevel(1);
-		     if (HP.detectHeadPhones() == true)
+		    HP.setRightLevel(1);
+		    if (HP.detectHeadPhones() == true)
 			HP.play(Path,0);
 		}
 			I.putExtra("Action", swipeAction);

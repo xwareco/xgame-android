@@ -2,7 +2,9 @@ package uencom.xgame.engine.web;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+
 import com.google.gson.Gson;
+
 import uencom.xgame.engine.offlinexGameList;
 import uencom.xgame.engine.onDeviceGameChecker;
 import uencom.xgame.engine.xGameList;
@@ -17,6 +19,7 @@ import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -53,7 +56,9 @@ public class Server extends AsyncTask<String, String, String> implements
 		trans = lay;
 		gamesView = lv;
 		checkInstallations = new onDeviceGameChecker(ctx);
-		testFolder = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/Goal";
+		Log.d("locationFound",Environment.getExternalStorageDirectory().getAbsolutePath());
+		testFolder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/xGame/Games/Guess_Up";
+		Log.d("locationFound2",testFolder);
 	}
 
 	@Override
@@ -126,7 +131,7 @@ public class Server extends AsyncTask<String, String, String> implements
 		{
 			Intent I = new Intent(ctx , xGameParser.class);
 			I.putExtra("Folder", testFolder);
-			I.putExtra("gamename","Goal");
+			I.putExtra("gamename","Guess_Up");
 			ctx.startActivity(I);
 		}
 		else {
