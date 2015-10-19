@@ -2,8 +2,10 @@ package com.example.goal;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Environment;
 import android.widget.LinearLayout;
 import uencom.xgame.interfaces.IstateActions;
+import uencom.xgame.sound.HeadPhone;
 
 public class S2 implements IstateActions {
 
@@ -18,7 +20,13 @@ public class S2 implements IstateActions {
 		// TODO Auto-generated method stub
 		I.putExtra("Action", "NONE");
 		I.putExtra("State", "S1");
+		String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/Goal/Sound/goal !!.mp3";
 		//score sound
+		HeadPhone HP = new HeadPhone(c);
+		HP.setLeftLevel(1);
+		HP.setRightLevel(1);
+		if (HP.detectHeadPhones() == true)
+			HP.play(Path, 0);
 		return I;
 	}
 

@@ -7,7 +7,7 @@ public class T12L implements ItransitionActions {
 
 	@Override
 	public boolean isConditionActivated(Intent I) {
-		if(I.getStringExtra("Action") == "Left")
+		if(I.getStringExtra("Action") != "Left")
 			{
 			//out sound
 			return false;

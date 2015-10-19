@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import uencom.xgame.interfaces.IstateActions;
 import uencom.xgame.sound.HeadPhone;
 
-public class S1 implements IstateActions {
+public class S1 extends Thread implements IstateActions {
 
 	@Override
 	public void onStateEntry(LinearLayout layout, Intent I) {
@@ -22,7 +22,7 @@ public class S1 implements IstateActions {
 		// TODO Auto-generated method stub
 		int count = I.getIntExtra("Count", 0);
 		count++;
-		String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/Goal/Sound/beep.mp3";
+		String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/Goal/Sound/he shoots he scores.mp3";
 		HeadPhone HP = new HeadPhone(c);
 		Random r = new Random();
 		int num = r.nextInt(3);
@@ -33,14 +33,37 @@ public class S1 implements IstateActions {
 			HP.play(Path, 0);
 		if (num == 0) {
 			swipeAction = "Right";
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			
 
 		} else if (num == 1) {
 			swipeAction = "Left";
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
 			
 		}else if(num == 2)
 		{
-			swipeAction = "center";
+			swipeAction = "Both";
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
 			
 		}
 			I.putExtra("Action", swipeAction);
