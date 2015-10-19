@@ -2,6 +2,7 @@ package uencom.xgame.engine.views;
 
 import java.util.Locale;
 
+import uencom.xgame.engine.web.User;
 import uencom.xgame.xgame.R;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -48,27 +49,54 @@ public class GameOver extends SherlockActivity {
 
 			@Override
 			public void onClick(View v) {
+				Intent I;
 				SharedPreferences appSharedPrefs = PreferenceManager
 						.getDefaultSharedPreferences(getApplicationContext());
 				Editor prefsEditor = appSharedPrefs.edit();
 				String uID = appSharedPrefs.getString("uID", "");
 				String uName = appSharedPrefs.getString("uName", "");
-				Intent I;
+				String uPass = appSharedPrefs.getString("uPass", "");
+				System.out.println(uID + " " + uName + " " + uPass);
 				if (!uID.equals("") && !uName.equals("")) {
 					Toast.makeText(
 							getApplicationContext(),
-							"Welcome " + uName + " ,We are very glad to hear your feedback",
+							"Welcome " + uName
+									+ " ,We are very glad to hear your feedback",
 							Toast.LENGTH_LONG).show();
 					I = new Intent(getApplicationContext(), ContactUs.class);// contact
 					I.putExtra("ID", uID);
 					I.putExtra("Name", uName);
-					prefsEditor.commit();
+					
 				} else {
-					I = new Intent(getApplicationContext(), Register.class);
-					Toast.makeText(
-							getApplicationContext(),
-							"You need to register first before you can view the score board",
-							Toast.LENGTH_LONG).show();
+					String fileContents = User.readFromFile();
+					if (fileContents.equals("")) {
+						I = new Intent(getApplicationContext(), Register.class);
+						Toast.makeText(
+								getApplicationContext(),
+								"You need to register first before you can contact us",
+								Toast.LENGTH_LONG).show();
+					}
+					// 9,ali,123
+					else
+					{
+						uID = fileContents.substring(0,fileContents.indexOf(','));
+						uName = fileContents.substring(fileContents.indexOf(',')+1,fileContents.lastIndexOf(','));
+					    uPass = fileContents.substring(fileContents.lastIndexOf(',')+1,fileContents.length()-1);
+						System.out.println(uID + " " + uName + " Pass: " + uPass);
+						prefsEditor.putString("uID", uID);
+						prefsEditor.putString("uName", uName);
+						prefsEditor.putString("uPass", uPass);
+						prefsEditor.commit();
+						Toast.makeText(
+								getApplicationContext(),
+								"Welcome " + uName
+										+ " ,We are very glad to hear your feedback",
+								Toast.LENGTH_LONG).show();
+						I = new Intent(getApplicationContext(), ContactUs.class);// contact
+						I.putExtra("ID", uID);
+						I.putExtra("Name", uName);
+						I.putExtra("Pass", uPass);
+					}
 					
 				}
 				// Close the drawer

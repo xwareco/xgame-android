@@ -1,5 +1,10 @@
 package uencom.xgame.engine.web;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLEncoder;
@@ -21,6 +26,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
@@ -39,7 +45,7 @@ public class User extends AsyncTask<String, Void, Void> {
 	Handler updateHandler;
 	@SuppressWarnings("unused")
 	private int id;
-	private Context ctx;
+	private static Context ctx;
 
 	public User(Context c, String mail, String pass) {
 		ctx = c;
@@ -68,7 +74,7 @@ public class User extends AsyncTask<String, Void, Void> {
 			e1.printStackTrace();
 		}
 		String url = urlPrefix + "register?req_data=" + urlEncodedParams;
-        System.out.println(url);
+		System.out.println(url);
 		SharedPreferences appSharedPrefs = null;
 		ResponseHandler<String> handler = new BasicResponseHandler();
 		String result = "NULL";
@@ -89,35 +95,38 @@ public class User extends AsyncTask<String, Void, Void> {
 			JSONObject obj = new JSONObject(result);
 			String state = obj.getString("status");
 			final String msg = obj.getString("message");
-			if (state == "true")
-			{
-				 appSharedPrefs = PreferenceManager
+			String uID = obj.getString("user_id");
+			if (state == "true") {
+				appSharedPrefs = PreferenceManager
 						.getDefaultSharedPreferences(ctx);
-				 prefsEditor = appSharedPrefs.edit();
-				 prefsEditor.putString("uID", "0");
-				 prefsEditor.putString("uName", email);
-				 prefsEditor.commit();
+				String fileWriteString = uID + "," + email + "," + password;
+				writeToFile(fileWriteString);
+				prefsEditor = appSharedPrefs.edit();
+				prefsEditor.putString("uID", uID);
+				prefsEditor.putString("uName", email);
+				prefsEditor.putString("uPass", password);
+				prefsEditor.commit();
 				updateHandler.post(new Runnable() {
-					
+
 					@Override
 					public void run() {
-						Toast.makeText(ctx, "Successfullly Registered", Toast.LENGTH_LONG).show();
-						
+						Toast.makeText(ctx, "Successfullly Registered",
+								Toast.LENGTH_LONG).show();
+
 					}
 				});
 				return true;
-			}
-			else
-			{
+			} else {
 				updateHandler.post(new Runnable() {
-					
+
 					@Override
 					public void run() {
-						Toast.makeText(ctx, "Failed to register," + msg, Toast.LENGTH_LONG).show();
-						
+						Toast.makeText(ctx, "Failed to register," + msg,
+								Toast.LENGTH_LONG).show();
+
 					}
 				});
-				
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -279,7 +288,7 @@ public class User extends AsyncTask<String, Void, Void> {
 		} else if (params[0] == "load") {
 
 		} else if (params[0] == "register") {
-            register();
+			register();
 		}
 		return null;
 	}
@@ -290,4 +299,48 @@ public class User extends AsyncTask<String, Void, Void> {
 		super.onPostExecute(result);
 	}
 
+	private void writeToFile(String data) {
+		File xGameFolder = new File(Environment.getExternalStorageDirectory()
+				+ "/xGame/Data/");
+		xGameFolder.mkdirs();
+		File DataFile = new File(xGameFolder , "uData.txt");
+		BufferedWriter writer;
+		try {
+			DataFile.createNewFile();
+			writer = new BufferedWriter(new FileWriter(DataFile));
+			writer.write(data);
+			writer.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public static String readFromFile() {
+
+		File userDataFile = new File(Environment.getExternalStorageDirectory()
+				+ "/xGame/Data/uData.txt");
+		String ret = "";
+		if (userDataFile.exists()) {
+
+			BufferedReader bufferedReader;
+			try {
+				bufferedReader = new BufferedReader(
+						new FileReader(userDataFile));
+				String receiveString = "";
+				StringBuilder stringBuilder = new StringBuilder();
+
+				while ((receiveString = bufferedReader.readLine()) != null) {
+					stringBuilder.append(receiveString);
+				}
+				bufferedReader.close();
+				ret = stringBuilder.toString();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return ret;
+	}
 }

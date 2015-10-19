@@ -18,6 +18,7 @@ import uencom.xgame.engine.web.Game;
 import uencom.xgame.engine.web.GameCategory;
 import uencom.xgame.engine.web.Installer;
 import uencom.xgame.engine.web.Server;
+import uencom.xgame.engine.web.User;
 import uencom.xgame.xgame.R;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -498,25 +499,49 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 			Editor prefsEditor = appSharedPrefs.edit();
 			String uID = appSharedPrefs.getString("uID", "");
 			String uName = appSharedPrefs.getString("uName", "");
-			System.out.println(uID + " " + uName);
-			if (!uID.equals("") && !uName.equals(""))
-			{
+			String uPass = appSharedPrefs.getString("uPass", "");
+			System.out.println(uID + " " + uName + " " + uPass);
+			if (!uID.equals("") && !uName.equals("")) {
 				Toast.makeText(
 						getApplicationContext(),
-						"Welcome " + uName + " ,We are very glad to hear your feedback",
+						"Welcome " + uName
+								+ " ,We are very glad to hear your feedback",
 						Toast.LENGTH_LONG).show();
 				I = new Intent(this, ContactUs.class);// contact
 				I.putExtra("ID", uID);
 				I.putExtra("Name", uName);
-				prefsEditor.commit();
-			}
-			else
-			{
-				I = new Intent(this, Register.class);
-				Toast.makeText(
-						getApplicationContext(),
-						"You need to register first before you can contact us",
-						Toast.LENGTH_LONG).show();
+				
+			} else {
+				String fileContents = User.readFromFile();
+				if (fileContents.equals("")) {
+					I = new Intent(this, Register.class);
+					Toast.makeText(
+							getApplicationContext(),
+							"You need to register first before you can contact us",
+							Toast.LENGTH_LONG).show();
+				}
+				// 9,ali,123
+				else
+				{
+					uID = fileContents.substring(0,fileContents.indexOf(','));
+					uName = fileContents.substring(fileContents.indexOf(',')+1,fileContents.lastIndexOf(','));
+				    uPass = fileContents.substring(fileContents.lastIndexOf(',')+1,fileContents.length()-1);
+					System.out.println(uID + " " + uName + " Pass: " + uPass);
+					prefsEditor.putString("uID", uID);
+					prefsEditor.putString("uName", uName);
+					prefsEditor.putString("uPass", uPass);
+					prefsEditor.commit();
+					Toast.makeText(
+							getApplicationContext(),
+							"Welcome " + uName
+									+ " ,We are very glad to hear your feedback",
+							Toast.LENGTH_LONG).show();
+					I = new Intent(this, ContactUs.class);// contact
+					I.putExtra("ID", uID);
+					I.putExtra("Name", uName);
+					I.putExtra("Pass", uPass);
+				}
+
 			}
 			// Close the drawer
 			// mDrawerLayout.closeDrawer(mDrawerPane);
