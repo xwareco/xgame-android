@@ -10,15 +10,28 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ContactUs extends SherlockActivity {
 	TextView messageBox;
+	ImageView mic;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.contactus);
 		messageBox = (TextView)findViewById(R.id.textView1);
+		mic = (ImageView)findViewById(R.id.imageView2);
+		mic.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent I = new Intent(getApplicationContext() , AudioRecorder.class);
+				startActivity(I);
+				
+			}
+		});
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayShowTitleEnabled(true);
 		super.onCreate(savedInstanceState);
