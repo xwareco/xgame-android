@@ -24,13 +24,13 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public class Register extends SherlockActivity {
-	
+
 	LinearLayout reg;
 	ImageView regapi;
-	EditText name , pass;
-	TextView title, nameTV , passTV;
+	EditText name, pass;
+	TextView title, nameTV, passTV;
 	Typeface arabic, english;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.register_view);
@@ -41,24 +41,25 @@ public class Register extends SherlockActivity {
 		english = Typeface.createFromAsset(getAssets(),
 				"fonts/DJB Stinky Marker.ttf");
 		Locale current = getResources().getConfiguration().locale;
-	    reg = (LinearLayout)findViewById(R.id.reglay);
-	    name = (EditText)findViewById(R.id.editText1);
-	    pass = (EditText)findViewById(R.id.editText2);
-	    title = (TextView)findViewById(R.id.textView1);
-	    nameTV = (TextView)findViewById(R.id.textView2);
-	    passTV = (TextView)findViewById(R.id.textView3);
-	    regapi = (ImageView)findViewById(R.id.imageView1);
-	    regapi.setOnClickListener(new View.OnClickListener() {
-			
+		reg = (LinearLayout) findViewById(R.id.reglay);
+		name = (EditText) findViewById(R.id.editText1);
+		pass = (EditText) findViewById(R.id.editText2);
+		title = (TextView) findViewById(R.id.textView1);
+		nameTV = (TextView) findViewById(R.id.textView2);
+		passTV = (TextView) findViewById(R.id.textView3);
+		regapi = (ImageView) findViewById(R.id.imageView1);
+		regapi.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
-				new User(getApplicationContext(), name.getText().toString(), pass.getText().toString()).execute("register");
-				
+				new User(getApplicationContext(), name.getText().toString(),
+						pass.getText().toString() , null , null).execute("register");
+
 			}
 		});
-	    Animation a = AnimationUtils.loadAnimation(this, R.anim.transition4);
-	    reg.startAnimation(a);
-	    if (current.getDisplayLanguage().equals("Arabic")) {
+		Animation a = AnimationUtils.loadAnimation(this, R.anim.transition4);
+		reg.startAnimation(a);
+		if (current.getDisplayLanguage().equals("Arabic")) {
 			title.setTypeface(arabic);
 			nameTV.setTypeface(arabic);
 			passTV.setTypeface(arabic);
@@ -69,26 +70,24 @@ public class Register extends SherlockActivity {
 		}
 		super.onCreate(savedInstanceState);
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
-		
+
 		MenuInflater inflater = getSupportMenuInflater();
-	    inflater.inflate(R.menu.actionbar, menu);
-	    return true;
+		inflater.inflate(R.menu.actionbar, menu);
+		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		/*
-		if (item.getItemId() == android.R.id.home) {
-
-			if (mDrawerLayout.isDrawerOpen(rellay)) {
-				mDrawerLayout.closeDrawer(rellay);
-			} else {
-				mDrawerLayout.openDrawer(rellay);
-			}
-		}*/
+		 * if (item.getItemId() == android.R.id.home) {
+		 * 
+		 * if (mDrawerLayout.isDrawerOpen(rellay)) {
+		 * mDrawerLayout.closeDrawer(rellay); } else {
+		 * mDrawerLayout.openDrawer(rellay); } }
+		 */
 
 		if (item.getItemId() == R.id.action_testhead) {
 			Intent I = new Intent(getApplicationContext(),
@@ -98,7 +97,7 @@ public class Register extends SherlockActivity {
 
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		// TODO Auto-generated method stub

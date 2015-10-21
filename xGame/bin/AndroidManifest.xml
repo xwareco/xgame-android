@@ -86,6 +86,12 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:theme="@android:style/Theme.Dialog"
+            android:name="uencom.xgame.engine.views.TextMessageSender"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="uencom.xgame.engine.views.SplashActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >

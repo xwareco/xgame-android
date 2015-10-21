@@ -1,23 +1,28 @@
 package uencom.xgame.engine.views;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-
+import uencom.xgame.engine.web.User;
 import uencom.xgame.xgame.R;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AudioRecorder extends Activity {
 
-	ImageView play, stop, record , close;
+	ImageView play, stop, record, close;
 	Button send, delete;
 	TextView Status;
 	MediaRecorder xGameAudioRecorder;
@@ -39,7 +44,7 @@ public class AudioRecorder extends Activity {
 				+ "/xGame/feedback/";
 		File f = new File(outputFile);
 		f.mkdirs();
-		outputFile += "Audio_File.mp4";
+		outputFile += "Audio_File.aac";
 
 		send = (Button) findViewById(R.id.button1);
 		delete = (Button) findViewById(R.id.button2);
@@ -50,8 +55,8 @@ public class AudioRecorder extends Activity {
 
 		xGameAudioRecorder = new MediaRecorder();
 		xGameAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-		xGameAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-		xGameAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.MPEG_4);
+		xGameAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.AAC_ADTS);
+		xGameAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
 		xGameAudioRecorder.setOutputFile(outputFile);
 		prepareOnClicks();
 		super.onCreate(savedInstanceState);
@@ -137,7 +142,24 @@ public class AudioRecorder extends Activity {
 			@Override
 			public void onClick(View v) {
 				// send & delete the file
+				SharedPreferences appSharedPrefs = PreferenceManager
+						.getDefaultSharedPreferences(getApplicationContext());
+				String id = appSharedPrefs.getString("uID", "");
 
+				try {
+					FileInputStream fstrm = new FileInputStream(outputFile);
+					new User(getApplicationContext(), null, null, id, fstrm)
+							.execute("contact");
+					Toast.makeText(
+							getApplicationContext(),
+							"Your audio file is being uploaded to our server now you will be notified as soon as it is done",
+							Toast.LENGTH_LONG).show();
+					finish();
+
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 
@@ -146,8 +168,7 @@ public class AudioRecorder extends Activity {
 			@Override
 			public void onClick(View v) {
 				File recAudioFile = new File(outputFile);
-				if (recAudioFile.exists())
-				{
+				if (recAudioFile.exists()) {
 					recAudioFile.delete();
 					Status.setText("File deleted..");
 					send.setEnabled(false);
@@ -162,16 +183,15 @@ public class AudioRecorder extends Activity {
 
 			}
 		});
-		
+
 		close.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				finish();
-				
+
 			}
 		});
 
 	}
-
 }

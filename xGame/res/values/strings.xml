@@ -71,4 +71,7 @@
     <string name="pau">pause button</string>
     <string name="pla">play button</string>
     <string name="rec">Record button</string>
-    <string name="cancel">close this dialog</string></resources>
+    <string name="cancel">close this dialog</string>
+    <string name="cntctustitle">How do you want to send us your feedback?</string>
+    <string name="viatxt">Via Text</string>
+    <string name="viasnd">Via Voice</string></resources>

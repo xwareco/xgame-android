@@ -141,7 +141,7 @@ public class xGameAPI {
 				if (e.getMessage().contains("Unauthorized")
 						|| e.getMessage().contains("Bad Request")) {
 					e.printStackTrace();
-					String newToken = getNewToken();
+					String newToken = getNewToken("guest");
 					System.out.println("New Token: " + newToken);
 					request.setHeader("Authorization", newToken);
 					Editor prefEditor2 = appSharedPrefs.edit();
@@ -184,7 +184,7 @@ public class xGameAPI {
 				if (e.getMessage().contains("Unauthorized")
 						|| e.getMessage().contains("Bad Request")) {
 					e.printStackTrace();
-					String newToken = getNewToken();
+					String newToken = getNewToken("guest");
 					System.out.println("New Token: " + newToken);
 					request.setHeader("Authorization", newToken);
 					Editor prefEditor2 = appSharedPrefs.edit();
@@ -213,7 +213,7 @@ public class xGameAPI {
 				result = httpclient.execute(request, handler);
 			} catch (Exception e) {
 
-				String newToken = getNewToken();
+				String newToken = getNewToken("user");
 				// System.out.println(newToken);
 				request.setHeader("Authorization", newToken);
 				Editor prefEditor2 = appSharedPrefs.edit();
@@ -229,35 +229,45 @@ public class xGameAPI {
 		return result;
 	}
 
-	public static String getNewToken() {
+	public static String getNewToken(String Flag) {
 		// Data definition
-				String AuthLayerUrl = authUrlPrefix + "access_token";
-				final TelephonyManager tm = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
-				HttpClient httpclient = new DefaultHttpClient();
-				ResponseHandler<String> handler = new BasicResponseHandler();
-				String result = "NULL";
-				String Final = "";
-				try {
-					// API method parameters
-					List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
-					nameValuePairs.add(new BasicNameValuePair("username", "b@c.com"));
-					nameValuePairs.add(new BasicNameValuePair("password", "asdasd"));
-					nameValuePairs.add(new BasicNameValuePair("grant_type", "client_credentials"));
-					nameValuePairs.add(new BasicNameValuePair("client_id", "!@#"));
-					nameValuePairs.add(new BasicNameValuePair("client_secret", "asdasd"));
-					nameValuePairs.add(new BasicNameValuePair("device_id", tm.getDeviceId()));
-					HttpPost request = new HttpPost(new URI(AuthLayerUrl));
-					request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-					request.addHeader("Content-Type","application/x-www-form-urlencoded");
-					request.addHeader("Accept", "application/json");
-					result = httpclient.execute(request, handler);
-					JSONObject obj = new JSONObject(result);
-					Final = obj.getString("access_token");
-		            //System.out.println(Final);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				
+		String AuthLayerUrl = authUrlPrefix + "access_token";
+		final TelephonyManager tm = (TelephonyManager) ctx
+				.getSystemService(Context.TELEPHONY_SERVICE);
+		HttpClient httpclient = new DefaultHttpClient();
+		ResponseHandler<String> handler = new BasicResponseHandler();
+		String result = "NULL";
+		String Final = "";
+		try {
+			// API method parameters
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
+			nameValuePairs
+					.add(new BasicNameValuePair("username", "hhh@lll.com"));
+			nameValuePairs.add(new BasicNameValuePair("password", "vvv"));
+			if (Flag.equals("guest"))
+				nameValuePairs.add(new BasicNameValuePair("grant_type",
+						"client_credentials"));
+			else if (Flag.equals("user"))
+				nameValuePairs.add(new BasicNameValuePair("grant_type",
+						"password"));
+			nameValuePairs.add(new BasicNameValuePair("client_id", "!@#"));
+			nameValuePairs
+					.add(new BasicNameValuePair("client_secret", "asdasd"));
+			nameValuePairs.add(new BasicNameValuePair("device_id", tm
+					.getDeviceId()));
+			HttpPost request = new HttpPost(new URI(AuthLayerUrl));
+			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			request.addHeader("Content-Type",
+					"application/x-www-form-urlencoded");
+			request.addHeader("Accept", "application/json");
+			result = httpclient.execute(request, handler);
+			JSONObject obj = new JSONObject(result);
+			Final = obj.getString("access_token");
+			// System.out.println(Final);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return Final;
 
 	}

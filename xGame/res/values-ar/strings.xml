@@ -71,4 +71,7 @@
     <string name="send2">Send</string>
     <string name="delete">Delete</string>
     <string name="recording">Waiting..</string>
-     <string name="cancel">close this dialog</string></resources>
+     <string name="cancel">close this dialog</string>
+     <string name="cntctustitle">كيف تريد اﻻتصال بنا؟</string>
+    <string name="viatxt">بواسطة الكتابة</string>
+    <string name="viasnd">بواسطة الصوت</string></resources>

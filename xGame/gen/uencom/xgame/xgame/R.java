@@ -997,33 +997,33 @@ containing a value of this type.
         public static final int abs__title=0x7f0a001b;
         public static final int abs__up=0x7f0a0001;
         public static final int action_testhead=0x7f0a0058;
-        public static final int button1=0x7f0a0035;
-        public static final int button2=0x7f0a0036;
-        public static final int button3=0x7f0a0037;
-        public static final int button4=0x7f0a0038;
-        public static final int button5=0x7f0a0039;
+        public static final int button1=0x7f0a0037;
+        public static final int button2=0x7f0a0038;
+        public static final int button3=0x7f0a0039;
+        public static final int button4=0x7f0a003a;
+        public static final int button5=0x7f0a003b;
         public static final int catImg=0x7f0a0048;
         public static final int disableHome=0x7f0a000a;
         public static final int drawerLayout=0x7f0a0045;
-        public static final int editText1=0x7f0a0034;
+        public static final int editText1=0x7f0a0043;
         public static final int editText2=0x7f0a0044;
         public static final int edit_query=0x7f0a0026;
-        public static final int gameLay=0x7f0a003e;
+        public static final int gameLay=0x7f0a003f;
         public static final int homeAsUp=0x7f0a000b;
-        public static final int icon=0x7f0a003a;
-        public static final int imageView1=0x7f0a0032;
-        public static final int imageView2=0x7f0a0033;
-        public static final int imageView3=0x7f0a003d;
+        public static final int icon=0x7f0a003c;
+        public static final int imageView1=0x7f0a0033;
+        public static final int imageView2=0x7f0a0035;
+        public static final int imageView3=0x7f0a003e;
         public static final int imageView4=0x7f0a004f;
         public static final int imageView5=0x7f0a004e;
-        public static final int img=0x7f0a003f;
-        public static final int img2=0x7f0a0040;
+        public static final int img=0x7f0a0040;
+        public static final int img2=0x7f0a0041;
         public static final int lLayout=0x7f0a0057;
         public static final int leftArrow=0x7f0a0047;
         public static final int listMode=0x7f0a0007;
         public static final int listView1=0x7f0a004a;
         public static final int mainlay=0x7f0a0051;
-        public static final int mainlayout=0x7f0a0041;
+        public static final int mainlayout=0x7f0a0042;
         public static final int navList=0x7f0a004d;
         public static final int normal=0x7f0a0008;
         public static final int progressBar1=0x7f0a0053;
@@ -1037,10 +1037,10 @@ containing a value of this type.
         public static final int showTitle=0x7f0a000e;
         public static final int tabMode=0x7f0a0009;
         public static final int text=0x7f0a0056;
-        public static final int textView1=0x7f0a003c;
-        public static final int textView2=0x7f0a0042;
-        public static final int textView3=0x7f0a0043;
-        public static final int title=0x7f0a003b;
+        public static final int textView1=0x7f0a0034;
+        public static final int textView2=0x7f0a0036;
+        public static final int textView3=0x7f0a0032;
+        public static final int title=0x7f0a003d;
         public static final int translay=0x7f0a004b;
         public static final int useLogo=0x7f0a000f;
         public static final int wrap_content=0x7f0a0006;
@@ -1088,9 +1088,10 @@ containing a value of this type.
         public static final int sherlock_spinner_item=0x7f030024;
         public static final int speechandsounddemo=0x7f030025;
         public static final int splash_activity=0x7f030026;
-        public static final int ttsdemo=0x7f030027;
-        public static final int xgame_list_item=0x7f030028;
-        public static final int xmldemo=0x7f030029;
+        public static final int textmessenger=0x7f030027;
+        public static final int ttsdemo=0x7f030028;
+        public static final int xgame_list_item=0x7f030029;
+        public static final int xmldemo=0x7f03002a;
     }
     public static final class menu {
         public static final int actionbar=0x7f0d0000;
@@ -1165,6 +1166,7 @@ containing a value of this type.
         public static final int button5=0x7f0b001c;
         public static final int cancel=0x7f0b0054;
         public static final int cats=0x7f0b0046;
+        public static final int cntctustitle=0x7f0b0055;
         public static final int conerror=0x7f0b003b;
         public static final int cont=0x7f0b002e;
         public static final int delete=0x7f0b004f;
@@ -1214,6 +1216,8 @@ containing a value of this type.
         public static final int tv_cat=0x7f0b0021;
         public static final int type=0x7f0b004b;
         public static final int usr=0x7f0b0036;
+        public static final int viasnd=0x7f0b0057;
+        public static final int viatxt=0x7f0b0056;
         public static final int welcome=0x7f0b003f;
     }
     public static final class style {
