@@ -1,4 +1,4 @@
-package com.example.missingLetter;
+package com.example.missingletter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +19,7 @@ public class S0 implements IstateActions {
 		// TTS for how to play
 		Toast.makeText(
 				c,
-				"application store random word and show to you without one letter you should guess this letter from four letters also showed to you and complete the word ",Toast.LENGTH_LONG).show();
+				"application store random word and show to you without one letter you should guess this letter from four letters also showed to you so Listen in your headphone and click button have  the correct letter  and complete the word ",Toast.LENGTH_LONG).show();
 		return I;
 	}
 

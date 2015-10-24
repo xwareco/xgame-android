@@ -1,4 +1,4 @@
-package com.example.missingLetter;
+package com.example.missingletter;
 
 import android.content.Intent;
 import android.widget.Toast;

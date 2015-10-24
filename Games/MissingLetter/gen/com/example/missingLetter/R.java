@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.example.missingLetter;
+package com.example.missingletter;
 
 public final class R {
     public static final class attr {

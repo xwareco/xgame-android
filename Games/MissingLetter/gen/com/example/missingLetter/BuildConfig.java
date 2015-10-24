@@ -1,5 +1,5 @@
 /** Automatically generated file. DO NOT MODIFY */
-package com.example.missingLetter;
+package com.example.missingletter;
 
 public final class BuildConfig {
     public final static boolean DEBUG = true;

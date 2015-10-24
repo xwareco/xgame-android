@@ -1,24 +1,16 @@
-package com.example.missingLetter;
+package com.example.missingletter;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
 
+import uencom.xgame.interfaces.IstateActions;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Environment;
-import android.speech.RecognizerIntent;
-import android.util.Log;
+import android.graphics.Color;
+import android.view.Gravity;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
-import android.widget.Toast;
-import uencom.xgame.interfaces.IstateActions;
-import uencom.xgame.sound.HeadPhone;
-import uencom.xgame.sound.TTS;
-import uencom.xgame.speech.SpeechRecognition;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class S1 extends Activity implements IstateActions {
 	String[] words = new String[]{"freedom","elephant","education","school","house"};
@@ -31,12 +23,42 @@ public class S1 extends Activity implements IstateActions {
 	@Override
 	public void onStateEntry(LinearLayout layout, Intent I) {
 		// TODO Auto-generated method stub
+		
+		 // setup parent LinearLayout
+		LayoutParams parentLayoutParams =
+				new LinearLayout.LayoutParams(
+				LayoutParams.MATCH_PARENT,
+				LayoutParams.MATCH_PARENT);
+		layout.setOrientation(LinearLayout.VERTICAL);
+		layout.setLayoutParams(parentLayoutParams);
+		
+		//first text view to show word
 		word = words[wordnum];
-		 I.putExtra("word",word );
-		 letterposition = (int) Math.floor(Math.random()*word.length());
-		 I.putExtra("letterPosition", letterposition);
+		I.putExtra("word",word );
+		letterposition = (int) Math.floor(Math.random()*word.length());
+		I.putExtra("letterPosition", letterposition);
 		tempString = new StringBuilder(word);
 		tempString.setCharAt(letterposition, '$');
+		TextView tv = new TextView(this);
+		
+		LinearLayout.LayoutParams layoutCenterParams =
+				new LinearLayout.LayoutParams(
+				LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT );
+		layoutCenterParams.setMargins(5, 5, 5, 5);
+		layoutCenterParams.gravity = Gravity.CENTER;
+		tv.setLayoutParams(layoutCenterParams);
+		tv.setText(tempString.toString());
+		tv.setBackgroundColor(Color.BLUE);
+		layout.addView(tv);
+		
+		//setup Button to show letter
+		LinearLayout.LayoutParams layoutButtonParams =
+				new LinearLayout.LayoutParams(
+				LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT );
+		layoutCenterParams.setMargins(2, 2, 2, 2);
+		
 	    count  = I.getIntExtra("Count", 0);
 		count++;
 		I.putExtra("Count", count);
