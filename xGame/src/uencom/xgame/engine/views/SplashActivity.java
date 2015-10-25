@@ -103,6 +103,7 @@ public class SplashActivity extends Activity {
 				// load the games
 				new Server(SplashActivity.this, refresh, offline, loading,
 						connerror, bar, null, offlineGames).execute("cat");
+				
 
 			}
 		});

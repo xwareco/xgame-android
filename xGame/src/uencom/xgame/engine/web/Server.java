@@ -53,7 +53,7 @@ public class Server extends AsyncTask<String, String, String> implements
 		trans = lay;
 		gamesView = lv;
 		checkInstallations = new onDeviceGameChecker(ctx);
-		testFolder = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/Shoot it!";
+		testFolder = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/hunt_the_duck";
 	}
 
 	@Override

@@ -4,10 +4,12 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 import uencom.xgame.interfaces.IStateListener;
 import uencom.xgame.interfaces.IstateActions;
 import uencom.xgame.sensors.Accelerometer;
+import uencom.xgame.xgame.R;
 import uencom.xgame.gestures.HandGestures;
 import dalvik.system.DexClassLoader;
 import android.annotation.SuppressLint;
@@ -17,6 +19,8 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -187,10 +191,28 @@ public class State implements IstateActions {
 
 	@Override
 	public void onStateEntry(LinearLayout layout, Intent I) {
+		 Typeface arabic , english;
+		 Animation fadeIn;
+		 arabic = Typeface.createFromAsset(ctx.getAssets(),
+					"fonts/Kharabeesh Font.ttf");
+			english = Typeface.createFromAsset(ctx.getAssets(),
+					"fonts/DJB Stinky Marker.ttf");
+			Locale current = ctx.getResources().getConfiguration().locale;
+			if (current.getDisplayLanguage().equals("Arabic")) {
+				gameTextView.setTypeface(arabic);
+			} else if (current.getDisplayLanguage().equals("English")) {
+				gameTextView.setTypeface(english);
+			}
+			fadeIn = AnimationUtils.loadAnimation(ctx, R.anim.fadein);
+			gameTextView.startAnimation(fadeIn);
 		if (!this.id.equals("S0"))
 			layout.setBackground(Drawable.createFromPath(imgPath));
 		else
-			layout.setBackgroundColor(Color.GREEN);
+		{
+			layout.setBackgroundResource(R.drawable.bg1);
+			gameTextView.setBackgroundResource(R.drawable.trans);
+		}
+		
 		gameTextView.setTextColor(Color.WHITE);
 		gameTextView.setText(text);
 		Call("Entry", layout, I);

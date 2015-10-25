@@ -42,6 +42,7 @@ public class GameOver extends SherlockActivity {
 		}
 		gamescore = (ImageView) findViewById(R.id.imageView3);
 		tryAgain = (ImageView) findViewById(R.id.imageView2);
+		int Score = getIntent().getIntExtra("Score" , 0);
 		Animation a = AnimationUtils.loadAnimation(this, R.anim.transition4);
 		// int Score = getIntent().getIntExtra("Score", 0);
 		gamescore.startAnimation(a);
@@ -106,6 +107,7 @@ public class GameOver extends SherlockActivity {
 			}
 		});
 		gameName.setText(getIntent().getStringExtra("gamename"));
+		Toast.makeText(this, "Your Score is: " + Score, Toast.LENGTH_LONG).show();
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayShowTitleEnabled(true);
 		super.onCreate(savedInstanceState);
