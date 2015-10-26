@@ -1,9 +1,10 @@
-package uencom.xgame.demos;
+/*package uencom.xgame.demos;
 
-/*import java.util.ArrayList;
+import java.util.ArrayList;
 
-import uencom.Xgame.sound.headPhone;
-import uencom.Xgame.speech.speechRecognition;
+import uencom.xgame.sound.HeadPhone;
+import uencom.xgame.speech.SpeechRecognition;
+import uencom.xgame.xgame.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -19,8 +20,8 @@ public class SpeechandSoundDemo extends Activity implements OnClickListener,
 		android.content.DialogInterface.OnClickListener {
 
 	TextView TV, TV2, TV3;
-	speechRecognition engine = speechRecognition.getInstance();
-	headPhone headPhone = new headPhone(this);
+	SpeechRecognition engine = SpeechRecognition.getInstance();
+	HeadPhone headPhone = new HeadPhone(this);
 	int REQUST_CODE = 999;
 	String lang = "ar-EG";
 	AlertDialog dialog;
@@ -49,7 +50,7 @@ public class SpeechandSoundDemo extends Activity implements OnClickListener,
 		case R.id.textView1:
 			// headPhone.play(R.raw.helicopter2, 2);
 			if (headPhone.detectHeadPhones() == false)
-				Toast.makeText(this, "ÊÃßÏ ãä ÊæÕíá ÓãÇÚÇÊ ÇáÃĞä",
+				Toast.makeText(this, "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½",
 						Toast.LENGTH_LONG).show();
 			else {
 				dialog = buil.create();
@@ -59,11 +60,11 @@ public class SpeechandSoundDemo extends Activity implements OnClickListener,
 			break;
 
 		case R.id.textView2:
-			headPhone.play(R.raw.helicopter, 3);
+			//headPhone.play(R.raw.helicopter, 3);
 			break;
 
 		case R.id.textView3:
-			headPhone.play(R.raw.helicopter2, 2);
+			//headPhone.play(R.raw.helicopter2, 2);
 			break;
 		}
 
@@ -79,7 +80,7 @@ public class SpeechandSoundDemo extends Activity implements OnClickListener,
 
 			ProcessWords(suggestedWords);
 		} else
-			Toast.makeText(this, "áã íÊã ÇáÊÚÑİ Úáì Ãí ßáãÇÊ",
+			Toast.makeText(this, "ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½",
 					Toast.LENGTH_LONG).show();
 		super.onActivityResult(requestCode, resultCode, data);
 	}
@@ -88,19 +89,19 @@ public class SpeechandSoundDemo extends Activity implements OnClickListener,
 
 		for (String word : suggestedWords) {
 
-			if (word.equals("íãíä") || word.equals("right")) {
+			if (word.equals("ï¿½ï¿½ï¿½ï¿½") || word.equals("right")) {
 				Toast.makeText(getApplicationContext(), word, Toast.LENGTH_LONG)
 						.show();
 				headPhone.setLeftLevel(0f);
 				headPhone.setRightLevel(1f);
 				headPhone.play(R.raw.gameover, 0);
-			} else if (word.equals("íÓÇÑ") || word.equals("left")) {
+			} else if (word.equals("ï¿½ï¿½ï¿½ï¿½") || word.equals("left")) {
 				Toast.makeText(getApplicationContext(), word, Toast.LENGTH_LONG)
 						.show();
 				headPhone.setRightLevel(0f);
 				headPhone.setLeftLevel(1f);
 				headPhone.play(R.raw.gameover, 0);
-			} else if (word.equals("ÇÎÊÈÇÑ") || word.equals("test")) {
+			} else if (word.equals("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½") || word.equals("test")) {
 				Toast.makeText(getApplicationContext(), word, Toast.LENGTH_LONG)
 						.show();
 				headPhone.setRightLevel(1f);
@@ -117,14 +118,14 @@ public class SpeechandSoundDemo extends Activity implements OnClickListener,
 
 		case 0:
 			lang = "ar-EG";
-			TV.setText("ÇÖÛØ áÈÏÁ ÇáÃæÇãÑ.áÇÎÊÈÇÑ ÓãÇÚÉ ÇáÃĞä Çáíãäì Şá (íãíä) æáÇÎÊÈÇÑ ÓãÇÚÉ ÇáÃĞä ÇáíÓÑì Şá (íÓÇÑ) æáÇÎÊÈÇÑ ßáÊÇ ÇáÓãÇÚÊíä Şá (ÇÎÊÈÇÑ).");
-			TV2.setText("ÇÖÛØ åäÇ áÇÎÊÈÇÑ ÇÑÊİÇÚ æÇäÎİÇÖ ãÓÊæì ÇáÕæÊ ãä Çáíãíä ááíÓÇÑ");
-			TV3.setText("ÇÖÛØ åäÇ áÇÎÊÈÇÑ ÇÑÊİÇÚ æÇäÎİÇÖ ãÓÊæì ÇáÕæÊ ãä ÇáíÓÇÑ ááíãíä");
+			TV.setText("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½).");
+			TV2.setText("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+			TV3.setText("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			break;
 
 		case 1:
 			lang = "en-US";
-			TV.setText("ÇPress here to start the speech commands. To test the right headset say (right) , To test the left headset say (left), To test both headsets together say (test).");
+			TV.setText("ï¿½Press here to start the speech commands. To test the right headset say (right) , To test the left headset say (left), To test both headsets together say (test).");
 			TV2.setText("Press here to test sound leveling from right to left");
 			TV3.setText("Press here to test sound leveling from left to right");
 
@@ -137,4 +138,5 @@ public class SpeechandSoundDemo extends Activity implements OnClickListener,
 	}
 
 	
-}*/
+}
+*/

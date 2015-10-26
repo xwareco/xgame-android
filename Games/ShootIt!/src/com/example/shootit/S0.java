@@ -6,10 +6,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import uencom.xgame.interfaces.IstateActions;
 
+
 public class S0 implements IstateActions {
 
 	@Override
-	public void onStateEntry(LinearLayout layout, Intent I) {
+	public void onStateEntry(LinearLayout layout, Intent I, Context C) {
+		
 		TextView tv = (TextView)layout.getChildAt(0);
 		tv.setText("This is the how to play instructions");
 

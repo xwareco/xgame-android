@@ -9,7 +9,7 @@ import uencom.xgame.interfaces.IstateActions;
 public class S0 implements IstateActions {
 
 	@Override
-	public void onStateEntry(LinearLayout layout, Intent I) {
+	public void onStateEntry(LinearLayout layout, Intent I, Context C) {
 		TextView tv = (TextView) layout.getChildAt(0);
 		tv.setText("The duck is flying beside you,shoot it when you can by double tapping the screen,you can only shot it when it's sound is played in both left and right headphones.");
 

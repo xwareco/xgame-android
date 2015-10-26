@@ -175,8 +175,8 @@ public class State implements IstateActions {
 			} else if (method.equals("Entry")) {
 				Object myObject = stateClass.getConstructor().newInstance();
 				Method Entry = myObject.getClass().getMethod("onStateEntry",
-						new Class[] { LinearLayout.class, Intent.class });
-				Entry.invoke(myObject, lay, I);
+						new Class[] { LinearLayout.class, Intent.class, Context.class});
+				Entry.invoke(myObject, lay, I, ctx);
 			} else if (method.equals("Loop")) {
 				Object myObject = stateClass.getConstructor().newInstance();
 				Method Loop = myObject.getClass().getMethod("loopBack",
@@ -190,7 +190,7 @@ public class State implements IstateActions {
 	}
 
 	@Override
-	public void onStateEntry(LinearLayout layout, Intent I) {
+	public void onStateEntry(LinearLayout layout, Intent I , Context C) {
 		 Typeface arabic , english;
 		 Animation fadeIn;
 		 arabic = Typeface.createFromAsset(ctx.getAssets(),

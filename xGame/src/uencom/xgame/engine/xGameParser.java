@@ -92,7 +92,7 @@ public class xGameParser extends Activity implements IStateListener {
 								runOnUiThread(new Runnable() {
 									public void run() {
 										currentState.onStateEntry(gameLayout,
-												gameIntent);
+												gameIntent, xGameParser.this);
 									}
 								});
 								stateGesture = currentState
@@ -144,7 +144,7 @@ public class xGameParser extends Activity implements IStateListener {
 			gameIntent.putExtra("Count", counterTime);
 			definetheTask();
 			loopTimer.schedule(loopTimerTask, 0, 3000);
-			currentState.onStateEntry(gameLayout, gameIntent);
+			currentState.onStateEntry(gameLayout, gameIntent, xGameParser.this);
 		}
 
 	}
@@ -244,7 +244,7 @@ public class xGameParser extends Activity implements IStateListener {
 					currentState = stateFromTransition(trans.get(i));
 					runOnUiThread(new Runnable() {
 						public void run() {
-							currentState.onStateEntry(gameLayout, gameIntent);
+							currentState.onStateEntry(gameLayout, gameIntent, xGameParser.this);
 
 						}
 					});
@@ -282,7 +282,7 @@ public class xGameParser extends Activity implements IStateListener {
 					runOnUiThread(new Runnable() {
 						public void run() {
 
-							currentState.onStateEntry(gameLayout, gameIntent);
+							currentState.onStateEntry(gameLayout, gameIntent, xGameParser.this);
 
 						}
 					});
@@ -295,4 +295,6 @@ public class xGameParser extends Activity implements IStateListener {
 		}
 
 	}
+	
+	
 }

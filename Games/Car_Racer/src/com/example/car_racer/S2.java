@@ -10,7 +10,7 @@ import uencom.xgame.sound.HeadPhone;
 public class S2 implements IstateActions {
 
 	@Override
-	public void onStateEntry(LinearLayout layout, Intent I) {
+	public void onStateEntry(LinearLayout layout, Intent I, Context C) {
 		// TODO Auto-generated method stub
 
 	}

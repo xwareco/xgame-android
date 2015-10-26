@@ -6,7 +6,7 @@ import android.widget.LinearLayout;
 
 public interface IstateActions {
 
-	public void onStateEntry(LinearLayout layout , Intent I);
+	public void onStateEntry(LinearLayout layout , Intent I , Context C);
 
 	public Intent loopBack(Context c , Intent I);
 
