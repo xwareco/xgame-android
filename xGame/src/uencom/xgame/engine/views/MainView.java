@@ -26,15 +26,12 @@ import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -143,6 +140,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 		trans = (LinearLayout) findViewById(R.id.translay);
 		pre = (ImageView) findViewById(R.id.leftArrow);
 		next = (ImageView) findViewById(R.id.rightArrow);
+		System.out.println("CURINDO: " + categories.get(currentIndex).getId());
 		new Server(MainView.this, null, null, loading, null, proBar, trans,
 				list).execute("game", categories.get(currentIndex).getId(),
 				String.valueOf(0));
@@ -162,70 +160,26 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 					currentIndex = categories.size() - 1;
 
 				if (currentIndex != lastIndex) {
-					Thread t = new Thread(new Runnable() {
+
+					runOnUiThread(new Runnable() {
 
 						@Override
 						public void run() {
-							try {
-								final Drawable logo = categories.get(
-										currentIndex).setCategoryLogo();
-								if (logo != null) {
-									runOnUiThread(new Runnable() {
+							trans.setVisibility(View.VISIBLE);
+							loading.setVisibility(View.VISIBLE);
+							proBar.setVisibility(View.VISIBLE);
+							list.setVisibility(View.GONE);
+							System.out.println("CURIND: "
+									+ categories.get(currentIndex).getId());
+							new Server(MainView.this, null, null, loading,
+									null, proBar, trans, list).execute("game",
+									categories.get(currentIndex).getId(),
+									String.valueOf(0));
 
-										@Override
-										public void run() {
-											mainImage.setImageDrawable(logo);
-
-										}
-									});
-
-								}
-							} finally {
-								final Animation a = AnimationUtils
-										.loadAnimation(getApplicationContext(),
-												R.anim.fadein);
-
-								a.setAnimationListener(new Animation.AnimationListener() {
-
-									@Override
-									public void onAnimationStart(Animation arg0) {
-										// TODO Auto-generated method stub
-
-									}
-
-									@Override
-									public void onAnimationRepeat(Animation arg0) {
-										// TODO Auto-generated method stub
-
-									}
-
-									@Override
-									public void onAnimationEnd(Animation arg0) {
-										// TODO Auto-generated method stub
-										trans.setVisibility(View.VISIBLE);
-										loading.setVisibility(View.VISIBLE);
-										proBar.setVisibility(View.VISIBLE);
-										new Server(getApplicationContext(),
-												null, null, null, null, proBar,
-												trans, list).execute("game",
-												String.valueOf(currentIndex),
-												String.valueOf(0));
-									}
-								});
-								runOnUiThread(new Runnable() {
-
-									@Override
-									public void run() {
-										mainImage.startAnimation(a);
-
-									}
-								});
-							}
 						}
 					});
-					t.start();
-					setNames();
 				}
+				setNames();
 			}
 
 		});
@@ -240,68 +194,24 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 					currentIndex = 0;
 
 				if (currentIndex != lastIndex) {
-					Thread t = new Thread(new Runnable() {
+
+					runOnUiThread(new Runnable() {
 
 						@Override
 						public void run() {
-							try {
-								final Drawable logo = categories.get(
-										currentIndex).setCategoryLogo();
-								if (logo != null) {
-									runOnUiThread(new Runnable() {
+							trans.setVisibility(View.VISIBLE);
+							loading.setVisibility(View.VISIBLE);
+							proBar.setVisibility(View.VISIBLE);
+							list.setVisibility(View.GONE);
+							System.out.println("CURIND: "
+									+ categories.get(currentIndex).getId());
+							new Server(MainView.this, null, null, loading,
+									null, proBar, trans, list).execute("game",
+									categories.get(currentIndex).getId(),
+									String.valueOf(0));
 
-										@Override
-										public void run() {
-											mainImage.setImageDrawable(logo);
-
-										}
-									});
-
-								}
-							} finally {
-								final Animation a = AnimationUtils
-										.loadAnimation(getApplicationContext(),
-												R.anim.fadein);
-								a.setAnimationListener(new Animation.AnimationListener() {
-
-									@Override
-									public void onAnimationStart(Animation arg0) {
-										// TODO Auto-generated method stub
-
-									}
-
-									@Override
-									public void onAnimationRepeat(Animation arg0) {
-										// TODO Auto-generated method stub
-
-									}
-
-									@Override
-									public void onAnimationEnd(Animation arg0) {
-										// TODO Auto-generated method stub
-										trans.setVisibility(View.VISIBLE);
-										loading.setVisibility(View.VISIBLE);
-										proBar.setVisibility(View.VISIBLE);
-										new Server(MainView.this, null, null,
-												null, null, proBar, trans, list)
-												.execute("game", String
-														.valueOf(currentIndex),
-														String.valueOf(0));
-									}
-								});
-								runOnUiThread(new Runnable() {
-
-									@Override
-									public void run() {
-										mainImage.startAnimation(a);
-
-									}
-								});
-
-							}
 						}
 					});
-					t.start();
 				}
 				setNames();
 			}
@@ -510,7 +420,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 				I = new Intent(this, ContactUs.class);// contact
 				I.putExtra("ID", uID);
 				I.putExtra("Name", uName);
-				
+
 			} else {
 				String fileContents = User.readFromFile();
 				if (fileContents.equals("")) {
@@ -521,11 +431,14 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 							Toast.LENGTH_LONG).show();
 				}
 				// 9,ali,123
-				else
-				{
-					uID = fileContents.substring(0,fileContents.indexOf(','));
-					uName = fileContents.substring(fileContents.indexOf(',')+1,fileContents.lastIndexOf(','));
-				    uPass = fileContents.substring(fileContents.lastIndexOf(',')+1,fileContents.length()-1);
+				else {
+					uID = fileContents.substring(0, fileContents.indexOf(','));
+					uName = fileContents.substring(
+							fileContents.indexOf(',') + 1,
+							fileContents.lastIndexOf(','));
+					uPass = fileContents.substring(
+							fileContents.lastIndexOf(',') + 1,
+							fileContents.length() - 1);
 					System.out.println(uID + " " + uName + " Pass: " + uPass);
 					prefsEditor.putString("uID", uID);
 					prefsEditor.putString("uName", uName);
@@ -533,7 +446,8 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 					prefsEditor.commit();
 					Toast.makeText(
 							getApplicationContext(),
-							"Welcome " + uName
+							"Welcome "
+									+ uName
 									+ " ,We are very glad to hear your feedback",
 							Toast.LENGTH_LONG).show();
 					I = new Intent(this, ContactUs.class);// contact

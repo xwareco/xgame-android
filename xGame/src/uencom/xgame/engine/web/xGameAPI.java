@@ -80,6 +80,7 @@ public class xGameAPI {
 		// Data definition
 		GamesJsonParameterConverter JPC = new GamesJsonParameterConverter(
 				catId, limit, last_id);
+		System.out.println("DATA: " + catId + " " + limit + " " + last_id);
 		String paramsJSON = inputJSONConverter.toJson(JPC);
 		String urlEncodedParams = null;
 		try {
@@ -90,6 +91,7 @@ public class xGameAPI {
 		}
 		String url = urlPrefix + "getCategoryGames?req_data="
 				+ urlEncodedParams;
+		System.out.println(url);
 		String result = makeApiCall(url, "game", "");
 		ArrayList<Game> games = new ArrayList<Game>();
 		if (result != "NULL") {

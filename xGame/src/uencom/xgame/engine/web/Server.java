@@ -65,7 +65,7 @@ public class Server extends AsyncTask<String, String, String> implements
 				categories = api.getCategories();
 			else if (arg0[0].equalsIgnoreCase("game")) {
 				games = api.getGames(arg0[1], "10", arg0[2]);
-				System.out.println(games.get(0).getName());
+				System.out.println("DATA2:" + arg0[1] + " " + arg0[2]);
 				Gson g = new Gson();
 				String gamesJSON = g.toJson(games);
 				System.out.println("Iam In!!!");
@@ -130,10 +130,10 @@ public class Server extends AsyncTask<String, String, String> implements
 			ctx.startActivity(I);
 		}
 		else {
-			System.out.println("Iam here!!");
+			
 			if (bar != null && loading != null && trans != null
 					&& gamesView != null) {
-
+				System.out.println("Iam here here!!");
 				bar.setVisibility(View.GONE);
 				loading.setVisibility(View.GONE);
 				trans.setVisibility(View.GONE);
@@ -143,6 +143,8 @@ public class Server extends AsyncTask<String, String, String> implements
 					xGameList xgameAdapter = new xGameList(act, games);
 					gamesView.setAdapter(xgameAdapter);
 					gamesView.setVisibility(View.VISIBLE);
+					mp = MediaPlayer.create(ctx, uencom.xgame.xgame.R.raw.done);
+					mp.start();
 				}
 			}
 		}
