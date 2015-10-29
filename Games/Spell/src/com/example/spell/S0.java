@@ -10,12 +10,13 @@ import uencom.xgame.interfaces.IstateActions;
 public class S0 implements IstateActions {
 
 	@Override
-	public void onStateEntry(LinearLayout layout, Intent I) {
+	public void onStateEntry(LinearLayout layout, Intent I, Context C) {
 		// TODO Auto-generated method stub
 		TextView tv = (TextView)layout.getChildAt(0);
 	     tv.setText("you should listen to word and then spell it correctly");
 
 	}
+
 
 	@Override
 	public Intent loopBack(Context c, Intent I) {
@@ -29,4 +30,5 @@ public class S0 implements IstateActions {
 
 	}
 
+	
 }
