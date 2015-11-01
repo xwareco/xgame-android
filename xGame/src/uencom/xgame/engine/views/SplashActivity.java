@@ -73,6 +73,7 @@ public class SplashActivity extends Activity {
 				bar.setVisibility(View.VISIBLE);
 				refresh.setVisibility(View.GONE);
 				offlineGames.setVisibility(View.GONE);
+				offline.setVisibility(View.GONE);
 				connerror.setVisibility(View.GONE);
 				loading.setVisibility(View.VISIBLE);
 				new Server(SplashActivity.this, refresh, offline, loading,

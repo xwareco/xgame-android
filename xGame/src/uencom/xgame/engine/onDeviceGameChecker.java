@@ -43,6 +43,7 @@ public class onDeviceGameChecker {
 				String xmlFileName = "App.xml";
 				if (mainGameFolder.getName().equalsIgnoreCase(gameName)
 						|| gameName.equalsIgnoreCase("any")) {
+
 					for (int j = 0; j < game.size(); j++) {
 						if (game.get(j).getName().equals(xmlFileName))
 							xmlFileExists = true;
@@ -62,7 +63,14 @@ public class onDeviceGameChecker {
 
 					if (xmlFileExists && imagesFoldeNotEmpty
 							&& soundFoldeNotEmpty && sourceFoldeNotEmpty) {
+
 						offGames.add(mainGameFolder.getName());
+						if (!gameName.equalsIgnoreCase("any")) {
+							res = new offlinexGameList((Activity) ctx, offGames);
+							System.out.println(gameName);
+							return res;
+						}
+
 					}
 
 					else {
@@ -71,6 +79,7 @@ public class onDeviceGameChecker {
 					}
 
 					if (i == folderContents.size() - 1 && offGames.size() > 0) {
+
 						res = new offlinexGameList((Activity) ctx, offGames);
 
 					}

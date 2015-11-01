@@ -218,7 +218,6 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 		});
 
 		list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
@@ -236,7 +235,6 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 						+ "/xGame/Games/" + games.get(arg2).getName();
 
 				if (!new File(ifGameExistsLocation).exists()) {
-
 					final String logUrl = IMAGE_PREFIX
 							+ games.get(arg2)
 									.getFileName()
@@ -265,8 +263,8 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 				else {
 					onDeviceGameChecker installations = new onDeviceGameChecker(
 							MainView.this);
-					if (installations.isOfflineGameExists(games.get(arg2)
-							.getName()) == null) {
+					if (installations.isOfflineGameExists(list.getAdapter()
+							.getItem(arg2).toString()) == null) {
 						Intent I = new Intent(getApplicationContext(),
 								GameView.class);
 						I.putExtra("Folder", ifGameExistsLocation);
@@ -398,11 +396,12 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 
 	private void selectItemFromDrawer(int position) {
 		Intent I = null;
-		// if(position == 0) I = new Intent(this , SplashActivity.class);
-		if (position == 1)
+		if (position == 0)
+			I = new Intent(this, SplashActivity.class);
+		else if (position == 1)
 			I = new Intent(this, Register.class);
 		else if (position == 2)
-			I = new Intent(this, AboutUs.class);// about
+			I = new Intent(this, Register.class);// about
 		else if (position == 3) {
 			SharedPreferences appSharedPrefs = PreferenceManager
 					.getDefaultSharedPreferences(getApplicationContext());
@@ -457,11 +456,9 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 				}
 
 			}
-			// Close the drawer
-			// mDrawerLayout.closeDrawer(mDrawerPane);
-			startActivity(I);
-		}
 
+		}
+		startActivity(I);
 	}
 
 	@Override

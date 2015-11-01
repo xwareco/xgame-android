@@ -18,6 +18,7 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -113,10 +114,26 @@ public class Server extends AsyncTask<String, String, String> implements
 		} else if (result.equalsIgnoreCase("off")) {
 			mp = MediaPlayer.create(ctx, uencom.xgame.xgame.R.raw.failed);
 			mp.start();
-			offlinexGameList xgameAdapter = checkInstallations.isOfflineGameExists("any");
+			final offlinexGameList xgameAdapter = checkInstallations.isOfflineGameExists("any");
 			if (xgameAdapter != null) {
 				offline.setVisibility(View.VISIBLE);
 				gamesView.setAdapter(xgameAdapter);
+				gamesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> arg0, View arg1,
+							int arg2, long arg3) {
+						// TODO Auto-generated method stub
+						String gameName = xgameAdapter.getItem(arg2);
+						String offlinePath = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/" + gameName;
+								Intent I = new Intent(ctx,
+										xGameParser.class);
+								I.putExtra("Folder", offlinePath);
+								I.putExtra("gamename",gameName);
+								ctx.startActivity(I);
+						
+					}
+				});
 			}
 			bar.setVisibility(View.GONE);
 			loading.setVisibility(View.GONE);
