@@ -30,7 +30,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -64,22 +66,85 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 	ListView list;
 	int currentIndex, lastIndex;
 	TextView header, loading;
-	HandGestures HG;
 	SpinnerAdapter adapter;
 	ActionBar bar;
 	ProgressBar proBar;
 	Typeface arabic, english;
+	HandGestures CatHG;
 
 	// xGameAPI api;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.main_view);
+		CatHG = new HandGestures(this) {
+			@Override
+			public void onSwipeRight() {
+				lastIndex = currentIndex;
+				currentIndex++;
+				if (currentIndex >= categories.size())
+					currentIndex = 0;
 
+				if (currentIndex != lastIndex) {
+
+					runOnUiThread(new Runnable() {
+
+						@Override
+						public void run() {
+							trans.setVisibility(View.VISIBLE);
+							loading.setVisibility(View.VISIBLE);
+							proBar.setVisibility(View.VISIBLE);
+							list.setVisibility(View.GONE);
+							System.out.println("CURIND: "
+									+ categories.get(currentIndex).getId());
+							new Server(MainView.this, null, null, loading,
+									null, proBar, trans, list).execute("game",
+									categories.get(currentIndex).getId(),
+									String.valueOf(0));
+
+						}
+					});
+				}
+				setNames();
+				super.onSwipeRight();
+			}
+
+			@Override
+			public void onSwipeleft() {
+				lastIndex = currentIndex;
+				currentIndex--;
+				if (currentIndex < 0)
+					currentIndex = categories.size() - 1;
+
+				if (currentIndex != lastIndex) {
+
+					runOnUiThread(new Runnable() {
+
+						@Override
+						public void run() {
+							trans.setVisibility(View.VISIBLE);
+							loading.setVisibility(View.VISIBLE);
+							proBar.setVisibility(View.VISIBLE);
+							list.setVisibility(View.GONE);
+							System.out.println("CURIND: "
+									+ categories.get(currentIndex).getId());
+							new Server(MainView.this, null, null, loading,
+									null, proBar, trans, list).execute("game",
+									categories.get(currentIndex).getId(),
+									String.valueOf(0));
+
+						}
+					});
+				}
+				setNames();
+				super.onSwipeleft();
+			}
+		};
 		mNavItems.add(new navxgameList("Games List", R.drawable.games));
 		mNavItems.add(new navxgameList("Register", R.drawable.reg));
-		mNavItems.add(new navxgameList("About Us", R.drawable.about));
 		mNavItems.add(new navxgameList("Contact Us", R.drawable.env));
+		mNavItems.add(new navxgameList("About Us", R.drawable.about));
+		
 		// DrawerLayout
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 		// Populate the Navigtion Drawer with options
@@ -87,7 +152,22 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 		rellay = (RelativeLayout) findViewById(R.id.rellay);
 		mDrawerList = (ListView) findViewById(R.id.navList);
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-				R.drawable.options, R.string.drawer_open, R.string.app_name);
+				R.drawable.options, R.string.drawer_open, R.string.app_name) {
+			public void onDrawerClosed(View view) {
+				super.onDrawerClosed(view);
+				getActionBar().setTitle("xGame");
+				invalidateOptionsMenu(); // creates call to
+											// onPrepareOptionsMenu()
+			}
+
+			/** Called when a drawer has settled in a completely open state. */
+			public void onDrawerOpened(View drawerView) {
+				super.onDrawerOpened(drawerView);
+				getActionBar().setTitle("xGame Menu");
+				invalidateOptionsMenu(); // creates call to
+											// onPrepareOptionsMenu()
+			}
+		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 		navxgameAdapter navAdapter = new navxgameAdapter(this, mNavItems);
 		mDrawerList.setAdapter(navAdapter);
@@ -353,13 +433,14 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		/*
-		 * if (item.getItemId() == android.R.id.home) {
-		 * 
-		 * if (mDrawerLayout.isDrawerOpen(rellay)) {
-		 * mDrawerLayout.closeDrawer(rellay); } else {
-		 * mDrawerLayout.openDrawer(rellay); } }
-		 */
+
+		if (item.getItemId() == android.R.id.home) {
+
+			if (getActionBar().getTitle().equals("xGame"))
+				mDrawerLayout.openDrawer(GravityCompat.START);
+			else
+				mDrawerLayout.closeDrawer(GravityCompat.START);
+		}
 
 		if (item.getItemId() == R.id.action_testhead) {
 			Intent I = new Intent(getApplicationContext(),
@@ -396,13 +477,23 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 
 	private void selectItemFromDrawer(int position) {
 		Intent I = null;
-		if (position == 0)
-			I = new Intent(this, SplashActivity.class);
+		if (position == 0){
+			mDrawerLayout.closeDrawer(GravityCompat.START);
+		}
 		else if (position == 1)
+		{
+			mDrawerLayout.closeDrawer(GravityCompat.START);
 			I = new Intent(this, Register.class);
-		else if (position == 2)
+			I.putExtra("TAG", "main");
+			startActivity(I);
+		}
+		else if (position == 2){
+			mDrawerLayout.closeDrawer(GravityCompat.START);
 			I = new Intent(this, Register.class);// about
-		else if (position == 3) {
+			startActivity(I);
+		}
+		else if (position == 4) {
+			mDrawerLayout.closeDrawer(GravityCompat.START);
 			SharedPreferences appSharedPrefs = PreferenceManager
 					.getDefaultSharedPreferences(getApplicationContext());
 			Editor prefsEditor = appSharedPrefs.edit();
@@ -424,6 +515,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 				String fileContents = User.readFromFile();
 				if (fileContents.equals("")) {
 					I = new Intent(this, Register.class);
+					I.putExtra("TAG", "main2");
 					Toast.makeText(
 							getApplicationContext(),
 							"You need to register first before you can contact us",
@@ -456,9 +548,9 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 				}
 
 			}
-
+			startActivity(I);
 		}
-		startActivity(I);
+		
 	}
 
 	@Override
@@ -466,6 +558,18 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 		// TODO Auto-generated method stub
 		super.onConfigurationChanged(newConfig);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+	}
+
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent ev) {
+		CatHG.OnTouchEvent(ev);
+		return super.dispatchTouchEvent(ev);
+	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		CatHG.OnTouchEvent(event);
+		return super.onTouchEvent(event);
 	}
 
 }

@@ -47,13 +47,16 @@ public class HeadphoneTester extends Activity {
 			@Override
 			public void onTapOnce() {
 				HeadPhone hp = new HeadPhone(getApplicationContext(),
-						R.raw.gameover);
+						R.raw.right);
 				if (whichHeadPhoneToTest.equalsIgnoreCase("right")) {
 					whichHeadPhoneToTest = "left";
+					 
 					if (hp.detectHeadPhones() == true) {
 						hp.setLeftLevel(0);
 						hp.setRightLevel(1);
 						hp.play("", 4);
+						hp = new HeadPhone(getApplicationContext(),
+								R.raw.left);
 
 					} else
 						Toast.makeText(
@@ -63,10 +66,14 @@ public class HeadphoneTester extends Activity {
 				}
 				else if(whichHeadPhoneToTest.equalsIgnoreCase("left"))
 				{
+					hp = new HeadPhone(getApplicationContext(),
+							R.raw.left);
 					if (hp.detectHeadPhones() == true) {
 						hp.setLeftLevel(1);
 						hp.setRightLevel(0);
 						hp.play("", 4);
+						hp = new HeadPhone(getApplicationContext(),
+								R.raw.right);
 					} else
 						Toast.makeText(
 								getApplicationContext(),

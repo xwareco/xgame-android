@@ -54,7 +54,7 @@
                 android:background="@android:color/white"
                 android:contentDescription="@string/ent_name"
                 android:ems="10"
-                android:inputType="textPersonName" >
+                android:inputType="textEmailAddress" >
 
                 <requestFocus />
             </EditText>

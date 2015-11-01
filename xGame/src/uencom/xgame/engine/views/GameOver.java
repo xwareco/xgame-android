@@ -64,7 +64,7 @@ public class GameOver extends SherlockActivity {
 							"Welcome " + uName
 									+ " ,We are very glad to hear your feedback",
 							Toast.LENGTH_LONG).show();
-					I = new Intent(getApplicationContext(), ContactUs.class);// contact
+					I = new Intent(getApplicationContext(), ContactUs.class);// score board
 					I.putExtra("ID", uID);
 					I.putExtra("Name", uName);
 					
@@ -72,6 +72,7 @@ public class GameOver extends SherlockActivity {
 					String fileContents = User.readFromFile();
 					if (fileContents.equals("")) {
 						I = new Intent(getApplicationContext(), Register.class);
+						I.putExtra("TAG", "gameover");
 						Toast.makeText(
 								getApplicationContext(),
 								"You need to register first before you can contact us",

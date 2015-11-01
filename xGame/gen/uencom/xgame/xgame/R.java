@@ -1103,6 +1103,8 @@ containing a value of this type.
         public static final int getready=0x7f050003;
         public static final int helicopter=0x7f050004;
         public static final int helicopter2=0x7f050005;
+        public static final int left=0x7f050006;
+        public static final int right=0x7f050007;
     }
     public static final class string {
         public static final int ACC_TV=0x7f0b0014;

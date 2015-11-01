@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -52,8 +53,30 @@ public class Register extends SherlockActivity {
 
 			@Override
 			public void onClick(View v) {
-				new User(getApplicationContext(), name.getText().toString(),
-						pass.getText().toString() , null , null).execute("register");
+				if (!name.getText().toString().equals("")
+						&& !pass.getText().toString().equals("")
+						&& isEmailValid(name)) {
+					new User(getApplicationContext(),
+							name.getText().toString(), pass.getText()
+									.toString(), null, null)
+							.execute("register");
+					Intent I = null;
+					if (getIntent().getStringExtra("TAG").equalsIgnoreCase(
+							"main")
+							|| getIntent().getStringExtra("TAG")
+									.equalsIgnoreCase("gameover"))
+						finish();
+					else if (getIntent().getStringExtra("TAG")
+							.equalsIgnoreCase("main2")) {
+						I = new Intent(getApplicationContext(), ContactUs.class);
+						startActivity(I);
+						finish();
+					}
+				} else {
+					Toast.makeText(getApplicationContext(),
+							"Empty field or invalid email address",
+							Toast.LENGTH_LONG).show();
+				}
 
 			}
 		});
@@ -103,5 +126,10 @@ public class Register extends SherlockActivity {
 		// TODO Auto-generated method stub
 		super.onConfigurationChanged(newConfig);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+	}
+
+	public boolean isEmailValid(EditText et) {
+		return android.util.Patterns.EMAIL_ADDRESS.matcher(
+				et.getText().toString()).matches();
 	}
 }
