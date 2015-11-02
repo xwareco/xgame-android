@@ -56,22 +56,11 @@ public class Register extends SherlockActivity {
 				if (!name.getText().toString().equals("")
 						&& !pass.getText().toString().equals("")
 						&& isEmailValid(name)) {
-					new User(getApplicationContext(),
+					new User(Register.this,
 							name.getText().toString(), pass.getText()
-									.toString(), null, null)
+									.toString(), getIntent().getStringExtra("TAG"), null)
 							.execute("register");
-					Intent I = null;
-					if (getIntent().getStringExtra("TAG").equalsIgnoreCase(
-							"main")
-							|| getIntent().getStringExtra("TAG")
-									.equalsIgnoreCase("gameover"))
-						finish();
-					else if (getIntent().getStringExtra("TAG")
-							.equalsIgnoreCase("main2")) {
-						I = new Intent(getApplicationContext(), ContactUs.class);
-						startActivity(I);
-						finish();
-					}
+					
 				} else {
 					Toast.makeText(getApplicationContext(),
 							"Empty field or invalid email address",
@@ -131,5 +120,11 @@ public class Register extends SherlockActivity {
 	public boolean isEmailValid(EditText et) {
 		return android.util.Patterns.EMAIL_ADDRESS.matcher(
 				et.getText().toString()).matches();
+	}
+	
+	@Override
+	protected void onPause() {
+		finish();
+		super.onPause();
 	}
 }

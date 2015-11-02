@@ -140,11 +140,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 				super.onSwipeleft();
 			}
 		};
-		mNavItems.add(new navxgameList("Games List", R.drawable.games));
-		mNavItems.add(new navxgameList("Register", R.drawable.reg));
-		mNavItems.add(new navxgameList("Contact Us", R.drawable.env));
-		mNavItems.add(new navxgameList("About Us", R.drawable.about));
-		
+
 		// DrawerLayout
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 		// Populate the Navigtion Drawer with options
@@ -169,8 +165,6 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 			}
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
-		navxgameAdapter navAdapter = new navxgameAdapter(this, mNavItems);
-		mDrawerList.setAdapter(navAdapter);
 
 		// Drawer Item click listeners
 		mDrawerList
@@ -435,11 +429,44 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		if (item.getItemId() == android.R.id.home) {
+			if (mNavItems.size() != 0) {
+				mNavItems.removeAll(mNavItems);
+			}
+			mNavItems.add(new navxgameList("Games List", R.drawable.games));
+
+			SharedPreferences appSharedPrefs = PreferenceManager
+					.getDefaultSharedPreferences(getApplicationContext());
+			String uName = appSharedPrefs.getString("uName", "");
+			if (!uName.equals("")) {
+				String uNameSideMenu = uName.substring(0, uName.indexOf('@'));
+				mNavItems.add(new navxgameList(uNameSideMenu, R.drawable.reg));
+			} else {
+				String fileContents = User.readFromFile();
+				if (fileContents.equals("")) {
+					mNavItems.add(new navxgameList("Register", R.drawable.reg));
+				}
+
+				else {
+					uName = fileContents.substring(
+							fileContents.indexOf(',') + 1,
+							fileContents.lastIndexOf(','));
+					String uNameSideMenu = uName.substring(0,
+							uName.indexOf('@'));
+					mNavItems.add(new navxgameList(uNameSideMenu,
+							R.drawable.reg));
+
+				}
+			}
+			mNavItems.add(new navxgameList("Contact Us", R.drawable.env));
+			mNavItems.add(new navxgameList("About Us", R.drawable.about));
+			navxgameAdapter navAdapter = new navxgameAdapter(this, mNavItems);
+			mDrawerList.setAdapter(navAdapter);
 
 			if (getActionBar().getTitle().equals("xGame"))
 				mDrawerLayout.openDrawer(GravityCompat.START);
 			else
 				mDrawerLayout.closeDrawer(GravityCompat.START);
+
 		}
 
 		if (item.getItemId() == R.id.action_testhead) {
@@ -477,22 +504,24 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 
 	private void selectItemFromDrawer(int position) {
 		Intent I = null;
-		if (position == 0){
+		if (position == 0) {
+			System.out.println(position);
 			mDrawerLayout.closeDrawer(GravityCompat.START);
-		}
-		else if (position == 1)
-		{
+		} else if (position == 1) {
 			mDrawerLayout.closeDrawer(GravityCompat.START);
-			I = new Intent(this, Register.class);
-			I.putExtra("TAG", "main");
-			startActivity(I);
-		}
-		else if (position == 2){
-			mDrawerLayout.closeDrawer(GravityCompat.START);
-			I = new Intent(this, Register.class);// about
-			startActivity(I);
-		}
-		else if (position == 4) {
+			if (mNavItems.get(1).getTitle().equalsIgnoreCase("register"))
+			{
+				I = new Intent(this, Register.class);
+				I.putExtra("TAG", "main");
+				System.out.println(position);
+				startActivity(I);
+			}
+			else
+				Toast.makeText(getApplicationContext(), "Registered user",
+						Toast.LENGTH_LONG).show();
+			
+		} else if (position == 2) {
+			System.out.println(position);
 			mDrawerLayout.closeDrawer(GravityCompat.START);
 			SharedPreferences appSharedPrefs = PreferenceManager
 					.getDefaultSharedPreferences(getApplicationContext());
@@ -516,6 +545,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 				if (fileContents.equals("")) {
 					I = new Intent(this, Register.class);
 					I.putExtra("TAG", "main2");
+					System.out.println("HERE!!!");
 					Toast.makeText(
 							getApplicationContext(),
 							"You need to register first before you can contact us",
@@ -550,7 +580,14 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 			}
 			startActivity(I);
 		}
-		
+
+		else if (position == 3) {
+			mDrawerLayout.closeDrawer(GravityCompat.START);
+			I = new Intent(this, Register.class);// about
+			System.out.println(position);
+			startActivity(I);
+		}
+
 	}
 
 	@Override

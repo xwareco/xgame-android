@@ -27,6 +27,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import uencom.xgame.engine.views.ContactUs;
 import uencom.xgame.jsonconverters.LoadUserMessagesJsonParameter;
 import uencom.xgame.jsonconverters.RegisterJsonParameterConverter;
 import uencom.xgame.jsonconverters.ScoreJsonParameterConverter;
@@ -34,8 +36,10 @@ import uencom.xgame.xgame.R;
 
 import com.google.gson.Gson;
 
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
@@ -52,6 +56,7 @@ public class User extends AsyncTask<String, Void, Void> {
 	private String email;
 	private String password;
 	private String urlPrefix;
+	private String TAG;
 	private Gson inputJSONConverter;
 	private FileInputStream fileUpload;
 	NotificationManager mNotifyManager;
@@ -80,6 +85,7 @@ public class User extends AsyncTask<String, Void, Void> {
 				.setContentText("Your Audio feedback is being sent!")
 				.setSmallIcon(R.drawable.env);
 		urlPrefix = "http://xgameapp.com/api/v2/";
+		TAG = id;
 	}
 
 	public String getName() {
@@ -132,6 +138,17 @@ public class User extends AsyncTask<String, Void, Void> {
 				prefsEditor.putString("uName", email);
 				prefsEditor.putString("uPass", password);
 				prefsEditor.commit();
+				Intent I = null;
+
+				if (TAG.equalsIgnoreCase("main2")) {
+					I = new Intent(ctx, ContactUs.class);
+					ctx.startActivity(I);
+
+				} else if (TAG.equalsIgnoreCase("main")) {
+					Activity act = (Activity) ctx;
+					act.finish();
+
+				}
 				updateHandler.post(new Runnable() {
 
 					@Override
@@ -155,12 +172,26 @@ public class User extends AsyncTask<String, Void, Void> {
 
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			String newToken = xGameAPI.getNewToken("guest");
-			postRequest.setHeader("Authorization", newToken);
-			Editor prefEditor2 = appSharedPrefs.edit();
-			prefEditor2.putString("access_token", newToken);
-			prefEditor2.commit();
+			System.out.println(e.getMessage());
+			if (e.getMessage().contains("Internal Server Error")) {
+				updateHandler.post(new Runnable() {
+
+					@Override
+					public void run() {
+						Toast.makeText(
+								ctx,
+								"Failed to register, user already exists with the same data",
+								Toast.LENGTH_LONG).show();
+
+					}
+				});
+			} else {
+				String newToken = xGameAPI.getNewToken("guest");
+				postRequest.setHeader("Authorization", newToken);
+				Editor prefEditor2 = appSharedPrefs.edit();
+				prefEditor2.putString("access_token", newToken);
+				prefEditor2.commit();
+			}
 		}
 		return false;
 	}
@@ -172,8 +203,8 @@ public class User extends AsyncTask<String, Void, Void> {
 		String boundary = "*****";
 		String Tag = "fSnd";
 		mBuilder.setProgress(0, 0, true);
-        // Displays the progress bar for the first time.
-        mNotifyManager.notify(1, mBuilder.build());
+		// Displays the progress bar for the first time.
+		mNotifyManager.notify(1, mBuilder.build());
 		HttpURLConnection conn = null;
 		// Authentication Layer
 		SharedPreferences appSharedPrefs = PreferenceManager
@@ -251,10 +282,10 @@ public class User extends AsyncTask<String, Void, Void> {
 			String s = b.toString();
 			Log.i("Response", s);
 			dos.close();
-			 mBuilder.setContentText("Message Sent")
-	            // Removes the progress bar
-	                    .setProgress(0,0,false);
-	            mNotifyManager.notify(1, mBuilder.build());
+			mBuilder.setContentText("Message Sent")
+			// Removes the progress bar
+					.setProgress(0, 0, false);
+			mNotifyManager.notify(1, mBuilder.build());
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -283,13 +314,14 @@ public class User extends AsyncTask<String, Void, Void> {
 			String Auth = appSharedPrefs.getString("access_token", "");
 			prefsEditor.commit();
 			postRequest.addHeader("Authorization", Auth);
-			postRequest.addHeader("Content-Type", "application/x-www-form-urlencoded");
+			postRequest.addHeader("Content-Type",
+					"application/x-www-form-urlencoded");
 			postRequest.addHeader("Accept", "application/json");
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		    nameValuePairs.add(new BasicNameValuePair("user_id", id));
-		    nameValuePairs.add(new BasicNameValuePair("title", email));
-		    nameValuePairs.add(new BasicNameValuePair("body", password));
-		    postRequest.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			nameValuePairs.add(new BasicNameValuePair("user_id", id));
+			nameValuePairs.add(new BasicNameValuePair("title", email));
+			nameValuePairs.add(new BasicNameValuePair("body", password));
+			postRequest.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			result = httpclient.execute(postRequest, handler);
 			System.out.println(result);
 			JSONObject obj = new JSONObject(result);
@@ -426,14 +458,14 @@ public class User extends AsyncTask<String, Void, Void> {
 
 	@Override
 	protected void onPostExecute(Void result) {
-		if(fileUpload != null)
-		{
-			File f = new File(Environment.getExternalStorageDirectory().toString() + "/xGame/feedback/Audio_File.aac");
-			if(f.exists())
-			{
+		if (fileUpload != null) {
+			File f = new File(Environment.getExternalStorageDirectory()
+					.toString() + "/xGame/feedback/Audio_File.aac");
+			if (f.exists()) {
 				f.delete();
 			}
 		}
+
 		super.onPostExecute(result);
 	}
 

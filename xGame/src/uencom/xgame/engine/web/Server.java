@@ -2,6 +2,8 @@ package uencom.xgame.engine.web;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import com.google.gson.Gson;
 import uencom.xgame.engine.offlinexGameList;
 import uencom.xgame.engine.onDeviceGameChecker;
@@ -63,9 +65,27 @@ public class Server extends AsyncTask<String, String, String> implements
 		if (checkInstallations.isOnline() == true) {
 			res = "cat";
 			if (arg0[0].equalsIgnoreCase("cat"))
+			{
 				categories = api.getCategories();
+				Collections.sort(categories, new Comparator<GameCategory>() {
+
+					@Override
+					public int compare(GameCategory lhs, GameCategory rhs) {
+						return lhs.getName().compareTo(rhs.getName());
+					}
+				
+				});
+			}
 			else if (arg0[0].equalsIgnoreCase("game")) {
 				games = api.getGames(arg0[1], "10", arg0[2]);
+				Collections.sort(games, new Comparator<Game>() {
+
+					@Override
+					public int compare(Game lhs, Game rhs) {
+						return lhs.getName().compareTo(rhs.getName());
+					}
+				
+				});
 				System.out.println("DATA2:" + arg0[1] + " " + arg0[2]);
 				Gson g = new Gson();
 				String gamesJSON = g.toJson(games);

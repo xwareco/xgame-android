@@ -8,4 +8,9 @@ public class navxgameList {
         this.title = title;
         this.icon = icon;
     }
+
+	public String getTitle() {
+		return title;
+	}
+    
 }
