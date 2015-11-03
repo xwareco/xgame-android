@@ -5,6 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import uencom.xgame.interfaces.IStateListener;
 import uencom.xgame.sensors.Accelerometer;
+import uencom.xgame.sound.HeadPhone;
 import uencom.xgame.xgame.R;
 import uencom.xgame.xml.State;
 import uencom.xgame.xml.StateEvent;
@@ -42,6 +43,7 @@ public class xGameParser extends Activity implements IStateListener {
 	ArrayList<Transition> trans;
 	ArrayList<State> states;
 	Intent gameIntent;
+	HeadPhone gameMediaPlayer;
 	int gameScore, counterTime;
 	Timer loopTimer;
 	TimerTask loopTimerTask;
@@ -68,12 +70,17 @@ public class xGameParser extends Activity implements IStateListener {
 					@Override
 					public void run() {
 						if (gameOver == false) {
-							gameIntent.putExtra("Count", gameIntent.getIntExtra("Count", 0));
-							gameIntent.putExtra("Score", gameIntent.getIntExtra("Score", 0));
+							gameIntent.putExtra("Count",
+									gameIntent.getIntExtra("Count", 0));
+							gameIntent.putExtra("Score",
+									gameIntent.getIntExtra("Score", 0));
 							gameIntent = currentState.loopBack(
-									getApplicationContext(), gameIntent);
-							System.out.println(gameIntent.getIntExtra("Count", 0));
-							System.out.println(gameIntent.getIntExtra("Score", 0));
+									getApplicationContext(), gameIntent,
+									gameMediaPlayer);
+							System.out.println(gameIntent.getIntExtra("Count",
+									0));
+							System.out.println(gameIntent.getIntExtra("Score",
+									0));
 							if (gameIntent.getIntExtra("Count", 0) >= GAME_COUNT) {
 								gameOver = true;
 							}
@@ -85,14 +92,15 @@ public class xGameParser extends Activity implements IStateListener {
 
 										currentState.onStateExit(
 												getApplicationContext(),
-												gameIntent);
+												gameIntent, gameMediaPlayer);
 									}
 								});
 								currentState = getStartingState(backTo);
 								runOnUiThread(new Runnable() {
 									public void run() {
 										currentState.onStateEntry(gameLayout,
-												gameIntent, xGameParser.this);
+												gameIntent, xGameParser.this,
+												gameMediaPlayer);
 									}
 								});
 								stateGesture = currentState
@@ -107,7 +115,8 @@ public class xGameParser extends Activity implements IStateListener {
 							Intent gameOverActivity = new Intent(
 									getApplicationContext(), GameOver.class);
 							gameOverActivity.putExtra("Score", score);
-							gameOverActivity.putExtra("gamename", getIntent().getStringExtra("gamename"));
+							gameOverActivity.putExtra("gamename", getIntent()
+									.getStringExtra("gamename"));
 							startActivity(gameOverActivity);
 							finish();
 						}
@@ -140,11 +149,13 @@ public class xGameParser extends Activity implements IStateListener {
 					.show();
 		else {
 			stateGesture = currentState.setHandGesture(stateGesture);
+			gameMediaPlayer = new HeadPhone(xGameParser.this);
 			gameIntent = new Intent();
 			gameIntent.putExtra("Count", counterTime);
 			definetheTask();
 			loopTimer.schedule(loopTimerTask, 0, 3000);
-			currentState.onStateEntry(gameLayout, gameIntent, xGameParser.this);
+			currentState.onStateEntry(gameLayout, gameIntent, xGameParser.this,
+					gameMediaPlayer);
 		}
 
 	}
@@ -237,14 +248,15 @@ public class xGameParser extends Activity implements IStateListener {
 						public void run() {
 
 							currentState.onStateExit(getApplicationContext(),
-									gameIntent);
+									gameIntent, gameMediaPlayer);
 
 						}
 					});
 					currentState = stateFromTransition(trans.get(i));
 					runOnUiThread(new Runnable() {
 						public void run() {
-							currentState.onStateEntry(gameLayout, gameIntent, xGameParser.this);
+							currentState.onStateEntry(gameLayout, gameIntent,
+									xGameParser.this, gameMediaPlayer);
 
 						}
 					});
@@ -274,7 +286,7 @@ public class xGameParser extends Activity implements IStateListener {
 						public void run() {
 
 							currentState.onStateExit(getApplicationContext(),
-									gameIntent);
+									gameIntent, gameMediaPlayer);
 
 						}
 					});
@@ -282,7 +294,8 @@ public class xGameParser extends Activity implements IStateListener {
 					runOnUiThread(new Runnable() {
 						public void run() {
 
-							currentState.onStateEntry(gameLayout, gameIntent, xGameParser.this);
+							currentState.onStateEntry(gameLayout, gameIntent,
+									xGameParser.this, gameMediaPlayer);
 
 						}
 					});
@@ -295,6 +308,5 @@ public class xGameParser extends Activity implements IStateListener {
 		}
 
 	}
-	
-	
+
 }

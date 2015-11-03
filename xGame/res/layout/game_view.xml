@@ -26,7 +26,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:contentDescription="@string/game"
-        android:src="@drawable/blurredcatch" />
+         />
 
     <ImageView
         android:id="@+id/img"

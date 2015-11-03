@@ -2,10 +2,8 @@ package com.example.car_racer;
 
 import java.util.ArrayList;
 import java.util.Random;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
@@ -17,7 +15,16 @@ import uencom.xgame.sound.HeadPhone;
 public class S1 implements IstateActions {
 
 	@Override
-	public void onStateEntry(LinearLayout layout, Intent I, Context C) {
+	public void onStateEntry(LinearLayout layout, Intent I, Context C,
+			HeadPhone H) {
+		String Path = Environment.getExternalStorageDirectory().toString()
+				+ "/xGame/Games/Car Racer/Sound/car_running.mp3";
+		H.setLeftLevel(1);
+		H.setRightLevel(1);
+		if (H.detectHeadPhones() == true) {
+			H.stopCurrentPlay();
+			H.play(Path, 1);
+		}
 		ArrayList<Obstacle> trackObstacles;
 		// Generate obstacles
 		trackObstacles = generateObstacles(I);
@@ -38,8 +45,8 @@ public class S1 implements IstateActions {
 	private ArrayList<Obstacle> generateObstacles(Intent I) {
 
 		// define obstacles number
-		int currentLocation = I.getIntExtra("Count", 0) + 10;
-		int numOfObstacles = (190 - currentLocation) / 4;
+		int currentLocation = I.getIntExtra("Count", 0) + 2;
+		int numOfObstacles = (200 - currentLocation) / 4;
 		ArrayList<Obstacle> res = new ArrayList<Obstacle>(numOfObstacles);
 
 		// generate based on type and location
@@ -60,10 +67,10 @@ public class S1 implements IstateActions {
 
 			// generate obs location
 			if (i == 0) {
-				obs.setLocation(currentLocation + r.nextInt(11));
+				obs.setLocation(currentLocation + r.nextInt(5));
 			} else {
 
-				obs.setLocation(lastObs.getLocation() + 20);
+				obs.setLocation(lastObs.getLocation() + 5);
 			}
 			res.add(obs);
 			lastObs = obs;
@@ -73,22 +80,14 @@ public class S1 implements IstateActions {
 
 	@SuppressWarnings("unused")
 	@Override
-	public Intent loopBack(Context c, Intent I) {
+	public Intent loopBack(Context c, Intent I, HeadPhone H) {
 		int startTime = (int) System.currentTimeMillis();
 		System.out.println("Iam called!!");
-		String Path = Environment.getExternalStorageDirectory().toString()
-				+ "/xGame/Games/Car Racer/Sound/car_running.mp3";
 		int currVPos = I.getIntExtra("Count", 0);
 		System.out.println("Count: " + currVPos);
 		int penaltyTime = 0;
-		HeadPhone HP = new HeadPhone(c);
-		HP.setLeftLevel(1);
-		HP.setRightLevel(1);
-		if (HP.detectHeadPhones() == true) {
-			// HP.stopCurrentPlay();
-			HP.play(Path, 0);
-		}
-		Obstacle nearestObs = getOrRemoveNearestObstacle(I, 0, 0);
+
+		Obstacle nearestObs = getOrRemoveNearestObstacle(I, 0, 0, H);
 		// init Accelerometer
 		boolean right = false;
 		boolean left = false;
@@ -101,9 +100,10 @@ public class S1 implements IstateActions {
 				// stop current play & play sound
 				String Path2 = Environment.getExternalStorageDirectory()
 						.toString() + "/xGame/Games/Car Racer/Sound/turn.mp3";
+				HeadPhone HP = new HeadPhone(c);
 
 				if (HP.detectHeadPhones() == true) {
-					// HP.stopCurrentPlay();
+					H.stopCurrentPlay();
 					HP.setLeftLevel(1);
 					HP.setRightLevel(0);
 					HP.play(Path2, 0);
@@ -114,9 +114,9 @@ public class S1 implements IstateActions {
 				// stop current play & play sound
 				String Path2 = Environment.getExternalStorageDirectory()
 						.toString() + "/xGame/Games/Car Racer/Sound/turn.mp3";
-
+				HeadPhone HP = new HeadPhone(c);
 				if (HP.detectHeadPhones() == true) {
-					// HP.stopCurrentPlay();
+					H.stopCurrentPlay();
 					HP.setLeftLevel(0);
 					HP.setRightLevel(1);
 					HP.play(Path2, 0);
@@ -127,9 +127,9 @@ public class S1 implements IstateActions {
 				// stop current play & play sound
 				String Path2 = Environment.getExternalStorageDirectory()
 						.toString() + "/xGame/Games/Car Racer/Sound/cow.mp3";
-
+				HeadPhone HP = new HeadPhone(c);
 				if (HP.detectHeadPhones() == true) {
-					// HP.stopCurrentPlay();
+					H.stopCurrentPlay();
 					HP.setLeftLevel(1);
 					HP.setRightLevel(1);
 					HP.play(Path2, 0);
@@ -140,9 +140,9 @@ public class S1 implements IstateActions {
 				// stop current play & play sound
 				String Path2 = Environment.getExternalStorageDirectory()
 						.toString() + "/xGame/Games/Car Racer/Sound/girl.mp3";
-
+				HeadPhone HP = new HeadPhone(c);
 				if (HP.detectHeadPhones() == true) {
-					// HP.stopCurrentPlay();
+					H.stopCurrentPlay();
 					HP.setLeftLevel(1);
 					HP.setRightLevel(1);
 					HP.play(Path2, 0);
@@ -150,7 +150,7 @@ public class S1 implements IstateActions {
 				any = true;
 			}
 			int index = I.getIntExtra("NearInd", 0);
-			Accelerometer inStateAcc = initAcc(c, right, left, any, index, I);
+			Accelerometer inStateAcc = initAcc(c, right, left, any, index, I, H);
 			System.out.println("Nearest: " + nearestObs.getLocation() + "cur: "
 					+ currVPos);
 			System.out.println("R: " + right);
@@ -159,19 +159,30 @@ public class S1 implements IstateActions {
 			if (currVPos == nearestObs.getLocation()
 					&& (right == true || left == true || any == true)) {
 				if (nearestObs.getType().equals("cow")
-						|| nearestObs.getType().equals("girl"))
+						|| nearestObs.getType().equals("girl")) {
 					currVPos = 300;
-				else if (nearestObs.getType().equals("turnleft")
+					H.stopCurrentPlay();
+					String Path2 = Environment.getExternalStorageDirectory()
+							.toString() + "/xGame/Games/Car Racer/Sound/gameover.mp3";
+					H.play(Path2, 0);
+				} else if (nearestObs.getType().equals("turnleft")
 						|| nearestObs.getType().equals("turnright"))
 					penaltyTime = 50;
 			}
 
 		}
-		int scoreSoFar = I.getIntExtra("Scroe", 0);
+		int scoreSoFar = I.getIntExtra("Score", 0);
 		System.out.println("ScoreBefore = " + scoreSoFar);
 		int newScoreSoFar;
 		int duration;
 		currVPos++;
+		if(currVPos == 200)
+		{
+			H.stopCurrentPlay();
+			String Path2 = Environment.getExternalStorageDirectory()
+					.toString() + "/xGame/Games/Car Racer/Sound/success.mp3";
+			H.play(Path2, 0);
+		}
 		int endTime = (int) System.currentTimeMillis();
 		duration = endTime - startTime;
 		newScoreSoFar = (scoreSoFar + duration) - penaltyTime;
@@ -184,7 +195,7 @@ public class S1 implements IstateActions {
 
 	private Accelerometer initAcc(final Context c, final boolean right,
 			final boolean left, final boolean any, final int obsInd,
-			final Intent I) {
+			final Intent I, final HeadPhone H) {
 		Accelerometer Acc = new Accelerometer(c, 0, 75f, 0) {
 
 			@Override
@@ -226,7 +237,7 @@ public class S1 implements IstateActions {
 			@Override
 			public void onYGoodRight() {
 				if (right == true || any == true) {
-					getOrRemoveNearestObstacle(I, obsInd, 1);
+					getOrRemoveNearestObstacle(I, obsInd, 1, H);
 					System.out.println("right turn acc");
 
 				}
@@ -235,8 +246,9 @@ public class S1 implements IstateActions {
 
 			@Override
 			public void onYGoodLeft() {
-				if (left == true || any == true) {
-					getOrRemoveNearestObstacle(I, obsInd, 1);
+
+				if (left == true) {
+					getOrRemoveNearestObstacle(I, obsInd, 1, H);
 					System.out.println("left turn acc");
 
 				}
@@ -270,7 +282,8 @@ public class S1 implements IstateActions {
 		return Acc;
 	}
 
-	private Obstacle getOrRemoveNearestObstacle(Intent I, int index, int flag) {
+	private Obstacle getOrRemoveNearestObstacle(Intent I, int index, int flag,
+			HeadPhone H) {
 		Obstacle result = null;
 		String obsJson = I.getStringExtra("obs");
 		Gson g = new Gson();
@@ -283,7 +296,9 @@ public class S1 implements IstateActions {
 			if (trackObstacles != null) {
 
 				for (int i = 0; i < trackObstacles.size(); i++) {
-					if (trackObstacles.get(i).getLocation() - currentLocation <= 5) {
+					System.out.println("obs new: "
+							+ trackObstacles.get(i).getLocation() + "\n");
+					if (trackObstacles.get(i).getLocation() - currentLocation <= 3) {
 						result = trackObstacles.get(i);
 						I.putExtra("NearInd", i);
 					}
@@ -291,16 +306,30 @@ public class S1 implements IstateActions {
 				}
 			}
 		} else {
-			trackObstacles.remove(index);
-			String newObsJson = g.toJson(trackObstacles);
-			I.putExtra("obs", newObsJson);
+			int currentLocation = I.getIntExtra("Count", 0);
+			int diff = trackObstacles.get(index).getLocation()
+					- currentLocation;
+			if (diff <= 5 && diff > 0) {
+				trackObstacles.remove(index);
+				String Path = Environment.getExternalStorageDirectory()
+						.toString()
+						+ "/xGame/Games/Car Racer/Sound/car_running.mp3";
+				H.setLeftLevel(1);
+				H.setRightLevel(1);
+				if (H.detectHeadPhones() == true) {
+					H.stopCurrentPlay();
+					H.play(Path, 1);
+				}
+				String newObsJson = g.toJson(trackObstacles);
+				I.putExtra("obs", newObsJson);
+			}
 		}
 		return result;
 	}
 
 	@Override
-	public void onStateExit(Context c, Intent I) {
-		// TODO Auto-generated method stub
+	public void onStateExit(Context c, Intent I, HeadPhone H) {
+		H.stopCurrentPlay();
 
 	}
 

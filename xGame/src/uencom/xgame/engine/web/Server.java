@@ -9,6 +9,7 @@ import uencom.xgame.engine.offlinexGameList;
 import uencom.xgame.engine.onDeviceGameChecker;
 import uencom.xgame.engine.xGameList;
 import uencom.xgame.engine.xGameParser;
+import uencom.xgame.engine.views.GameView;
 import uencom.xgame.engine.views.MainView;
 import android.app.Activity;
 import android.content.Context;
@@ -56,7 +57,7 @@ public class Server extends AsyncTask<String, String, String> implements
 		trans = lay;
 		gamesView = lv;
 		checkInstallations = new onDeviceGameChecker(ctx);
-		testFolder = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/hunt_the_duck";
+		testFolder = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/Shoot it!";
 	}
 
 	@Override
@@ -161,8 +162,9 @@ public class Server extends AsyncTask<String, String, String> implements
 			refresh.setVisibility(View.VISIBLE);
 		} else if(result.equalsIgnoreCase("test"))
 		{
-			Intent I = new Intent(ctx , xGameParser.class);
+			Intent I = new Intent(ctx , GameView.class);
 			I.putExtra("Folder", testFolder);
+			I.putExtra("Name", "Shoot it!");
 			I.putExtra("gamename","Shoot it!");
 			ctx.startActivity(I);
 		}

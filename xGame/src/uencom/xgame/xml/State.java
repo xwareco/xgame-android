@@ -9,6 +9,7 @@ import java.util.Map;
 import uencom.xgame.interfaces.IStateListener;
 import uencom.xgame.interfaces.IstateActions;
 import uencom.xgame.sensors.Accelerometer;
+import uencom.xgame.sound.HeadPhone;
 import uencom.xgame.xgame.R;
 import uencom.xgame.gestures.HandGestures;
 import dalvik.system.DexClassLoader;
@@ -165,23 +166,29 @@ public class State implements IstateActions {
 		return transDetected;
 	}
 
-	private Intent Call(String method, LinearLayout lay, Intent I) {
+	private Intent Call(String method, LinearLayout lay, Intent I, HeadPhone H) {
 		try {
 			if (method.equals("Exit")) {
 				Object myObject = stateClass.getConstructor().newInstance();
-				Method Exit = myObject.getClass().getMethod("onStateExit",
-						new Class[] { Context.class, Intent.class });
-				Exit.invoke(myObject, ctx, I);
+				Method Exit = myObject.getClass().getMethod(
+						"onStateExit",
+						new Class[] { Context.class, Intent.class,
+								HeadPhone.class });
+				Exit.invoke(myObject, ctx, I, H);
 			} else if (method.equals("Entry")) {
 				Object myObject = stateClass.getConstructor().newInstance();
-				Method Entry = myObject.getClass().getMethod("onStateEntry",
-						new Class[] { LinearLayout.class, Intent.class, Context.class});
-				Entry.invoke(myObject, lay, I, ctx);
+				Method Entry = myObject.getClass().getMethod(
+						"onStateEntry",
+						new Class[] { LinearLayout.class, Intent.class,
+								Context.class, HeadPhone.class });
+				Entry.invoke(myObject, lay, I, ctx, H);
 			} else if (method.equals("Loop")) {
 				Object myObject = stateClass.getConstructor().newInstance();
-				Method Loop = myObject.getClass().getMethod("loopBack",
-						new Class[] { Context.class, Intent.class });
-				I = (Intent) Loop.invoke(myObject, ctx, I);
+				Method Loop = myObject.getClass().getMethod(
+						"loopBack",
+						new Class[] { Context.class, Intent.class,
+								HeadPhone.class });
+				I = (Intent) Loop.invoke(myObject, ctx, I, H);
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -190,44 +197,44 @@ public class State implements IstateActions {
 	}
 
 	@Override
-	public void onStateEntry(LinearLayout layout, Intent I , Context C) {
-		 Typeface arabic , english;
-		 Animation fadeIn;
-		 arabic = Typeface.createFromAsset(ctx.getAssets(),
-					"fonts/Kharabeesh Font.ttf");
-			english = Typeface.createFromAsset(ctx.getAssets(),
-					"fonts/DJB Stinky Marker.ttf");
-			Locale current = ctx.getResources().getConfiguration().locale;
-			if (current.getDisplayLanguage().equals("Arabic")) {
-				gameTextView.setTypeface(arabic);
-			} else if (current.getDisplayLanguage().equals("English")) {
-				gameTextView.setTypeface(english);
-			}
-			fadeIn = AnimationUtils.loadAnimation(ctx, R.anim.fadein);
-			gameTextView.startAnimation(fadeIn);
+	public void onStateEntry(LinearLayout layout, Intent I, Context C,
+			HeadPhone H) {
+		Typeface arabic, english;
+		Animation fadeIn;
+		arabic = Typeface.createFromAsset(ctx.getAssets(),
+				"fonts/Kharabeesh Font.ttf");
+		english = Typeface.createFromAsset(ctx.getAssets(),
+				"fonts/DJB Stinky Marker.ttf");
+		Locale current = ctx.getResources().getConfiguration().locale;
+		if (current.getDisplayLanguage().equals("Arabic")) {
+			gameTextView.setTypeface(arabic);
+		} else if (current.getDisplayLanguage().equals("English")) {
+			gameTextView.setTypeface(english);
+		}
+		fadeIn = AnimationUtils.loadAnimation(ctx, R.anim.fadein);
+		gameTextView.startAnimation(fadeIn);
 		if (!this.id.equals("S0"))
 			layout.setBackground(Drawable.createFromPath(imgPath));
-		else
-		{
+		else {
 			layout.setBackgroundResource(R.drawable.bg1);
 			gameTextView.setBackgroundResource(R.drawable.trans);
 		}
-		
+
 		gameTextView.setTextColor(Color.WHITE);
 		gameTextView.setText(text);
-		Call("Entry", layout, I);
+		Call("Entry", layout, I, H);
 
 	}
 
 	@Override
-	public Intent loopBack(Context c, Intent I) {
-		return Call("Loop", gameLayout, I);
+	public Intent loopBack(Context c, Intent I, HeadPhone H) {
+		return Call("Loop", gameLayout, I, H);
 
 	}
 
 	@Override
-	public void onStateExit(Context c, Intent I) {
-		Call("Exit", gameLayout, I);
+	public void onStateExit(Context c, Intent I, HeadPhone H) {
+		Call("Exit", gameLayout, I, H);
 	}
 
 	public HandGestures setHandGesture(HandGestures H) {

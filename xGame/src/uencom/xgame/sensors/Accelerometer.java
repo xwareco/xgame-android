@@ -47,7 +47,7 @@ public abstract class Accelerometer implements SensorEventListener {
 			// float z = sensorEvent.values[2];
 			long curTime = System.currentTimeMillis();
 
-			if ((curTime - last_update) > 100) {
+			if ((curTime - last_update) > 800) {
 				if (x <= xMin)
 					onXHugeLeft();
 				else if (x >= xMax)
@@ -62,11 +62,14 @@ public abstract class Accelerometer implements SensorEventListener {
 
 				} else if (y >= yMax) {
 					onYHugeRight();
-				} else if ((y - lastY) >= 5 && x < yMax){
+				} else if ((y - lastY) >= 5 && y < yMax){
 					onYGoodRight();
 				}
-				else if ((lastY - y) >= 5 && x > yMin)
+				else if ((lastY - y) >= 5 && y > yMin)
+				{
+					System.out.println("ACC DATA:"+ lastY + " " + y);
 					onYGoodLeft();
+				}
 
 				lastX = x;
 				lastY = y;
