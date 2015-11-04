@@ -83,7 +83,7 @@ public class User extends AsyncTask<String, Void, Void> {
 		mBuilder = new NotificationCompat.Builder(ctx);
 		mBuilder.setContentTitle("Sending Message")
 				.setContentText("Your Audio feedback is being sent!")
-				.setSmallIcon(R.drawable.env);
+				.setSmallIcon(R.drawable.iconnot);
 		urlPrefix = "http://xgameapp.com/api/v2/";
 		TAG = id;
 	}

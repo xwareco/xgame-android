@@ -10,8 +10,8 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="right"
-        android:layout_marginTop="3dp"
-        android:layout_marginRight="3dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
         android:contentDescription="@string/cancel"
         android:src="@drawable/closerec" />
 
@@ -20,7 +20,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/recording"
-        android:textSize="30sp"
+        android:textSize="25sp"
+        android:layout_gravity="center"
         android:textStyle="bold|italic"
         android:layout_marginLeft="5dp"
         android:layout_marginBottom="5dp"
@@ -29,11 +30,11 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="300dp"
+        android:layout_width="325dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/sep" />
+        android:src="@drawable/line" />
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -80,6 +81,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"
+                
                 android:text="@string/delete" />
             
         </LinearLayout>

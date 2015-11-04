@@ -66,9 +66,11 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="uencom.xgame.engine.views.Register" >
+        <activity
+            android:name="uencom.xgame.engine.views.Register"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Dialog" >
         </activity>
         <activity android:name="uencom.xgame.engine.views.HeadphoneTester" >
             android:configChanges="orientation|keyboardHidden"
@@ -80,16 +82,16 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:theme="@android:style/Theme.Dialog"
             android:name="uencom.xgame.engine.views.AudioRecorder"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Dialog" >
         </activity>
         <activity
-            android:theme="@android:style/Theme.Dialog"
             android:name="uencom.xgame.engine.views.TextMessageSender"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Dialog" >
         </activity>
         <activity
             android:name="uencom.xgame.engine.views.SplashActivity"

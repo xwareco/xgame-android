@@ -40,8 +40,9 @@ public class xGameList extends ArrayAdapter<Game> {
 		super(context, R.layout.xgame_list_item, games);
 		this.context = context;
 		this.games = games;
-		font = Typeface.createFromAsset(context.getAssets(), "fonts/DJB Stinky Marker.ttf");
-		item = (TableRow)context.findViewById(R.id.TR);
+		font = Typeface.createFromAsset(context.getAssets(),
+				"fonts/DJB Stinky Marker.ttf");
+		item = (TableRow) context.findViewById(R.id.TR);
 		// UNIVERSAL IMAGE LOADER SETUP
 		DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
 				.cacheOnDisk(true).cacheInMemory(true)
@@ -61,11 +62,29 @@ public class xGameList extends ArrayAdapter<Game> {
 	public View getView(int position, View view, ViewGroup parent) {
 		LayoutInflater inflater = context.getLayoutInflater();
 		View rowView = inflater.inflate(R.layout.xgame_list_item, null, true);
-		if(position%2 == 0)rowView.setBackgroundResource(drawable.even);
-		else rowView.setBackgroundResource(drawable.odd);
+		if (position % 2 == 0)
+			rowView.setBackgroundResource(drawable.even);
+		else
+			rowView.setBackgroundResource(drawable.odd);
 		TextView txtTitle = (TextView) rowView.findViewById(R.id.text);
 		txtTitle.setTypeface(font);
+
 		final ImageView gameIcon = (ImageView) rowView.findViewById(R.id.img);
+
+		ImageView statusIcon = (ImageView) rowView.findViewById(R.id.img2);
+		onDeviceGameChecker installations = new onDeviceGameChecker(context);
+		if (installations.isOfflineGameExists(games.get(position).getName()) != null) {
+			rowView.setClickable(false);
+			statusIcon.setImageResource(R.drawable.start);
+			statusIcon
+					.setContentDescription("This game is already installed, click to start playing");
+		} else {
+			rowView.setClickable(false);
+			statusIcon.setImageResource(R.drawable.download);
+			statusIcon
+					.setContentDescription("This game is not yet installed, click to install");
+		}
+
 		if (position != games.size()) {
 			txtTitle.setText(games.get(position).getName());
 			ImageLoader imageLoader = ImageLoader.getInstance();
@@ -82,8 +101,9 @@ public class xGameList extends ArrayAdapter<Game> {
 					+ games.get(position).getImgPath();
 			imageLoader.displayImage(url, gameIcon, options);
 		} else {
-			new Server(context, null,null,null,null, null , null , null).execute("game", games.get(0)
-					.getCategory_id(), games.get(games.size() - 1).getId());
+			new Server(context, null, null, null, null, null, null, null)
+					.execute("game", games.get(0).getCategory_id(),
+							games.get(games.size() - 1).getId());
 			SharedPreferences appSharedPrefs = PreferenceManager
 					.getDefaultSharedPreferences(context);
 			Editor prefsEditor = appSharedPrefs.edit();
@@ -98,5 +118,5 @@ public class xGameList extends ArrayAdapter<Game> {
 		}
 		return rowView;
 	}
-
+	
 }

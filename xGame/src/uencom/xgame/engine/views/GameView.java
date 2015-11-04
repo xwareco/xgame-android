@@ -56,9 +56,7 @@ public class GameView extends SherlockActivity {
 
 			@Override
 			public void onClick(View v) {
-				Intent I = new Intent(getApplicationContext(),
-						SplashActivity.class);
-				startActivity(I);
+				finish();
 			}
 		});
 		String x = getIntent().getStringExtra("Folder");
