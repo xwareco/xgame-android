@@ -6,11 +6,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.zip.Inflater;
+
+import com.actionbarsherlock.internal.ResourcesCompat;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.StateListDrawable;
+import android.graphics.drawable.shapes.OvalShape;
+import android.graphics.drawable.shapes.RoundRectShape;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.speech.RecognitionListener;
@@ -21,8 +30,10 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import javaclasses.CustomShapeDrawable;
 import uencom.xgame.interfaces.IstateActions;
 import uencom.xgame.sound.HeadPhone;
 import uencom.xgame.sound.TTS;
@@ -33,23 +44,25 @@ public class S2  implements IstateActions {
 	static Button startSpeech;
 	static LinearLayout layout;
 	static String resultString;
-
+	static LinearLayout layout2;
+	public SpeechRecognizer sr;
 	@Override
 	public void onStateEntry(LinearLayout layout,  Intent I,  Context c) {
 		// TODO Auto-generated method stub
 	    I.putExtra("Action", "Right");
 		    
-		this.layout = layout;      
+		this.layout = layout;
+		Toast.makeText(c,"$ indicate remaining letter "+ I.getStringExtra("workingWord"), Toast.LENGTH_LONG).show();
+		
 		createUI(this.layout,I,c);
-			
+		
+		
 	}
 	@Override
 	public Intent loopBack(final Context c, final Intent I) {
 		
 		// TODO Auto-generated method stub
-		
-		
-			return I;
+		return I;
 		
 	}
 	
@@ -58,32 +71,71 @@ public class S2  implements IstateActions {
 	public void onStateExit(Context c, Intent I) {
 		// TODO Auto-generated method stub
 		
+		layout.removeView(layout2);
 		layout.removeView(startSpeech);
-		int Score = I.getIntExtra("Score", 0);
-		Score++;
-		I.putExtra("Score", Score);
+	
 		
 
 	}
 public void createUI(LinearLayout layout, final Intent I, final Context c) {
-	FrameLayout.LayoutParams parentLayoutParams =
-			new FrameLayout.LayoutParams(
-			LayoutParams.MATCH_PARENT,
-			LayoutParams.MATCH_PARENT);
-	layout.setOrientation(LinearLayout.VERTICAL);
-	layout.setLayoutParams(parentLayoutParams);
-	FrameLayout.LayoutParams layoutCenterParams =
-			new FrameLayout.LayoutParams(
-			LayoutParams.WRAP_CONTENT,
-			LayoutParams.WRAP_CONTENT );
-	layoutCenterParams.setMargins(5, 5, 5, 5);
-	layoutCenterParams.gravity = Gravity.CENTER;
+	 layout2 = new LinearLayout(c);
+	LinearLayout.LayoutParams layoutCenterParent =
+			new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.MATCH_PARENT,
+					LinearLayout.LayoutParams.MATCH_PARENT);
+
+
+	
+	
+	LinearLayout.LayoutParams layoutCenterParams =
+			new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.WRAP_CONTENT,
+					LinearLayout.LayoutParams.WRAP_CONTENT);
+	
+
+	
+	//layoutCenterParams.topMargin =150;
 	startSpeech = new Button(c);
-	startSpeech.setBackgroundColor(Color.RED);
+	//startSpeech.setBackgroundColor(Color.RED);
+	//startSpeech.setBackground(c.getResources().getDrawable(R.drawable.yellow_button));
+	//Inflater inflater = new Inflater();
+	//Button firstStyleBtn = (Button) inflater.inflate(R.layout.centerbutton, layout, false);
+	
+   
+
+	
+	//startSpeech.setBackgroundResource(R.drawable.text_background);
+	RoundRectShape rect = new RoundRectShape(
+			  new float[] {30,30, 30,30, 30,30, 30,30},
+			  null,
+			  null);
+	OvalShape ov = new OvalShape();
+			ShapeDrawable bg = new ShapeDrawable(ov);
+			bg.getPaint().setColor(0x990099FF);
+			ShapeDrawable bg2 = new ShapeDrawable(ov);
+			bg2.getPaint().setColor(Color.LTGRAY);
+			StateListDrawable stld = new StateListDrawable();
+			stld.addState(new int[] { android.R.attr.state_pressed }, bg2);
+			stld.addState(new int[] { android.R.attr.state_enabled }, bg);
+			
 	startSpeech.setLayoutParams(layoutCenterParams);
+	
+	startSpeech.setBackground(stld);
+	startSpeech.setPadding(10, 10, 10, 10);
+	startSpeech.setGravity(Gravity.CENTER);
+	startSpeech.setHeight(150);
+	startSpeech.setWidth(200);
+	//startSpeech.setBackground(states);
+	//startSpeech.setBackground(c.getResources().getDrawable(R.drawable.text_background));
 	startSpeech.setText("start Speech");
-	layout.addView(startSpeech);
-	final SpeechRecognizer sr = SpeechRecognizer.createSpeechRecognizer(c);
+	layout2.addView(startSpeech);
+	
+	layout2.setLayoutParams(layoutCenterParent);
+	layout2.setHorizontalGravity(Gravity.CENTER);
+	layout2.setVerticalGravity(Gravity.CENTER);
+	layout.addView(layout2);
+	
+	sr = SpeechRecognizer.createSpeechRecognizer(c);
 	sr.setRecognitionListener(new RecognitionListener() {
 
 		@Override
@@ -162,6 +214,7 @@ public void createUI(LinearLayout layout, final Intent I, final Context c) {
 		}
 	});
 	
+
 	
 }
 
