@@ -15,6 +15,7 @@ public class S3 implements IstateActions {
 	public void onStateEntry(LinearLayout layout, Intent I, Context C) {
 		I.putExtra("Action", "Right");
 		letter =I.getCharExtra("letter", '$');
+		letter = Character.toLowerCase(letter);
 		word = I.getStringExtra("word");
 		workingWord = I.getStringExtra("workingWord");
 		char[] oldString = word.toCharArray();
@@ -28,17 +29,25 @@ public class S3 implements IstateActions {
 					workingString[i] = letter;
 				}
 			}
-			workingWord = workingString.toString();
-			I.putExtra("workingWord", workingWord);
-			 Toast.makeText(C, "great this letter correct, now spell remaining letter", Toast.LENGTH_SHORT).show();
-			if(word.equals(workingString))
+			workingWord = new String(workingString);
+			I.putExtra("workingWord", workingWord.toString());
+			
+			if(word.equals(workingWord))
 			{
-				I.putExtra("Action", "NONE");
-				I.putExtra("State", "S5");
+				int Score = I.getIntExtra("Score", 0);
+				Score = 20;
+				I.putExtra("Score", Score);
+				int count = I.getIntExtra("Count", 0);
+				count = 20;
+				I.putExtra("Count", count);
+			//	I.putExtra("Action", "NONE");
+			//	I.putExtra("State", "S5");
 			}else
 			{
+			Toast.makeText(C, "great this letter correct, now spell remaining letter", Toast.LENGTH_SHORT).show();
 			I.putExtra("Action", "NONE");
 			I.putExtra("State", "S2");
+			
 			}
 		}else
 		{

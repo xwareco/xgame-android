@@ -21,8 +21,9 @@ import uencom.xgame.sound.TTS;
 import uencom.xgame.speech.SpeechRecognition;
 
 public class S1  implements IstateActions {
-	String[] words = new String[]{"freedom","elephant","education","school","house"};
-	static int wordnum = 0;
+	String[] words = new String[]{"arabic","egypt","man","love",
+			"tired","back","sad","star","good","collect"};
+	static int wordnum ;
 	static String word;
 	static String workingWord;
 	 
@@ -34,11 +35,16 @@ public class S1  implements IstateActions {
 		// TODO Auto-generated method stub
 		//word = I.getStringExtra("word");
 		//if(word == null)
-		
+		Random  random = new Random();
+		wordnum = random.nextInt(10);
 		word = words[wordnum];
 		char[] chars = new char[word.length()];
+		char[] tempChars =word.toCharArray();
 		Arrays.fill(chars, '$');
+		chars[0] = tempChars[0];
+		chars[(chars.length)-1] = tempChars[(tempChars.length)-1];
 		workingWord = new String(chars);
+		
 		I.putExtra("word", word);
 		I.putExtra("workingWord", workingWord);
 		
@@ -53,8 +59,8 @@ public class S1  implements IstateActions {
 	@Override
 	public Intent loopBack(Context c, Intent I) {
 		// TODO Auto-generated method stub
-		Toast.makeText(c, word +"  "+workingWord , Toast.LENGTH_SHORT).show();
 	
+	Toast.makeText(c, workingWord, Toast.LENGTH_SHORT).show();
 		return I;
 		
 	}
@@ -62,7 +68,7 @@ public class S1  implements IstateActions {
 	@Override
 	public void onStateExit(Context c, Intent I) {
 		// TODO Auto-generated method stub
-		 wordnum++;
+		
 
 	}
 
