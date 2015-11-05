@@ -169,7 +169,7 @@ public class Installer extends AsyncTask<String, String, String> {
 				zin.closeEntry();
 			}
 			zin.close();
-			percent = count / 30;
+			percent = 30 / count;
 			int cur = 0;
 			while ((ze2 = zin2.getNextEntry()) != null) {
 				System.out.println("FOKK MENI!!!");

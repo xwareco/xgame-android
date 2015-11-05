@@ -1,5 +1,6 @@
 package uencom.xgame.engine;
 
+import java.io.File;
 import java.util.ArrayList;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -17,7 +18,9 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,7 +71,9 @@ public class xGameList extends ArrayAdapter<Game> {
 			rowView.setBackgroundResource(drawable.odd);
 		TextView txtTitle = (TextView) rowView.findViewById(R.id.text);
 		txtTitle.setTypeface(font);
-
+		String path = Environment.getExternalStorageDirectory()
+				+ "/xGame/Games/" + games.get(position).getName();
+		File file = new File(path);
 		final ImageView gameIcon = (ImageView) rowView.findViewById(R.id.img);
 
 		ImageView statusIcon = (ImageView) rowView.findViewById(R.id.img2);
@@ -78,7 +83,17 @@ public class xGameList extends ArrayAdapter<Game> {
 			statusIcon.setImageResource(R.drawable.start);
 			statusIcon
 					.setContentDescription("This game is already installed, click to start playing");
-		} else {
+		}
+
+	     else if(installations.isOfflineGameExists(games.get(position).getName())== null && file.exists())
+	     {
+	    	 rowView.setClickable(true);
+	    	 rowView.setBackgroundColor(Color.LTGRAY);
+	    	 txtTitle.setText(txtTitle.getText().toString() + "(is installing, please wait!)");
+	    	 statusIcon.setImageResource(R.drawable.installing);
+	     }
+
+		else {
 			rowView.setClickable(false);
 			statusIcon.setImageResource(R.drawable.download);
 			statusIcon
@@ -118,5 +133,4 @@ public class xGameList extends ArrayAdapter<Game> {
 		}
 		return rowView;
 	}
-	
 }

@@ -84,6 +84,10 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 		CatHG = new HandGestures(this) {
 			@Override
 			public void onSwipeRight() {
+				@SuppressWarnings("unchecked")
+				ArrayAdapter<Game> AD = (ArrayAdapter<uencom.xgame.engine.web.Game>) list
+						.getAdapter();
+				AD.notifyDataSetChanged();
 				lastIndex = currentIndex;
 				currentIndex++;
 				if (currentIndex >= categories.size())
@@ -115,6 +119,10 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 
 			@Override
 			public void onSwipeleft() {
+				@SuppressWarnings("unchecked")
+				ArrayAdapter<Game> AD = (ArrayAdapter<uencom.xgame.engine.web.Game>) list
+						.getAdapter();
+				AD.notifyDataSetChanged();
 				lastIndex = currentIndex;
 				currentIndex--;
 				if (currentIndex < 0)
@@ -146,6 +154,10 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 			
 			@Override
 			public void onSwipeDown() {
+				@SuppressWarnings("unchecked")
+				ArrayAdapter<Game> AD = (ArrayAdapter<uencom.xgame.engine.web.Game>) list
+						.getAdapter();
+				AD.notifyDataSetChanged();
 				list.setVisibility(View.GONE);
 				trans.setVisibility(View.VISIBLE);
 				proBar.setVisibility(View.VISIBLE);

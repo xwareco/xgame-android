@@ -93,7 +93,7 @@ public class AudioRecorder extends Activity {
 				xGameAudioRecorder.release();
 				xGameAudioRecorder = null;
 				record.setEnabled(false);
-				record.setImageResource(R.drawable.record);
+				record.setImageResource(R.drawable.recording);
 				stop.setEnabled(false);
 				stop.setImageResource(R.drawable.pause);
 				play.setEnabled(true);
@@ -113,7 +113,7 @@ public class AudioRecorder extends Activity {
 				send.setEnabled(false);
 				delete.setEnabled(false);
 				record.setEnabled(false);
-				record.setImageResource(R.drawable.record);
+				record.setImageResource(R.drawable.recording);
 				try {
 					m.setDataSource(outputFile);
 					m.prepare();
@@ -126,10 +126,10 @@ public class AudioRecorder extends Activity {
 
 					@Override
 					public void onCompletion(MediaPlayer mp) {
-						send.setEnabled(false);
-						delete.setEnabled(false);
-						record.setEnabled(false);
-						record.setImageResource(R.drawable.recording);
+						send.setEnabled(true);
+						delete.setEnabled(true);
+						record.setEnabled(true);
+						record.setImageResource(R.drawable.record);
 						Status.setText("Ready..");
 					}
 				});
@@ -174,7 +174,7 @@ public class AudioRecorder extends Activity {
 					send.setEnabled(false);
 					delete.setEnabled(false);
 					record.setEnabled(true);
-					record.setImageResource(R.drawable.recording);
+					record.setImageResource(R.drawable.record);
 					stop.setEnabled(false);
 					stop.setImageResource(R.drawable.pause);
 					play.setEnabled(false);
