@@ -3,15 +3,16 @@ package com.example.hangman;
 import java.util.ArrayList;
 
 import android.app.Activity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
+import android.os.Environment;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -23,6 +24,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import uencom.xgame.interfaces.IstateActions;
+import uencom.xgame.sound.HeadPhone;
 
 public class S4 extends Activity implements IstateActions {
 	
@@ -31,9 +33,20 @@ public class S4 extends Activity implements IstateActions {
     static Button tryAgain;
     static LinearLayout layout2;
 	@Override
-	public void onStateEntry(LinearLayout layout, Intent I, Context C) {
+	public void onStateEntry(LinearLayout layout, Intent I, Context C, HeadPhone H) {
 		// TODO Auto-generated method stub
 		I.putExtra("Action", "Right");
+		 BitmapDrawable b = (BitmapDrawable) layout.getBackground();
+			b.setAlpha(155);
+			layout.setBackground(b);
+
+			String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/MissingLetter/Sound/error.mp3";
+			//score sound
+			HeadPhone HP = new HeadPhone(C);
+			HP.setLeftLevel(1);
+			HP.setRightLevel(1);
+			if (HP.detectHeadPhones() == true)
+				HP.play(Path, 0);
 		failnum = I.getIntExtra("failnum", 0);
 		failnum++;
 		I.putExtra("failnum", failnum);
@@ -56,14 +69,14 @@ public class S4 extends Activity implements IstateActions {
 	}
 
 	@Override
-	public Intent loopBack(Context c, Intent I) {
+	public Intent loopBack(Context c, Intent I, HeadPhone H) {
 		// TODO Auto-generated method stub
 		
 		return I;
 	}
 	
 	@Override
-	public void onStateExit(Context c, Intent I) {
+	public void onStateExit(Context c, Intent I, HeadPhone H) {
 		// TODO Auto-generated method stub
 		layout.removeView(tryAgain);
 		layout.removeView(layout2);
@@ -134,6 +147,14 @@ public class S4 extends Activity implements IstateActions {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+
+				String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/MissingLetter/Sound/Button.mp3";
+				//score sound
+				HeadPhone HP = new HeadPhone(c);
+				HP.setLeftLevel(1);
+				HP.setRightLevel(1);
+				if (HP.detectHeadPhones() == true)
+					HP.play(Path, 0);
 				I.putExtra("Action", "NONE");
 				I.putExtra("State", "S2");
 			}

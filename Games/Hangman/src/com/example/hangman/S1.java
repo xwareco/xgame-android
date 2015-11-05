@@ -11,6 +11,7 @@ import java.util.Random;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Environment;
 import android.speech.RecognizerIntent;
 import android.widget.LinearLayout;
@@ -30,11 +31,14 @@ public class S1  implements IstateActions {
 	
 
 	@Override
-	public void onStateEntry(LinearLayout layout, Intent I, Context C) {
+	public void onStateEntry(LinearLayout layout, Intent I, Context c, HeadPhone HC) {
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
 		//word = I.getStringExtra("word");
-		//if(word == null)
+		//if(word == null) 
+		BitmapDrawable b = (BitmapDrawable) layout.getBackground();
+		b.setAlpha(155);
+		layout.setBackground(b);
 		Random  random = new Random();
 		wordnum = random.nextInt(10);
 		word = words[wordnum];
@@ -57,7 +61,7 @@ public class S1  implements IstateActions {
 		 
 	}
 	@Override
-	public Intent loopBack(Context c, Intent I) {
+	public Intent loopBack(Context c, Intent I, HeadPhone H) {
 		// TODO Auto-generated method stub
 	
 	Toast.makeText(c, workingWord, Toast.LENGTH_SHORT).show();
@@ -66,7 +70,7 @@ public class S1  implements IstateActions {
 	}
 	
 	@Override
-	public void onStateExit(Context c, Intent I) {
+	public void onStateExit(Context c, Intent I, HeadPhone H) {
 		// TODO Auto-generated method stub
 		
 

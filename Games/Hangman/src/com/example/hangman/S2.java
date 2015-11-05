@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.OvalShape;
@@ -32,6 +33,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import javaclasses.CustomShapeDrawable;
 import uencom.xgame.interfaces.IstateActions;
@@ -42,24 +44,53 @@ import uencom.xgame.speech.SpeechRecognition;
 public class S2  implements IstateActions {
 	
 	static Button startSpeech;
+	static TextView speechWord;
 	static LinearLayout layout;
 	static String resultString;
 	static LinearLayout layout2;
 	public SpeechRecognizer sr;
 	@Override
-	public void onStateEntry(LinearLayout layout,  Intent I,  Context c) {
+	public void onStateEntry(LinearLayout layout,  Intent I,  Context c, HeadPhone H) {
 		// TODO Auto-generated method stub
 	    I.putExtra("Action", "Right");
-		    
+	    BitmapDrawable b = (BitmapDrawable) layout.getBackground();
+		b.setAlpha(155);
+		layout.setBackground(b);
 		this.layout = layout;
-		Toast.makeText(c,"$ indicate remaining letter "+ I.getStringExtra("workingWord"), Toast.LENGTH_LONG).show();
+		RoundRectShape ov = new RoundRectShape(
+				  new float[] {30,30, 30,30, 30,30, 30,30},
+				  null,
+				  null);
+		
+		ShapeDrawable bgedit = new ShapeDrawable(ov);
+		bgedit.getPaint().setColor(0x99FF9900);
+		bgedit.getPaint().setStrokeWidth(12);
+		bgedit.setPadding(5, 5, 5, 5);
+		
+		
+LinearLayout.LayoutParams layoutEditParams =new LinearLayout.LayoutParams(
+		LinearLayout.LayoutParams.WRAP_CONTENT,
+		LinearLayout.LayoutParams.WRAP_CONTENT);
+layoutEditParams.gravity = Gravity.CENTER_HORIZONTAL;
+layoutEditParams.topMargin = 13;
+
+speechWord =new  TextView(c);
+speechWord.setBackground(bgedit);
+//speechWord.setWidth(150);
+//speechWord.setHeight(90);
+speechWord.setPadding(7, 10, 7, 7);
+speechWord.setTextSize(38);
+speechWord.setText(I.getStringExtra("workingWord"));
+speechWord.setTextColor(Color.BLUE);
+speechWord.setLayoutParams(layoutEditParams);
+layout.addView(speechWord);
 		
 		createUI(this.layout,I,c);
 		
 		
 	}
 	@Override
-	public Intent loopBack(final Context c, final Intent I) {
+	public Intent loopBack(final Context c, final Intent I, HeadPhone H) {
 		
 		// TODO Auto-generated method stub
 		return I;
@@ -68,11 +99,12 @@ public class S2  implements IstateActions {
 	
 	
 	@Override
-	public void onStateExit(Context c, Intent I) {
+	public void onStateExit(Context c, Intent I, HeadPhone H) {
 		// TODO Auto-generated method stub
 		
 		layout.removeView(layout2);
 		layout.removeView(startSpeech);
+		layout.removeView(speechWord);
 	
 		
 
