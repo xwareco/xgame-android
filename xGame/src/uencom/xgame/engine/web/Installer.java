@@ -13,52 +13,58 @@ import java.util.zip.ZipInputStream;
 import uencom.xgame.engine.offlinexGameList;
 import uencom.xgame.engine.onDeviceGameChecker;
 import uencom.xgame.engine.views.GameView;
+import uencom.xgame.xgame.R;
 import android.app.Activity;
-import android.app.ProgressDialog;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 public class Installer extends AsyncTask<String, String, String> {
 
 	private static Activity ctx;
 	private static String unzipLocation;
 	private String logoUrl;
+	private int progress;
 	private static String gameName;
 	private static File f;
-	ProgressDialog barProgressDialog;
-	Handler updateBarHandler;
+	private ListView list;
+	NotificationManager mNotifyManager;
+	NotificationCompat.Builder mBuilder;
 
-	public Installer(Activity c, String unzip, String logoUrl, String name) {
+	public Installer(Activity c, String unzip, String logoUrl, String name,
+			ListView l) {
 		ctx = c;
 		unzipLocation = unzip;
 		this.logoUrl = logoUrl;
 		gameName = name;
-		updateBarHandler = new Handler();
+		progress = 0;
+		list = l;
 	}
 
 	@Override
 	protected void onPreExecute() {
-		barProgressDialog = new ProgressDialog(ctx);
-		barProgressDialog.setTitle("Downloading " + gameName + " ...");
-		barProgressDialog.setMessage("Download in progress ...");
-		barProgressDialog.setCancelable(false);
-		barProgressDialog.setCanceledOnTouchOutside(false);
-		barProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-		barProgressDialog.setProgress(0);
-		barProgressDialog.setMax(100);
-		barProgressDialog.show();
 
+		mNotifyManager = (NotificationManager) ctx
+				.getSystemService(Context.NOTIFICATION_SERVICE);
+		mBuilder = new NotificationCompat.Builder(ctx);
+		mBuilder.setContentTitle("Downloading " + gameName + " Game")
+				.setContentText("Checking for any corrupt installation")
+				.setSmallIcon(R.drawable.iconnot);
+		mBuilder.setProgress(100, progress, false);
 		super.onPreExecute();
 	}
 
 	@Override
 	protected String doInBackground(String... arg0) {
 
+		mNotifyManager.notify(1, mBuilder.build());
 		checkForCorruptDownload();
 		download(arg0[0]);
 		install(Environment.getExternalStorageDirectory() + "/xGame/Games/"
@@ -69,28 +75,30 @@ public class Installer extends AsyncTask<String, String, String> {
 
 	@Override
 	protected void onPostExecute(String result) {
-		barProgressDialog.dismiss();
+		mBuilder.setContentText("Finalizing..");
 		if (f.exists())
 			f.delete();
 
+		// When the loop is finished, updates the notification
+		mBuilder.setContentTitle(gameName);
+		mBuilder.setContentText("Download complete")
+		// Removes the progress bar
+				.setProgress(0, 0, false);
+		mNotifyManager.notify(1, mBuilder.build());
+		@SuppressWarnings("unchecked")
+		ArrayAdapter<Game> AD = (ArrayAdapter<uencom.xgame.engine.web.Game>) list
+				.getAdapter();
+		AD.notifyDataSetChanged();
 		Intent I = new Intent(ctx.getApplicationContext(), GameView.class);
 		I.putExtra("Logo", logoUrl);
 		I.putExtra("Name", gameName);
 		I.putExtra("Folder", unzipLocation + gameName);
-		ctx.finish();
 		ctx.startActivity(I);
 		super.onPostExecute(result);
 	}
 
 	public void download(String url) {
 
-		updateBarHandler.post(new Runnable() {
-
-			public void run() {
-				barProgressDialog.setMessage("Fetching game url ...");
-				barProgressDialog.incrementProgressBy(4);
-			}
-		});
 		InputStream input = null;
 		OutputStream output = null;
 		HttpURLConnection connection = null;
@@ -99,13 +107,9 @@ public class Installer extends AsyncTask<String, String, String> {
 			connection = (HttpURLConnection) downUrl.openConnection();
 			connection.connect();
 			// download the file
-			updateBarHandler.post(new Runnable() {
-
-				public void run() {
-					barProgressDialog.setMessage("Receiving data ...");
-					barProgressDialog.incrementProgressBy(5);
-				}
-			});
+			progress += 10;
+			mBuilder.setProgress(100, progress, false);
+			mNotifyManager.notify(1, mBuilder.build());
 			input = connection.getInputStream();
 			f = new File(Environment.getExternalStorageDirectory()
 					+ "/xGame/Games/" + gameName + ".xgame");
@@ -113,29 +117,20 @@ public class Installer extends AsyncTask<String, String, String> {
 				f.createNewFile();
 
 			output = new FileOutputStream(f);
-			updateBarHandler.post(new Runnable() {
-
-				public void run() {
-					barProgressDialog
-							.setMessage("Finalizing your Download ...");
-				}
-			});
+			progress += 10;
+			mBuilder.setProgress(100, progress, false);
+			mNotifyManager.notify(1, mBuilder.build());
 			byte data[] = new byte[4096];
 			int count;
 			while ((count = input.read(data)) != -1) {
 
 				output.write(data, 0, count);
 			}
-			updateBarHandler.post(new Runnable() {
 
-				public void run() {
-
-					barProgressDialog.incrementProgressBy(30);
-
-				}
-
-			});
-			System.out.println("download complete");
+			progress += 10;
+			mBuilder.setProgress(100, progress, false);
+			mNotifyManager.notify(1, mBuilder.build());
+			mBuilder.setContentText("Installing..");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -156,74 +151,51 @@ public class Installer extends AsyncTask<String, String, String> {
 
 	public void install(String path) {
 
-		updateBarHandler.post(new Runnable() {
-
-			public void run() {
-				barProgressDialog.setMessage("Installing ...");
-			}
-		});
 		File f = new File(unzipLocation + gameName);
-		updateBarHandler.post(new Runnable() {
 
-			public void run() {
-
-				barProgressDialog.incrementProgressBy(10);
-
-			}
-
-		});
 		// _dirChecker("");
 		try {
+
 			f.mkdir();
 			FileInputStream fin = new FileInputStream(path);
+			FileInputStream fin2 = new FileInputStream(path);
 			final ZipInputStream zin = new ZipInputStream(fin);
-			ZipEntry ze;
-			updateBarHandler.post(new Runnable() {
-
-				public void run() {
-
-					barProgressDialog.incrementProgressBy(10);
-
-				}
-
-			});
-			updateBarHandler.post(new Runnable() {
-
-				public void run() {
-					barProgressDialog.setMessage("Extracting Game Data ...");
-
-				}
-			});
+			final ZipInputStream zin2 = new ZipInputStream(fin2);
+			ZipEntry ze, ze2;
+			int count = 0, percent = 0;
 			while ((ze = zin.getNextEntry()) != null) {
-
-				if (ze.isDirectory()) {
-					_dirChecker(ze.getName());
+				count++;
+				System.out.println(ze.getName());
+				zin.closeEntry();
+			}
+			zin.close();
+			percent = count / 30;
+			int cur = 0;
+			while ((ze2 = zin2.getNextEntry()) != null) {
+				System.out.println("FOKK MENI!!!");
+				cur++;
+				if (ze2.isDirectory()) {
+					_dirChecker(ze2.getName());
 				} else {
 
-					updateBarHandler.post(new Runnable() {
-
-						public void run() {
-							barProgressDialog.incrementProgressBy(3);
-						}
-					});
 					FileOutputStream fout = new FileOutputStream(unzipLocation
-							+ gameName + "/" + ze.getName());
-					for (int c = zin.read(); c != -1; c = zin.read()) {
+							+ gameName + "/" + ze2.getName());
+					progress += percent;
+					mBuilder.setProgress(100, progress, false);
+					mNotifyManager.notify(1, mBuilder.build());
+					mBuilder.setContentText("Extracting data: " + cur + "/"
+							+ count);
+					for (int c = zin2.read(); c != -1; c = zin2.read()) {
 						fout.write(c);
 					}
 
-					zin.closeEntry();
+					zin2.closeEntry();
 					fout.close();
 				}
 
 			}
-			zin.close();
-			updateBarHandler.post(new Runnable() {
+			zin2.close();
 
-				public void run() {
-					barProgressDialog.setMessage("Saving ...");
-				}
-			});
 		} catch (Exception e) {
 			Log.e("Decompress", "unzip", e);
 		}
@@ -239,28 +211,19 @@ public class Installer extends AsyncTask<String, String, String> {
 
 	private void checkForCorruptDownload() {
 		Looper.prepare();
-		updateBarHandler.post(new Runnable() {
-
-			public void run() {
-				barProgressDialog
-						.setMessage("Checking for invalid installation files ..");
-			}
-		});
 		onDeviceGameChecker checkInstallations = new onDeviceGameChecker(ctx);
 		offlinexGameList currentInstallations = checkInstallations
 				.isOfflineGameExists(gameName);
 		if (currentInstallations == null) {
-			Toast.makeText(
-					ctx,
-					"A corrupted download found for this game and deleted successfully",
-					Toast.LENGTH_LONG).show();
-		}
-		updateBarHandler.post(new Runnable() {
 
-			public void run() {
-				barProgressDialog.incrementProgressBy(1);
-			}
-		});
+			mBuilder.setContentText("A corrupted download found for this game and deleted successfully");
+
+		}
+		progress += 30;
+		mBuilder.setProgress(100, progress, false);
+		mBuilder.setContentText("Connecting to xGame server");
+		mNotifyManager.notify(1, mBuilder.build());
+
 	}
 
 }

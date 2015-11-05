@@ -41,7 +41,7 @@
     <string name="logbtn">Login</string>
     <string name="regbtn">Register</string>
     <string name="pwd">Password:</string>
-    <string name="usr">User Name:</string>
+    <string name="usr">E-mail:</string>
     <string name="game_cnt">The game icon</string>
     <string name="down_cnt">Download</string>
     <string name="LoginOrReegister">Login  |  Register</string>

@@ -20,11 +20,14 @@ import uencom.xgame.engine.web.Installer;
 import uencom.xgame.engine.web.Server;
 import uencom.xgame.engine.web.User;
 import uencom.xgame.xgame.R;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
@@ -35,6 +38,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -138,6 +142,19 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 				}
 				setNames();
 				super.onSwipeleft();
+			}
+			
+			@Override
+			public void onSwipeDown() {
+				list.setVisibility(View.GONE);
+				trans.setVisibility(View.VISIBLE);
+				proBar.setVisibility(View.VISIBLE);
+				loading.setText("Refreshing..");
+				loading.setVisibility(View.VISIBLE);
+				new Server(MainView.this, null, null, loading, null, proBar, trans,
+						list).execute("game", categories.get(currentIndex).getId(),
+						String.valueOf(0));
+				super.onSwipeDown();
 			}
 		};
 
@@ -309,6 +326,9 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 						+ "/xGame/Games/" + games.get(arg2).getName();
 
 				if (!new File(ifGameExistsLocation).exists()) {
+					arg1.setClickable(true);
+					arg1.setBackgroundColor(Color.LTGRAY);
+					Toast.makeText(MainView.this, "Installing in background", Toast.LENGTH_LONG).show();
 					final String logUrl = IMAGE_PREFIX
 							+ games.get(arg2)
 									.getFileName()
@@ -330,7 +350,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 							+ "/xGame/Games/";
 
 					new Installer(MainView.this, unzipLocation, logUrl, games
-							.get(arg2).getName()).execute(downUrl);
+							.get(arg2).getName(), list).execute(downUrl);
 
 				}
 
@@ -357,10 +377,14 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 										+ "/" + games.get(arg2).getImgPath());
 						startActivity(I);
 					} else {
+						arg1.setClickable(true);
+						arg1.setBackgroundColor(Color.LTGRAY);
+						Toast.makeText(MainView.this, "Installing in background", Toast.LENGTH_LONG).show();
 						Toast.makeText(
 								getApplicationContext(),
 								"This installation is corrupted..The game will be downloaded again",
 								Toast.LENGTH_LONG).show();
+						
 						final String logUrl = IMAGE_PREFIX
 								+ games.get(arg2)
 										.getFileName()
@@ -382,7 +406,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 								+ "/xGame/Games/";
 
 						new Installer(MainView.this, unzipLocation, logUrl,
-								games.get(arg2).getName()).execute(downUrl);
+								games.get(arg2).getName(), list).execute(downUrl);
 					}
 				}
 
@@ -399,6 +423,52 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 			}
 		});
 
+		list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					final int arg2, long arg3) {
+				final Game toBeDeleted = (Game) list.getAdapter().getItem(arg2);
+				final File Game = new File(Environment
+						.getExternalStorageDirectory()
+						+ "/xGame/Games/"
+						+ toBeDeleted.getName());
+				if (Game.exists()) {
+
+					@SuppressWarnings("unused")
+					AlertDialog deleteDialog = new AlertDialog.Builder(
+							MainView.this)
+							.setTitle("Delete " + toBeDeleted.getName() + "?")
+							.setMessage(
+									"Do you really want to Delete "
+											+ toBeDeleted.getName() + "?")
+							.setIcon(R.drawable.icon_scaled)
+							.setPositiveButton(android.R.string.yes,
+									new DialogInterface.OnClickListener() {
+
+										public void onClick(
+												DialogInterface dialog,
+												int whichButton) {
+
+											onDeviceGameChecker
+													.DeleteGame(Game);
+											Toast.makeText(
+													MainView.this,
+													"Game Successfully Deleted",
+													Toast.LENGTH_LONG).show();
+											@SuppressWarnings("unchecked")
+											ArrayAdapter<Game> AD = (ArrayAdapter<uencom.xgame.engine.web.Game>) list
+													.getAdapter();
+											AD.notifyDataSetChanged();
+										}
+									})
+							.setNegativeButton(android.R.string.no, null)
+							.show();
+				}
+				return true;
+			}
+		});
+
 	}
 
 	private void setNames() {
@@ -411,11 +481,6 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 
 	}
 
-	@Override
-	protected void onPause() {
-		// finish();
-		super.onPause();
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
@@ -509,17 +574,15 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 			mDrawerLayout.closeDrawer(GravityCompat.START);
 		} else if (position == 1) {
 			mDrawerLayout.closeDrawer(GravityCompat.START);
-			if (mNavItems.get(1).getTitle().equalsIgnoreCase("register"))
-			{
+			if (mNavItems.get(1).getTitle().equalsIgnoreCase("register")) {
 				I = new Intent(this, Register.class);
 				I.putExtra("TAG", "main");
 				System.out.println(position);
 				startActivity(I);
-			}
-			else
+			} else
 				Toast.makeText(getApplicationContext(), "Registered user",
 						Toast.LENGTH_LONG).show();
-			
+
 		} else if (position == 2) {
 			System.out.println(position);
 			mDrawerLayout.closeDrawer(GravityCompat.START);

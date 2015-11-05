@@ -77,7 +77,7 @@ public class SplashActivity extends Activity {
 				connerror.setVisibility(View.GONE);
 				loading.setVisibility(View.VISIBLE);
 				new Server(SplashActivity.this, refresh, offline, loading,
-						connerror, bar, null, offlineGames).execute("test");
+						connerror, bar, null, offlineGames).execute("cat");
 
 			}
 		});
@@ -103,7 +103,7 @@ public class SplashActivity extends Activity {
 
 				// load the games
 				new Server(SplashActivity.this, refresh, offline, loading,
-						connerror, bar, null, offlineGames).execute("test");
+						connerror, bar, null, offlineGames).execute("cat");
 				
 
 			}

@@ -57,7 +57,7 @@ public class Server extends AsyncTask<String, String, String> implements
 		trans = lay;
 		gamesView = lv;
 		checkInstallations = new onDeviceGameChecker(ctx);
-		testFolder = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/Hangman";
+		testFolder = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/Shoot it!";
 	}
 
 	@Override
@@ -129,6 +129,7 @@ public class Server extends AsyncTask<String, String, String> implements
 				}
 				bar.setVisibility(View.GONE);
 				loading.setVisibility(View.GONE);
+				loading.setText("Loading ..");
 				connError.setVisibility(View.VISIBLE);
 				refresh.setVisibility(View.VISIBLE);
 			}
@@ -158,14 +159,15 @@ public class Server extends AsyncTask<String, String, String> implements
 			}
 			bar.setVisibility(View.GONE);
 			loading.setVisibility(View.GONE);
+			loading.setText("Loading ..");
 			connError.setVisibility(View.VISIBLE);
 			refresh.setVisibility(View.VISIBLE);
 		} else if(result.equalsIgnoreCase("test"))
 		{
 			Intent I = new Intent(ctx , GameView.class);
 			I.putExtra("Folder", testFolder);
-			I.putExtra("Name", "Hangman");
-			I.putExtra("gamename","Hangman");
+			I.putExtra("Name", "Shoot it!");
+			I.putExtra("gamename","Shoot it!");
 			ctx.startActivity(I);
 		}
 		else {
@@ -175,6 +177,7 @@ public class Server extends AsyncTask<String, String, String> implements
 				System.out.println("Iam here here!!");
 				bar.setVisibility(View.GONE);
 				loading.setVisibility(View.GONE);
+				loading.setText("Loading..");
 				trans.setVisibility(View.GONE);
 				if (games != null) {
 

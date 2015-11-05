@@ -39,7 +39,7 @@ public class onDeviceGameChecker {
 
 				ArrayList<File> game = new ArrayList<File>(
 						Arrays.asList(mainGameFolder.listFiles()));
-				boolean xmlFileExists = false, imagesFoldeNotEmpty = false, soundFoldeNotEmpty = false, sourceFoldeNotEmpty = false;
+				boolean xmlFileExists = false, sourceFoldeNotEmpty = false;
 				String xmlFileName = "App.xml";
 				if (mainGameFolder.getName().equalsIgnoreCase(gameName)
 						|| gameName.equalsIgnoreCase("any")) {
@@ -47,22 +47,21 @@ public class onDeviceGameChecker {
 					for (int j = 0; j < game.size(); j++) {
 						if (game.get(j).getName().equals(xmlFileName))
 							xmlFileExists = true;
-						else if (game.get(j).getName().equals("Images")
+						/*else if (game.get(j).getName().equals("Images")
 								&& game.get(j).isDirectory()
 								&& game.get(j).list().length > 0)
 							imagesFoldeNotEmpty = true;
 						else if (game.get(j).getName().equals("Sound")
 								&& game.get(j).isDirectory()
 								&& game.get(j).list().length > 0)
-							soundFoldeNotEmpty = true;
+							soundFoldeNotEmpty = true;*/
 						else if (game.get(j).getName().equals("Source")
 								&& game.get(j).isDirectory()
 								&& game.get(j).list().length > 0)
 							sourceFoldeNotEmpty = true;
 					}
 
-					if (xmlFileExists && imagesFoldeNotEmpty
-							&& soundFoldeNotEmpty && sourceFoldeNotEmpty) {
+					if (xmlFileExists && sourceFoldeNotEmpty) {
 
 						offGames.add(mainGameFolder.getName());
 						if (!gameName.equalsIgnoreCase("any")) {
@@ -90,7 +89,7 @@ public class onDeviceGameChecker {
 		return res;
 	}
 
-	private void DeleteGame(File mainGameFolder) {
+	public static void DeleteGame(File mainGameFolder) {
 		if (mainGameFolder.isDirectory())
 			for (File child : mainGameFolder.listFiles())
 				DeleteGame(child);
