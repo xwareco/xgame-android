@@ -40,7 +40,7 @@ public class S4 extends Activity implements IstateActions {
 			b.setAlpha(155);
 			layout.setBackground(b);
 
-			String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/MissingLetter/Sound/error.mp3";
+			String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/Hangman/Sound/error.mp3";
 			//score sound
 			HeadPhone HP = new HeadPhone(C);
 			HP.setLeftLevel(1);
@@ -50,6 +50,7 @@ public class S4 extends Activity implements IstateActions {
 		failnum = I.getIntExtra("failnum", 0);
 		failnum++;
 		I.putExtra("failnum", failnum);
+		Toast.makeText(C, "number of failur = "+failnum, Toast.LENGTH_LONG).show();
 		this.layout = layout;
 		if(failnum == 5)
 		{
@@ -148,7 +149,7 @@ public class S4 extends Activity implements IstateActions {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 
-				String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/MissingLetter/Sound/Button.mp3";
+				String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/Hangman/Sound/Button.mp3";
 				//score sound
 				HeadPhone HP = new HeadPhone(c);
 				HP.setLeftLevel(1);

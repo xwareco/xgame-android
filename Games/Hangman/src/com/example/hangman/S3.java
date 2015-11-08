@@ -3,6 +3,7 @@ package com.example.hangman;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Environment;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import uencom.xgame.interfaces.IstateActions;
@@ -48,17 +49,22 @@ public class S3 implements IstateActions {
 			//	I.putExtra("Action", "NONE");
 			//	I.putExtra("State", "S5");
 			}else
-			{
-			
-			Toast.makeText(C, "great this letter correct, now spell remaining letter", Toast.LENGTH_SHORT).show();
-			try {
+			{try {
 				Thread.sleep(3000);
+				String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/Hangman/Sound/correct.mp3";
+				//score sound
+				HeadPhone HP = new HeadPhone(C);
+				HP.setLeftLevel(1);
+				HP.setRightLevel(1);
+				if (HP.detectHeadPhones() == true)
+					HP.play(Path, 0);
+				I.putExtra("Action", "NONE");
+				I.putExtra("State", "S2");
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			I.putExtra("Action", "NONE");
-			I.putExtra("State", "S2");
+			
 			
 			}
 		}else

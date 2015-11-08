@@ -64,7 +64,7 @@ public class S1  implements IstateActions {
 	public Intent loopBack(Context c, Intent I, HeadPhone H) {
 		// TODO Auto-generated method stub
 	
-	Toast.makeText(c, workingWord, Toast.LENGTH_SHORT).show();
+	
 		return I;
 		
 	}
