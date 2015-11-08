@@ -88,6 +88,12 @@
             android:theme="@android:style/Theme.Dialog" >
         </activity>
         <activity
+            android:name="uencom.xgame.engine.views.Edit"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
             android:name="uencom.xgame.engine.views.TextMessageSender"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"

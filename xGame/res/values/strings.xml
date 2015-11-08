@@ -63,8 +63,8 @@
     <string name="offline">play offline</string>
     <string name="offlinestate">You are offline now</string>
     <string name="type">Type your message ..</string>
-    <string name="send">send message</string>
-    <string name="record">Record your message</string>
+    <string name="send">via text</string>
+    <string name="record">Via voice</string>
     <string name="send2">Send</string>
     <string name="delete">Delete</string>
     <string name="recording">Waiting..</string>
@@ -74,4 +74,5 @@
     <string name="cancel">close this dialog</string>
     <string name="cntctustitle">How do you want to send us your feedback?</string>
     <string name="viatxt">Via Text</string>
-    <string name="viasnd">Via Voice</string></resources>
+    <string name="viasnd">Via Voice</string>
+    <string name="forgot"><u>forgot your password..?</u></string></resources>

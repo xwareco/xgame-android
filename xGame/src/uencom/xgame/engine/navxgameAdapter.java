@@ -62,6 +62,7 @@ public class navxgameAdapter extends BaseAdapter {
 
 		TextView titleView = (TextView) view.findViewById(R.id.title);
 		ImageView iconView = (ImageView) view.findViewById(R.id.icon);
+		ImageView editIconView = (ImageView) view.findViewById(R.id.editicon);
 		if (current.getDisplayLanguage().equals("Arabic")) {
 			titleView.setTypeface(arabic);
 		} else if (current.getDisplayLanguage().equals("English")) {
@@ -69,7 +70,14 @@ public class navxgameAdapter extends BaseAdapter {
 		}
 		titleView.setText(mNavItems.get(position).title);
 		iconView.setImageResource(mNavItems.get(position).icon);
-
+		
+		if(position == 1 && !mNavItems.get(1).title.equalsIgnoreCase("register"))
+		{
+			System.out.println(position + " " + mNavItems.get(1).title);
+			editIconView.setVisibility(View.VISIBLE);
+		}
+		if(position == 0)
+			editIconView.setVisibility(View.GONE);
 		return view;
 	}
 }

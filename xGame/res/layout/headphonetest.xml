@@ -11,11 +11,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
+        android:background="@drawable/trans"
         android:gravity="center"
         android:text="@string/test"
-        android:background="@drawable/trans"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/white"
-        android:textSize="25sp"
-        android:textStyle="bold|italic" />
-    </LinearLayout>
+        android:textSize="25sp" />
+
+</LinearLayout>

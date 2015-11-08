@@ -46,17 +46,20 @@ public class Installer extends AsyncTask<String, String, String> {
 		gameName = name;
 		progress = 0;
 		list = l;
+		
 	}
 
 	@Override
 	protected void onPreExecute() {
 
+		list.setEnabled(false);
 		mNotifyManager = (NotificationManager) ctx
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 		mBuilder = new NotificationCompat.Builder(ctx);
 		mBuilder.setContentTitle("Downloading " + gameName + " Game")
 				.setContentText("Checking for any corrupt installation")
-				.setSmallIcon(R.drawable.iconnot);
+				.setSmallIcon(R.drawable.iconnot)
+				.setOngoing(true);
 		mBuilder.setProgress(100, progress, false);
 		super.onPreExecute();
 	}
@@ -82,8 +85,9 @@ public class Installer extends AsyncTask<String, String, String> {
 		// When the loop is finished, updates the notification
 		mBuilder.setContentTitle(gameName);
 		mBuilder.setContentText("Download complete")
-		// Removes the progress bar
-				.setProgress(0, 0, false);
+		.setOngoing(false)
+		.setProgress(0, 0, false);
+		
 		mNotifyManager.notify(1, mBuilder.build());
 		@SuppressWarnings("unchecked")
 		ArrayAdapter<Game> AD = (ArrayAdapter<uencom.xgame.engine.web.Game>) list
@@ -94,6 +98,7 @@ public class Installer extends AsyncTask<String, String, String> {
 		I.putExtra("Name", gameName);
 		I.putExtra("Folder", unzipLocation + gameName);
 		ctx.startActivity(I);
+		list.setEnabled(true);
 		super.onPostExecute(result);
 	}
 

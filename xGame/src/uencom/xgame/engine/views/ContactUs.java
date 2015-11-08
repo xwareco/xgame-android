@@ -11,13 +11,14 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ContactUs extends SherlockActivity {
-	TextView title, micTV, textTV;
-	ImageView mic, text;
+	TextView title;
+	ImageView voice, text;
 	Typeface arabic, english;
 
 	@Override
@@ -29,20 +30,16 @@ public class ContactUs extends SherlockActivity {
 				"fonts/DJB Stinky Marker.ttf");
 		Locale current = getResources().getConfiguration().locale;
 		title = (TextView) findViewById(R.id.textView3);
-		textTV = (TextView) findViewById(R.id.textView2);
-		micTV = (TextView) findViewById(R.id.textView1);
-		mic = (ImageView) findViewById(R.id.imageView2);
+		title.setGravity(Gravity.CENTER_HORIZONTAL);
+		voice = (ImageView) findViewById(R.id.imageView2);
 		text = (ImageView) findViewById(R.id.imageView1);
 		if (current.getDisplayLanguage().equals("Arabic")) {
 			title.setTypeface(arabic);
-			micTV.setTypeface(arabic);
-			textTV.setTypeface(arabic);
 		} else if (current.getDisplayLanguage().equals("English")) {
 			title.setTypeface(english);
-			micTV.setTypeface(english);
-			textTV.setTypeface(english);
+			
 		}
-		mic.setOnClickListener(new View.OnClickListener() {
+		voice.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {

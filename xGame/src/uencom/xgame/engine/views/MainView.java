@@ -35,6 +35,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -48,7 +49,7 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainView extends SherlockActivity implements OnNavigationListener {
+public class MainView extends SherlockActivity implements OnNavigationListener, SwipeRefreshLayout.OnRefreshListener {
 
 	ImageView mainImage, next, pre, select;
 	ArrayList<GameCategory> categories;
@@ -58,6 +59,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 	RelativeLayout rellay;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private DrawerLayout mDrawerLayout;
+	private SwipeRefreshLayout swipeRefreshLayout;
 
 	ArrayList<navxgameList> mNavItems = new ArrayList<navxgameList>();
 	boolean cat;
@@ -154,22 +156,14 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 			
 			@Override
 			public void onSwipeDown() {
-				@SuppressWarnings("unchecked")
-				ArrayAdapter<Game> AD = (ArrayAdapter<uencom.xgame.engine.web.Game>) list
-						.getAdapter();
-				AD.notifyDataSetChanged();
-				list.setVisibility(View.GONE);
-				trans.setVisibility(View.VISIBLE);
-				proBar.setVisibility(View.VISIBLE);
-				loading.setText("Refreshing..");
-				loading.setVisibility(View.VISIBLE);
-				new Server(MainView.this, null, null, loading, null, proBar, trans,
-						list).execute("game", categories.get(currentIndex).getId(),
-						String.valueOf(0));
+				
 				super.onSwipeDown();
 			}
 		};
 
+		swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+		swipeRefreshLayout.setOnRefreshListener(this);
+		
 		// DrawerLayout
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 		// Populate the Navigtion Drawer with options
@@ -592,8 +586,8 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 				System.out.println(position);
 				startActivity(I);
 			} else
-				Toast.makeText(getApplicationContext(), "Registered user",
-						Toast.LENGTH_LONG).show();
+				I = new Intent(this, Edit.class);
+			startActivity(I);
 
 		} else if (position == 2) {
 			System.out.println(position);
@@ -682,6 +676,30 @@ public class MainView extends SherlockActivity implements OnNavigationListener {
 	public boolean onTouchEvent(MotionEvent event) {
 		CatHG.OnTouchEvent(event);
 		return super.onTouchEvent(event);
+	}
+
+	@Override
+	public void onRefresh() {
+		refreshGames();
+		
+	}
+	
+	private void refreshGames() {
+		swipeRefreshLayout.setRefreshing(true);
+		/*@SuppressWarnings("unchecked")
+		ArrayAdapter<Game> AD = (ArrayAdapter<uencom.xgame.engine.web.Game>) list
+				.getAdapter();
+		AD.notifyDataSetChanged();
+		/*list.setVisibility(View.GONE);
+		trans.setVisibility(View.VISIBLE);
+		proBar.setVisibility(View.VISIBLE);
+		loading.setText("Refreshing..");
+		loading.setVisibility(View.VISIBLE);*/
+		new Server(MainView.this, null, null, loading, null, proBar, trans,
+				list).execute("game", categories.get(currentIndex).getId(),
+				String.valueOf(0));
+		
+		swipeRefreshLayout.setRefreshing(false);
 	}
 
 }
