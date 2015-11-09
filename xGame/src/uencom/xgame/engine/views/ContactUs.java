@@ -13,6 +13,8 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ public class ContactUs extends SherlockActivity {
 	TextView title;
 	ImageView voice, text;
 	Typeface arabic, english;
+	Animation a;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +32,13 @@ public class ContactUs extends SherlockActivity {
 		english = Typeface.createFromAsset(getAssets(),
 				"fonts/DJB Stinky Marker.ttf");
 		Locale current = getResources().getConfiguration().locale;
+		a = AnimationUtils.loadAnimation(this, R.anim.fadein);
 		title = (TextView) findViewById(R.id.textView3);
 		title.setGravity(Gravity.CENTER_HORIZONTAL);
 		voice = (ImageView) findViewById(R.id.imageView2);
 		text = (ImageView) findViewById(R.id.imageView1);
+		text.startAnimation(a);
+		voice.startAnimation(a);
 		if (current.getDisplayLanguage().equals("Arabic")) {
 			title.setTypeface(arabic);
 		} else if (current.getDisplayLanguage().equals("English")) {
@@ -61,6 +67,7 @@ public class ContactUs extends SherlockActivity {
 		});
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayShowTitleEnabled(true);
+		actionBar.setHomeButtonEnabled(true);
 		super.onCreate(savedInstanceState);
 	}
 
@@ -91,6 +98,10 @@ public class ContactUs extends SherlockActivity {
 			Intent I = new Intent(getApplicationContext(),
 					HeadphoneTester.class);
 			startActivity(I);
+		}
+		else if (item.getItemId() == android.R.id.home) {
+			finish();
+			overridePendingTransition(R.anim.transition5, R.anim.transition4);
 		}
 
 		return super.onOptionsItemSelected(item);

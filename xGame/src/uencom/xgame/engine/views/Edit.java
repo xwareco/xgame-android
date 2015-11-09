@@ -14,10 +14,10 @@ import android.widget.TextView;
 
 public class Edit extends Activity {
 	
-	TextView email, newEmail;
+	TextView email, newEmail, pass;
 	ImageView edit;
 	Button forgot, update;
-	EditText newMail;
+	EditText newMail, passEditText;
 	Typeface arabic, english;
 	
 	@Override
@@ -31,8 +31,10 @@ public class Edit extends Activity {
 				.getDefaultSharedPreferences(getApplicationContext());
 		email = (TextView)findViewById(R.id.textView1);
 		newEmail = (TextView)findViewById(R.id.textView2);
-		email.setTypeface(english);
+		pass = (TextView)findViewById(R.id.textView3);
+		//email.setTypeface(english);
 		newEmail.setTypeface(english);
+		pass.setTypeface(english);
 		email.setText(appSharedPrefs.getString("uName", ""));
 		
 		edit = (ImageView)findViewById(R.id.imageView1);
@@ -40,6 +42,7 @@ public class Edit extends Activity {
 		update = (Button)findViewById(R.id.button1);
 		
 		newMail = (EditText)findViewById(R.id.editText1);
+		passEditText = (EditText)findViewById(R.id.editText2);
 		
 		edit.setOnClickListener(new View.OnClickListener() {
 			
@@ -48,6 +51,8 @@ public class Edit extends Activity {
 				newEmail.setVisibility(View.VISIBLE);
 				newMail.setVisibility(View.VISIBLE);
 				update.setVisibility(View.VISIBLE);
+				pass.setVisibility(View.VISIBLE);
+				passEditText.setVisibility(View.VISIBLE);
 				
 			}
 		});

@@ -4,10 +4,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Locale;
+
 import uencom.xgame.engine.web.User;
 import uencom.xgame.xgame.R;
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -27,6 +30,7 @@ public class AudioRecorder extends Activity {
 	TextView Status;
 	MediaRecorder xGameAudioRecorder;
 	String outputFile;
+	Typeface arabic, english;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +43,12 @@ public class AudioRecorder extends Activity {
 		play.setEnabled(false);
 		stop.setEnabled(false);
 		record.setEnabled(true);
-
+		arabic = Typeface.createFromAsset(getAssets(),
+				"fonts/Kharabeesh Font.ttf");
+		english = Typeface.createFromAsset(getAssets(),
+				"fonts/DJB Stinky Marker.ttf");
+		Locale current = getResources().getConfiguration().locale;
+		
 		outputFile = Environment.getExternalStorageDirectory()
 				+ "/xGame/feedback/";
 		File f = new File(outputFile);
@@ -52,7 +61,13 @@ public class AudioRecorder extends Activity {
 		delete.setEnabled(false);
 
 		Status = (TextView) findViewById(R.id.textView1);
-
+		if (current.getDisplayLanguage().equals("Arabic")) {
+			Status.setTypeface(arabic);
+		} else if (current.getDisplayLanguage().equals("English")) {
+			Status.setTypeface(english);
+		}
+		
+		
 		xGameAudioRecorder = new MediaRecorder();
 		xGameAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 		xGameAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.AAC_ADTS);

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="@drawable/lstbg"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -10,7 +10,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:background="#000000"
         android:orientation="horizontal"
         android:weightSum="100" >
 
@@ -22,13 +21,14 @@
             android:layout_marginLeft="5dp"
             android:layout_weight="80"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#ffffff" />
+            android:textColor="#389e99" />
 
         <ImageView
             android:id="@+id/imageView1"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
+            android:contentDescription="edit your email"
             android:layout_marginLeft="15dp"
             android:layout_weight="20"
             android:src="@drawable/edit" />
@@ -36,15 +36,22 @@
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:background="#0070bf"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#389e99"
+        android:paddingBottom="10dp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:layout_marginTop="30dp"
+        android:paddingTop="10dp"
         android:text="@string/forgot"
-        android:textStyle="italic" />
+        android:textColor="#ffffff"
+        android:textSize="23sp"
+         />
 
     <TextView
         android:id="@+id/textView2"
@@ -53,42 +60,72 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="50dp"
         android:text="New E-mail:"
-        android:visibility="gone"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#ffffff" />
+        android:textColor="#389e99"
+        android:visibility="gone" />
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:paddingLeft="3dp"
+        android:contentDescription="Enter your new E-mail"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:textColor="#389e99"
+        android:background="@drawable/edittextttyle"
+        android:textStyle="bold"
+        android:visibility="gone" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#000000"
-        android:orientation="horizontal"
-        android:weightSum="100" >
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="15dp"
+        android:text="Current Password:"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#389e99"
+        android:visibility="gone" />
 
-        <EditText
-            android:id="@+id/editText1"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="70"
-            android:background="#ffffff"
-            android:ems="10"
-            android:visibility="gone"
-            android:inputType="textEmailAddress" >
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:paddingLeft="3dp"
+        android:ems="10"
+        android:contentDescription="Enter your current password"
+        android:inputType="textPassword"
+        android:textColor="#389e99"
+        android:textStyle="bold"
+        android:background="@drawable/edittextttyle"
+        android:visibility="gone" >
+    </EditText>
 
-            <requestFocus />
-        </EditText>
-
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_marginRight="5dp"
-            android:layout_weight="30"
-            android:background="#0070bf"
-            android:visibility="gone"
-            android:text="Update" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:background="#389e99"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp"
+        android:text="Update"
+        android:textColor="#ffffff"
+        android:textSize="23sp"
+        android:visibility="gone" />
 
 </LinearLayout>

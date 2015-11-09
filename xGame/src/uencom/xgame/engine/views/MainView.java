@@ -648,6 +648,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener, 
 
 			}
 			startActivity(I);
+			overridePendingTransition(R.anim.transition5, R.anim.transition4);
 		}
 
 		else if (position == 3) {
