@@ -67,7 +67,7 @@ public class TextMessageSender extends Activity {
 					String id = appSharedPrefs.getString("uID", "");
 					System.out.println("Iam IN!! " + id);
 					new User(getApplicationContext(), titleText, Message, id,
-							null).execute("msg");
+							null, null).execute("msg");
 					
 					Toast.makeText(getApplicationContext(),
 							"Your feedback has been successfully sent,Thank you for helping us enhancing xGame", Toast.LENGTH_LONG)

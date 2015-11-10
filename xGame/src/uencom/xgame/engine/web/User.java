@@ -15,7 +15,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
@@ -26,16 +25,15 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
-
 import uencom.xgame.engine.views.ContactUs;
+import uencom.xgame.jsonconverters.ChangeEmailJsonConverter;
 import uencom.xgame.jsonconverters.LoadUserMessagesJsonParameter;
 import uencom.xgame.jsonconverters.RegisterJsonParameterConverter;
 import uencom.xgame.jsonconverters.ScoreJsonParameterConverter;
 import uencom.xgame.xgame.R;
-
 import com.google.gson.Gson;
-
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -49,6 +47,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class User extends AsyncTask<String, Void, Void> {
@@ -59,6 +58,7 @@ public class User extends AsyncTask<String, Void, Void> {
 	private String TAG;
 	private Gson inputJSONConverter;
 	private FileInputStream fileUpload;
+	private TextView newEmail;
 	NotificationManager mNotifyManager;
 	NotificationCompat.Builder mBuilder;
 	HttpClient httpclient = new DefaultHttpClient();
@@ -70,13 +70,14 @@ public class User extends AsyncTask<String, Void, Void> {
 	private static Context ctx;
 
 	public User(Context c, String mail, String pass, String id,
-			FileInputStream fileInputStream) {
+			FileInputStream fileInputStream, TextView tv) {
 		ctx = c;
 		this.email = mail;
 		this.inputJSONConverter = new Gson();
 		this.password = pass;
 		updateHandler = new Handler();
 		this.id = id;
+		this.newEmail = tv;
 		fileUpload = fileInputStream;
 		mNotifyManager = (NotificationManager) ctx
 				.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -90,6 +91,120 @@ public class User extends AsyncTask<String, Void, Void> {
 
 	public String getName() {
 		return email;
+	}
+
+	public void changeEmail() {
+		ChangeEmailJsonConverter CEJC = new ChangeEmailJsonConverter(id, email);
+		String JsonParams = inputJSONConverter.toJson(CEJC);
+		String urlEncodedParams = null;
+		try {
+			urlEncodedParams = URLEncoder.encode(JsonParams, "utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String url = urlPrefix + "changeEmail?req_data=" + urlEncodedParams;
+		System.out.println(url);
+		SharedPreferences appSharedPrefs = null;
+		ResponseHandler<String> handler = new BasicResponseHandler();
+		String result = "NULL";
+		Activity act = (Activity) ctx;
+
+		try {
+			postRequest = new HttpPost(new URI(url));
+			// Authentication Layer
+			appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+			Editor prefsEditor = appSharedPrefs.edit();
+			String Auth = appSharedPrefs.getString("access_token", "");
+			System.out.println("TOK: " + Auth);
+			prefsEditor.commit();
+			postRequest.addHeader("Authorization", Auth);
+			postRequest.addHeader("Content-Type", "application/json");
+			postRequest.addHeader("Accept", "application/json");
+			result = httpclient.execute(postRequest, handler);
+			res = result;
+			System.out.println(result);
+			final JSONObject obj = new JSONObject(result);
+			String state = obj.getString("status");
+
+			if (state == "true") {
+
+				act.runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						newEmail.setText(email);
+
+					}
+				});
+				prefsEditor.putString("uID", id);
+				prefsEditor.putString("uName", email);
+				prefsEditor.putString("uPass", password);
+				prefsEditor.commit();
+				String fileWriteString = id + "," + email + "," + password;
+				writeToFile(fileWriteString);
+				act.runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						Toast.makeText(ctx,
+								"Your Email has been successfully changed",
+								Toast.LENGTH_LONG).show();
+
+					}
+				});
+
+			} else {
+				act.runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						try {
+							Toast.makeText(
+									ctx,
+									"Error updating your Email, "
+											+ obj.getString("message"),
+									Toast.LENGTH_LONG).show();
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+					}
+				});
+
+			}
+		} catch (Exception e) {
+			if (e.getMessage().contains("Unauthorized")
+					|| e.getMessage().contains("Bad Request")
+					|| e.getMessage().contains("challenges")) {
+				String newToken = xGameAPI.getNewToken("user");
+				postRequest.setHeader("Authorization", newToken);
+				Editor prefEditor2 = appSharedPrefs.edit();
+				prefEditor2.putString("access_token", newToken);
+				prefEditor2.commit();
+
+			}
+
+			else if (e.getMessage().contains("Internal Server Error")) {
+				act.runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						Toast.makeText(
+								ctx,
+								"Failed to update, user already exists with the same data",
+								Toast.LENGTH_LONG).show();
+
+					}
+				});
+
+			}
+
+			else {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public boolean register() {
@@ -160,6 +275,7 @@ public class User extends AsyncTask<String, Void, Void> {
 				});
 				return true;
 			} else {
+				System.out.println("Error!!!");
 				updateHandler.post(new Runnable() {
 
 					@Override
@@ -452,6 +568,8 @@ public class User extends AsyncTask<String, Void, Void> {
 			register();
 		} else if (params[0] == "contact") {
 			sendAudioFeedback();
+		} else if (params[0] == "change") {
+			changeEmail();
 		}
 		return null;
 	}

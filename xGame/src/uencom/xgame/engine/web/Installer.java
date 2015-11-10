@@ -1,5 +1,6 @@
 package uencom.xgame.engine.web;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -46,7 +47,7 @@ public class Installer extends AsyncTask<String, String, String> {
 		gameName = name;
 		progress = 0;
 		list = l;
-		
+
 	}
 
 	@Override
@@ -58,8 +59,7 @@ public class Installer extends AsyncTask<String, String, String> {
 		mBuilder = new NotificationCompat.Builder(ctx);
 		mBuilder.setContentTitle("Downloading " + gameName + " Game")
 				.setContentText("Checking for any corrupt installation")
-				.setSmallIcon(R.drawable.iconnot)
-				.setOngoing(true);
+				.setSmallIcon(R.drawable.iconnot).setOngoing(true);
 		mBuilder.setProgress(100, progress, false);
 		super.onPreExecute();
 	}
@@ -84,10 +84,9 @@ public class Installer extends AsyncTask<String, String, String> {
 
 		// When the loop is finished, updates the notification
 		mBuilder.setContentTitle(gameName);
-		mBuilder.setContentText("Download complete")
-		.setOngoing(false)
-		.setProgress(0, 0, false);
-		
+		mBuilder.setContentText("Download complete").setOngoing(false)
+				.setProgress(0, 0, false);
+
 		mNotifyManager.notify(1, mBuilder.build());
 		@SuppressWarnings("unchecked")
 		ArrayAdapter<Game> AD = (ArrayAdapter<uencom.xgame.engine.web.Game>) list
@@ -160,7 +159,8 @@ public class Installer extends AsyncTask<String, String, String> {
 
 		// _dirChecker("");
 		try {
-
+			long start, end;
+			start = System.currentTimeMillis();
 			f.mkdir();
 			FileInputStream fin = new FileInputStream(path);
 			FileInputStream fin2 = new FileInputStream(path);
@@ -185,21 +185,35 @@ public class Installer extends AsyncTask<String, String, String> {
 
 					FileOutputStream fout = new FileOutputStream(unzipLocation
 							+ gameName + "/" + ze2.getName());
+
 					progress += percent;
 					mBuilder.setProgress(100, progress, false);
 					mNotifyManager.notify(1, mBuilder.build());
 					mBuilder.setContentText("Extracting data: " + cur + "/"
 							+ count);
-					for (int c = zin2.read(); c != -1; c = zin2.read()) {
-						fout.write(c);
-					}
+					byte[] b = new byte[1024];
+					BufferedOutputStream bos = new BufferedOutputStream(fout,
+							b.length);
 
-					zin2.closeEntry();
+					int size;
+
+					while ((size = zin2.read(b, 0, b.length)) != -1) {
+						bos.write(b, 0, size);
+					}
+					// Close up shop..
+					bos.flush();
+					bos.close();
+
+					fout.flush();
 					fout.close();
+					zin2.closeEntry();
 				}
 
 			}
 			zin2.close();
+			end = System.currentTimeMillis();
+			long dur = (end - start) / 10000;
+			System.out.println(dur + " Second(s)");
 
 		} catch (Exception e) {
 			Log.e("Decompress", "unzip", e);

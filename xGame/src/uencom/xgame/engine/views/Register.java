@@ -55,7 +55,7 @@ public class Register extends SherlockActivity {
 						&& isEmailValid(name)) {
 					new User(Register.this, name.getText().toString(), pass
 							.getText().toString(), getIntent().getStringExtra(
-							"TAG"), null).execute("register");
+							"TAG"), null, null).execute("register");
 
 				} else {
 					Toast.makeText(getApplicationContext(),

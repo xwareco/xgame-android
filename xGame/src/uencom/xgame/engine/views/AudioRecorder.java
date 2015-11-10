@@ -163,7 +163,7 @@ public class AudioRecorder extends Activity {
 
 				try {
 					FileInputStream fstrm = new FileInputStream(outputFile);
-					new User(getApplicationContext(), null, null, id, fstrm)
+					new User(getApplicationContext(), null, null, id, fstrm, null)
 							.execute("contact");
 					Toast.makeText(
 							getApplicationContext(),
