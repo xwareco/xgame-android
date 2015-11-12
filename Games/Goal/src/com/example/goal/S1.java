@@ -12,13 +12,13 @@ import uencom.xgame.sound.HeadPhone;
 public class S1 extends Thread implements IstateActions {
 
 	@Override
-	public void onStateEntry(LinearLayout layout, Intent I, Context C) {
+	public void onStateEntry(LinearLayout layout, Intent I, Context C, HeadPhone H) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Intent loopBack(Context c, Intent I) {
+	public Intent loopBack(Context c, Intent I, HeadPhone H) {
 		// TODO Auto-generated method stub
 		int count = I.getIntExtra("Count", 0);
 		count++;
@@ -32,48 +32,22 @@ public class S1 extends Thread implements IstateActions {
 		if (HP.detectHeadPhones() == true)
 			HP.play(Path, 0);
 		if (num == 0) {
-			swipeAction = "Right";
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
-
+			swipeAction = "SwipeRight";
 		} else if (num == 1) {
-			swipeAction = "Left";
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
-			
+			swipeAction = "SwipeLeft";
 		}else if(num == 2)
 		{
-			swipeAction = "Both";
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
-			
+			swipeAction = "SingleTap";
 		}
-			I.putExtra("Action", swipeAction);
-			I.putExtra("Count", count);
-			return I;
+			
+		I.putExtra("Action", swipeAction);
+		I.putExtra("Count", count);
+		return I;
 		
 	}
 
 	@Override
-	public void onStateExit(Context c, Intent I) {
+	public void onStateExit(Context c, Intent I, HeadPhone H) {
 		// TODO Auto-generated method stub
 		int Score = I.getIntExtra("Score", 0);
 		Score++;
