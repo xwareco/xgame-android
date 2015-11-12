@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import uencom.xgame.interfaces.IstateActions;
 import uencom.xgame.sound.HeadPhone;
 
