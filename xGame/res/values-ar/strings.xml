@@ -61,17 +61,19 @@
     <string name="HeadTest">إختبر سماعاتك</string>
     <string name="drawer_open">الخيارات</string>
     <string name="offlinestate">انت اﻻن غير متصل باﻻنترنت</string>
-     <string name="offline">play offline</string>
-     <string name="send">إرسال</string>
+    <string name="offline">play offline</string>
+    <string name="send">إرسال</string>
     <string name="type">اكتب رسالتك ..</string>
     <string name="record">سجل رسالتك ..</string>
     <string name="send2">إرسال</string>
     <string name="delete">مسح</string>
     <string name="recording">جاري اﻻنتظار..</string>
-    <string name="send2">Send</string>
-    <string name="delete">Delete</string>
-    <string name="recording">Waiting..</string>
-     <string name="cancel">close this dialog</string>
-     <string name="cntctustitle">كيف تريد اﻻتصال بنا؟</string>
+     <string name="pau">إيقاف التسجيل</string>
+    <string name="pla">تشغيل الملف</string>
+    <string name="rec">تسجيل</string>
+    <string name="cancel">close this dialog</string>
+    <string name="cntctustitle">كيف تريد اﻻتصال بنا؟</string>
     <string name="viatxt">بواسطة الكتابة</string>
-    <string name="viasnd">بواسطة الصوت</string></resources>
+    <string name="viasnd">بواسطة الصوت</string>
+    <string name="forgot"><u>نسيت كلمة السر..؟</u></string>
+</resources>

@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -16,6 +17,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -91,6 +93,118 @@ public class User extends AsyncTask<String, Void, Void> {
 
 	public String getName() {
 		return email;
+	}
+
+	public void passwordReminder() {
+		PasswordReminderJsonConverter PRJC = new PasswordReminderJsonConverter(
+				id, password);
+		String JsonParams = inputJSONConverter.toJson(PRJC);
+		String urlEncodedParams = null;
+		try {
+			urlEncodedParams = URLEncoder.encode(JsonParams, "utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String url = urlPrefix + "passwordReminder?req_data="
+				+ urlEncodedParams;
+		System.out.println(url);
+		SharedPreferences appSharedPrefs = null;
+		ResponseHandler<String> handler = new BasicResponseHandler();
+		String result = "NULL";
+		Activity act = (Activity) ctx;
+
+		try {
+			postRequest = new HttpPost(new URI(url));
+			// Authentication Layer
+			appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+			Editor prefsEditor = appSharedPrefs.edit();
+			String Auth = appSharedPrefs.getString("access_token", "");
+			System.out.println("TOK: " + Auth);
+			prefsEditor.commit();
+			postRequest.addHeader("Authorization", Auth);
+			postRequest.addHeader("Content-Type", "application/json");
+			postRequest.addHeader("Accept", "application/json");
+			result = httpclient.execute(postRequest, handler);
+			res = result;
+			System.out.println(result);
+			final JSONObject obj = new JSONObject(result);
+			String state = obj.getString("status");
+
+			if (state == "true") {
+
+				act.runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						Toast.makeText(
+								ctx,
+								"Your password has been successfully sent to your E-mail",
+								Toast.LENGTH_LONG).show();
+
+					}
+				});
+
+			} else {
+				act.runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						try {
+							Toast.makeText(
+									ctx,
+									"Error sending your password, "
+											+ obj.getString("message"),
+									Toast.LENGTH_LONG).show();
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+					}
+				});
+
+			}
+		} catch (Exception e) {
+			if (e.getMessage().contains("Unauthorized")
+					|| e.getMessage().contains("Bad Request")
+					|| e.getMessage().contains("challenges")) {
+				String newToken = xGameAPI.getNewToken("user");
+				postRequest.setHeader("Authorization", newToken);
+				System.out.println(newToken);
+				Editor prefEditor2 = appSharedPrefs.edit();
+				prefEditor2.putString("access_token", newToken);
+				prefEditor2.commit();
+				
+				try {
+					result = httpclient.execute(postRequest, handler);
+				} catch (ClientProtocolException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+
+			/*
+			 * else if (e.getMessage().contains("Internal Server Error")) {
+			 * act.runOnUiThread(new Runnable() {
+			 * 
+			 * @Override public void run() { Toast.makeText( ctx,
+			 * "Failed to update, user already exists with the same data",
+			 * Toast.LENGTH_LONG).show();
+			 * 
+			 * } });
+			 * 
+			 * }
+			 */
+
+			else {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void changeEmail() {
@@ -562,14 +676,16 @@ public class User extends AsyncTask<String, Void, Void> {
 		} else if (params[0].equals("msg")) {
 			sendUserMessage();
 
-		} else if (params[0] == "load") {
+		} else if (params[0].equals("load")) {
 
-		} else if (params[0] == "register") {
+		} else if (params[0].equals("register")) {
 			register();
-		} else if (params[0] == "contact") {
+		} else if (params[0].equals("contact")) {
 			sendAudioFeedback();
-		} else if (params[0] == "change") {
+		} else if (params[0].equals("change")) {
 			changeEmail();
+		} else if (params[0].equals("passRem")) {
+			passwordReminder();
 		}
 		return null;
 	}

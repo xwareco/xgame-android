@@ -75,4 +75,5 @@
     <string name="cntctustitle">How do you want to send us your feedback?</string>
     <string name="viatxt">Via Text</string>
     <string name="viasnd">Via Voice</string>
-    <string name="forgot"><u>forgot your password..?</u></string></resources>
+    <string name="forgot"><u>forgot your password..?</u></string>
+</resources>

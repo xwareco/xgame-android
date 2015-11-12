@@ -43,7 +43,7 @@ public class GameOver extends SherlockActivity {
 		gamescore = (ImageView) findViewById(R.id.imageView3);
 		tryAgain = (ImageView) findViewById(R.id.imageView2);
 		int Score = getIntent().getIntExtra("Score" , 0);
-		Animation a = AnimationUtils.loadAnimation(this, R.anim.transition4);
+		Animation a = AnimationUtils.loadAnimation(this, R.anim.transition6);
 		// int Score = getIntent().getIntExtra("Score", 0);
 		gamescore.startAnimation(a);
 		gamescore.setOnClickListener(new View.OnClickListener() {

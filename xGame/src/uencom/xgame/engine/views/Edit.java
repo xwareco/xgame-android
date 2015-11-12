@@ -25,7 +25,7 @@ public class Edit extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.edit);
-		
+
 		arabic = Typeface.createFromAsset(getAssets(),
 				"fonts/Kharabeesh Font.ttf");
 		english = Typeface.createFromAsset(getAssets(),
@@ -65,29 +65,44 @@ public class Edit extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				
+
 				if (!newMail.getText().toString().equals("")
 						&& !passEditText.getText().toString().equals("")
 						&& passEditText.getText().toString()
-								.equals(appSharedPrefs.getString("uPass", "")) && isEmailValid(newMail) == true) {
+								.equals(appSharedPrefs.getString("uPass", ""))
+						&& isEmailValid(newMail) == true) {
 					new User(Edit.this, newMail.getText().toString(),
 							appSharedPrefs.getString("uPass", ""),
-							appSharedPrefs.getString("uID", ""), null, email).execute("change");
+							appSharedPrefs.getString("uID", ""), null, email)
+							.execute("change");
 					newEmail.setText("");
 					passEditText.setText("");
 				}
 
 				else {
-					Toast.makeText(Edit.this,
+					Toast.makeText(
+							Edit.this,
 							"Empty field(s), wrong password, or invalid Email format",
 							Toast.LENGTH_LONG).show();
 				}
 
 			}
 		});
+
+		forgot.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				new User(Edit.this, null,
+						appSharedPrefs.getString("uPass", ""), appSharedPrefs
+								.getString("uID", ""), null, null).execute("passRem");
+
+			}
+		});
+
 		super.onCreate(savedInstanceState);
 	}
-	
+
 	public boolean isEmailValid(EditText et) {
 		return android.util.Patterns.EMAIL_ADDRESS.matcher(
 				et.getText().toString()).matches();
