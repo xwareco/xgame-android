@@ -2,6 +2,7 @@ package uencom.xgame.engine.views;
 
 import java.util.Locale;
 
+import uencom.xgame.engine.xGameParser;
 import uencom.xgame.engine.web.User;
 import uencom.xgame.xgame.R;
 import android.content.Intent;
@@ -33,6 +34,8 @@ public class GameOver extends SherlockActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.game_over_view);
+		SharedPreferences appSharedPrefs = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
 		english = Typeface.createFromAsset(getAssets(),
 				"fonts/DJB Stinky Marker.ttf");
 		Locale current = getResources().getConfiguration().locale;
@@ -42,6 +45,16 @@ public class GameOver extends SherlockActivity {
 		}
 		gamescore = (ImageView) findViewById(R.id.imageView3);
 		tryAgain = (ImageView) findViewById(R.id.imageView2);
+		tryAgain.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent I = new Intent(GameOver.this, xGameParser.class);
+				I.putExtra("Folder", getIntent().getStringExtra("Folder"));
+				startActivity(I);
+				overridePendingTransition(R.anim.transition5, R.anim.transition4);
+			}
+		});
 		int Score = getIntent().getIntExtra("Score" , 0);
 		Animation a = AnimationUtils.loadAnimation(this, R.anim.transition6);
 		// int Score = getIntent().getIntExtra("Score", 0);
@@ -107,7 +120,9 @@ public class GameOver extends SherlockActivity {
 
 			}
 		});
-		gameName.setText(getIntent().getStringExtra("gamename"));
+		String name = getIntent().getStringExtra("gamename");
+		System.out.println(name);
+		gameName.setText(appSharedPrefs.getString("game", ""));
 		Toast.makeText(this, "Your Score is: " + Score, Toast.LENGTH_LONG).show();
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayShowTitleEnabled(true);

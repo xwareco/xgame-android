@@ -197,6 +197,7 @@ public class HeadPhone implements OnErrorListener {
 
 	public void stopCurrentPlay() {
 		mediaPlayer.stop();
+		//mediaPlayer.release();
 	}
 
 	public void setLeftLevel(float level) {

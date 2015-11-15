@@ -50,11 +50,14 @@ public class xGameParser extends Activity implements IStateListener {
 	Handler loopHandler;
 	XmlParser parser;
 	Intent engineIntent;
+	String name;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.xmldemo);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		name = getIntent().getStringExtra("gamename");
+		System.out.println("Parser: " + name);
 		initViewAndGameDate();
 		startTheGame();
 		super.onCreate(savedInstanceState);
@@ -115,10 +118,12 @@ public class xGameParser extends Activity implements IStateListener {
 							Intent gameOverActivity = new Intent(
 									getApplicationContext(), GameOver.class);
 							gameOverActivity.putExtra("Score", score);
-							gameOverActivity.putExtra("gamename", getIntent()
-									.getStringExtra("gamename"));
+							gameOverActivity.putExtra("Folder", getIntent()
+									.getStringExtra("Folder"));
+							gameOverActivity.putExtra("gamename", name);
 							startActivity(gameOverActivity);
 							finish();
+
 						}
 					}
 				});
@@ -137,6 +142,7 @@ public class xGameParser extends Activity implements IStateListener {
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 			System.out.println("Portrait view");
 		}
+
 		GAME_COUNT = Integer.parseInt(parser.environmentVariables
 				.get("GAME_COUNT"));
 		for (int i = 0; i < states.size(); i++)
@@ -180,7 +186,7 @@ public class xGameParser extends Activity implements IStateListener {
 			}
 		});
 		gameFolder = engineIntent.getStringExtra("Folder");
-
+		System.out.println("Parser2: " + engineIntent.getStringExtra("Folder"));
 		parser = new XmlParser(getApplicationContext(), gameFolder, gameLayout);
 		engineGesture = new HandGestures(this) {
 			@Override
@@ -230,10 +236,25 @@ public class xGameParser extends Activity implements IStateListener {
 	protected void onPause() {
 		loopTimerTask.cancel();
 		loopTimer.cancel();
+		currentState.onStateExit(xGameParser.this, gameIntent, gameMediaPlayer);
 		if (stateAccelerometer != null)
 			stateAccelerometer.onAccelerometerPause();
 		super.onPause();
 	}
+	
+	@Override
+	protected void onResume() {
+		currentState.onStateEntry(gameLayout, gameIntent, xGameParser.this, gameMediaPlayer);
+		super.onResume();
+	}
+	
+	@Override
+	public void onBackPressed() {
+		//finish();
+		//super.onBackPressed();
+	}
+	
+	
 
 	@Override
 	public void transRecieved(StateEvent event) {

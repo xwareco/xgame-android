@@ -1,6 +1,8 @@
 package uencom.xgame.engine.views;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Locale;
 import com.actionbarsherlock.app.ActionBar;
@@ -49,7 +51,8 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainView extends SherlockActivity implements OnNavigationListener, SwipeRefreshLayout.OnRefreshListener {
+public class MainView extends SherlockActivity implements OnNavigationListener,
+		SwipeRefreshLayout.OnRefreshListener {
 
 	ImageView mainImage, next, pre, select;
 	ArrayList<GameCategory> categories;
@@ -153,19 +156,20 @@ public class MainView extends SherlockActivity implements OnNavigationListener, 
 				setNames();
 				super.onSwipeleft();
 			}
-			
+
 			@Override
 			public void onSwipeDown() {
-				
+
 				super.onSwipeDown();
 			}
 		};
 
 		swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 		swipeRefreshLayout.setOnRefreshListener(this);
-		
+
 		// DrawerLayout
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+		mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 		// Populate the Navigtion Drawer with options
 		// mDrawerPane = (RelativeLayout) findViewById(R.id.drawerPane);
 		rellay = (RelativeLayout) findViewById(R.id.rellay);
@@ -334,7 +338,8 @@ public class MainView extends SherlockActivity implements OnNavigationListener, 
 				if (!new File(ifGameExistsLocation).exists()) {
 					arg1.setClickable(true);
 					arg1.setBackgroundColor(Color.LTGRAY);
-					Toast.makeText(MainView.this, "Installing in background", Toast.LENGTH_LONG).show();
+					Toast.makeText(MainView.this, "Installing in background",
+							Toast.LENGTH_LONG).show();
 					final String logUrl = IMAGE_PREFIX
 							+ games.get(arg2)
 									.getFileName()
@@ -382,15 +387,19 @@ public class MainView extends SherlockActivity implements OnNavigationListener, 
 																		'.'))
 										+ "/" + games.get(arg2).getImgPath());
 						startActivity(I);
+						overridePendingTransition(R.anim.transition5,
+								R.anim.transition4);
 					} else {
 						arg1.setClickable(true);
 						arg1.setBackgroundColor(Color.LTGRAY);
-						Toast.makeText(MainView.this, "Installing in background", Toast.LENGTH_LONG).show();
+						Toast.makeText(MainView.this,
+								"Installing in background", Toast.LENGTH_LONG)
+								.show();
 						Toast.makeText(
 								getApplicationContext(),
 								"This installation is corrupted..The game will be downloaded again",
 								Toast.LENGTH_LONG).show();
-						
+
 						final String logUrl = IMAGE_PREFIX
 								+ games.get(arg2)
 										.getFileName()
@@ -412,7 +421,8 @@ public class MainView extends SherlockActivity implements OnNavigationListener, 
 								+ "/xGame/Games/";
 
 						new Installer(MainView.this, unzipLocation, logUrl,
-								games.get(arg2).getName(), list).execute(downUrl);
+								games.get(arg2).getName(), list)
+								.execute(downUrl);
 					}
 				}
 
@@ -487,7 +497,6 @@ public class MainView extends SherlockActivity implements OnNavigationListener, 
 
 	}
 
-
 	@Override
 	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
 
@@ -500,43 +509,66 @@ public class MainView extends SherlockActivity implements OnNavigationListener, 
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		if (item.getItemId() == android.R.id.home) {
-			if (mNavItems.size() != 0) {
-				mNavItems.removeAll(mNavItems);
-			}
-			mNavItems.add(new navxgameList("Games List", R.drawable.games));
 
-			SharedPreferences appSharedPrefs = PreferenceManager
-					.getDefaultSharedPreferences(getApplicationContext());
-			String uName = appSharedPrefs.getString("uName", "");
-			if (!uName.equals("")) {
-				String uNameSideMenu = uName.substring(0, uName.indexOf('@'));
-				mNavItems.add(new navxgameList(uNameSideMenu, R.drawable.reg));
-			} else {
-				String fileContents = User.readFromFile();
-				if (fileContents.equals("")) {
-					mNavItems.add(new navxgameList("Register", R.drawable.reg));
+			try {
+				if (mNavItems.size() != 0) {
+					mNavItems.removeAll(mNavItems);
 				}
+				mNavItems.add(new navxgameList("Games List", R.drawable.games));
 
-				else {
-					uName = fileContents.substring(
-							fileContents.indexOf(',') + 1,
-							fileContents.lastIndexOf(','));
+				SharedPreferences appSharedPrefs = PreferenceManager
+						.getDefaultSharedPreferences(getApplicationContext());
+				String uName = appSharedPrefs.getString("uName", "");
+				if (!uName.equals("")) {
 					String uNameSideMenu = uName.substring(0,
 							uName.indexOf('@'));
 					mNavItems.add(new navxgameList(uNameSideMenu,
 							R.drawable.reg));
+				} else {
+					String fileContents = User.readFromFile();
+					if (fileContents.equals("")) {
+						mNavItems.add(new navxgameList("Register",
+								R.drawable.reg));
+					}
 
+					else {
+						uName = fileContents.substring(
+								fileContents.indexOf(',') + 1,
+								fileContents.lastIndexOf(','));
+						String uNameSideMenu = uName.substring(0,
+								uName.indexOf('@'));
+						mNavItems.add(new navxgameList(uNameSideMenu,
+								R.drawable.reg));
+
+					}
+				}
+				mNavItems.add(new navxgameList("Contact Us", R.drawable.env));
+				mNavItems.add(new navxgameList("About Us", R.drawable.about));
+				navxgameAdapter navAdapter = new navxgameAdapter(this,
+						mNavItems);
+				mDrawerList.setAdapter(navAdapter);
+
+				if (getActionBar().getTitle().equals("xGame"))
+					mDrawerLayout.openDrawer(GravityCompat.START);
+				else
+					mDrawerLayout.closeDrawer(GravityCompat.START);
+			} catch (Exception e) {
+				File xGameFolder = new File(
+						Environment.getExternalStorageDirectory()
+								+ "/xGame/Data/");
+				xGameFolder.mkdirs();
+				File DataFile = new File(xGameFolder, "test.txt");
+				BufferedWriter writer;
+				try {
+					DataFile.createNewFile();
+					writer = new BufferedWriter(new FileWriter(DataFile));
+					writer.write(e.getMessage());
+					writer.close();
+				} catch (Exception ex) {
+					// TODO Auto-generated catch block
+					ex.printStackTrace();
 				}
 			}
-			mNavItems.add(new navxgameList("Contact Us", R.drawable.env));
-			mNavItems.add(new navxgameList("About Us", R.drawable.about));
-			navxgameAdapter navAdapter = new navxgameAdapter(this, mNavItems);
-			mDrawerList.setAdapter(navAdapter);
-
-			if (getActionBar().getTitle().equals("xGame"))
-				mDrawerLayout.openDrawer(GravityCompat.START);
-			else
-				mDrawerLayout.closeDrawer(GravityCompat.START);
 
 		}
 
@@ -656,6 +688,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener, 
 			I = new Intent(this, Register.class);// about
 			System.out.println(position);
 			startActivity(I);
+			overridePendingTransition(R.anim.transition5, R.anim.transition4);
 		}
 
 	}
@@ -682,24 +715,15 @@ public class MainView extends SherlockActivity implements OnNavigationListener, 
 	@Override
 	public void onRefresh() {
 		refreshGames();
-		
+
 	}
-	
+
 	private void refreshGames() {
 		swipeRefreshLayout.setRefreshing(true);
-		/*@SuppressWarnings("unchecked")
-		ArrayAdapter<Game> AD = (ArrayAdapter<uencom.xgame.engine.web.Game>) list
-				.getAdapter();
-		AD.notifyDataSetChanged();
-		/*list.setVisibility(View.GONE);
-		trans.setVisibility(View.VISIBLE);
-		proBar.setVisibility(View.VISIBLE);
-		loading.setText("Refreshing..");
-		loading.setVisibility(View.VISIBLE);*/
 		new Server(MainView.this, null, null, loading, null, proBar, trans,
 				list).execute("game", categories.get(currentIndex).getId(),
 				String.valueOf(0));
-		
+
 		swipeRefreshLayout.setRefreshing(false);
 	}
 

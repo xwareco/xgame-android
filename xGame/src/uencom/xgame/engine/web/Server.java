@@ -57,7 +57,7 @@ public class Server extends AsyncTask<String, String, String> implements
 		trans = lay;
 		gamesView = lv;
 		checkInstallations = new onDeviceGameChecker(ctx);
-		testFolder = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/Shoot it!";
+		testFolder = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/Car Racer";
 	}
 
 	@Override
@@ -166,8 +166,8 @@ public class Server extends AsyncTask<String, String, String> implements
 		{
 			Intent I = new Intent(ctx , GameView.class);
 			I.putExtra("Folder", testFolder);
-			I.putExtra("Name", "Shoot it!");
-			I.putExtra("gamename","Shoot it!");
+			I.putExtra("Name", "Goal");
+			I.putExtra("gamename","Car Racer");
 			ctx.startActivity(I);
 		}
 		else {

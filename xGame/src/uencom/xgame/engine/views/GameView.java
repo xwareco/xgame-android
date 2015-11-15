@@ -1,6 +1,5 @@
 package uencom.xgame.engine.views;
 
-
 import java.util.Locale;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -10,12 +9,15 @@ import uencom.xgame.engine.xGameParser;
 import uencom.xgame.gestures.HandGestures;
 import uencom.xgame.xgame.R;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.accessibility.AccessibilityManager;
@@ -32,46 +34,57 @@ public class GameView extends SherlockActivity {
 	AccessibilityManager manager;
 	LinearLayout main;
 	Typeface english;
+	String name;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.game_view);
+		name = getIntent().getStringExtra("Name");
+		SharedPreferences appSharedPrefs = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
+		Editor ed = appSharedPrefs.edit();
+		ed.putString("game", name);
+		ed.commit();
+		System.out.println("Game_View: " + name);
 		english = Typeface.createFromAsset(getAssets(),
 				"fonts/DJB Stinky Marker.ttf");
 		Locale current = getResources().getConfiguration().locale;
 		play = (ImageView) findViewById(R.id.img);
 		home = (ImageView) findViewById(R.id.img2);
-		play.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				Intent I = new Intent(getApplicationContext(),
-						xGameParser.class);
-				I.putExtra("Folder", getIntent().getStringExtra("Folder"));
-				I.putExtra("gamename", getIntent().getStringExtra("Name"));
-				startActivity(I);
 
-			}
-		});
 		home.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				finish();
+				overridePendingTransition(R.anim.transition5,
+						R.anim.transition4);
 			}
 		});
-		String x = getIntent().getStringExtra("Folder");
-		String y = getIntent().getStringExtra("Name");
-		String z = getIntent().getStringExtra("Logo");
-		System.out.println(x + " " + y + " " + z);
+
 		gameImg = (ImageView) findViewById(R.id.imageView1);
 
 		gameName = (TextView) findViewById(R.id.textView1);
 		if (current.getDisplayLanguage().equals("English")) {
 			gameName.setTypeface(english);
 		}
-		gameName.setText(getIntent().getStringExtra("Name"));
-		gameImg.setImageURI(Uri.parse(Environment
-				.getExternalStorageDirectory().toString()
+		gameName.setText(name);
+
+		play.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				Intent I = new Intent(getApplicationContext(),
+						xGameParser.class);
+				I.putExtra("Folder", getIntent().getStringExtra("Folder"));
+				I.putExtra("gamename", name);
+				startActivity(I);
+				/*overridePendingTransition(R.anim.transition5,
+						R.anim.transition4);*/
+
+			}
+		});
+		gameImg.setImageURI(Uri.parse(Environment.getExternalStorageDirectory()
+				.toString()
 				+ "/xGame/Games/"
 				+ getIntent().getStringExtra("Name") + "/Images/logo.png"));
 		/*
