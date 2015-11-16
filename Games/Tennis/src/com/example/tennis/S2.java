@@ -10,13 +10,13 @@ import uencom.xgame.sound.HeadPhone;
 public class S2 implements IstateActions {
 
 	@Override
-	public void onStateEntry(LinearLayout layout, Intent I,Context C) {
+	public void onStateEntry(LinearLayout layout, Intent I,Context C,HeadPhone H) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public Intent loopBack(Context c, Intent I) {
+	public Intent loopBack(Context c, Intent I,HeadPhone H) {
 		// TODO Auto-generated method stub
 		String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/Tennis/Sound/Goal.mp3";
 		HeadPhone HP = new HeadPhone(c);
@@ -31,7 +31,7 @@ public class S2 implements IstateActions {
 	}
 
 	@Override
-	public void onStateExit(Context c, Intent I) {
+	public void onStateExit(Context c, Intent I,HeadPhone H) {
 		// TODO Auto-generated method stub
 
 	}

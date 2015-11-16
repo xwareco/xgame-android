@@ -41,7 +41,8 @@ public class S3 implements IstateActions {
 			if(word.equals(workingWord))
 			{
 				int Score = I.getIntExtra("Score", 0);
-				Score = 20;
+				int fail = I.getIntExtra("failnum", 0);
+				Score = 100-(fail*5);
 				I.putExtra("Score", Score);
 				int count = I.getIntExtra("Count", 0);
 				count = 20;

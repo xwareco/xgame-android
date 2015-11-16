@@ -30,7 +30,8 @@ public class S3 implements IstateActions {
 			System.out.print(score);
 			if(letterPosition == (word.length()-1))
 			{
-				I.putExtra("Score",( score/word.length())*100);
+				int failnum = I.getIntExtra("failnum", 0);
+				I.putExtra("Score",(( score/word.length())*100)-(failnum*5));
 				I.putExtra("Count", 20);
 			}else
 			{
