@@ -22,8 +22,8 @@ import uencom.xgame.sound.TTS;
 import uencom.xgame.speech.SpeechRecognition;
 
 public class S1  implements IstateActions {
-	String[] words = new String[]{"arabic","egypt","man","love",
-			"tired","back","sad","star","good","collect"};
+	String[] words = new String[]{"arabic","egypt","baby","love","mobile","device","time","farmer","black","green",
+			"tired","back","verb","star","good","collect","nice","cost","text","ready"};
 	static int wordnum ;
 	static String word;
 	static String workingWord;
@@ -40,7 +40,7 @@ public class S1  implements IstateActions {
 		b.setAlpha(155);
 		layout.setBackground(b);
 		Random  random = new Random();
-		wordnum = random.nextInt(10);
+		wordnum = random.nextInt(20);
 		word = words[wordnum];
 		char[] chars = new char[word.length()];
 		char[] tempChars =word.toCharArray();

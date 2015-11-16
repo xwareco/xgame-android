@@ -55,7 +55,11 @@ public class S4 extends Activity implements IstateActions {
 		if(failnum == 5)
 		{
 			int Score = I.getIntExtra("Score", 0);
-			Score = 0;
+			String workingWord = I.getStringExtra("workingWord");
+			int decreased = workingWord.length() - workingWord.replace("$","").length();
+			Score = 100-(decreased*10)-25;
+			if(decreased == (workingWord.length()-2))
+				Score = 0;
 			I.putExtra("Score", Score);
 			int count = I.getIntExtra("Count", 0);
 			count = 20;

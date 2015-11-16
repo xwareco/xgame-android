@@ -54,7 +54,8 @@ public class S4 extends Activity implements IstateActions {
 		{
 			int score = I.getIntExtra("Score", 0);
 			String word = I.getStringExtra("word");
-			I.putExtra("Score",( score/word.length())*100);
+			
+			I.putExtra("Score",(( score/word.length())*100)-(failnum*5));
 			I.putExtra("Count", 20);
 		//	I.putExtra("Action", "NONE");
 		//	I.putExtra("State", "S6");

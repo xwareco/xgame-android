@@ -14,7 +14,7 @@ public class S0 implements IstateActions {
 	public void onStateEntry(LinearLayout layout, Intent I, Context C,HeadPhone H) {
 		// TODO Auto-generated method stub
 		TextView tv = (TextView)layout.getChildAt(0);
-	     tv.setText("A random word will be generated and spoken out for you, you have to spell the word using your voice.");
+	     tv.setText("A random word will be generated and spoken out for you, you have to spell the word using your voice. swipe left when you are ready to start the game");
 
 	}
 
