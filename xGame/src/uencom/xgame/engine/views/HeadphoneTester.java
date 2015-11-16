@@ -86,6 +86,14 @@ public class HeadphoneTester extends Activity {
 		};
 		super.onCreate(savedInstanceState);
 	}
+	
+	@Override
+	protected void onPause() {
+		finish();
+		overridePendingTransition(R.anim.transition8,
+				R.anim.transition7);
+		super.onPause();
+	}
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {

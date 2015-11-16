@@ -76,4 +76,6 @@
     <string name="viatxt">بواسطة الكتابة</string>
     <string name="viasnd">بواسطة الصوت</string>
     <string name="forgot"><u>نسيت كلمة السر..؟</u></string>
+     <string name="facebook_app_id">1928673774025481</string>
+     <string name="com_facebook_loginview_log_in_button_long">سجل دخولك في فيسبوك لتشارك تـرتيبك</string>
 </resources>

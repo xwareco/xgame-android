@@ -101,7 +101,7 @@ public class ContactUs extends SherlockActivity {
 		}
 		else if (item.getItemId() == android.R.id.home) {
 			finish();
-			overridePendingTransition(R.anim.transition5, R.anim.transition4);
+			overridePendingTransition(R.anim.transition8, R.anim.transition7);
 		}
 
 		return super.onOptionsItemSelected(item);
@@ -112,6 +112,13 @@ public class ContactUs extends SherlockActivity {
 		// TODO Auto-generated method stub
 		super.onConfigurationChanged(newConfig);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+	}
+	
+	@Override
+	public void onBackPressed() {
+		finish();
+		overridePendingTransition(R.anim.transition8, R.anim.transition7);
+		super.onBackPressed();
 	}
 
 }

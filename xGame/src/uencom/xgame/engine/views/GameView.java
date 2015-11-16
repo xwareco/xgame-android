@@ -57,8 +57,8 @@ public class GameView extends SherlockActivity {
 			@Override
 			public void onClick(View v) {
 				finish();
-				overridePendingTransition(R.anim.transition5,
-						R.anim.transition4);
+				overridePendingTransition(R.anim.transition8,
+						R.anim.transition7);
 			}
 		});
 
@@ -78,8 +78,9 @@ public class GameView extends SherlockActivity {
 				I.putExtra("Folder", getIntent().getStringExtra("Folder"));
 				I.putExtra("gamename", name);
 				startActivity(I);
-				/*overridePendingTransition(R.anim.transition5,
-						R.anim.transition4);*/
+				finish();
+				overridePendingTransition(R.anim.transition10,
+						R.anim.transition9);
 
 			}
 		});
@@ -87,34 +88,9 @@ public class GameView extends SherlockActivity {
 				.toString()
 				+ "/xGame/Games/"
 				+ getIntent().getStringExtra("Name") + "/Images/logo.png"));
-		/*
-		 * Thread t = new Thread(new Runnable() {
-		 * 
-		 * @Override public void run() { try { InputStream is = new
-		 * URL(getIntent().getStringExtra("Logo")) .openStream(); final Drawable
-		 * logo = Drawable.createFromStream(is, "src"); if (logo != null) {
-		 * runOnUiThread(new Runnable() {
-		 * 
-		 * @Override public void run() { gameImg.getLayoutParams().height = 256;
-		 * gameImg.getLayoutParams().width = 256;
-		 * gameImg.setImageDrawable(logo);
-		 * 
-		 * } });
-		 * 
-		 * } } catch (Exception e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); } finally { final Animation a =
-		 * AnimationUtils.loadAnimation( getApplicationContext(),
-		 * R.anim.fadein); a.setDuration(1000); runOnUiThread(new Runnable() {
-		 * 
-		 * @Override public void run() { gameImg.startAnimation(a);
-		 * 
-		 * } });
-		 * 
-		 * } } }); t.start();
-		 */
+		
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayShowTitleEnabled(true);
-		setOnclicks();
 		main = (LinearLayout) findViewById(R.id.gameLay);
 		HG = new HandGestures(getApplicationContext()) {
 			@Override
@@ -125,22 +101,6 @@ public class GameView extends SherlockActivity {
 			}
 		};
 		super.onCreate(savedInstanceState);
-	}
-
-	private void setOnclicks() {
-
-		play.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				Intent I = new Intent(getApplicationContext(),
-						xGameParser.class);
-				I.putExtra("Folder", getIntent().getStringExtra("Folder"));
-				startActivity(I);
-
-			}
-		});
-
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package uencom.xgame.engine.views;
 
+
 import java.util.Locale;
 
 import uencom.xgame.engine.xGameParser;
@@ -19,21 +20,51 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 
 public class GameOver extends SherlockActivity {
 
 	ImageView gamescore, tryAgain;
 	TextView gameName;
 	Typeface english;
+	CallbackManager callbackManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		FacebookSdk.sdkInitialize(getApplicationContext());
 		setContentView(R.layout.game_over_view);
+		callbackManager = CallbackManager.Factory.create();
+        LoginButton loginButton = (LoginButton)findViewById(R.id.login_button);
+        loginButton.setReadPermissions("user_friends");
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+			
+			@Override
+			public void onSuccess(LoginResult result) {
+				Toast.makeText(GameOver.this, "Successfully loged in", Toast.LENGTH_LONG).show();
+				
+			}
+			
+			@Override
+			public void onError(FacebookException error) {
+				Toast.makeText(GameOver.this, "Error, Cannot log you in", Toast.LENGTH_LONG).show();
+				
+			}
+			
+			@Override
+			public void onCancel() {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		SharedPreferences appSharedPrefs = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
 		english = Typeface.createFromAsset(getAssets(),
@@ -52,7 +83,7 @@ public class GameOver extends SherlockActivity {
 				Intent I = new Intent(GameOver.this, xGameParser.class);
 				I.putExtra("Folder", getIntent().getStringExtra("Folder"));
 				startActivity(I);
-				overridePendingTransition(R.anim.transition5, R.anim.transition4);
+				overridePendingTransition(R.anim.transition11, R.anim.transition12);
 			}
 		});
 		int Score = getIntent().getIntExtra("Score" , 0);
@@ -153,7 +184,7 @@ public class GameOver extends SherlockActivity {
 
 	@Override
 	protected void onPause() {
-		finish();
+		//finish();
 		super.onPause();
 	}
 
@@ -162,5 +193,11 @@ public class GameOver extends SherlockActivity {
 		// TODO Auto-generated method stub
 		super.onConfigurationChanged(newConfig);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    super.onActivityResult(requestCode, resultCode, data);
+	    callbackManager.onActivityResult(requestCode, resultCode, data);
 	}
 }

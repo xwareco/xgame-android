@@ -576,6 +576,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 			Intent I = new Intent(getApplicationContext(),
 					HeadphoneTester.class);
 			startActivity(I);
+			overridePendingTransition(R.anim.transition5, R.anim.transition4);
 		}
 
 		return super.onOptionsItemSelected(item);

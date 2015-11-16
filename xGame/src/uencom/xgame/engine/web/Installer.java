@@ -97,6 +97,8 @@ public class Installer extends AsyncTask<String, String, String> {
 		I.putExtra("Name", gameName);
 		I.putExtra("Folder", unzipLocation + gameName);
 		ctx.startActivity(I);
+		Activity act = (Activity)ctx;
+		act.overridePendingTransition(R.anim.transition5, R.anim.transition4);
 		list.setEnabled(true);
 		super.onPostExecute(result);
 	}

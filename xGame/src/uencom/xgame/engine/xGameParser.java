@@ -123,6 +123,8 @@ public class xGameParser extends Activity implements IStateListener {
 							gameOverActivity.putExtra("gamename", name);
 							startActivity(gameOverActivity);
 							finish();
+							overridePendingTransition(R.anim.transition10,
+									R.anim.transition9);
 
 						}
 					}

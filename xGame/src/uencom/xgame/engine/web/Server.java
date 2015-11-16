@@ -11,6 +11,7 @@ import uencom.xgame.engine.xGameList;
 import uencom.xgame.engine.xGameParser;
 import uencom.xgame.engine.views.GameView;
 import uencom.xgame.engine.views.MainView;
+import uencom.xgame.xgame.R;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -119,6 +120,8 @@ public class Server extends AsyncTask<String, String, String> implements
 				mp = MediaPlayer.create(ctx, uencom.xgame.xgame.R.raw.done);
 				mp.start();
 				ctx.startActivity(I);
+				Activity act = (Activity)ctx;
+				act.overridePendingTransition(R.anim.transition5, R.anim.transition4);
 			} else {
 				mp = MediaPlayer.create(ctx, uencom.xgame.xgame.R.raw.failed);
 				mp.start();
@@ -153,6 +156,8 @@ public class Server extends AsyncTask<String, String, String> implements
 								I.putExtra("Folder", offlinePath);
 								I.putExtra("gamename",gameName);
 								ctx.startActivity(I);
+								Activity act = (Activity)ctx;
+								act.overridePendingTransition(R.anim.transition5, R.anim.transition4);
 						
 					}
 				});
@@ -169,6 +174,8 @@ public class Server extends AsyncTask<String, String, String> implements
 			I.putExtra("Name", "Goal");
 			I.putExtra("gamename","Car Racer");
 			ctx.startActivity(I);
+			Activity act = (Activity)ctx;
+			act.overridePendingTransition(R.anim.transition5, R.anim.transition4);
 		}
 		else {
 			
