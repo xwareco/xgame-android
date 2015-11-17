@@ -374,6 +374,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 								GameView.class);
 						I.putExtra("Folder", ifGameExistsLocation);
 						I.putExtra("Name", games.get(arg2).getName());
+						I.putExtra("gameid", games.get(arg2).getId());
 						I.putExtra(
 								"Logo",
 								IMAGE_PREFIX

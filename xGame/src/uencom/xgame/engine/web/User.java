@@ -29,7 +29,10 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import uencom.xgame.engine.Scorer;
 import uencom.xgame.engine.views.ContactUs;
+import uencom.xgame.engine.views.GameOver;
 import uencom.xgame.jsonconverters.ChangeEmailJsonConverter;
 import uencom.xgame.jsonconverters.LoadUserMessagesJsonParameter;
 import uencom.xgame.jsonconverters.RegisterJsonParameterConverter;
@@ -58,6 +61,7 @@ public class User extends AsyncTask<String, Void, Void> {
 	private String password;
 	private String urlPrefix;
 	private String TAG;
+	private String gameID, gameScore, folder, gameName;
 	private Gson inputJSONConverter;
 	private FileInputStream fileUpload;
 	private TextView newEmail;
@@ -71,8 +75,8 @@ public class User extends AsyncTask<String, Void, Void> {
 	private String id;
 	private static Context ctx;
 
-	public User(Context c, String mail, String pass, String id,
-			FileInputStream fileInputStream, TextView tv) {
+	public User(Context c, String mail, String pass, String id, String f,
+			String n, FileInputStream fileInputStream, TextView tv) {
 		ctx = c;
 		this.email = mail;
 		this.inputJSONConverter = new Gson();
@@ -80,6 +84,10 @@ public class User extends AsyncTask<String, Void, Void> {
 		updateHandler = new Handler();
 		this.id = id;
 		this.newEmail = tv;
+		this.gameID = mail;
+		this.gameScore = pass;
+		this.folder = f;
+		this.gameName = n;
 		fileUpload = fileInputStream;
 		mNotifyManager = (NotificationManager) ctx
 				.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -175,7 +183,7 @@ public class User extends AsyncTask<String, Void, Void> {
 				Editor prefEditor2 = appSharedPrefs.edit();
 				prefEditor2.putString("access_token", newToken);
 				prefEditor2.commit();
-				
+
 				try {
 					result = httpclient.execute(postRequest, handler);
 				} catch (ClientProtocolException e1) {
@@ -646,22 +654,68 @@ public class User extends AsyncTask<String, Void, Void> {
 		String url = urlPrefix + "addUserScore?req_data=" + urlEncodedParams;
 		SharedPreferences appSharedPrefs = null;
 		ResponseHandler<String> handler = new BasicResponseHandler();
-		@SuppressWarnings("unused")
 		String result = "NULL";
 		try {
-			request = new HttpGet(new URI(url));
+			postRequest = new HttpPost(new URI(url));
 			// Authentication Layer
 			appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 			Editor prefsEditor = appSharedPrefs.edit();
 			String Auth = appSharedPrefs.getString("access_token", "");
 			prefsEditor.commit();
-			request.addHeader("Authorization", Auth);
-			request.addHeader("Content-Type", "application/json");
-			request.addHeader("Accept", "application/json");
-			result = httpclient.execute(request, handler);
+			postRequest.addHeader("Authorization", Auth);
+			postRequest.addHeader("Content-Type", "application/json");
+			postRequest.addHeader("Accept", "application/json");
+			result = httpclient.execute(postRequest, handler);
+			System.out.println(result);
+			boolean cheer = false;
+			JSONObject obj = new JSONObject(result);
+			String state = obj.getString("status");
+			String msg = obj.getString("message");
+
+			if (state == "true") {
+				String rank = obj.getString("rank");
+				System.out.println(msg + " " + Integer.parseInt(rank));
+				if (msg.equalsIgnoreCase("Score added successfully")
+						&& Integer.parseInt(rank) >= 1
+						&& Integer.parseInt(rank) < 4) {
+					cheer = true;
+				}
+				ArrayList<Scorer> topScorers = new ArrayList<Scorer>();
+				JSONArray top = obj.getJSONArray("top_scorers");
+				for (int i = 0; i < top.length(); i++) {
+					JSONObject scoreJSON = top.getJSONObject(i);
+					JSONObject mailJSON = scoreJSON.getJSONObject("user");
+					String scorerScore = scoreJSON.getString("score");
+					String scorerEmail = mailJSON.getString("email");
+
+					Scorer scorer = new Scorer();
+					scorer.setRank(Integer.toString(i + 1));
+					scorer.setScore(scorerScore);
+					scorer.setUserMail(scorerEmail);
+					topScorers.add(scorer);
+				}
+
+				String scorersJSON = inputJSONConverter.toJson(topScorers);
+				Editor ed = appSharedPrefs.edit();
+				ed.putString("scorers", scorersJSON);
+				ed.commit();
+
+				Intent gameOver = new Intent(ctx, GameOver.class);
+				gameOver.putExtra("Score", Integer.parseInt(gameScore));
+				gameOver.putExtra("Folder", folder);
+				gameOver.putExtra("gamename", gameName);
+				gameOver.putExtra("gameid", gameID);
+				gameOver.putExtra("rank", rank);
+				gameOver.putExtra("cheer", cheer);
+				ctx.startActivity(gameOver);
+				Activity act = (Activity) ctx;
+				act.finish();
+				act.overridePendingTransition(R.anim.transition10,
+						R.anim.transition9);
+			}
 		} catch (Exception e) {
 			String newToken = xGameAPI.getNewToken("user");
-			request.setHeader("Authorization", newToken);
+			postRequest.setHeader("Authorization", newToken);
 			Editor prefEditor2 = appSharedPrefs.edit();
 			prefEditor2.putString("access_token", newToken);
 			prefEditor2.commit();
@@ -686,6 +740,8 @@ public class User extends AsyncTask<String, Void, Void> {
 			changeEmail();
 		} else if (params[0].equals("passRem")) {
 			passwordReminder();
+		} else if (params[0].equals("score")) {
+			addUserScore(id, gameID, gameScore);
 		}
 		return null;
 	}

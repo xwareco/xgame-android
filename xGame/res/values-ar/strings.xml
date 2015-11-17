@@ -68,7 +68,7 @@
     <string name="send2">إرسال</string>
     <string name="delete">مسح</string>
     <string name="recording">جاري اﻻنتظار..</string>
-     <string name="pau">إيقاف التسجيل</string>
+    <string name="pau">إيقاف التسجيل</string>
     <string name="pla">تشغيل الملف</string>
     <string name="rec">تسجيل</string>
     <string name="cancel">close this dialog</string>
@@ -76,6 +76,8 @@
     <string name="viatxt">بواسطة الكتابة</string>
     <string name="viasnd">بواسطة الصوت</string>
     <string name="forgot"><u>نسيت كلمة السر..؟</u></string>
-     <string name="facebook_app_id">1928673774025481</string>
-     <string name="com_facebook_loginview_log_in_button_long">سجل دخولك في فيسبوك لتشارك تـرتيبك</string>
+    <string name="facebook_app_id">1928673774025481</string>
+    <string name="com_facebook_loginview_log_in_button_long">سجل دخولك في فيسبوك لتشارك تـرتيبك</string>
+    <string name="com_facebook_loginview_log_in_button">سجل دخولك في فيسبوك لتشارك تـرتيبك</string>
+
 </resources>

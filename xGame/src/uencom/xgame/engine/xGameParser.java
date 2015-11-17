@@ -12,13 +12,17 @@ import uencom.xgame.xml.StateEvent;
 import uencom.xgame.xml.Transition;
 import uencom.xgame.xml.XmlParser;
 import uencom.xgame.engine.views.GameOver;
+import uencom.xgame.engine.views.RankGetterSplash;
 import uencom.xgame.gestures.HandGestures;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -50,13 +54,17 @@ public class xGameParser extends Activity implements IStateListener {
 	Handler loopHandler;
 	XmlParser parser;
 	Intent engineIntent;
-	String name;
+	String name, gameID;
+	SharedPreferences appPrefs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.xmldemo);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		appPrefs = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
 		name = getIntent().getStringExtra("gamename");
+		gameID = getIntent().getStringExtra("gameid");
 		System.out.println("Parser: " + name);
 		initViewAndGameDate();
 		startTheGame();
@@ -114,17 +122,35 @@ public class xGameParser extends Activity implements IStateListener {
 										.setTransDetected("NoTransitionDetected");
 							}
 						} else {
-							int score = gameIntent.getIntExtra("Score", 0);
-							Intent gameOverActivity = new Intent(
-									getApplicationContext(), GameOver.class);
-							gameOverActivity.putExtra("Score", score);
-							gameOverActivity.putExtra("Folder", getIntent()
-									.getStringExtra("Folder"));
-							gameOverActivity.putExtra("gamename", name);
-							startActivity(gameOverActivity);
-							finish();
-							overridePendingTransition(R.anim.transition10,
-									R.anim.transition9);
+							
+							if (appPrefs.getString("uName", "").equals("")) {
+								int score = gameIntent.getIntExtra("Score", 0);
+								Intent gameOverActivity = new Intent(
+										getApplicationContext(), GameOver.class);
+								gameOverActivity.putExtra("Score", score);
+								gameOverActivity.putExtra("Folder", getIntent()
+										.getStringExtra("Folder"));
+								gameOverActivity.putExtra("gamename", name);
+								startActivity(gameOverActivity);
+								finish();
+								overridePendingTransition(R.anim.transition10,
+										R.anim.transition9);
+							}
+							
+							else{
+								int score = gameIntent.getIntExtra("Score", 0);
+								Intent rankSplash = new Intent(
+										getApplicationContext(), RankGetterSplash.class);
+								rankSplash.putExtra("Score", score);
+								rankSplash.putExtra("Folder", getIntent()
+										.getStringExtra("Folder"));
+								rankSplash.putExtra("gamename", name);
+								rankSplash.putExtra("gameid", gameID);
+								startActivity(rankSplash);
+								finish();
+								overridePendingTransition(R.anim.transition5,
+										R.anim.transition4);
+							}
 
 						}
 					}
@@ -243,20 +269,36 @@ public class xGameParser extends Activity implements IStateListener {
 			stateAccelerometer.onAccelerometerPause();
 		super.onPause();
 	}
-	
+
 	@Override
 	protected void onResume() {
-		currentState.onStateEntry(gameLayout, gameIntent, xGameParser.this, gameMediaPlayer);
+		currentState.onStateEntry(gameLayout, gameIntent, xGameParser.this,
+				gameMediaPlayer);
 		super.onResume();
 	}
-	
+
 	@Override
 	public void onBackPressed() {
-		//finish();
-		//super.onBackPressed();
+		Editor ed = appPrefs.edit();
+		int count = appPrefs.getInt("cnt", 0);
+		count++;
+		if(count == 1){
+			Toast.makeText(xGameParser.this, "Press Back again to exit the game", Toast.LENGTH_LONG).show();
+			ed.putInt("cnt", count);
+			ed.commit();
+		}
+		else if(count == 2){
+			currentState.onStateExit(xGameParser.this, gameIntent, gameMediaPlayer);
+			gameMediaPlayer.release();
+			count = 0;
+			ed.putInt("cnt", count);
+			ed.commit();
+			finish();
+			overridePendingTransition(R.anim.transition8, R.anim.transition7);
+		}
+		
+		// super.onBackPressed();
 	}
-	
-	
 
 	@Override
 	public void transRecieved(StateEvent event) {

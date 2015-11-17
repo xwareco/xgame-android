@@ -19,7 +19,8 @@
         android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:layout_gravity="center"
-        android:src="@drawable/gamescores" />
+        android:src="@drawable/gamescores"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/imageView1"
@@ -35,7 +36,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="20dp"
-        android:text="" />
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/imageView2"

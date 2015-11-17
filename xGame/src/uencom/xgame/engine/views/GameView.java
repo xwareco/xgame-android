@@ -34,12 +34,13 @@ public class GameView extends SherlockActivity {
 	AccessibilityManager manager;
 	LinearLayout main;
 	Typeface english;
-	String name;
+	String name, gameID;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.game_view);
 		name = getIntent().getStringExtra("Name");
+		gameID = getIntent().getStringExtra("gameid");
 		SharedPreferences appSharedPrefs = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
 		Editor ed = appSharedPrefs.edit();
@@ -77,6 +78,7 @@ public class GameView extends SherlockActivity {
 						xGameParser.class);
 				I.putExtra("Folder", getIntent().getStringExtra("Folder"));
 				I.putExtra("gamename", name);
+				I.putExtra("gameid", gameID);
 				startActivity(I);
 				finish();
 				overridePendingTransition(R.anim.transition10,
@@ -107,6 +109,13 @@ public class GameView extends SherlockActivity {
 	protected void onPause() {
 		finish();
 		super.onPause();
+	}
+	
+	@Override
+	public void onBackPressed() {
+		finish();
+		overridePendingTransition(R.anim.transition8, R.anim.transition7);
+		super.onBackPressed();
 	}
 
 	@Override

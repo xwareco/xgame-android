@@ -1300,30 +1300,33 @@ containing a value of this type.
         public static final int messenger_button_send_white_round=0x7f030027;
         public static final int messenger_button_send_white_small=0x7f030028;
         public static final int offline_xgame_list_item=0x7f030029;
-        public static final int recordaudio=0x7f03002a;
-        public static final int register_view=0x7f03002b;
-        public static final int sensorsdemo=0x7f03002c;
-        public static final int sherlock_spinner_dropdown_item=0x7f03002d;
-        public static final int sherlock_spinner_item=0x7f03002e;
-        public static final int speechandsounddemo=0x7f03002f;
-        public static final int splash_activity=0x7f030030;
-        public static final int textmessenger=0x7f030031;
-        public static final int ttsdemo=0x7f030032;
-        public static final int xgame_list_item=0x7f030033;
-        public static final int xmldemo=0x7f030034;
+        public static final int ranksplash=0x7f03002a;
+        public static final int recordaudio=0x7f03002b;
+        public static final int register_view=0x7f03002c;
+        public static final int sensorsdemo=0x7f03002d;
+        public static final int sherlock_spinner_dropdown_item=0x7f03002e;
+        public static final int sherlock_spinner_item=0x7f03002f;
+        public static final int speechandsounddemo=0x7f030030;
+        public static final int splash_activity=0x7f030031;
+        public static final int textmessenger=0x7f030032;
+        public static final int ttsdemo=0x7f030033;
+        public static final int xgame_list_item=0x7f030034;
+        public static final int xmldemo=0x7f030035;
     }
     public static final class menu {
         public static final int actionbar=0x7f0d0000;
     }
     public static final class raw {
-        public static final int done=0x7f050000;
-        public static final int failed=0x7f050001;
-        public static final int gameover=0x7f050002;
-        public static final int getready=0x7f050003;
-        public static final int helicopter=0x7f050004;
-        public static final int helicopter2=0x7f050005;
-        public static final int left=0x7f050006;
-        public static final int right=0x7f050007;
+        public static final int cheer=0x7f050000;
+        public static final int congrat=0x7f050001;
+        public static final int done=0x7f050002;
+        public static final int failed=0x7f050003;
+        public static final int gameover=0x7f050004;
+        public static final int getready=0x7f050005;
+        public static final int helicopter=0x7f050006;
+        public static final int helicopter2=0x7f050007;
+        public static final int left=0x7f050008;
+        public static final int right=0x7f050009;
     }
     public static final class string {
         public static final int ACC_TV=0x7f060025;

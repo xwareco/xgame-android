@@ -52,7 +52,7 @@ public class HeadPhone implements OnErrorListener {
 				stopCurrentPlay();
 		}
 
-		if (flag != 4) {
+		if (flag != 4 || flag != 0) {
 			mediaPlayer = MediaPlayer.create(context,
 					Uri.fromFile(new File(path)));
 			totalTime = mediaPlayer.getDuration();
@@ -210,6 +210,11 @@ public class HeadPhone implements OnErrorListener {
 
 	public boolean isPlaying() {
 		return mediaPlayer.isPlaying();
+	}
+	
+	public void release()
+	{
+		mediaPlayer.release();
 	}
 
 	@Override

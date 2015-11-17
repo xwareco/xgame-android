@@ -73,7 +73,7 @@ public class Edit extends Activity {
 						&& isEmailValid(newMail) == true) {
 					new User(Edit.this, newMail.getText().toString(),
 							appSharedPrefs.getString("uPass", ""),
-							appSharedPrefs.getString("uID", ""), null, email)
+							appSharedPrefs.getString("uID", ""), null, null, null, email)
 							.execute("change");
 					newEmail.setText("");
 					passEditText.setText("");
@@ -95,7 +95,7 @@ public class Edit extends Activity {
 			public void onClick(View v) {
 				new User(Edit.this, null,
 						appSharedPrefs.getString("uPass", ""), appSharedPrefs
-								.getString("uID", ""), null, null).execute("passRem");
+								.getString("uID", ""), null, null, null, null).execute("passRem");
 
 			}
 		});

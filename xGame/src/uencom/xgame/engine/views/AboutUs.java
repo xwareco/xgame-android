@@ -25,6 +25,7 @@ public class AboutUs extends SherlockActivity {
 	@Override
 	protected void onPause() {
 		finish();
+		overridePendingTransition(R.anim.transition8, R.anim.transition7);
 		super.onPause();
 	}
 	

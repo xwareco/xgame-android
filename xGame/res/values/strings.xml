@@ -77,6 +77,7 @@
     <string name="viasnd">Via Voice</string>
     <string name="forgot"><u>forgot your password..?</u></string>
     <string name="facebook_app_id">1928673774025481</string>
-    <string name="com_facebook_loginview_log_in_button_long">Log in with Facebook to share your score</string>
+    <string name="com_facebook_loginview_log_in_button_long">Log in with Facebook to share your rank</string>
+    <string name="com_facebook_loginview_log_in_button">Log in with Facebook to share your rank</string>
 
 </resources>
