@@ -28,6 +28,11 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider1928673774025481"
+            android:exported="true" />
+
         <activity android:name="uencom.xgame.demos.DemosLauncher" >
         </activity>
         <activity android:name="uencom.xgame.demos.SpeechandSoundDemo" >
@@ -55,7 +60,7 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Dialog" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name="uencom.xgame.engine.views.GameView"
             android:configChanges="orientation|keyboardHidden"

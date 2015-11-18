@@ -79,5 +79,6 @@
     <string name="facebook_app_id">1928673774025481</string>
     <string name="com_facebook_loginview_log_in_button_long">سجل دخولك في فيسبوك لتشارك تـرتيبك</string>
     <string name="com_facebook_loginview_log_in_button">سجل دخولك في فيسبوك لتشارك تـرتيبك</string>
+    <string name="com_facebook_share_button_text">شارك ترتيبك الآن</string>
 
 </resources>

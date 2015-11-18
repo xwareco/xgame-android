@@ -14,6 +14,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -32,12 +33,14 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 public class GameOver extends SherlockActivity {
 
-	ImageView gamescore, tryAgain;
+	ImageView gamescore, tryAgain, cheerForUser;
 	TextView gameName;
 	Typeface english;
 	CallbackManager callbackManager;
@@ -50,17 +53,44 @@ public class GameOver extends SherlockActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		FacebookSdk.sdkInitialize(getApplicationContext());
 		setContentView(R.layout.game_over_view);
-        cheer = getIntent().getBooleanExtra("cheer", false);
-        System.out.println("Cheer = "+cheer);
-        if(cheer == true)
-        {
-        	MediaPlayer mp = MediaPlayer.create(this, R.raw.cheer);
-        	MediaPlayer mp2 = MediaPlayer.create(this, R.raw.congrat);
-        	mp.start();
-        	mp2.start();
-        }
+		cheer = getIntent().getBooleanExtra("cheer", false);
+		cheerForUser = (ImageView) findViewById(R.id.img3);
+		cheerForUser.bringToFront();
+		Animation anim = AnimationUtils.loadAnimation(this, R.anim.cheer);
+		anim.setAnimationListener(new Animation.AnimationListener() {
+
+			@Override
+			public void onAnimationStart(Animation animation) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				cheerForUser.setVisibility(View.GONE);
+
+			}
+		});
+		System.out.println("Cheer = " + cheer);
+		if (cheer == true) {
+			cheerForUser.setVisibility(View.VISIBLE);
+			cheerForUser.startAnimation(anim);
+			MediaPlayer mp = MediaPlayer.create(this, R.raw.cheer);
+			MediaPlayer mp2 = MediaPlayer.create(this, R.raw.congrat);
+			mp.start();
+			mp2.start();
+
+		}
 		callbackManager = CallbackManager.Factory.create();
-		LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+		final LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+		final ShareButton shareButton = (ShareButton) findViewById(R.id.share_button);
+
 		loginButton.setReadPermissions("user_friends");
 		loginButton.registerCallback(callbackManager,
 				new FacebookCallback<LoginResult>() {
@@ -69,6 +99,8 @@ public class GameOver extends SherlockActivity {
 					public void onSuccess(LoginResult result) {
 						Toast.makeText(GameOver.this, "Successfully loged in",
 								Toast.LENGTH_LONG).show();
+						shareButton.setVisibility(View.VISIBLE);
+						loginButton.setVisibility(View.GONE);
 
 					}
 
@@ -94,6 +126,32 @@ public class GameOver extends SherlockActivity {
 		}.getType();
 		gameTopScorers = g.fromJson(topJSon, (java.lang.reflect.Type) type);
 		userRank = getIntent().getStringExtra("rank");
+		String userRankFacebook = "";
+
+		if (userRank.equals("1"))
+			userRankFacebook = userRank + "st";
+		else if (userRank.equals("1"))
+			userRankFacebook = userRank + "st";
+		else if (userRank.equals("2"))
+			userRankFacebook = userRank + "nd";
+		else if (userRank.equals("3"))
+			userRankFacebook = userRank + "rd";
+		else
+			userRankFacebook = userRank + "th";
+
+		ShareLinkContent linkContent = new ShareLinkContent.Builder()
+				.setContentTitle(userRankFacebook + "Place")
+				.setContentDescription(
+						"I have played "
+								+ appSharedPrefs.getString("game", "")
+								+ "\ngame and got a new highscore \njoin xGame now and try to beat me!")
+				.setContentUrl(Uri.parse("http://scoreboard.xgameapp.com/"))
+				.build();
+		shareButton.setShareContent(linkContent);
+		if (loginButton.getText().equals("Log out")) {
+			shareButton.setVisibility(View.VISIBLE);
+			loginButton.setVisibility(View.GONE);
+		}
 		Toast.makeText(this, "Your rank is: " + userRank, Toast.LENGTH_LONG)
 				.show();
 		System.out.println("Top Scorers Data: \n");
@@ -109,9 +167,11 @@ public class GameOver extends SherlockActivity {
 		if (current.getDisplayLanguage().equals("English")) {
 			gameName.setTypeface(english);
 		}
+
 		gamescore = (ImageView) findViewById(R.id.imageView3);
 		if (!appSharedPrefs.getString("uName", "").equals("")) {
-			loginButton.setVisibility(View.VISIBLE);
+			if (!loginButton.getText().equals("Log out"))
+				loginButton.setVisibility(View.VISIBLE);
 			gamescore.setVisibility(View.VISIBLE);
 		}
 		tryAgain = (ImageView) findViewById(R.id.imageView2);
