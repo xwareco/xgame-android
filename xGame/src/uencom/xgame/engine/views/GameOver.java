@@ -120,46 +120,12 @@ public class GameOver extends SherlockActivity {
 				});
 		appSharedPrefs = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
-		String topJSon = appSharedPrefs.getString("scorers", "");
-		Gson g = new Gson();
-		java.lang.reflect.Type type = new TypeToken<ArrayList<Scorer>>() {
-		}.getType();
-		gameTopScorers = g.fromJson(topJSon, (java.lang.reflect.Type) type);
-		userRank = getIntent().getStringExtra("rank");
-		String userRankFacebook = "";
 
-		if (userRank.equals("1"))
-			userRankFacebook = userRank + "st";
-		else if (userRank.equals("1"))
-			userRankFacebook = userRank + "st";
-		else if (userRank.equals("2"))
-			userRankFacebook = userRank + "nd";
-		else if (userRank.equals("3"))
-			userRankFacebook = userRank + "rd";
-		else
-			userRankFacebook = userRank + "th";
-
-		ShareLinkContent linkContent = new ShareLinkContent.Builder()
-				.setContentTitle(userRankFacebook + "Place")
-				.setContentDescription(
-						"I have played "
-								+ appSharedPrefs.getString("game", "")
-								+ "\ngame and got a new highscore \njoin xGame now and try to beat me!")
-				.setContentUrl(Uri.parse("http://scoreboard.xgameapp.com/"))
-				.build();
-		shareButton.setShareContent(linkContent);
 		if (loginButton.getText().equals("Log out")) {
 			shareButton.setVisibility(View.VISIBLE);
 			loginButton.setVisibility(View.GONE);
 		}
-		Toast.makeText(this, "Your rank is: " + userRank, Toast.LENGTH_LONG)
-				.show();
-		System.out.println("Top Scorers Data: \n");
-		for (int i = 0; i < gameTopScorers.size(); i++) {
-			System.out.println("Rank: " + gameTopScorers.get(i).getRank()
-					+ " Name: " + gameTopScorers.get(i).getUserMail()
-					+ " Score: " + gameTopScorers.get(i).getScore());
-		}
+
 		english = Typeface.createFromAsset(getAssets(),
 				"fonts/DJB Stinky Marker.ttf");
 		Locale current = getResources().getConfiguration().locale;
@@ -173,6 +139,41 @@ public class GameOver extends SherlockActivity {
 			if (!loginButton.getText().equals("Log out"))
 				loginButton.setVisibility(View.VISIBLE);
 			gamescore.setVisibility(View.VISIBLE);
+			String topJSon = appSharedPrefs.getString("scorers", "");
+			Gson g = new Gson();
+			java.lang.reflect.Type type = new TypeToken<ArrayList<Scorer>>() {
+			}.getType();
+			gameTopScorers = g.fromJson(topJSon, (java.lang.reflect.Type) type);
+			System.out.println("Top Scorers Data: \n");
+			for (int i = 0; i < gameTopScorers.size(); i++) {
+				System.out.println("Rank: " + gameTopScorers.get(i).getRank()
+						+ " Name: " + gameTopScorers.get(i).getUserMail()
+						+ " Score: " + gameTopScorers.get(i).getScore());
+			}
+			userRank = getIntent().getStringExtra("rank");
+			String userRankFacebook = "";
+			Toast.makeText(this, "Your rank is: " + userRank, Toast.LENGTH_LONG)
+					.show();
+			if (userRank.equals("1"))
+				userRankFacebook = userRank + "st";
+			else if (userRank.equals("1"))
+				userRankFacebook = userRank + "st";
+			else if (userRank.equals("2"))
+				userRankFacebook = userRank + "nd";
+			else if (userRank.equals("3"))
+				userRankFacebook = userRank + "rd";
+			else
+				userRankFacebook = userRank + "th";
+
+			ShareLinkContent linkContent = new ShareLinkContent.Builder()
+					.setContentTitle(userRankFacebook + "Place")
+					.setContentDescription(
+							"I have played "
+									+ appSharedPrefs.getString("game", "")
+									+ "\ngame and got a new highscore \njoin xGame now and try to beat me!")
+					.setContentUrl(Uri.parse("http://scoreboard.xgameapp.com/"))
+					.build();
+			shareButton.setShareContent(linkContent);
 		}
 		tryAgain = (ImageView) findViewById(R.id.imageView2);
 		tryAgain.setOnClickListener(new View.OnClickListener() {

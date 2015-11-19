@@ -361,7 +361,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 							+ "/xGame/Games/";
 
 					new Installer(MainView.this, unzipLocation, logUrl, games
-							.get(arg2).getName(), list).execute(downUrl);
+							.get(arg2).getName(), games.get(arg2).getId(), list).execute(downUrl);
 
 				}
 
@@ -422,7 +422,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 								+ "/xGame/Games/";
 
 						new Installer(MainView.this, unzipLocation, logUrl,
-								games.get(arg2).getName(), list)
+								games.get(arg2).getName(), games.get(arg2).getId(), list)
 								.execute(downUrl);
 					}
 				}

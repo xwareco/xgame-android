@@ -644,6 +644,7 @@ public class User extends AsyncTask<String, Void, Void> {
 		ScoreJsonParameterConverter SJC = new ScoreJsonParameterConverter(
 				userId, gameID, score);
 		String JsonParams = inputJSONConverter.toJson(SJC);
+		System.out.println(JsonParams);
 		String urlEncodedParams = null;
 		try {
 			urlEncodedParams = URLEncoder.encode(JsonParams, "utf-8");

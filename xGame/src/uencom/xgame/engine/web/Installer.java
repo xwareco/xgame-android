@@ -21,11 +21,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class Installer extends AsyncTask<String, String, String> {
 
@@ -34,17 +34,19 @@ public class Installer extends AsyncTask<String, String, String> {
 	private String logoUrl;
 	private int progress;
 	private static String gameName;
+	private String game_id;
 	private static File f;
 	private ListView list;
 	NotificationManager mNotifyManager;
 	NotificationCompat.Builder mBuilder;
 
 	public Installer(Activity c, String unzip, String logoUrl, String name,
-			ListView l) {
+			String game_id, ListView l) {
 		ctx = c;
 		unzipLocation = unzip;
 		this.logoUrl = logoUrl;
 		gameName = name;
+		this.game_id = game_id;
 		progress = 0;
 		list = l;
 
@@ -69,41 +71,64 @@ public class Installer extends AsyncTask<String, String, String> {
 
 		mNotifyManager.notify(1, mBuilder.build());
 		checkForCorruptDownload();
-		download(arg0[0]);
-		install(Environment.getExternalStorageDirectory() + "/xGame/Games/"
-				+ gameName + ".xgame");
+		boolean b = download(arg0[0]);
+		if (b == true)
+			install(Environment.getExternalStorageDirectory() + "/xGame/Games/"
+					+ gameName + ".xgame");
+		else
+			return "Error";
 
-		return null;
+		return "Success";
 	}
 
 	@Override
 	protected void onPostExecute(String result) {
+
 		mBuilder.setContentText("Finalizing..");
-		if (f.exists())
-			f.delete();
+		if (!result.equals("Error")) {
 
-		// When the loop is finished, updates the notification
-		mBuilder.setContentTitle(gameName);
-		mBuilder.setContentText("Download complete").setOngoing(false)
-				.setProgress(0, 0, false);
+			if (f.exists())
+				f.delete();
+			// When the loop is finished, updates the notification
+			mBuilder.setContentTitle(gameName);
+			mBuilder.setContentText("Download complete").setOngoing(false)
+					.setProgress(0, 0, false);
 
-		mNotifyManager.notify(1, mBuilder.build());
-		@SuppressWarnings("unchecked")
-		ArrayAdapter<Game> AD = (ArrayAdapter<uencom.xgame.engine.web.Game>) list
-				.getAdapter();
-		AD.notifyDataSetChanged();
-		Intent I = new Intent(ctx.getApplicationContext(), GameView.class);
-		I.putExtra("Logo", logoUrl);
-		I.putExtra("Name", gameName);
-		I.putExtra("Folder", unzipLocation + gameName);
-		ctx.startActivity(I);
-		Activity act = (Activity)ctx;
-		act.overridePendingTransition(R.anim.transition5, R.anim.transition4);
-		list.setEnabled(true);
+			mNotifyManager.notify(1, mBuilder.build());
+			@SuppressWarnings("unchecked")
+			ArrayAdapter<Game> AD = (ArrayAdapter<uencom.xgame.engine.web.Game>) list
+					.getAdapter();
+			AD.notifyDataSetChanged();
+			Intent I = new Intent(ctx.getApplicationContext(), GameView.class);
+			I.putExtra("Logo", logoUrl);
+			I.putExtra("Name", gameName);
+			I.putExtra("Folder", unzipLocation + gameName);
+			I.putExtra("gameid", game_id);
+			ctx.startActivity(I);
+			Activity act = (Activity) ctx;
+			act.overridePendingTransition(R.anim.transition5,
+					R.anim.transition4);
+			list.setEnabled(true);
+		} else {
+			Toast.makeText(
+					ctx,
+					"Cannot download " + gameName
+							+ " now, please try again later", Toast.LENGTH_LONG)
+					.show();
+			@SuppressWarnings("unchecked")
+			ArrayAdapter<Game> AD = (ArrayAdapter<uencom.xgame.engine.web.Game>) list
+					.getAdapter();
+			AD.notifyDataSetChanged();
+			mBuilder.setContentTitle(gameName);
+			mBuilder.setContentText("Failed to download").setOngoing(false)
+					.setProgress(0, 0, false);
+			mNotifyManager.notify(1, mBuilder.build());
+			list.setEnabled(true);
+		}
 		super.onPostExecute(result);
 	}
 
-	public void download(String url) {
+	public boolean download(String url) {
 
 		InputStream input = null;
 		OutputStream output = null;
@@ -139,7 +164,7 @@ public class Installer extends AsyncTask<String, String, String> {
 			mBuilder.setContentText("Installing..");
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			return false;
 		} finally {
 			try {
 				if (output != null)
@@ -152,7 +177,7 @@ public class Installer extends AsyncTask<String, String, String> {
 			if (connection != null)
 				connection.disconnect();
 		}
-
+		return true;
 	}
 
 	public void install(String path) {
@@ -231,7 +256,7 @@ public class Installer extends AsyncTask<String, String, String> {
 	}
 
 	private void checkForCorruptDownload() {
-		Looper.prepare();
+		// Looper.prepare();
 		onDeviceGameChecker checkInstallations = new onDeviceGameChecker(ctx);
 		offlinexGameList currentInstallations = checkInstallations
 				.isOfflineGameExists(gameName);
