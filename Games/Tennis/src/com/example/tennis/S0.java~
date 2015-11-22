@@ -1,4 +1,4 @@
-package com.example.spellme;
+package com.example.tennis;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,11 +13,11 @@ public class S0 implements IstateActions {
 	@Override
 	public void onStateEntry(LinearLayout layout, Intent I, Context C,HeadPhone H) {
 		// TODO Auto-generated method stub
+
 		TextView tv = (TextView)layout.getChildAt(0);
-	     tv.setText("A random word will be generated and spoken out for you, you have to spell the word by choosing the letters from a menu, swipe left when you are ready to start the game");
+	     tv.setText("shoot the ball back by taping the screen once but if only sound is playing in both your left and right headphones, otherwise you will lose a point, swipe left when you are ready to start the game");
 
 	}
-
 
 	@Override
 	public Intent loopBack(Context c, Intent I,HeadPhone H) {
@@ -31,5 +31,6 @@ public class S0 implements IstateActions {
 
 	}
 
-	
 }
+
+

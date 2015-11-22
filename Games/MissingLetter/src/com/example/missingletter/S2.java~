@@ -1,20 +1,16 @@
-package com.example.wordmaster;
+package com.example.missingletter;
 
 import android.app.ActionBar.LayoutParams;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources.Theme;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Environment;
-import android.util.StateSet;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -40,7 +36,7 @@ public class S2 implements IstateActions {
 		b.setAlpha(155);
 		layout.setBackground(b);
 
-		String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/The Word Master/Sound/error.mp3";
+		String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/MissingLetter/Sound/error.mp3";
 		//score sound
 		HeadPhone HP = new HeadPhone(C);
 		HP.setLeftLevel(1);
@@ -52,7 +48,7 @@ public class S2 implements IstateActions {
 		I.putExtra("failnum", failnum);
 		int level = I.getIntExtra("Level", 1);
 		
-		Toast.makeText(C, "You stil have "+(5-failnum)+" tries to go", Toast.LENGTH_LONG).show();
+		Toast.makeText(C, "number of failur = "+failnum, Toast.LENGTH_LONG).show();
 		this.layout = layout;
 		if(level == 5 || failnum ==5)
 		{
@@ -103,48 +99,38 @@ public class S2 implements IstateActions {
 		
 		//layoutCenterParams.topMargin =150;
 		tryAgain = new Button(c);
-		RoundRectShape rect = new RoundRectShape(
-			  new float[] {30,30, 30,30, 30,30, 30,30},
-			  null,
-			  null);
-	OvalShape ov = new OvalShape();
-			ShapeDrawable bg = new ShapeDrawable(ov);
-			
-			bg.getPaint().setColor(Color.RED);
-			
-			StateListDrawable stld = new StateListDrawable();
-			
-			stld.addState(new int[] { android.R.attr.state_enabled }, bg);
-			Drawable d = Drawable.createFromPath(Environment
-					.getExternalStorageDirectory().toString()
-					+ "/xGame/Games/"
-					+ "The Word Master" + "/Images/tryAgain.png");
-			Bitmap b = drawableToBitmap(d);
-			
-			 Bitmap bc1 = Bitmap.createBitmap(b.getWidth() + 10, b.getHeight() + 10, Bitmap.Config.ARGB_8888);
-		        Canvas c1 = new Canvas(bc1);
-		        c1.drawBitmap(b, 0, 0, null);
-		        Bitmap bc2 = Bitmap.createBitmap(b.getWidth() + 10, b.getHeight() + 10, Bitmap.Config.ARGB_8888);
-		        Canvas c2 = new Canvas(bc2);
-		        c2.drawBitmap(b, 10, 10, null);
+		//startSpeech.setBackgroundColor(Color.RED);
+		//startSpeech.setBackground(c.getResources().getDrawable(R.drawable.yellow_button));
+		//Inflater inflater = new Inflater();
+		//Button firstStyleBtn = (Button) inflater.inflate(R.layout.centerbutton, layout, false);
+		
+	   
 
-		        stld = new StateListDrawable();
-		        stld.addState(new int[] { android.R.attr.state_pressed },  new BitmapDrawable(c.getResources(),bc2));
-		        stld.addState(StateSet.WILD_CARD, new BitmapDrawable(c.getResources(),bc1));
-	tryAgain.setLayoutParams(layoutCenterParams);
-	
-	tryAgain.setBackground(stld);
-	//startSpeech.setBackground(d);
-	//startSpeech.setPadding(10, 10, 10, 10);
-	tryAgain.setGravity(Gravity.CENTER);
-	tryAgain.setHeight(110);
-	tryAgain.setWidth(150);
-	
-	//startSpeech.setBackgroundColor(0x99FF00CC);
-	//startSpeech.setBackground(states);
-	//startSpeech.setBackground(c.getResources().getDrawable(R.drawable.text_background));
-	tryAgain.setContentDescription("try again");
-	tryAgain.setTextColor(0x99FF2400);
+		
+		//startSpeech.setBackgroundResource(R.drawable.text_background);
+		RoundRectShape rect = new RoundRectShape(
+				  new float[] {30,30, 30,30, 30,30, 30,30},
+				  null,
+				  null);
+		OvalShape ov = new OvalShape();
+				ShapeDrawable bg = new ShapeDrawable(ov);
+				bg.getPaint().setColor(Color.RED);
+				ShapeDrawable bg2 = new ShapeDrawable(ov);
+				bg2.getPaint().setColor(Color.LTGRAY);
+				StateListDrawable stld = new StateListDrawable();
+				stld.addState(new int[] { android.R.attr.state_pressed }, bg2);
+				stld.addState(new int[] { android.R.attr.state_enabled }, bg);
+				
+				tryAgain.setLayoutParams(layoutCenterParams);
+		
+				tryAgain.setBackground(stld);
+				tryAgain.setPadding(10, 10, 10, 10);
+				tryAgain.setGravity(Gravity.CENTER);
+				tryAgain.setHeight(150);
+				tryAgain.setWidth(200);
+		//startSpeech.setBackground(states);
+		//startSpeech.setBackground(c.getResources().getDrawable(R.drawable.text_background));
+				tryAgain.setText("Try  Again");
 		layout2.addView(tryAgain);
 		
 		layout2.setLayoutParams(layoutCenterParent);
@@ -160,7 +146,7 @@ public class S2 implements IstateActions {
 			@Override
 			public void onClick(View v) {
 
-				String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/The Word Master/Sound/Button.mp3";
+				String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/MissingLetter/Sound/Button.mp3";
 				//score sound
 				HeadPhone HP = new HeadPhone(c);
 				HP.setLeftLevel(1);
@@ -176,27 +162,7 @@ public class S2 implements IstateActions {
 
 		
 	}
-	public static Bitmap drawableToBitmap (Drawable drawable) {
-	    Bitmap bitmap = null;
-	 
-	    if (drawable instanceof BitmapDrawable) {
-	        BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-	        if(bitmapDrawable.getBitmap() != null) {
-	            return bitmapDrawable.getBitmap();
-	        } 
-	    } 
-	 
-	    if(drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
-	        bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
-	    } else { 
-	        bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-	    } 
-	 
-	    Canvas canvas = new Canvas(bitmap);
-	    drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-	    drawable.draw(canvas);
-	    return bitmap;
-	} 
+	
 }
 
 	

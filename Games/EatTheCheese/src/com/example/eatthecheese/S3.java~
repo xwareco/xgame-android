@@ -1,4 +1,4 @@
-package com.example.spellme;
+package com.example.eatthecheese;
 
 import android.app.ActionBar.LayoutParams;
 import android.content.Context;
@@ -24,7 +24,7 @@ import android.widget.Toast;
 import uencom.xgame.interfaces.IstateActions;
 import uencom.xgame.sound.HeadPhone;
 
-public class S4 implements IstateActions {
+public class S3 implements IstateActions {
 
 	 static int failnum = 0;
 	    static LinearLayout layout;
@@ -40,7 +40,7 @@ public class S4 implements IstateActions {
 		b.setAlpha(155);
 		layout.setBackground(b);
 
-		String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/Spell Me/Sound/error.mp3";
+		String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/Eat The Cheese/Sound/error.mp3";
 		//score sound
 		HeadPhone HP = new HeadPhone(C);
 		HP.setLeftLevel(1);
@@ -50,15 +50,24 @@ public class S4 implements IstateActions {
 		failnum = I.getIntExtra("failnum", 0);
 		failnum++;
 		I.putExtra("failnum", failnum);
-		int level = I.getIntExtra("Level", 1);
 		
-		Toast.makeText(C, "You stil have "+(5-failnum)+" tries to go", Toast.LENGTH_LONG).show();
+		
+		Toast.makeText(C, "You still have another "+5-failnum+" tries to go", Toast.LENGTH_LONG).show();
 		this.layout = layout;
-		if(failnum == 5)
+		if(failnum == 7)
 		{
+			String Path2 = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/Eat The Cheese/Sound/finish.mp3";
+			//score sound
+			HeadPhone HP2 = new HeadPhone(C);
+			HP2.setLeftLevel(1);
+			HP2.setRightLevel(1);
+			if (HP2.detectHeadPhones() == true)
+				HP2.play(Path2, 0);
 			int score = I.getIntExtra("Score", 1);
 			String word = I.getStringExtra("word");
 			score = ((score/word.length())*100) - failnum*5;
+			if(score<0)
+				score = 0;
 			I.putExtra("Score",score );
 			
 			I.putExtra("Count", 20);
@@ -118,7 +127,7 @@ public class S4 implements IstateActions {
 			Drawable d = Drawable.createFromPath(Environment
 					.getExternalStorageDirectory().toString()
 					+ "/xGame/Games/"
-					+ "Spell Me" + "/Images/tryAgain.png");
+					+ "Eat The Cheese" + "/Images/tryAgain.png");
 			Bitmap b = drawableToBitmap(d);
 			
 			 Bitmap bc1 = Bitmap.createBitmap(b.getWidth() + 10, b.getHeight() + 10, Bitmap.Config.ARGB_8888);
@@ -169,7 +178,7 @@ public class S4 implements IstateActions {
 					HP.play(Path, 0);
 				// TODO Auto-generated method stub
 				I.putExtra("Action", "NONE");
-				I.putExtra("State", "S2");
+				I.putExtra("State", "S1");
 			}
 		});
 		

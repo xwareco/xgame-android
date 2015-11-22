@@ -52,7 +52,7 @@ public class S3 implements IstateActions {
 		I.putExtra("failnum", failnum);
 		
 		
-		Toast.makeText(C, "number of failur = "+failnum, Toast.LENGTH_LONG).show();
+		Toast.makeText(C, "You stil have "+(5-failnum)+" tries to go", Toast.LENGTH_LONG).show();
 		this.layout = layout;
 		if(failnum == 7)
 		{

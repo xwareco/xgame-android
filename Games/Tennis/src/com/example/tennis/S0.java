@@ -15,7 +15,7 @@ public class S0 implements IstateActions {
 		// TODO Auto-generated method stub
 
 		TextView tv = (TextView)layout.getChildAt(0);
-	     tv.setText("shoot the ball back by taping the screen once but if only sound is playing in both your left and right headphones, otherwise you will lose a point, swipe left when you are ready to start the game");
+	     tv.setText(" You are playing a tennis game against the computer, shoot the ball back by taping the screen once but if only sound is playing in both your left and right headphones, otherwise you will lose a point, swipe left when you are ready to start the game");
 
 	}
 

@@ -17,7 +17,7 @@ public class S0 implements IstateActions {
 		
 		// TODO Auto-generated method stub
 				TextView tv = (TextView)layout.getChildAt(0);
-			     tv.setText("you have sentence of 4 words not sorted  in the left side, sort them to create meaningful sentence in the right side , you have 5 tries before fail, swipe left when you are ready to start the game ");
+			     tv.setText("You have a sentence of 4 words not sorted  in the left side, sort them to create  a meaningful sentence in the right side , you have 5 tries before the game is over, swipe left when you are ready to start the game ");
 	}
 
 	@Override

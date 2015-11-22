@@ -1,4 +1,4 @@
-package com.example.wordmaster;
+package com.example.alphabetize;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,8 +17,7 @@ public class S0 implements IstateActions {
 		
 		// TODO Auto-generated method stub
 				TextView tv = (TextView)layout.getChildAt(0);
-			     tv.setText("Random word is generated and showed to you but with scrambled letters, try to unscramble the word by selecting the letters with the correct arrangement, swipe left when you are ready to start the game");
-			        
+			     tv.setText("you have 4 words not sorted alphabetically in the left side, sort them by click on the high alphabetically index word,you will success when all words be ordered in the right side, swipe left when you are ready to start the game ");
 	}
 
 	@Override

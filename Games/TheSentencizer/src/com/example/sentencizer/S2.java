@@ -53,7 +53,7 @@ public class S2 implements IstateActions {
 		I.putExtra("failnum", failnum);
 		int level = I.getIntExtra("Level", 0);
 		I.putExtra("Level", ++level);
-		Toast.makeText(C, "number of failur = "+failnum, Toast.LENGTH_LONG).show();
+		Toast.makeText(C, "You stil have "+(5-failnum)+" tries to go", Toast.LENGTH_LONG).show();
 		this.layout = layout;
 		if(level == 4 || failnum ==4)
 		{

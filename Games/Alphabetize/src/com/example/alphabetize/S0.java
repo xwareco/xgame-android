@@ -17,7 +17,7 @@ public class S0 implements IstateActions {
 		
 		// TODO Auto-generated method stub
 				TextView tv = (TextView)layout.getChildAt(0);
-			     tv.setText("you have 4 words not sorted alphabetically in the left side, sort them by click on the high alphabetically index word,you will success when all words be ordered in the right side, swipe left when you are ready to start the game ");
+			     tv.setText("You are given a list of 4 randomly sorted words the goal is to sort this list alphabetically, click on the word you want to try sorting it correctly, swipe left when you are ready to start the game ");
 	}
 
 	@Override

@@ -50,7 +50,7 @@ public class S4 extends Activity implements IstateActions {
 		failnum = I.getIntExtra("failnum", 0);
 		failnum++;
 		I.putExtra("failnum", failnum);
-		Toast.makeText(C, "number of failur = "+failnum, Toast.LENGTH_LONG).show();
+		Toast.makeText(C, "You stil have "+(5-failnum)+" tries to go", Toast.LENGTH_LONG).show();
 		this.layout = layout;
 		if(failnum == 5)
 		{

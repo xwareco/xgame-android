@@ -21,7 +21,7 @@ public class S0 implements IstateActions {
 	public void onStateEntry(LinearLayout layout, Intent I, Context C,HeadPhone H) {
 		// TODO Auto-generated method stub
 		TextView tv = (TextView)layout.getChildAt(0);
-	     tv.setText("The mouse is trying to get to the cheese to eat it without the cat notices it, help the mouse to eat the cheese by guessing the the letters of the following word using you voice, be careful as 7 wrong gusses will make the cat eats you, swipe left when you are ready to start the game");
+	     tv.setText("A random word will be generated , you should to spell it correctly using your voice to help the mouse eating the cheese without the cat noticing it. if you fail 7 time cat will notice and eat the mouse. swipe left when you are ready to start the game");
 	     Random  random = new Random();
 			wordnum = random.nextInt(words.length);
 			word = words[wordnum];
