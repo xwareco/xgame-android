@@ -48,7 +48,7 @@ public class AudioRecorder extends Activity {
 		english = Typeface.createFromAsset(getAssets(),
 				"fonts/DJB Stinky Marker.ttf");
 		Locale current = getResources().getConfiguration().locale;
-		
+
 		outputFile = Environment.getExternalStorageDirectory()
 				+ "/xGame/feedback/";
 		File f = new File(outputFile);
@@ -66,8 +66,7 @@ public class AudioRecorder extends Activity {
 		} else if (current.getDisplayLanguage().equals("English")) {
 			Status.setTypeface(english);
 		}
-		
-		
+
 		xGameAudioRecorder = new MediaRecorder();
 		xGameAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 		xGameAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.AAC_ADTS);
@@ -163,11 +162,11 @@ public class AudioRecorder extends Activity {
 
 				try {
 					FileInputStream fstrm = new FileInputStream(outputFile);
-					new User(getApplicationContext(), null, null, id, null, null, fstrm, null)
-							.execute("contact");
+					new User(getApplicationContext(), null, null, id, null,
+							null, fstrm, null).execute("contact");
 					Toast.makeText(
 							getApplicationContext(),
-							"Your audio file is being uploaded to our server now you will be notified as soon as it is done",
+							"Thank you for contacting us, Your audio file is being uploaded to our server,  We will get back to you shortly",
 							Toast.LENGTH_LONG).show();
 					finish();
 

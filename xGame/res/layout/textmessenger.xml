@@ -17,7 +17,7 @@
 
     <TextView
         android:id="@+id/textView1"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
@@ -29,7 +29,7 @@
 
     <EditText
         android:id="@+id/editText1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -57,17 +57,18 @@
 
     <EditText
         android:id="@+id/editText2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:paddingLeft="3dp"
+        android:padding="3dp"
         android:background="@drawable/edittextttyle"
         android:ems="10"
+        android:gravity="top"
         android:textColor="#389e99"
         android:textStyle="bold"
         android:inputType="textMultiLine"
-        android:lines="10" />
+        android:lines="13" />
 
     <Button
         android:id="@+id/button1"
@@ -76,9 +77,22 @@
         android:padding="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginTop="5dp"
         android:text="Send"
+        android:textSize="23sp"
+        android:background="#389e99"
+        android:textColor="#ffffff" />
+    
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="5dp"
+        android:text="Close"
         android:textSize="23sp"
         android:background="#389e99"
         android:textColor="#ffffff" />
