@@ -114,6 +114,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 									null, proBar, trans, list).execute("game",
 									categories.get(currentIndex).getId(),
 									String.valueOf(0));
+							header.setContentDescription(categories.get(currentIndex).getName() + " Games");
 
 						}
 					});
@@ -149,6 +150,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 									null, proBar, trans, list).execute("game",
 									categories.get(currentIndex).getId(),
 									String.valueOf(0));
+							header.setContentDescription(categories.get(currentIndex).getName() + " Games");
 
 						}
 					});
@@ -227,6 +229,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 		currentIndex = 0;
 		lastIndex = -1;
 		header = (TextView) findViewById(R.id.textView1);
+		header.setContentDescription(categories.get(currentIndex).getName() + " Games");
 		header.setText(categories.get(currentIndex).getName());
 		loading = (TextView) findViewById(R.id.textView2);
 		if (current.getDisplayLanguage().equals("Arabic")) {
@@ -276,6 +279,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 									null, proBar, trans, list).execute("game",
 									categories.get(currentIndex).getId(),
 									String.valueOf(0));
+							header.setContentDescription(categories.get(currentIndex).getName() + " Games");
 
 						}
 					});
@@ -310,6 +314,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 									null, proBar, trans, list).execute("game",
 									categories.get(currentIndex).getId(),
 									String.valueOf(0));
+							header.setContentDescription(categories.get(currentIndex).getName() + " Games");
 
 						}
 					});

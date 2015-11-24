@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class RankGetterSplash extends Activity {
@@ -13,6 +14,7 @@ public class RankGetterSplash extends Activity {
 	SharedPreferences appPrefs;
 	String gameID, gameName, folder;
 	String userID;
+	ImageView loading;
 	int score;
 
 	@Override
@@ -28,6 +30,7 @@ public class RankGetterSplash extends Activity {
 		folder = getIntent().getStringExtra("Folder");
 		gameName = getIntent().getStringExtra("gamename");
 		String s = String.valueOf(score);
+		loading = (ImageView)findViewById(R.id.imageView1);
 		new User(RankGetterSplash.this, gameID, s, userID, folder, gameName,
 				null, null).execute("score");
 		super.onCreate(savedInstanceState);

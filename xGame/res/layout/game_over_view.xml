@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/lstbg"
+    android:contentDescription="Game over"
     android:orientation="vertical" >
 
     <TextView
@@ -23,6 +24,7 @@
         android:src="@drawable/gamescores"
         android:layout_below="@id/textView1"
         android:layout_centerHorizontal="true"
+        android:contentDescription="View your rank map"
         android:visibility="gone" />
 
     <ImageView
@@ -32,6 +34,7 @@
         android:layout_below="@id/imageView3"
         android:layout_marginTop="5dp"
         android:layout_centerHorizontal="true"
+        android:contentDescription="Game over"
         android:src="@drawable/gaov" />
 
     <com.facebook.login.widget.LoginButton
@@ -62,6 +65,7 @@
         android:layout_marginTop="1dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/share_button"
+        android:contentDescription="Try again"
         android:src="@drawable/tryagain" />
 
     <ImageView

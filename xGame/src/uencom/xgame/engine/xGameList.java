@@ -82,16 +82,17 @@ public class xGameList extends ArrayAdapter<Game> {
 			rowView.setClickable(false);
 			statusIcon.setImageResource(R.drawable.start);
 			statusIcon
-					.setContentDescription("This game is already installed, click to start playing");
+					.setContentDescription("This game is already installed, click to start playing, or long click to delete");
 		}
 
-	     else if(installations.isOfflineGameExists(games.get(position).getName())== null && file.exists())
-	     {
-	    	 rowView.setClickable(true);
-	    	 rowView.setBackgroundColor(Color.LTGRAY);
-	    	 txtTitle.setText(txtTitle.getText().toString() + "(is installing, please wait!)");
-	    	 statusIcon.setImageResource(R.drawable.installing);
-	     }
+		else if (installations.isOfflineGameExists(games.get(position)
+				.getName()) == null && file.exists()) {
+			rowView.setClickable(true);
+			rowView.setBackgroundColor(Color.LTGRAY);
+			txtTitle.setText(txtTitle.getText().toString()
+					+ "(is installing, please wait!)");
+			statusIcon.setImageResource(R.drawable.installing);
+		}
 
 		else {
 			rowView.setClickable(false);

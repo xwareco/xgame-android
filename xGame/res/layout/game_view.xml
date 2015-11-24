@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/lstbg"
+    android:contentDescription="Play the game now"
     android:orientation="vertical" >
 
     <TextView
@@ -42,7 +43,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="10dp"
-        android:contentDescription="@string/play"
+        android:contentDescription="Return to Games List"
         android:src="@drawable/home" />
 
 </LinearLayout>

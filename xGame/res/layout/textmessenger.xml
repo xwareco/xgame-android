@@ -37,6 +37,7 @@
         android:textStyle="bold"
         android:paddingLeft="2dp"
         android:inputType="textEmailSubject"
+        android:contentDescription="Enter your message title"
         android:background="@drawable/edittextttyle"
         android:ems="10" >
 
@@ -68,6 +69,7 @@
         android:textColor="#389e99"
         android:textStyle="bold"
         android:inputType="textMultiLine"
+        android:contentDescription="Enter your message"
         android:lines="13" />
 
     <Button

@@ -5,7 +5,7 @@
         android:id="@+id/action_testhead"
         android:icon="@drawable/head"
         android:showAsAction="always"
-        android:title="@string/cont"/>
+        android:title="Test headphones"/>
     
     <!--  <item
         android:id="@+id/action_aboutUs"
