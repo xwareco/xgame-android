@@ -62,7 +62,7 @@ public class xGameParser extends Activity implements IStateListener {
 		setContentView(R.layout.xmldemo);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		appPrefs = PreferenceManager
-				.getDefaultSharedPreferences(getApplicationContext());
+				.getDefaultSharedPreferences(xGameParser.this);
 		name = getIntent().getStringExtra("gamename");
 		gameID = getIntent().getStringExtra("gameid");
 		System.out.println("Parser: " + name);
@@ -86,7 +86,7 @@ public class xGameParser extends Activity implements IStateListener {
 							gameIntent.putExtra("Score",
 									gameIntent.getIntExtra("Score", 0));
 							gameIntent = currentState.loopBack(
-									getApplicationContext(), gameIntent,
+									xGameParser.this, gameIntent,
 									gameMediaPlayer);
 							System.out.println(gameIntent.getIntExtra("Count",
 									0));
@@ -102,7 +102,7 @@ public class xGameParser extends Activity implements IStateListener {
 									public void run() {
 
 										currentState.onStateExit(
-												getApplicationContext(),
+												xGameParser.this,
 												gameIntent, gameMediaPlayer);
 									}
 								});
@@ -126,7 +126,7 @@ public class xGameParser extends Activity implements IStateListener {
 							if (appPrefs.getString("uName", "").equals("")) {
 								int score = gameIntent.getIntExtra("Score", 0);
 								Intent gameOverActivity = new Intent(
-										getApplicationContext(), GameOver.class);
+										xGameParser.this, GameOver.class);
 								gameOverActivity.putExtra("Score", score);
 								gameOverActivity.putExtra("Folder", getIntent()
 										.getStringExtra("Folder"));
@@ -140,7 +140,7 @@ public class xGameParser extends Activity implements IStateListener {
 							else{
 								int score = gameIntent.getIntExtra("Score", 0);
 								Intent rankSplash = new Intent(
-										getApplicationContext(), RankGetterSplash.class);
+										xGameParser.this, RankGetterSplash.class);
 								rankSplash.putExtra("Score", score);
 								rankSplash.putExtra("Folder", getIntent()
 										.getStringExtra("Folder"));
@@ -178,7 +178,7 @@ public class xGameParser extends Activity implements IStateListener {
 
 		currentState = getStartingState("S0");
 		if (currentState == null)
-			Toast.makeText(getApplicationContext(),
+			Toast.makeText(xGameParser.this,
 					"Error..The game cannot be parsed", Toast.LENGTH_LONG)
 					.show();
 		else {
@@ -215,7 +215,7 @@ public class xGameParser extends Activity implements IStateListener {
 		});
 		gameFolder = engineIntent.getStringExtra("Folder");
 		System.out.println("Parser2: " + engineIntent.getStringExtra("Folder"));
-		parser = new XmlParser(getApplicationContext(), gameFolder, gameLayout);
+		parser = new XmlParser(xGameParser.this, gameFolder, gameLayout);
 		engineGesture = new HandGestures(this) {
 			@Override
 			public void onTapOnce() {
@@ -312,7 +312,7 @@ public class xGameParser extends Activity implements IStateListener {
 					runOnUiThread(new Runnable() {
 						public void run() {
 
-							currentState.onStateExit(getApplicationContext(),
+							currentState.onStateExit(xGameParser.this,
 									gameIntent, gameMediaPlayer);
 
 						}
@@ -350,7 +350,7 @@ public class xGameParser extends Activity implements IStateListener {
 					runOnUiThread(new Runnable() {
 						public void run() {
 
-							currentState.onStateExit(getApplicationContext(),
+							currentState.onStateExit(xGameParser.this,
 									gameIntent, gameMediaPlayer);
 
 						}
