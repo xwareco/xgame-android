@@ -672,10 +672,10 @@ public class User extends AsyncTask<String, Void, Void> {
 			JSONObject obj = new JSONObject(result);
 			String state = obj.getString("status");
 			String msg = obj.getString("message");
-
-			if (state == "true") {
+			if (state.equals("true")) {
 				String rank = obj.getString("rank");
 				System.out.println(msg + " " + Integer.parseInt(rank));
+				
 				if (msg.equalsIgnoreCase("Score added successfully")
 						&& Integer.parseInt(rank) >= 1
 						&& Integer.parseInt(rank) < 4) {
@@ -683,6 +683,7 @@ public class User extends AsyncTask<String, Void, Void> {
 				}
 				ArrayList<Scorer> topScorers = new ArrayList<Scorer>();
 				JSONArray top = obj.getJSONArray("top_scorers");
+				
 				for (int i = 0; i < top.length(); i++) {
 					JSONObject scoreJSON = top.getJSONObject(i);
 					JSONObject mailJSON = scoreJSON.getJSONObject("user");
@@ -695,12 +696,12 @@ public class User extends AsyncTask<String, Void, Void> {
 					scorer.setUserMail(scorerEmail);
 					topScorers.add(scorer);
 				}
-
+				System.out.println("ERROR!");
 				String scorersJSON = inputJSONConverter.toJson(topScorers);
 				Editor ed = appSharedPrefs.edit();
 				ed.putString("scorers", scorersJSON);
 				ed.commit();
-
+                System.out.println("HERE!!");
 				Intent gameOver = new Intent(ctx, GameOver.class);
 				gameOver.putExtra("Score", Integer.parseInt(gameScore));
 				gameOver.putExtra("Folder", folder);
@@ -713,6 +714,10 @@ public class User extends AsyncTask<String, Void, Void> {
 				act.finish();
 				act.overridePendingTransition(R.anim.transition10,
 						R.anim.transition9);
+			}
+			else{
+				System.out.println("S = "+state);
+				System.out.println(state.compareTo("true"));
 			}
 		} catch (Exception e) {
 			String newToken = xGameAPI.getNewToken("user");

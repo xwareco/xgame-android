@@ -804,16 +804,19 @@ containing a value of this type.
         public static final int abs__split_action_bar_is_narrow=0x7f0a0001;
     }
     public static final class color {
+        public static final int Bronze=0x7f080015;
+        public static final int Gold=0x7f080013;
+        public static final int Olive=0x7f080016;
         public static final int abs__background_holo_dark=0x7f08000d;
         public static final int abs__background_holo_light=0x7f08000e;
         public static final int abs__bright_foreground_disabled_holo_dark=0x7f080011;
         public static final int abs__bright_foreground_disabled_holo_light=0x7f080012;
         public static final int abs__bright_foreground_holo_dark=0x7f08000f;
         public static final int abs__bright_foreground_holo_light=0x7f080010;
-        public static final int abs__primary_text_disable_only_holo_dark=0x7f080013;
-        public static final int abs__primary_text_disable_only_holo_light=0x7f080014;
-        public static final int abs__primary_text_holo_dark=0x7f080015;
-        public static final int abs__primary_text_holo_light=0x7f080016;
+        public static final int abs__primary_text_disable_only_holo_dark=0x7f080017;
+        public static final int abs__primary_text_disable_only_holo_light=0x7f080018;
+        public static final int abs__primary_text_holo_dark=0x7f080019;
+        public static final int abs__primary_text_holo_light=0x7f08001a;
         public static final int com_facebook_blue=0x7f080000;
         public static final int com_facebook_button_background_color=0x7f080005;
         public static final int com_facebook_button_background_color_disabled=0x7f080006;
@@ -827,6 +830,7 @@ containing a value of this type.
         public static final int com_facebook_likeboxcountview_text_color=0x7f080003;
         public static final int com_facebook_likeview_text_color=0x7f080001;
         public static final int com_facebook_share_button_text_color=0x7f080004;
+        public static final int silver=0x7f080014;
     }
     public static final class dimen {
         /**  Default height of an action bar. 
@@ -1135,11 +1139,13 @@ containing a value of this type.
         public static final int sep=0x7f0200ba;
         public static final int splash=0x7f0200bb;
         public static final int start=0x7f0200bc;
-        public static final int trans=0x7f0200bd;
-        public static final int tryagain=0x7f0200be;
-        public static final int txtmsg=0x7f0200bf;
-        public static final int vmsg=0x7f0200c0;
-        public static final int xgamelogo=0x7f0200c1;
+        public static final int text_style=0x7f0200bd;
+        public static final int trans=0x7f0200be;
+        public static final int tryagain=0x7f0200bf;
+        public static final int txtmsg=0x7f0200c0;
+        public static final int update=0x7f0200c1;
+        public static final int vmsg=0x7f0200c2;
+        public static final int xgamelogo=0x7f0200c3;
     }
     public static final class id {
         public static final int TR=0x7f0c0070;
@@ -1605,6 +1611,7 @@ containing a value of this type.
         public static final int com_facebook_button_share=0x7f070014;
         public static final int com_facebook_loginview_default_style=0x7f070011;
         public static final int com_facebook_loginview_silver_style=0x7f070012;
+        public static final int textShadow=0x7f070070;
         public static final int tooltip_bubble_text=0x7f07000e;
     }
     public static final class styleable {

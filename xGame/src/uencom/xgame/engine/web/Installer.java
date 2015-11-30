@@ -164,6 +164,7 @@ public class Installer extends AsyncTask<String, String, String> {
 			mBuilder.setContentText("Installing..");
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		} finally {
 			try {
@@ -183,7 +184,7 @@ public class Installer extends AsyncTask<String, String, String> {
 	public void install(String path) {
 
 		File f = new File(unzipLocation + gameName);
-
+        
 		// _dirChecker("");
 		try {
 			long start, end;

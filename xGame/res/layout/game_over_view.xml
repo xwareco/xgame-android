@@ -10,9 +10,9 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:text=""
-        android:layout_centerHorizontal="true"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#0f540f" />
 
@@ -20,11 +20,11 @@
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
-        android:layout_gravity="center"
-        android:src="@drawable/gamescores"
         android:layout_below="@id/textView1"
         android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
         android:contentDescription="View your rank map"
+        android:src="@drawable/gamescores"
         android:visibility="gone" />
 
     <ImageView
@@ -32,8 +32,8 @@
         android:layout_width="fill_parent"
         android:layout_height="250dp"
         android:layout_below="@id/imageView3"
-        android:layout_marginTop="5dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
         android:contentDescription="Game over"
         android:src="@drawable/gaov" />
 
@@ -41,7 +41,7 @@
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imageView1"
+        android:layout_below="@id/textView2"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
@@ -61,10 +61,10 @@
         android:id="@+id/imageView2"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="1dp"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/share_button"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
         android:contentDescription="Try again"
         android:src="@drawable/tryagain" />
 
@@ -75,6 +75,19 @@
         android:layout_gravity="center"
         android:alpha="0.5"
         android:src="@drawable/cheer"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/imageView3"
+        android:layout_centerHorizontal="true"
+        style="@style/textShadow"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="120sp"
         android:visibility="gone" />
 
 </RelativeLayout>

@@ -18,6 +18,7 @@ public class HeadPhone implements OnErrorListener {
 	private int currentPosition2;
 	private int totalTime;
 	private boolean isDefaulConstructorCalled;
+	public boolean isReleased;
 
 	// constructor
 	public HeadPhone(Context ctx) {
@@ -30,6 +31,7 @@ public class HeadPhone implements OnErrorListener {
 		mediaPlayer = new MediaPlayer();
 		mediaPlayer.setOnErrorListener(this);
 		isDefaulConstructorCalled = true;
+		isReleased = false;
 	}
 	
 
@@ -43,6 +45,7 @@ public class HeadPhone implements OnErrorListener {
 		isDefaulConstructorCalled = false;
 		mediaPlayer = MediaPlayer.create(context, resId);
 		mediaPlayer.setOnErrorListener(this);
+		isReleased = false;
 	}
 	
 	
@@ -220,6 +223,7 @@ public class HeadPhone implements OnErrorListener {
 	public void release()
 	{
 		mediaPlayer.release();
+		isReleased = true;
 	}
 
 	@Override
