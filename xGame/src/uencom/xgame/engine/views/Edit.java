@@ -8,6 +8,8 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,6 +26,7 @@ public class Edit extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.edit);
 
 		arabic = Typeface.createFromAsset(getAssets(),
@@ -52,6 +55,10 @@ public class Edit extends Activity {
 
 			@Override
 			public void onClick(View v) {
+
+				getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+						ViewGroup.LayoutParams.MATCH_PARENT);
+
 				newEmail.setVisibility(View.VISIBLE);
 				newMail.setVisibility(View.VISIBLE);
 				update.setVisibility(View.VISIBLE);
@@ -73,8 +80,8 @@ public class Edit extends Activity {
 						&& isEmailValid(newMail) == true) {
 					new User(Edit.this, newMail.getText().toString(),
 							appSharedPrefs.getString("uPass", ""),
-							appSharedPrefs.getString("uID", ""), null, null, null, email)
-							.execute("change");
+							appSharedPrefs.getString("uID", ""), null, null,
+							null, email).execute("change");
 					newEmail.setText("");
 					passEditText.setText("");
 				}
@@ -95,7 +102,8 @@ public class Edit extends Activity {
 			public void onClick(View v) {
 				new User(Edit.this, null,
 						appSharedPrefs.getString("uPass", ""), appSharedPrefs
-								.getString("uID", ""), null, null, null, null).execute("passRem");
+								.getString("uID", ""), null, null, null, null)
+						.execute("passRem");
 
 			}
 		});
