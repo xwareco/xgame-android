@@ -746,7 +746,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 
 		else if (position == 3) {
 			mDrawerLayout.closeDrawer(GravityCompat.START);
-			I = new Intent(this, Register.class);// about
+			I = new Intent(this, AboutUs.class);// about
 			System.out.println(position);
 			startActivity(I);
 			overridePendingTransition(R.anim.transition5, R.anim.transition4);
