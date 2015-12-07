@@ -2,17 +2,15 @@ package com.example.sentencizer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -20,38 +18,34 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.graphics.drawable.shapes.RoundRectShape;
-import android.hardware.camera2.params.TonemapCurve;
-import android.os.Bundle;
 import android.os.Environment;
-import android.provider.UserDictionary.Words;
-import android.speech.RecognitionListener;
-import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
-import android.util.DisplayMetrics;
-import android.util.StateSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.GridLayout;
-import android.widget.GridLayout.Spec;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import uencom.xgame.interfaces.IstateActions;
 import uencom.xgame.sound.HeadPhone;
-import uencom.xgame.sound.TTS;
-import uencom.xgame.speech.SpeechRecognition;
 
 public class S1  implements IstateActions {
 	String[] words = new String[]{"how old are you","what is your name","study your lessons firstly",
-			"do one is best","hard work to success","go to school early"
+			"hard work to success","go to school early","Tidy up your room","Did you lock the door"
+			,"When’s your homework due","You beat me again!","Time to get up!","Where are you hurt?"
+			,"Be nice to your mom","you should learn English "
 			};
-
+	public static long startTime;
+	static Timer timer;
 	GridLayout letters ;
-	static TextView speechWord;
+	OvalShape timeoOv;
+	ShapeDrawable timeBg;
+	public static int time = 0;
+	static TextView showTime;
+	static ScrollView scroll;
 	static List<String> sentenceWords;
 	static LinearLayout layout;
 	static String workingWord ;
@@ -61,20 +55,47 @@ public class S1  implements IstateActions {
 	static char[]arr;
 	static String[] wordsArray;
 	StringBuilder str  = new StringBuilder();
-	Button[] btn ;
-	 Button[] btn2;
+	TextView[] btn ;
+	HeadPhone pre = null;
 	 static boolean flag;
 	 static int successNum = 1;
 	 public Context context;
+	 static HeadPhone Hc;
 	@Override
 	public void onStateEntry(LinearLayout layout,  Intent I,  Context c,HeadPhone H) {
 		// TODO Auto-generated method stub
+		context = c;
+		Hc = H;
+		LinearLayout.LayoutParams layoutEditParams =new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.WRAP_CONTENT,
+				LinearLayout.LayoutParams.WRAP_CONTENT);
+		layoutEditParams.gravity = Gravity.CENTER_HORIZONTAL;
+		RoundRectShape rect = new RoundRectShape(
+				  new float[] {30,30, 30,30, 30,30, 30,30},
+				  null,
+				  null);
+		 timeBg= new ShapeDrawable(rect);
+		 
+		 timeBg.getPaint().setColor(0x99463E3F);
+		layoutEditParams.topMargin = 4;
+		showTime = new TextView(c);
+		showTime.setTextSize(25);
+		showTime.setTextColor(Color.WHITE);
+		showTime.setBackground(timeBg);
+
+		showTime.setLayoutParams(layoutEditParams);
+		layout.addView(showTime);
+		timer = new Timer();
+		timer.schedule(new RemindTask(),
+		           0,        //initial delay
+		           1*1000);
+				
 		 I.putExtra("Action", "Right");
 		    BitmapDrawable b = (BitmapDrawable) layout.getBackground();
 			b.setAlpha(155);
 			layout.setBackground(b);
 			this.layout = layout;
-			context = c;
+			
 			int random = I.getIntExtra("Random", 0);
 			if(random == 0){
 			 Random rand = new Random();
@@ -109,24 +130,32 @@ public class S1  implements IstateActions {
 	@Override
 	public void onStateExit(Context c, Intent I,HeadPhone H) {
 		// TODO Auto-generated method stub
-		
+		I.putExtra("timeInSecond",time);
 		layout.removeView(layout2);
-		
-		layout.removeView(speechWord);
-		
+		layout.removeView(showTime);
+		layout.removeView(scroll);
+		Hc.stopCurrentPlay();
+		 timer.cancel();
 
 	}
 public void createUI(LinearLayout layout, final Intent I, final Context c) {
 	
 	layout2 = new LinearLayout(c);
+scroll = new ScrollView(context);
+	
+	scroll.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+	                                             LayoutParams.MATCH_PARENT));
 	LinearLayout.LayoutParams layoutCenterParent =
 			new LinearLayout.LayoutParams(
 					LinearLayout.LayoutParams.MATCH_PARENT,
-					LinearLayout.LayoutParams.WRAP_CONTENT);
+					LinearLayout.LayoutParams.MATCH_PARENT);
 	layoutCenterParent.topMargin = 10;
 	layoutCenterParent.leftMargin = 5;
 	letters = new GridLayout(c);
+	letters.setHorizontalScrollBarEnabled(true);
 	GridLayout.LayoutParams lettersParams = new GridLayout.LayoutParams();
+	letters.setUseDefaultMargins(true);
+	lettersParams.setMargins(0, 3, 3, 0);
 	lettersParams.topMargin = 10;
 	lettersParams.rightMargin=5;
 	
@@ -160,19 +189,20 @@ public void createUI(LinearLayout layout, final Intent I, final Context c) {
 			
 			
 			
-			btn = new Button[8];
+			btn = new TextView[8];
 			 System.out.println(sentenceWords.get(0)+""+sentenceWords.get(1));
 			for ( int step = 0,i=0; step < 8; step++) {
 				
-				btn[step] = new Button(c);
+				btn[step] = new TextView(c);
 				
 				StateListDrawable first = new StateListDrawable();
 				first.addState(new int[] { android.R.attr.state_pressed }, bg2);
 				first.addState(new int[] { android.R.attr.state_enabled }, bg);
 				btn[step].setBackground(first);
-				btn[step].setWidth((getScreenWidth()/2)-10);
+				btn[step].setWidth((getScreenWidth()/2)-15);
 				btn[step].setHeight((getScreenWidth()/4)-10);
-				
+				btn[step].setTextColor(Color.WHITE);
+				btn[step].setGravity(Gravity.CENTER);
 				btn[step].setTextSize(22);
 			    if(step%2==0){
 					btn[step].setText(sentenceWords.get(i));i++;	
@@ -191,10 +221,12 @@ public void createUI(LinearLayout layout, final Intent I, final Context c) {
 			layout2.setLayoutParams(layoutCenterParent);
 			
 			
-			layout.addView(layout2);
+			scroll.addView(layout2);
+			scroll.setLayoutParams(layoutCenterParent);
+			layout.addView(scroll);
 
 }
-View.OnClickListener handleOnClick(final Button button,final int index,final Intent I) {
+View.OnClickListener handleOnClick(final TextView button,final int index,final Intent I) {
     return new View.OnClickListener() {
         public void onClick(View v) {
         	boolean can = true;
@@ -216,7 +248,7 @@ View.OnClickListener handleOnClick(final Button button,final int index,final Int
 					+ "/xGame/Games/"
 					+ "The Sentencizer" + "/Images/error.png");
 			errorImage.setImageDrawable(er);
-			errorImage.setContentDescription("Correct");
+			errorImage.setContentDescription("error");
 			errorImage.setLayoutParams(toastchield);
 			errorToast.addView(errorImage);
            	Toast errorToasting = new Toast(context);
@@ -233,7 +265,7 @@ View.OnClickListener handleOnClick(final Button button,final int index,final Int
 						+ "/xGame/Games/"
 						+ "The Sentencizer" + "/Images/ok.png");
 				image.setImageDrawable(d);
-				image.setContentDescription("Error");
+				image.setContentDescription("Correct");
 				image.setLayoutParams(toastchield);
 		        toastLayout.addView(image);
               	Toast toast = new Toast(context);
@@ -250,14 +282,17 @@ View.OnClickListener handleOnClick(final Button button,final int index,final Int
         		{
         			if(btn[index].getText().toString().equals(wordsArray[0]))
         			{
+        				
         				 toast.show();
+        				 
         				 btn[1].setText(btn[index].getText().toString());
-        				 int score = I.getIntExtra("Score", 0);
-        				 I.putExtra("Score", ++score);
+        				 btn[index].setText("");
+        				
         				 break;
         			}
         			
         			else{
+        				
         				errorToasting.show();
         				int fail = I.getIntExtra("fail", 0);
         				fail++;
@@ -274,9 +309,10 @@ View.OnClickListener handleOnClick(final Button button,final int index,final Int
         			if(btn[index].getText().toString().equals(wordsArray[1]))
         				 {
         				toast.show();
+        				
        				    btn[3].setText(btn[index].getText().toString());
-       				 int score = I.getIntExtra("Score", 0);
-    				 I.putExtra("Score", ++score);
+       				 btn[index].setText("");
+       				 
        				     break;
         				 }
         			else{
@@ -296,9 +332,10 @@ View.OnClickListener handleOnClick(final Button button,final int index,final Int
         			if(btn[index].getText().toString().equals(wordsArray[2]))
         				 {
         				toast.show();
+        			
        				 btn[5].setText(btn[index].getText().toString());
-       				 int score = I.getIntExtra("Score", 0);
-    				 I.putExtra("Score", ++score);
+       				btn[index].setText("");
+       				 
        				 break;
         				 }
         			else{
@@ -319,10 +356,10 @@ View.OnClickListener handleOnClick(final Button button,final int index,final Int
         			if(btn[index].getText().toString().equals(wordsArray[3]))
         			{
         				toast.show();
+        				
    				       btn[7].setText(btn[index].getText().toString());
-   				       int score = I.getIntExtra("Score", 0);
-   				       score = score+2;
-   				       I.putExtra("Score", score);
+   				    btn[index].setText("");
+   				      
    				    I.putExtra("Action", "NONE");
 					I.putExtra("State", "S3");
    				         break;
@@ -370,6 +407,81 @@ public static List<String> shuffle(String[] input){
         
     }
     return strings;
+}
+
+class RemindTask extends TimerTask {
+	
+
+    public void run() {
+    	if(pre !=null)
+    	{
+    		pre.release();
+    	}
+    	Hc = new HeadPhone(context);
+    	String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/The Sentencizer/Sound/timer.mp3";
+		Hc.setLeftLevel(1);
+   		Hc.setRightLevel(1);
+		Hc.play(Path, 0);
+      time++;
+      ((Activity) context).runOnUiThread(new Runnable() {
+          @Override
+          public void run() {
+        	  Drawable background = showTime.getBackground();
+      		if (background instanceof ShapeDrawable) {
+      			if(time<=100)
+      			{
+      				  ((ShapeDrawable)background).getPaint().setColor(Color.GRAY);
+      				  showTime.setTextColor(Color.GREEN);
+      			}
+      			else if(time > 100&&time<=200)
+      			{
+      				  ((ShapeDrawable)background).getPaint().setColor(Color.GRAY);
+      				  showTime.setTextColor(Color.YELLOW);
+      			}
+      			else if(time > 200&&time<=300 )
+      			{
+      				  ((ShapeDrawable)background).getPaint().setColor(Color.GRAY);
+      				  showTime.setTextColor(0x99B40404);
+      			}
+      			else if(time > 300 ){
+      				  ((ShapeDrawable)background).getPaint().setColor(Color.RED);
+      				  showTime.setTextColor(Color.WHITE);
+      			}
+      			
+      			
+      		
+      		} else if (background instanceof GradientDrawable) {
+      		    ((GradientDrawable)background).setColor(0x99FF0000);
+      		}
+        	  
+        	  if(time<=50)
+        	  {
+        		  showTime.setText(String.format("%02d", time/60)+":"+String.format("%02d", time%60)+"(+20 points)");
+  			}
+  			else if(time > 50&&time<=100)
+  			{
+  				showTime.setText(String.format("%02d", time/60)+":"+String.format("%02d", time%60)+"(+15 points)");
+  			}
+  			else if(time > 100&&time<=150 )
+  			{
+  				showTime.setText(String.format("%02d", time/60)+":"+String.format("%02d", time%60)+"(+10 points)");
+  			}
+  			else if(time > 150&&time<=200 ){
+  				showTime.setText(String.format("%02d", time/60)+":"+String.format("%02d", time%60)+"(+10 points)");
+  			}
+  			else if(time > 200&&time<=300 ){
+  				showTime.setText(String.format("%02d", time/60)+":"+String.format("%02d", time%60)+"(+5 points)");
+  			}
+  			else if(time > 300){
+  				showTime.setText(String.format("%02d", time/60)+":"+String.format("%02d", time%60)+"(-10 points)");
+  			}
+             
+          }
+      });
+    pre = Hc;
+    }
+   
+	
 }
 
 } 

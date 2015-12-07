@@ -29,7 +29,8 @@ public class S2 implements IstateActions {
 		{
 			if(!(workingWord.contains(letter+"")))
 			{
-				Toast.makeText(C, "correct", Toast.LENGTH_SHORT).show();
+				
+				 Toast.makeText(C, "your time till now: "+ I.getIntExtra("timeInSecond", 1)+" second go on you can do it", Toast.LENGTH_SHORT).show();
 				int Score = I.getIntExtra("Score", 0);
 				Score++;
 				I.putExtra("Score", Score);
@@ -49,7 +50,21 @@ public class S2 implements IstateActions {
 				
 				int fail = I.getIntExtra("failnum", 0);
 				int Score = I.getIntExtra("Score", 0);
-				Score = 100-(fail*5);
+				Score = 75-(fail*2);
+				int timeInSecond = I.getIntExtra("timeInSecond", 0);
+				if(timeInSecond <= 50)
+					Score +=25;
+				else if(timeInSecond <= 100&& timeInSecond>50)
+					Score +=20;
+				else if(timeInSecond <= 150&&timeInSecond>100)
+					Score +=15;
+				else if(timeInSecond <=200&&timeInSecond>150)
+					Score +=10;
+				else if(timeInSecond<=300&&timeInSecond>200)
+					Score += 5;
+				else
+					Score -=5;
+				
 				I.putExtra("Score", Score);
 			
 				I.putExtra("Count", 20);

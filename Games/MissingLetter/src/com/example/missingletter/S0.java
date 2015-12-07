@@ -17,8 +17,10 @@ public class S0 implements IstateActions {
 		
 		// TODO Auto-generated method stub
 				TextView tv = (TextView)layout.getChildAt(0);
-			     tv.setText("A word is randomly generated and spoken to you but with a one missing letter, four choices of letters are given to you to select the missing letter from, navigate through the letters and choose one of them by clicking on it. swipe left when you are ready to start the game");
-			        
+			     tv.setText("A word is randomly generated and spoken to you but with a one missing letter, four choices of letters are given to you to select the missing letter from them, navigate through the letters and choose one of them by clicking on it, "
+			    		 + " Take care of the time, you will lose 10 points if you took more than 5 minutes to finish the game, otherwise you will be rewarded points according to your time."
+				     		+ ", swipe left when you are ready to start the game");
+
 	}
 
 	@Override

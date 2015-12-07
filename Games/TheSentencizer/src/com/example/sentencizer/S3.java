@@ -23,25 +23,38 @@ public class S3 implements IstateActions {
 		BitmapDrawable b = (BitmapDrawable) layout.getBackground();
 		b.setAlpha(155);
 		layout.setBackground(b);
-
+		int score = I.getIntExtra("Score", 0);
+        score += 20;
+        I.putExtra("Score", score);
 		String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/The Sentencizer/Sound/correct.mp3";
 		//score sound
 		HeadPhone HP = new HeadPhone(C);
 		HP.setLeftLevel(1);
 		HP.setRightLevel(1);
+		I.putExtra("fail", 0);
 		if (HP.detectHeadPhones() == true)
 			HP.play(Path, 0);
 		int level = I.getIntExtra("Level", 0);
 		I.putExtra("Level", ++level);
 		if(level == 4)
 		{
-			int failnum = I.getIntExtra("failnum", 0);
+			int timeInSecond = I.getIntExtra("timeInSecond", 0);
 			int Score = I.getIntExtra("Score", 0);
-			Score = (Score*5)-(failnum*4);
+			if(timeInSecond <= 50)
+				Score +=20;
+			else if(timeInSecond <= 100&& timeInSecond>50)
+				Score +=15;
+			else if(timeInSecond <= 150&&timeInSecond>100)
+				Score +=10;
+			else if(timeInSecond <=200&&timeInSecond>150)
+				Score +=10;
+			else if(timeInSecond<=300&&timeInSecond>200)
+				Score += 5;
+			else
+				Score -=10;
+			int failnum = I.getIntExtra("failnum", 0);
+			Score = Score - ((failnum) *3);
 			I.putExtra("Score", Score);
-			
-
-			
 			I.putExtra("Count", 20);
 		}else
 		{

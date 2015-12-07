@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import uencom.xgame.interfaces.IstateActions;
 import uencom.xgame.sound.HeadPhone;
@@ -28,7 +29,7 @@ public class S2 implements IstateActions {
 
 	 static int failnum = 0;
 	    static LinearLayout layout;
-	    static Button tryAgain;
+	    static TextView tryAgain;
 	    static LinearLayout layout2;
 	   
 
@@ -50,20 +51,32 @@ public class S2 implements IstateActions {
 		failnum = I.getIntExtra("failnum", 0);
 		failnum++;
 		I.putExtra("failnum", failnum);
-		int level = I.getIntExtra("Level", 1);
 		
-		Toast.makeText(C, "You stil have "+(5-failnum)+" tries to go", Toast.LENGTH_LONG).show();
+		
+		Toast.makeText(C, "You still have "+(5-failnum)+" tries to go", Toast.LENGTH_LONG).show();
 		this.layout = layout;
-		if(level == 5 || failnum ==5)
+		if(failnum ==5)
 		{
+			int timeInSecond = I.getIntExtra("timeInSecond", 0);
 			int Score = I.getIntExtra("Score", 0);
-			
+			if(timeInSecond <= 100)
+				Score +=20;
+			else if(timeInSecond <= 150&& timeInSecond>100)
+				Score +=15;
+			else if(timeInSecond <= 200&&timeInSecond>150)
+				Score +=15;
+			else if(timeInSecond <=250&&timeInSecond>200)
+				Score +=10;
+			else if(timeInSecond<=300&&timeInSecond>250)
+				Score += 5;
+			else
+				Score -=10;
+
+			Score = Score - ((failnum) *3);
+			if(Score <0)
+				Score =0;
 			I.putExtra("Score", Score);
-			int count = I.getIntExtra("Count", 0);
-			count = 20;
-			I.putExtra("Count", count);
-		//	I.putExtra("Action", "NONE");
-		//	I.putExtra("State", "S6");
+			I.putExtra("Count", 20);
 		}
 		else
 			createUI(this.layout,I,C);
@@ -96,13 +109,13 @@ public class S2 implements IstateActions {
 		
 		LinearLayout.LayoutParams layoutCenterParams =
 				new LinearLayout.LayoutParams(
-						LinearLayout.LayoutParams.WRAP_CONTENT,
-						LinearLayout.LayoutParams.WRAP_CONTENT);
+						LinearLayout.LayoutParams.MATCH_PARENT,
+						LinearLayout.LayoutParams.MATCH_PARENT);
 		
 
 		
 		//layoutCenterParams.topMargin =150;
-		tryAgain = new Button(c);
+		tryAgain = new TextView(c);
 		RoundRectShape rect = new RoundRectShape(
 			  new float[] {30,30, 30,30, 30,30, 30,30},
 			  null,
@@ -118,7 +131,7 @@ public class S2 implements IstateActions {
 			Drawable d = Drawable.createFromPath(Environment
 					.getExternalStorageDirectory().toString()
 					+ "/xGame/Games/"
-					+ "The Word Master" + "/Images/tryAgain.png");
+					+ "The Word Master" + "/Images/try.png");
 			Bitmap b = drawableToBitmap(d);
 			
 			 Bitmap bc1 = Bitmap.createBitmap(b.getWidth() + 10, b.getHeight() + 10, Bitmap.Config.ARGB_8888);
@@ -137,8 +150,8 @@ public class S2 implements IstateActions {
 	//startSpeech.setBackground(d);
 	//startSpeech.setPadding(10, 10, 10, 10);
 	tryAgain.setGravity(Gravity.CENTER);
-	tryAgain.setHeight(110);
-	tryAgain.setWidth(150);
+	//tryAgain.setHeight(110);
+	//tryAgain.setWidth(150);
 	
 	//startSpeech.setBackgroundColor(0x99FF00CC);
 	//startSpeech.setBackground(states);

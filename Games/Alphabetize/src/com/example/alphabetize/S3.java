@@ -19,27 +19,42 @@ public class S3 implements IstateActions {
 		// TODO Auto-generated method stub
         I.putExtra("Action", "Right");
         int score = I.getIntExtra("Score", 0);
-        score += 20;
+        score += 15;
 		I.putExtra("Score", score);
-		
+		I.putExtra("fail", 0);
 		BitmapDrawable b = (BitmapDrawable) layout.getBackground();
 		b.setAlpha(155);
 		layout.setBackground(b);
 
-		String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/The Word Master/Sound/correct.mp3";
+		String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/Alphabetize/Sound/correct.mp3";
 		//score sound
 		HeadPhone HP = new HeadPhone(C);
 		HP.setLeftLevel(1);
 		HP.setRightLevel(1);
 		if (HP.detectHeadPhones() == true)
 			HP.play(Path, 0);
-		int level = I.getIntExtra("Level", 1);
+		int level = I.getIntExtra("Level", 0);
+		I.putExtra("Level", ++level);
 		if(level == 5)
 		{
-			
-			int count = I.getIntExtra("Count", 0);
-			count = 20;
-			I.putExtra("Count", count);
+			int timeInSecond = I.getIntExtra("timeInSecond", 0);
+			int Score = I.getIntExtra("Score", 0);
+			if(timeInSecond <= 50)
+				Score +=25;
+			else if(timeInSecond <= 100&& timeInSecond>50)
+				Score +=20;
+			else if(timeInSecond <= 150&&timeInSecond>100)
+				Score +=15;
+			else if(timeInSecond <=200&&timeInSecond>150)
+				Score +=10;
+			else if(timeInSecond<=300&&timeInSecond>200)
+				Score += 5;
+			else
+				Score -=10;
+			int failnum = I.getIntExtra("failnum", 0);
+			Score = Score - ((failnum) *3);
+			I.putExtra("Score", Score);
+			I.putExtra("Count", 20);
 		}else
 		{
 		I.putExtra("Action", "NONE");

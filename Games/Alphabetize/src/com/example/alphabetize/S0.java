@@ -17,8 +17,10 @@ public class S0 implements IstateActions {
 		
 		// TODO Auto-generated method stub
 				TextView tv = (TextView)layout.getChildAt(0);
-			     tv.setText("You are given a list of 4 randomly sorted words the goal is to sort this list alphabetically, click on the word you want to try sorting it correctly, swipe left when you are ready to start the game ");
-	}
+			     tv.setText("You are given a list of 4 randomly sorted words the goal is to sort this list alphabetically, click on the word you want to try sorting it correctly,"
+			    		 + " Take care of the time, you will lose 10 points if you took more than 5 minutes to finish the game, otherwise you will be rewarded points according to your time."
+				     		+ ", swipe left when you are ready to start the game");
+}
 
 	@Override
 	public Intent loopBack(Context c, Intent I, HeadPhone H) {

@@ -8,219 +8,13 @@
 package com.example.shootit;
 
 public final class R {
-    public static final class anim {
-        public static final int fadein=0x7f040000;
-        public static final int fadeout=0x7f040001;
-        public static final int tranlatedown=0x7f040002;
-        public static final int transition4=0x7f040003;
-        public static final int transition5=0x7f040004;
-        public static final int transition6=0x7f040005;
-    }
     public static final class attr {
     }
     public static final class drawable {
-        public static final int about=0x7f020000;
-        public static final int bg1=0x7f020001;
-        public static final int bggs=0x7f020002;
-        public static final int blurredcatch=0x7f020003;
-        public static final int categories=0x7f020004;
-        public static final int closerec=0x7f020005;
-        public static final int download=0x7f020006;
-        public static final int env=0x7f020007;
-        public static final int even=0x7f020008;
-        public static final int games=0x7f020009;
-        public static final int gamescores=0x7f02000a;
-        public static final int gaov=0x7f02000b;
-        public static final int head=0x7f02000c;
-        public static final int home=0x7f02000d;
-        public static final int ic_launcher=0x7f02000e;
-        public static final int icon=0x7f02000f;
-        public static final int icon_scaled=0x7f020010;
-        public static final int iconnot=0x7f020011;
-        public static final int larr=0x7f020012;
-        public static final int laybg=0x7f020013;
-        public static final int laybg2=0x7f020014;
-        public static final int line=0x7f020015;
-        public static final int listbg=0x7f020016;
-        public static final int loading2=0x7f020017;
-        public static final int lstbg=0x7f020018;
-        public static final int mic=0x7f020019;
-        public static final int odd=0x7f02001a;
-        public static final int offline=0x7f02001b;
-        public static final int options=0x7f02001c;
-        public static final int pause=0x7f02001d;
-        public static final int pauseenabled=0x7f02001e;
-        public static final int play=0x7f02001f;
-        public static final int playing=0x7f020020;
-        public static final int playrec=0x7f020021;
-        public static final int playrecfile=0x7f020022;
-        public static final int rarr=0x7f020023;
-        public static final int record=0x7f020024;
-        public static final int recording=0x7f020025;
-        public static final int ref=0x7f020026;
-        public static final int reg=0x7f020027;
-        public static final int register=0x7f020028;
-        public static final int registerbg=0x7f020029;
-        public static final int send=0x7f02002a;
-        public static final int sep=0x7f02002b;
-        public static final int splash=0x7f02002c;
-        public static final int start=0x7f02002d;
-        public static final int trans=0x7f02002e;
-        public static final int tryagain=0x7f02002f;
-        public static final int xgamelogo=0x7f020030;
-    }
-    public static final class id {
-        public static final int TR=0x7f090023;
-        public static final int TT=0x7f090022;
-        public static final int action_testhead=0x7f090026;
-        public static final int button1=0x7f090005;
-        public static final int button2=0x7f090006;
-        public static final int button3=0x7f090007;
-        public static final int button4=0x7f090008;
-        public static final int button5=0x7f090009;
-        public static final int catImg=0x7f090016;
-        public static final int drawerLayout=0x7f090013;
-        public static final int editText1=0x7f090011;
-        public static final int editText2=0x7f090012;
-        public static final int gameLay=0x7f09000d;
-        public static final int icon=0x7f09000a;
-        public static final int imageView1=0x7f090001;
-        public static final int imageView2=0x7f090003;
-        public static final int imageView3=0x7f09000c;
-        public static final int imageView4=0x7f09001d;
-        public static final int imageView5=0x7f09001c;
-        public static final int img=0x7f09000e;
-        public static final int img2=0x7f09000f;
-        public static final int lLayout=0x7f090025;
-        public static final int leftArrow=0x7f090015;
-        public static final int listView1=0x7f090018;
-        public static final int mainlay=0x7f09001f;
-        public static final int mainlayout=0x7f090010;
-        public static final int navList=0x7f09001b;
-        public static final int progressBar1=0x7f090021;
-        public static final int progressBar2=0x7f09001a;
-        public static final int reglay=0x7f09001e;
-        public static final int rellay=0x7f090014;
-        public static final int rightArrow=0x7f090017;
-        public static final int seclay=0x7f090020;
-        public static final int text=0x7f090024;
-        public static final int textView1=0x7f090002;
-        public static final int textView2=0x7f090004;
-        public static final int textView3=0x7f090000;
-        public static final int title=0x7f09000b;
-        public static final int translay=0x7f090019;
-    }
-    public static final class layout {
-        public static final int aboutus=0x7f030000;
-        public static final int contactus=0x7f030001;
-        public static final int demoslancher=0x7f030002;
-        public static final int drawer_item=0x7f030003;
-        public static final int game_over_view=0x7f030004;
-        public static final int game_view=0x7f030005;
-        public static final int gesturesdemo=0x7f030006;
-        public static final int headphonetest=0x7f030007;
-        public static final int login_view=0x7f030008;
-        public static final int main_view=0x7f030009;
-        public static final int offline_xgame_list_item=0x7f03000a;
-        public static final int recordaudio=0x7f03000b;
-        public static final int register_view=0x7f03000c;
-        public static final int sensorsdemo=0x7f03000d;
-        public static final int speechandsounddemo=0x7f03000e;
-        public static final int splash_activity=0x7f03000f;
-        public static final int textmessenger=0x7f030010;
-        public static final int ttsdemo=0x7f030011;
-        public static final int xgame_list_item=0x7f030012;
-        public static final int xmldemo=0x7f030013;
-    }
-    public static final class menu {
-        public static final int actionbar=0x7f080000;
-    }
-    public static final class raw {
-        public static final int done=0x7f050000;
-        public static final int failed=0x7f050001;
-        public static final int gameover=0x7f050002;
-        public static final int getready=0x7f050003;
-        public static final int helicopter=0x7f050004;
-        public static final int helicopter2=0x7f050005;
-        public static final int left=0x7f050006;
-        public static final int right=0x7f050007;
+        public static final int ic_launcher=0x7f020000;
     }
     public static final class string {
-        public static final int ACC_TV=0x7f060007;
-        public static final int ButtonOne=0x7f060001;
-        public static final int GPS_TV=0x7f060006;
-        public static final int Gyro_TV=0x7f060008;
-        public static final int HeadTest=0x7f06003a;
-        public static final int Hint=0x7f06000d;
-        public static final int LTR=0x7f06000a;
-        public static final int Label1=0x7f060002;
-        public static final int LoginOrReegister=0x7f06002c;
-        public static final int MainViewTitle=0x7f060012;
-        public static final int RTL=0x7f060009;
-        public static final int TTS=0x7f06000c;
-        public static final int XMLdata=0x7f06000e;
-        public static final int about=0x7f060020;
-        public static final int app_name=0x7f060000;
-        public static final int bar=0x7f060035;
-        public static final int button2=0x7f060004;
-        public static final int button3=0x7f060005;
-        public static final int button4=0x7f06000b;
-        public static final int button5=0x7f06000f;
-        public static final int cancel=0x7f060047;
-        public static final int cats=0x7f060039;
-        public static final int cntctustitle=0x7f060048;
-        public static final int conerror=0x7f06002e;
-        public static final int cont=0x7f060021;
-        public static final int delete=0x7f060042;
-        public static final int down=0x7f06001b;
-        public static final int down_cnt=0x7f06002b;
-        public static final int drawer_open=0x7f06003b;
-        public static final int ent_name=0x7f060030;
-        public static final int ent_pass=0x7f060031;
-        public static final int error=0x7f060034;
-        public static final int game=0x7f060018;
-        public static final int game_cnt=0x7f06002a;
-        public static final int gestureString=0x7f060003;
-        public static final int getready=0x7f060011;
-        public static final int home=0x7f06001e;
-        public static final int how=0x7f06001f;
-        public static final int img_cnt_desc=0x7f060013;
-        public static final int langugeSelect=0x7f060010;
-        public static final int lefttest=0x7f060038;
-        public static final int loading=0x7f06002d;
-        public static final int log=0x7f060024;
-        public static final int logbtn=0x7f060026;
-        public static final int name=0x7f06001a;
-        public static final int nxt_btn=0x7f060015;
-        public static final int offline=0x7f06003c;
-        public static final int offlinestate=0x7f06003d;
-        public static final int over=0x7f060023;
-        public static final int pau=0x7f060044;
-        public static final int percent=0x7f06001c;
-        public static final int pla=0x7f060045;
-        public static final int play=0x7f06001d;
-        public static final int plyagn=0x7f06002f;
-        public static final int pre_btn=0x7f060016;
-        public static final int progress=0x7f060019;
-        public static final int pwd=0x7f060028;
-        public static final int rec=0x7f060046;
-        public static final int record=0x7f060040;
-        public static final int recording=0x7f060043;
-        public static final int refresh=0x7f060033;
-        public static final int reg=0x7f060025;
-        public static final int regbtn=0x7f060027;
-        public static final int righttest=0x7f060037;
-        public static final int sb=0x7f060022;
-        public static final int sel_btn=0x7f060017;
-        public static final int send=0x7f06003f;
-        public static final int send2=0x7f060041;
-        public static final int test=0x7f060036;
-        public static final int tv_cat=0x7f060014;
-        public static final int type=0x7f06003e;
-        public static final int usr=0x7f060029;
-        public static final int viasnd=0x7f06004a;
-        public static final int viatxt=0x7f060049;
-        public static final int welcome=0x7f060032;
+        public static final int app_name=0x7f030000;
     }
     public static final class style {
         /** 
@@ -243,33 +37,11 @@ public final class R {
         res/values-v11/styles.xml on API 14+ devices.
     
  API 14 theme customizations can go here. 
-
-        Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-    
-
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        
-
-        Base application theme for API 11+. This theme completely replaces
-        AppBaseTheme from res/values/styles.xml on API 11+ devices.
-    
- API 11 theme customizations can go here. 
-
-        Base application theme for API 14+. This theme completely replaces
-        AppBaseTheme from BOTH res/values/styles.xml and
-        res/values-v11/styles.xml on API 14+ devices.
-    
- API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f070000;
+        public static final int AppBaseTheme=0x7f040000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
- Application theme. 
- All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f070001;
+        public static final int AppTheme=0x7f040001;
     }
 }

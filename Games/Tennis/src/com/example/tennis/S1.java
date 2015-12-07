@@ -61,7 +61,7 @@ public class S1 implements IstateActions {
 	public void onStateExit(Context c, Intent I,HeadPhone H) {
 		// TODO Auto-generated method stub
 		int Score = I.getIntExtra("Score", 0);
-		Score++;
+		Score+=5;
 		I.putExtra("Score", Score);
 
 	}

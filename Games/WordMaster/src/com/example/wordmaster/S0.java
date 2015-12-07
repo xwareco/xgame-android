@@ -17,7 +17,10 @@ public class S0 implements IstateActions {
 		
 		// TODO Auto-generated method stub
 				TextView tv = (TextView)layout.getChildAt(0);
-			     tv.setText("Random word is generated and showed to you but with scrambled letters, try to unscramble the word by selecting the letters with the correct arrangement, swipe left when you are ready to start the game");
+			     tv.setText("Random word is generated and showed to you but with scrambled letters, try to unscramble the word by selecting the letters with the correct arrangement, "
+			    		 + " Take care of the time, you will lose 10 points if you took more than 5 minutes to finish the game, otherwise you will be rewarded points according to your time."
+				     		+ ", swipe left when you are ready to start the game");
+
 			        
 	}
 

@@ -14,7 +14,10 @@ public class S0 implements IstateActions {
 	public void onStateEntry(LinearLayout layout, Intent I, Context C,HeadPhone H) {
 		
 		TextView tv = (TextView)layout.getChildAt(0);
-		tv.setText(", swipe left when you are ready to start the game");
+		tv.setText("You were sent to space to manage a war against aliens, you are driving your space ship and aliens are flying every where to shoot you, "
+				+ "if the alien's sound is played from left to right swipe right to kill that alien, if the sound is played from right to left swipe left, "
+				+ "if the sound is played in both left and right double tap the screen, good luck saving the earth!"
+				+ ", swipe left when you are ready to start the game");
 	}
 
 	@Override

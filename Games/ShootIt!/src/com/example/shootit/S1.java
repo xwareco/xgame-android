@@ -56,7 +56,7 @@ public class S1 implements IstateActions {
 	@Override
 	public void onStateExit(Context c, Intent I,HeadPhone H) {
 		int Score = I.getIntExtra("Score", 0);
-		Score++;
+		Score += 5;
 		I.putExtra("Score", Score);
 		String Path = Environment.getExternalStorageDirectory().toString()
 				+ "/xGame/Games/Shoot it!/Sound/Weapon.mp3";
