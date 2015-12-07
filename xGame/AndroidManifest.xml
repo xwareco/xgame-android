@@ -120,6 +120,11 @@
             android:theme="@android:style/Theme.Dialog" >
         </activity>
         <activity
+            android:name="uencom.xgame.engine.views.AboutUs"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="uencom.xgame.engine.views.SplashActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >

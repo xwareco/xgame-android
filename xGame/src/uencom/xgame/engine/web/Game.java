@@ -8,6 +8,7 @@ public class Game {
 	private String url;
 	private String imgPath;
 	private String category_id;
+	private String version;
 
 	public String getName() {
 		return name;
@@ -56,6 +57,16 @@ public class Game {
 	public void setCategory_id(String category_id) {
 		this.category_id = category_id;
 	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+	
+	
 	
 	
 

@@ -25,6 +25,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnHoverListener;
 import android.widget.LinearLayout;
@@ -59,10 +60,14 @@ public class xGameParser extends Activity implements IStateListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.xmldemo);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		
 		appPrefs = PreferenceManager
-				.getDefaultSharedPreferences(getApplicationContext());
+				.getDefaultSharedPreferences(xGameParser.this);
 		name = getIntent().getStringExtra("gamename");
 		gameID = getIntent().getStringExtra("gameid");
 		System.out.println("Parser: " + name);
@@ -86,7 +91,7 @@ public class xGameParser extends Activity implements IStateListener {
 							gameIntent.putExtra("Score",
 									gameIntent.getIntExtra("Score", 0));
 							gameIntent = currentState.loopBack(
-									getApplicationContext(), gameIntent,
+									xGameParser.this, gameIntent,
 									gameMediaPlayer);
 							System.out.println(gameIntent.getIntExtra("Count",
 									0));
@@ -102,8 +107,8 @@ public class xGameParser extends Activity implements IStateListener {
 									public void run() {
 
 										currentState.onStateExit(
-												getApplicationContext(),
-												gameIntent, gameMediaPlayer);
+												xGameParser.this, gameIntent,
+												gameMediaPlayer);
 									}
 								});
 								currentState = getStartingState(backTo);
@@ -122,11 +127,11 @@ public class xGameParser extends Activity implements IStateListener {
 										.setTransDetected("NoTransitionDetected");
 							}
 						} else {
-							
+
 							if (appPrefs.getString("uName", "").equals("")) {
 								int score = gameIntent.getIntExtra("Score", 0);
 								Intent gameOverActivity = new Intent(
-										getApplicationContext(), GameOver.class);
+										xGameParser.this, GameOver.class);
 								gameOverActivity.putExtra("Score", score);
 								gameOverActivity.putExtra("Folder", getIntent()
 										.getStringExtra("Folder"));
@@ -136,11 +141,12 @@ public class xGameParser extends Activity implements IStateListener {
 								overridePendingTransition(R.anim.transition10,
 										R.anim.transition9);
 							}
-							
-							else{
+
+							else {
 								int score = gameIntent.getIntExtra("Score", 0);
 								Intent rankSplash = new Intent(
-										getApplicationContext(), RankGetterSplash.class);
+										xGameParser.this,
+										RankGetterSplash.class);
 								rankSplash.putExtra("Score", score);
 								rankSplash.putExtra("Folder", getIntent()
 										.getStringExtra("Folder"));
@@ -178,7 +184,7 @@ public class xGameParser extends Activity implements IStateListener {
 
 		currentState = getStartingState("S0");
 		if (currentState == null)
-			Toast.makeText(getApplicationContext(),
+			Toast.makeText(xGameParser.this,
 					"Error..The game cannot be parsed", Toast.LENGTH_LONG)
 					.show();
 		else {
@@ -215,7 +221,7 @@ public class xGameParser extends Activity implements IStateListener {
 		});
 		gameFolder = engineIntent.getStringExtra("Folder");
 		System.out.println("Parser2: " + engineIntent.getStringExtra("Folder"));
-		parser = new XmlParser(getApplicationContext(), gameFolder, gameLayout);
+		parser = new XmlParser(xGameParser.this, gameFolder, gameLayout);
 		engineGesture = new HandGestures(this) {
 			@Override
 			public void onTapOnce() {
@@ -265,6 +271,7 @@ public class xGameParser extends Activity implements IStateListener {
 		loopTimerTask.cancel();
 		loopTimer.cancel();
 		currentState.onStateExit(xGameParser.this, gameIntent, gameMediaPlayer);
+		gameMediaPlayer.release();
 		if (stateAccelerometer != null)
 			stateAccelerometer.onAccelerometerPause();
 		super.onPause();
@@ -282,21 +289,24 @@ public class xGameParser extends Activity implements IStateListener {
 		Editor ed = appPrefs.edit();
 		int count = appPrefs.getInt("cnt", 0);
 		count++;
-		if(count == 1){
-			Toast.makeText(xGameParser.this, "Press Back again to exit the game", Toast.LENGTH_LONG).show();
+		if (count == 1) {
+			Toast.makeText(xGameParser.this,
+					"Press Back again to exit the game", Toast.LENGTH_LONG)
+					.show();
 			ed.putInt("cnt", count);
 			ed.commit();
-		}
-		else if(count == 2){
-			currentState.onStateExit(xGameParser.this, gameIntent, gameMediaPlayer);
-			gameMediaPlayer.release();
+		} else if (count == 2) {
+			//currentState.onStateExit(xGameParser.this, gameIntent,
+				//	gameMediaPlayer);
+			
+
 			count = 0;
 			ed.putInt("cnt", count);
 			ed.commit();
 			finish();
 			overridePendingTransition(R.anim.transition8, R.anim.transition7);
 		}
-		
+
 		// super.onBackPressed();
 	}
 
@@ -312,7 +322,7 @@ public class xGameParser extends Activity implements IStateListener {
 					runOnUiThread(new Runnable() {
 						public void run() {
 
-							currentState.onStateExit(getApplicationContext(),
+							currentState.onStateExit(xGameParser.this,
 									gameIntent, gameMediaPlayer);
 
 						}
@@ -350,7 +360,7 @@ public class xGameParser extends Activity implements IStateListener {
 					runOnUiThread(new Runnable() {
 						public void run() {
 
-							currentState.onStateExit(getApplicationContext(),
+							currentState.onStateExit(xGameParser.this,
 									gameIntent, gameMediaPlayer);
 
 						}

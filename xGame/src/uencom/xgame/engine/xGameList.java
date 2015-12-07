@@ -1,7 +1,12 @@
 package uencom.xgame.engine;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
+
+import org.json.JSONObject;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
@@ -75,10 +80,18 @@ public class xGameList extends ArrayAdapter<Game> {
 				+ "/xGame/Games/" + games.get(position).getName();
 		File file = new File(path);
 		final ImageView gameIcon = (ImageView) rowView.findViewById(R.id.img);
-
+		String offlineVersion = readFromFile(position);
 		ImageView statusIcon = (ImageView) rowView.findViewById(R.id.img2);
 		onDeviceGameChecker installations = new onDeviceGameChecker(context);
-		if (installations.isOfflineGameExists(games.get(position).getName()) != null) {
+
+		if (installations.isOfflineGameExists(games.get(position).getName()) != null
+				&& !games.get(position).getVersion().equals(offlineVersion)) {
+			rowView.setClickable(false);
+			statusIcon.setImageResource(R.drawable.update);
+			statusIcon
+					.setContentDescription("This game needs to be updated, click to download the latest version");
+		} else if (installations.isOfflineGameExists(games.get(position)
+				.getName()) != null) {
 			rowView.setClickable(false);
 			statusIcon.setImageResource(R.drawable.start);
 			statusIcon
@@ -92,6 +105,8 @@ public class xGameList extends ArrayAdapter<Game> {
 			txtTitle.setText(txtTitle.getText().toString()
 					+ "(is installing, please wait!)");
 			statusIcon.setImageResource(R.drawable.installing);
+			statusIcon
+					.setContentDescription("This game is being installed, please wait");
 		}
 
 		else {
@@ -133,5 +148,34 @@ public class xGameList extends ArrayAdapter<Game> {
 			games.addAll(catGames);
 		}
 		return rowView;
+	}
+
+	private String readFromFile(int position) {
+		File userDataFile = new File(Environment.getExternalStorageDirectory()
+				+ "/xGame/Games/" + games.get(position).getName()
+				+ "/manifest.json");
+		String ret = "";
+		if (userDataFile.exists()) {
+
+			BufferedReader bufferedReader;
+			try {
+				bufferedReader = new BufferedReader(
+						new FileReader(userDataFile));
+				String receiveString = "";
+				StringBuilder stringBuilder = new StringBuilder();
+
+				while ((receiveString = bufferedReader.readLine()) != null) {
+					stringBuilder.append(receiveString);
+				}
+				bufferedReader.close();
+				ret = stringBuilder.toString();
+				JSONObject jO = new JSONObject(ret);
+				ret = jO.getString("version");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return ret;
 	}
 }

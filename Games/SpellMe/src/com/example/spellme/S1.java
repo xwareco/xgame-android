@@ -22,9 +22,24 @@ import uencom.xgame.sound.TTS;
 import uencom.xgame.speech.SpeechRecognition;
 
 public class S1  implements IstateActions {
-	String[] words = new String[]{"freedom","elephant","education","school","house",
-			"egypt","love","peace","greeting","security"
-			,"world","image","work","justice","collect","class","battle"};
+	String[] words1 = new String[]{
+			"egypt","peace","greeting","shake","product","world","option",
+			"school","house","interest","message",
+			"image","growth","profit","work","battle","shout","order","payment","rush","shallow","love","sale",
+			"arrangement","attempt","scared"
+			
+			};
+	String[] words2 = new String[]{"margin","rubbed","depth","limit","shaking","doll","poetry",
+			"donkey","policeman","egypt","positive",
+			"exchange","security","increase","market","opinion","mistake","objective",
+			"output","advice","penalty"
+			};
+	
+	String[] words3 = new String[]{"permission","justice","satisfied","education",
+			"production","industry","deeply","promotion","invoice","selection","plates","freedom","elephant","possibly","offer",
+			"practical","guarantee",
+			"inventory","knowledge","loss"};
+	
 	static int wordnum = 0;
 	static String word;
 	static String workingWord;
@@ -34,11 +49,36 @@ public class S1  implements IstateActions {
 	public void onStateEntry(LinearLayout layout, Intent I, Context C,HeadPhone H) {
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
+		I.putExtra("Action", "Right");
 		BitmapDrawable b = (BitmapDrawable) layout.getBackground();
 		b.setAlpha(100);
 		layout.setBackground(b);
-		Random  random = new Random();
-		wordnum = random.nextInt(17);
+		String[] words;
+		 int level = I.getIntExtra("level", 0);
+		 switch (level) {
+		case 0: {words =words1; }
+			
+			break;
+		case 1: {words =words2; }
+		
+		break;
+       case 2: {words =words3; }
+		
+		break;
+		default:
+		{words =words1; }
+		break;
+		}
+		 wordnum = I.getIntExtra("Random", 0);
+		if(wordnum == 0){
+		 Random rand = new Random();
+		 wordnum = rand.nextInt(words.length);
+		}
+		wordnum++;
+		if(wordnum == words.length)
+			wordnum = wordnum%words.length;
+		
+		 I.putExtra("Random", wordnum);
 		word = words[wordnum];
 		char[] chars = new char[word.length()];
 		char[] tempChars =word.toCharArray();
@@ -54,7 +94,7 @@ public class S1  implements IstateActions {
 	@Override
 	public Intent loopBack(Context c, Intent I,HeadPhone H) {
 		// TODO Auto-generated method stub
-		Toast.makeText(c, word , Toast.LENGTH_SHORT).show();
+		
 		
 		
 		return I;

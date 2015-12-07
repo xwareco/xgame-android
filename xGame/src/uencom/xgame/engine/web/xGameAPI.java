@@ -91,8 +91,9 @@ public class xGameAPI {
 		}
 		String url = urlPrefix + "getCategoryGames?req_data="
 				+ urlEncodedParams;
-		System.out.println(url);
+		
 		String result = makeApiCall(url, "game", "");
+		System.out.println(result);
 		ArrayList<Game> games = new ArrayList<Game>();
 		if (result != "NULL") {
 			try {
@@ -105,6 +106,7 @@ public class xGameAPI {
 					g.setFileName(obj.getString("file"));
 					g.setImgPath(obj.getString("logo"));
 					g.setCategory_id(obj.getString("category_id"));
+					g.setVersion(obj.getString("version"));
 					games.add(g);
 				}
 			} catch (Exception e) {

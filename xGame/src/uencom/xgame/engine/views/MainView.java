@@ -1,10 +1,15 @@
 package uencom.xgame.engine.views;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Locale;
+
+import org.json.JSONObject;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -114,7 +119,9 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 									null, proBar, trans, list).execute("game",
 									categories.get(currentIndex).getId(),
 									String.valueOf(0));
-							header.setContentDescription(categories.get(currentIndex).getName() + " Games");
+							header.setContentDescription(categories.get(
+									currentIndex).getName()
+									+ " Games");
 
 						}
 					});
@@ -150,7 +157,9 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 									null, proBar, trans, list).execute("game",
 									categories.get(currentIndex).getId(),
 									String.valueOf(0));
-							header.setContentDescription(categories.get(currentIndex).getName() + " Games");
+							header.setContentDescription(categories.get(
+									currentIndex).getName()
+									+ " Games");
 
 						}
 					});
@@ -229,7 +238,8 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 		currentIndex = 0;
 		lastIndex = -1;
 		header = (TextView) findViewById(R.id.textView1);
-		header.setContentDescription(categories.get(currentIndex).getName() + " Games");
+		header.setContentDescription(categories.get(currentIndex).getName()
+				+ " Games");
 		header.setText(categories.get(currentIndex).getName());
 		loading = (TextView) findViewById(R.id.textView2);
 		if (current.getDisplayLanguage().equals("Arabic")) {
@@ -279,7 +289,9 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 									null, proBar, trans, list).execute("game",
 									categories.get(currentIndex).getId(),
 									String.valueOf(0));
-							header.setContentDescription(categories.get(currentIndex).getName() + " Games");
+							header.setContentDescription(categories.get(
+									currentIndex).getName()
+									+ " Games");
 
 						}
 					});
@@ -314,7 +326,9 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 									null, proBar, trans, list).execute("game",
 									categories.get(currentIndex).getId(),
 									String.valueOf(0));
-							header.setContentDescription(categories.get(currentIndex).getName() + " Games");
+							header.setContentDescription(categories.get(
+									currentIndex).getName()
+									+ " Games");
 
 						}
 					});
@@ -366,7 +380,8 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 							+ "/xGame/Games/";
 
 					new Installer(MainView.this, unzipLocation, logUrl, games
-							.get(arg2).getName(), games.get(arg2).getId(), list).execute(downUrl);
+							.get(arg2).getName(), games.get(arg2).getId(), list)
+							.execute(downUrl);
 
 				}
 
@@ -375,26 +390,65 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 							MainView.this);
 					if (installations.isOfflineGameExists(list.getAdapter()
 							.getItem(arg2).toString()) == null) {
-						Intent I = new Intent(getApplicationContext(),
-								GameView.class);
-						I.putExtra("Folder", ifGameExistsLocation);
-						I.putExtra("Name", games.get(arg2).getName());
-						I.putExtra("gameid", games.get(arg2).getId());
-						I.putExtra(
-								"Logo",
-								IMAGE_PREFIX
-										+ games.get(arg2)
-												.getFileName()
-												.substring(
-														0,
-														games.get(arg2)
-																.getFileName()
-																.lastIndexOf(
-																		'.'))
-										+ "/" + games.get(arg2).getImgPath());
-						startActivity(I);
-						overridePendingTransition(R.anim.transition5,
-								R.anim.transition4);
+						String offlineVersion = readFromFile(arg2);
+						String onlineVersion = games.get(arg2).getVersion();
+                        System.out.println("On: " + onlineVersion + " Off: " + offlineVersion);
+						if (offlineVersion.equals(onlineVersion)) {
+							Intent I = new Intent(getApplicationContext(),
+									GameView.class);
+							I.putExtra("Folder", ifGameExistsLocation);
+							I.putExtra("Name", games.get(arg2).getName());
+							I.putExtra("gameid", games.get(arg2).getId());
+							I.putExtra(
+									"Logo",
+									IMAGE_PREFIX
+											+ games.get(arg2)
+													.getFileName()
+													.substring(
+															0,
+															games.get(arg2)
+																	.getFileName()
+																	.lastIndexOf(
+																			'.'))
+											+ "/"
+											+ games.get(arg2).getImgPath());
+							startActivity(I);
+							overridePendingTransition(R.anim.transition5,
+									R.anim.transition4);
+						}
+
+						else {
+							arg1.setClickable(true);
+							arg1.setBackgroundColor(Color.LTGRAY);
+							Toast.makeText(MainView.this,
+									"Updating..",
+									Toast.LENGTH_LONG).show();
+							final String logUrl = IMAGE_PREFIX
+									+ games.get(arg2)
+											.getFileName()
+											.substring(
+													0,
+													games.get(arg2)
+															.getFileName()
+															.lastIndexOf('.'))
+									+ "/" + games.get(arg2).getImgPath();
+							final String downUrl = IMAGE_PREFIX
+									+ games.get(arg2)
+											.getFileName()
+											.substring(
+													0,
+													games.get(arg2)
+															.getFileName()
+															.lastIndexOf('.'))
+									+ "/" + games.get(arg2).getFileName();
+							String unzipLocation = Environment
+									.getExternalStorageDirectory().toString()
+									+ "/xGame/Games/";
+
+							new Installer(MainView.this, unzipLocation, logUrl,
+									games.get(arg2).getName(), games.get(arg2)
+											.getId(), list).execute(downUrl);
+						}
 					} else {
 						arg1.setClickable(true);
 						arg1.setBackgroundColor(Color.LTGRAY);
@@ -427,8 +481,8 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 								+ "/xGame/Games/";
 
 						new Installer(MainView.this, unzipLocation, logUrl,
-								games.get(arg2).getName(), games.get(arg2).getId(), list)
-								.execute(downUrl);
+								games.get(arg2).getName(), games.get(arg2)
+										.getId(), list).execute(downUrl);
 					}
 				}
 
@@ -692,7 +746,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 
 		else if (position == 3) {
 			mDrawerLayout.closeDrawer(GravityCompat.START);
-			I = new Intent(this, Register.class);// about
+			I = new Intent(this, AboutUs.class);// about
 			System.out.println(position);
 			startActivity(I);
 			overridePendingTransition(R.anim.transition5, R.anim.transition4);
@@ -732,6 +786,36 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 				String.valueOf(0));
 
 		swipeRefreshLayout.setRefreshing(false);
+	}
+
+	public String readFromFile(int position) {
+		File userDataFile = new File(Environment.getExternalStorageDirectory()
+				+ "/xGame/Games/" + games.get(position).getName()
+				+ "/manifest.json");
+		String ret = "";
+		String ver = "";
+		if (userDataFile.exists()) {
+
+			BufferedReader bufferedReader;
+			try {
+				bufferedReader = new BufferedReader(
+						new FileReader(userDataFile));
+				String receiveString = "";
+				StringBuilder stringBuilder = new StringBuilder();
+
+				while ((receiveString = bufferedReader.readLine()) != null) {
+					stringBuilder.append(receiveString);
+				}
+				bufferedReader.close();
+				ret = stringBuilder.toString();
+				JSONObject jO = new JSONObject(ret);
+				ver = jO.getString("version");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return ver;
 	}
 
 }

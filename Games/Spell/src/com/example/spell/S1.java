@@ -22,38 +22,26 @@ import uencom.xgame.sound.TTS;
 import uencom.xgame.speech.SpeechRecognition;
 
 public class S1  implements IstateActions {
-	String[] words = new String[]{"go","sad","room","school","arabic","egypt","man","love",
-			"tired","back","star","good","collect","world","image","work","class","battle"};
-	static int wordnum = 0;
-	static String word;
-	static String workingWord;
+	
 	
 
 	@Override
 	public void onStateEntry(LinearLayout layout, Intent I, Context C,HeadPhone H) {
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
+		 I.putExtra("Action", "Right");
 		BitmapDrawable b = (BitmapDrawable) layout.getBackground();
 		b.setAlpha(100);
 		layout.setBackground(b);
-		Random  random = new Random();
-		wordnum = random.nextInt(18);
-		word = words[wordnum];
-		char[] chars = new char[word.length()];
-		char[] tempChars =word.toCharArray();
-		Arrays.fill(chars, '$');
-		workingWord = new String(chars);
-
-		I.putExtra("word", word);
-		I.putExtra("workingWord", workingWord);
-		I.putExtra("letterPosition", 0);
+		
+		
 		
 		 
 	}
 	@Override
 	public Intent loopBack(Context c, Intent I,HeadPhone H) {
 		// TODO Auto-generated method stub
-		Toast.makeText(c, word , Toast.LENGTH_SHORT).show();
+		
 		
 		
 		return I;

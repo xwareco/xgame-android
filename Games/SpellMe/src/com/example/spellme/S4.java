@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import uencom.xgame.interfaces.IstateActions;
 import uencom.xgame.sound.HeadPhone;
@@ -28,7 +29,7 @@ public class S4 implements IstateActions {
 
 	 static int failnum = 0;
 	    static LinearLayout layout;
-	    static Button tryAgain;
+	    static TextView tryAgain;
 	    static LinearLayout layout2;
 	   
 
@@ -50,17 +51,29 @@ public class S4 implements IstateActions {
 		failnum = I.getIntExtra("failnum", 0);
 		failnum++;
 		I.putExtra("failnum", failnum);
-		int level = I.getIntExtra("Level", 1);
+		I.putExtra("fail", 0);
 		
-		Toast.makeText(C, "You stil have "+(5-failnum)+" tries to go", Toast.LENGTH_LONG).show();
+		Toast.makeText(C, "You still have "+(5-failnum)+" tries to go", Toast.LENGTH_LONG).show();
 		this.layout = layout;
 		if(failnum == 5)
 		{
-			int score = I.getIntExtra("Score", 1);
-			String word = I.getStringExtra("word");
-			score = ((score/word.length())*100) - failnum*5;
-			I.putExtra("Score",score );
+			int timeInSecond = I.getIntExtra("timeInSecond", 0);
+			int Score = I.getIntExtra("Score", 0);
+			if(timeInSecond <= 50)
+				Score +=25;
+			else if(timeInSecond <= 100&& timeInSecond>50)
+				Score +=20;
+			else if(timeInSecond <= 150&&timeInSecond>100)
+				Score +=15;
+			else if(timeInSecond <=200&&timeInSecond>150)
+				Score +=10;
+			else if(timeInSecond<=300&&timeInSecond>200)
+				Score += 5;
+			else
+				Score -=5;
+	
 			
+			I.putExtra("Score", Score);
 			I.putExtra("Count", 20);
 		//	I.putExtra("Action", "NONE");
 		//	I.putExtra("State", "S6");
@@ -96,8 +109,8 @@ public class S4 implements IstateActions {
 		
 		LinearLayout.LayoutParams layoutCenterParams =
 				new LinearLayout.LayoutParams(
-						LinearLayout.LayoutParams.WRAP_CONTENT,
-						LinearLayout.LayoutParams.WRAP_CONTENT);
+						LinearLayout.LayoutParams.MATCH_PARENT,
+						LinearLayout.LayoutParams.MATCH_PARENT);
 		
 
 		
@@ -118,7 +131,7 @@ public class S4 implements IstateActions {
 			Drawable d = Drawable.createFromPath(Environment
 					.getExternalStorageDirectory().toString()
 					+ "/xGame/Games/"
-					+ "Spell Me" + "/Images/tryAgain.png");
+					+ "Spell Me" + "/Images/try.png");
 			Bitmap b = drawableToBitmap(d);
 			
 			 Bitmap bc1 = Bitmap.createBitmap(b.getWidth() + 10, b.getHeight() + 10, Bitmap.Config.ARGB_8888);
@@ -137,8 +150,8 @@ public class S4 implements IstateActions {
 	//startSpeech.setBackground(d);
 	//startSpeech.setPadding(10, 10, 10, 10);
 	tryAgain.setGravity(Gravity.CENTER);
-	tryAgain.setHeight(150);
-	tryAgain.setWidth(200);
+	//tryAgain.setHeight(150);
+	//tryAgain.setWidth(200);
 	
 	//startSpeech.setBackgroundColor(0x99FF00CC);
 	//startSpeech.setBackground(states);

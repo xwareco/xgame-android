@@ -2,7 +2,6 @@ package uencom.xgame.engine.views;
 
 import java.util.ArrayList;
 import java.util.Locale;
-
 import uencom.xgame.engine.Scorer;
 import uencom.xgame.engine.xGameParser;
 import uencom.xgame.engine.web.User;
@@ -12,6 +11,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -40,8 +40,8 @@ import com.google.gson.reflect.TypeToken;
 
 public class GameOver extends SherlockActivity {
 
-	ImageView gamescore, tryAgain, cheerForUser;
-	TextView gameName;
+	ImageView gamescore, tryAgain, cheerForUser, gameOver;
+	TextView gameName, rank;
 	Typeface english;
 	CallbackManager callbackManager;
 	SharedPreferences appSharedPrefs;
@@ -130,11 +130,14 @@ public class GameOver extends SherlockActivity {
 				"fonts/DJB Stinky Marker.ttf");
 		Locale current = getResources().getConfiguration().locale;
 		gameName = (TextView) findViewById(R.id.textView1);
+		rank = (TextView) findViewById(R.id.textView2);
 		if (current.getDisplayLanguage().equals("English")) {
 			gameName.setTypeface(english);
 		}
+		rank.setTypeface(english);
 
 		gamescore = (ImageView) findViewById(R.id.imageView3);
+		gameOver = (ImageView) findViewById(R.id.imageView1);
 		if (!appSharedPrefs.getString("uName", "").equals("")) {
 			if (!loginButton.getText().equals("Log out"))
 				loginButton.setVisibility(View.VISIBLE);
@@ -152,18 +155,38 @@ public class GameOver extends SherlockActivity {
 			}
 			userRank = getIntent().getStringExtra("rank");
 			String userRankFacebook = "";
-			Toast.makeText(this, "Your rank is: " + userRank, Toast.LENGTH_LONG)
-					.show();
+			gameOver.setVisibility(View.GONE);
 			if (userRank.equals("1"))
+			{
 				userRankFacebook = userRank + "st";
-			else if (userRank.equals("1"))
-				userRankFacebook = userRank + "st";
+				rank.setText(userRankFacebook);
+				rank.setTextColor(Color.parseColor("#FFD700"));
+				rank.setContentDescription("First place");
+			}
+			
 			else if (userRank.equals("2"))
+			{
 				userRankFacebook = userRank + "nd";
+				rank.setText(userRankFacebook);
+				rank.setTextColor(Color.parseColor("#C0C0C0"));
+				rank.setContentDescription("Second place");
+			}
 			else if (userRank.equals("3"))
+			{
 				userRankFacebook = userRank + "rd";
+				rank.setText(userRankFacebook);
+				rank.setTextColor(Color.parseColor("#CD7F32"));
+				rank.setContentDescription("Third place");
+			}
 			else
+			{
 				userRankFacebook = userRank + "th";
+				rank.setText(userRankFacebook);
+				rank.setTextColor(Color.parseColor("#FF808000"));
+				rank.setContentDescription(userRankFacebook);
+			}
+			
+			rank.setVisibility(View.VISIBLE);
 
 			ShareLinkContent linkContent = new ShareLinkContent.Builder()
 					.setContentTitle(userRankFacebook + "Place")
