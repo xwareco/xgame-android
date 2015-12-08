@@ -15,12 +15,16 @@ import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import uencom.xgame.gestures.HandGestures;
 import uencom.xgame.engine.navxgameAdapter;
 import uencom.xgame.engine.navxgameList;
 import uencom.xgame.engine.onDeviceGameChecker;
+import uencom.xgame.engine.xGame;
 import uencom.xgame.engine.web.Game;
 import uencom.xgame.engine.web.GameCategory;
 import uencom.xgame.engine.web.Installer;
@@ -85,12 +89,19 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 	ProgressBar proBar;
 	Typeface arabic, english;
 	HandGestures CatHG;
-
+	Tracker mTracker;
+	xGame application;
 	// xGameAPI api;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.main_view);
+		
+		application = (xGame) getApplication();
+		mTracker = application.getDefaultTracker();
+		mTracker.setScreenName("Home");
+		mTracker.send(new HitBuilders.AppViewBuilder().build());
+
 		CatHG = new HandGestures(this) {
 			@Override
 			public void onSwipeRight() {
@@ -355,6 +366,8 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 						+ "/xGame/Games/" + games.get(arg2).getName();
 
 				if (!new File(ifGameExistsLocation).exists()) {
+					mTracker.setScreenName(games.get(arg2).getName() + "(Download)");
+					mTracker.send(new HitBuilders.AppViewBuilder().build());
 					arg1.setClickable(true);
 					arg1.setBackgroundColor(Color.LTGRAY);
 					Toast.makeText(MainView.this, "Installing in background",
@@ -392,7 +405,8 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 							.getItem(arg2).toString()) == null) {
 						String offlineVersion = readFromFile(arg2);
 						String onlineVersion = games.get(arg2).getVersion();
-                        System.out.println("On: " + onlineVersion + " Off: " + offlineVersion);
+						System.out.println("On: " + onlineVersion + " Off: "
+								+ offlineVersion);
 						if (offlineVersion.equals(onlineVersion)) {
 							Intent I = new Intent(getApplicationContext(),
 									GameView.class);
@@ -419,9 +433,10 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 
 						else {
 							arg1.setClickable(true);
+							mTracker.setScreenName(games.get(arg2).getName() + "(Update)");
+							mTracker.send(new HitBuilders.AppViewBuilder().build());
 							arg1.setBackgroundColor(Color.LTGRAY);
-							Toast.makeText(MainView.this,
-									"Updating..",
+							Toast.makeText(MainView.this, "Updating..",
 									Toast.LENGTH_LONG).show();
 							final String logUrl = IMAGE_PREFIX
 									+ games.get(arg2)
@@ -816,6 +831,18 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 			}
 		}
 		return ver;
+	}
+	
+	@Override
+	protected void onStart() {
+		GoogleAnalytics.getInstance(MainView.this).reportActivityStart(this);
+		super.onStart();
+	}
+	
+	@Override
+	protected void onStop() {
+		GoogleAnalytics.getInstance(MainView.this).reportActivityStop(this);
+		super.onStop();
 	}
 
 }

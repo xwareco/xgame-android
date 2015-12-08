@@ -3,6 +3,10 @@ package uencom.xgame.engine;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import uencom.xgame.interfaces.IStateListener;
 import uencom.xgame.sensors.Accelerometer;
 import uencom.xgame.sound.HeadPhone;
@@ -166,6 +170,14 @@ public class xGameParser extends Activity implements IStateListener {
 	}
 
 	private void startTheGame() {
+		// Get tracker.
+		Tracker t = ((xGame) this.getApplication()).getDefaultTracker();
+		// Build and send an Event.
+		t.send(new HitBuilders.EventBuilder()
+		    .setCategory(name)
+		    .setAction("Played")
+		    .setLabel("start")
+		    .build());
 		parser.parse();
 		states = parser.getStatesList();
 		trans = parser.getTransitionsList();
