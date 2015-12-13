@@ -1,40 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/lstbg"
+    android:contentDescription="Game over"
     android:orientation="vertical" >
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
-        android:textStyle="bold|italic"
-        android:textColor="#0f540f"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#0f540f" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
+        android:layout_below="@id/textView1"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:src="@drawable/gamescores" />
+        android:contentDescription="View your rank map"
+        android:src="@drawable/gamescores"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="fill_parent"
-        android:layout_marginTop="20dp"
-        android:layout_height="240dp"
+        android:layout_height="400dp"
+        android:layout_below="@id/imageView3"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="5dp"
+        android:contentDescription="Game over"
         android:src="@drawable/gaov" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageView1"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
+        android:visibility="gone" />
+
+    <com.facebook.share.widget.ShareButton
+        android:id="@+id/share_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/login_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="300dp"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_below="@id/share_button"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:contentDescription="Try again"
         android:src="@drawable/tryagain" />
-    
-</LinearLayout>
+
+    <ImageView
+        android:id="@+id/img3"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:alpha="0.5"
+        android:src="@drawable/cheer"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/imageView3"
+        android:layout_centerHorizontal="true"
+        style="@style/textShadow"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="120sp"
+        android:visibility="gone" />
+
+</RelativeLayout>

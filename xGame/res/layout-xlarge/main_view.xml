@@ -26,7 +26,7 @@
                 android:layout_marginStart="-25dp"
                 android:layout_marginTop="30dp"
                 android:layout_weight="5"
-                android:contentDescription="@string/pre_btn"
+                android:contentDescription="previous game category"
                 android:src="@drawable/larr" />
 
             <LinearLayout
@@ -42,18 +42,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:contentDescription="@string/pre_btn" />
+                    android:contentDescription="@string/pre_btn"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/textView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="50dp"
                     android:text="@string/cats"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="#0f540f"
-                    android:textSize="30sp"
-                    android:textStyle="bold|italic" />
+                    android:textSize="30sp" />
             </LinearLayout>
 
             <ImageView
@@ -63,17 +63,24 @@
                 android:layout_marginEnd="-25dp"
                 android:layout_marginTop="30dp"
                 android:layout_weight="5"
-                android:contentDescription="@string/pre_btn"
+                android:contentDescription="Next game category"
                 android:src="@drawable/rarr" />
         </LinearLayout>
 
-        <ListView
-            android:id="@+id/listView1"
+        <android.support.v4.widget.SwipeRefreshLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="160dp"
-            android:visibility="gone" >
-        </ListView>
+            android:layout_marginTop="160dp" >
+
+            <ListView
+                android:id="@+id/listView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" >
+            </ListView>
+        </android.support.v4.widget.SwipeRefreshLayout>
 
         <LinearLayout
             android:id="@+id/translay"
@@ -105,13 +112,11 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@android:color/white"
                 android:textSize="30sp"
-                android:textStyle="bold|italic"
                 android:visibility="visible" />
         </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout
-        
         android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"

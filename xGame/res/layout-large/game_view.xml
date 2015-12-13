@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/lstbg"
+    android:contentDescription="Play the game now"
     android:orientation="vertical" >
-    
 
     <TextView
         android:id="@+id/textView1"
@@ -16,17 +16,15 @@
         android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#0f540f"
-        android:textSize="30sp"
-        android:textStyle="bold|italic" />
+        android:textSize="50sp" />
 
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="fill_parent"
-        android:layout_height="220dp"
+        android:layout_height="400dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:contentDescription="@string/game"
-        android:src="@drawable/blurredcatch" />
+        android:contentDescription="@string/game" />
 
     <ImageView
         android:id="@+id/img"
@@ -45,7 +43,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="10dp"
-        android:contentDescription="@string/play"
+        android:contentDescription="Return to Games List"
         android:src="@drawable/home" />
 
 </LinearLayout>
