@@ -23,8 +23,7 @@ public class S0 implements IstateActions {
 			"practical","guarantee",
 			"inventory","knowledge","loss"};
 	static int wordnum = 0;
-	static String word;
-	static String workingWord;
+	
 	@Override
 	public void onStateEntry(LinearLayout layout, Intent I, Context C,HeadPhone H) {
 		// TODO Auto-generated method stub
@@ -42,11 +41,11 @@ public class S0 implements IstateActions {
 				wordnum = wordnum%words.length;
 			
 			 I.putExtra("Random", wordnum);
-			word = words[wordnum];
+			 String word = words[wordnum];
 		char[] chars = new char[word.length()];
 		char[] tempChars =word.toCharArray();
 		Arrays.fill(chars, '$');
-		workingWord = new String(chars);
+		String workingWord = new String(chars);
 		
 		I.putExtra("word", word);
 		I.putExtra("workingWord", workingWord);

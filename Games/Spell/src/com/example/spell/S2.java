@@ -372,12 +372,12 @@ class RemindTask extends TimerTask {
       			else if(time > 50&&time<=100)
       			{
       				  ((ShapeDrawable)background).getPaint().setColor(Color.GRAY);
-      				  showTime.setTextColor(Color.YELLOW);
+      				showTime.setTextColor(Color.GREEN);
       			}
       			else if(time > 100&&time<=180 )
       			{
       				  ((ShapeDrawable)background).getPaint().setColor(Color.GRAY);
-      				  showTime.setTextColor(0x99B40404);
+      				showTime.setTextColor(Color.YELLOW);
       			}
       			else if(time > 180 ){
       				  ((ShapeDrawable)background).getPaint().setColor(Color.RED);

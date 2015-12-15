@@ -56,28 +56,40 @@ import uencom.xgame.speech.SpeechRecognition;
 
 public class S1   implements IstateActions {
 	String[] words1 = new String[]{
-			"job","around","plants","world","apart","options",
-			"bike","like","work"
+			"job","around","plants","world",
+			
 			
 			};
 	String[] sentence1 = new String[]{"He got job as waiter.","I did few jobs around the house."
 			,"It’s my job to water the plants.","She’s travelled all over the world."
-			,"His whole world fell apart when she left.","menu doesn’t have many options."
-			,"I ride my bike to school.","I like school.","He works as waiter"};
+			};
 	
 	String[] words2 = new String[]{"waiter","school","house","margin","poems",
 			"order"
 			};
 	
 	String[] sentence2 = new String[]{"He got job as waiter.","I ride my bike to school.","I like my house."
-			,"You can make notes in the margin","love poems","Has the waiter taken your order?"};
+			,"You can make notes in the margin","I love poems","Has the waiter taken your order?"};
 	
-	String[] words3 = new String[]{"positive","satellites","essential",
-			"security","increase"};
+	String[] words3 = new String[]{"apart","options","bike","like","work"
+			};
 
-    String[] sentence3 = new String[]{"She has a very positive attitude.","weather satellite","Computers are essential part of our lives."
-	        ,"airport security","Smoking increases the risk","Has the waiter taken your order?"};
+    String[] sentence3 = new String[]{"His whole world fell apart when she left.","menu doesn’t have many options."
+			,"I ride my bike to school.","I like school.","He work as waiter"};
 
+	String[] words4 = new String[]{"interests","usually","listed","number",
+			};
+	
+	String[] sentence4 = new String[]{"they have interests all over the world","she usually come late"
+			,"Am I listed in your register","the number of parameters is small"};
+	
+	String[] words5 = new String[]{"positive","essential",
+			"securities","increase"};
+
+    String[] sentence5 = new String[]{"She has a very positive attitude.","Computers are essential part of our lives."
+	        ,"he held several valuable securities","Smoking increase the risk"};
+
+	
 	
 	
 	ImageButton next;
@@ -89,6 +101,8 @@ public class S1   implements IstateActions {
 	static String sentence ;
 	static String[] wordsArray;
 	static String[] sentenceArray;
+	String[]  choiceWord = new String[5];
+	String[] choiceSentence =new String[5];
 	 static boolean flag;
 	 public Context context;
 	 static HeadPhone Hc;
@@ -119,8 +133,14 @@ public class S1   implements IstateActions {
            case 2: {wordsArray =words3; sentenceArray = sentence3;}
 			
 			break;
+           case 3: {wordsArray =words4; sentenceArray = sentence4;}
+			
+			break;
+           case 4: {wordsArray =words5; sentenceArray = sentence5;}
+			
+			break;
 			default:
-			        {wordsArray =words1; sentenceArray = sentence1;}
+			        {wordsArray =words5; sentenceArray = sentence5;}
 			break;
 			}
 			 int random = rand.nextInt(wordsArray.length);
@@ -128,6 +148,20 @@ public class S1   implements IstateActions {
 			 sentence = sentenceArray[random];
 			I.putExtra("word", word);
 			I.putExtra("sentence", sentence);
+			if(level ==0)
+			{
+				choiceWord [0]=(word);
+				choiceSentence [0]=(sentence);
+				I.putExtra("choiceWord", choiceWord);
+				I.putExtra("choiceSentence", choiceSentence);
+			}else{
+			choiceWord = I.getStringArrayExtra("choiceWord");
+			choiceSentence = I.getStringArrayExtra("choiceSentence");
+			choiceWord [level]=(word);
+			choiceSentence [level]=(sentence);
+			I.putExtra("choiceWord", choiceWord);
+			I.putExtra("choiceSentence", choiceSentence);
+			}
 			}
 			createUI(this.layout,I,c);
 			

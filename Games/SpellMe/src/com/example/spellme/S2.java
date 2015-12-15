@@ -307,6 +307,7 @@ View.OnClickListener handleOnClick(final TextView button,final int index,final I
 			HP.setRightLevel(1);
 			if (HP.detectHeadPhones() == true)
 				HP.play(Path, 0);
+			
         	workingWord = I.getStringExtra("workingWord");
         	word = I.getStringExtra("word");
         	myWord =  I.getStringExtra("workingWord").toCharArray();
@@ -332,6 +333,7 @@ View.OnClickListener handleOnClick(final TextView button,final int index,final I
         			temparr[(temparr.length)-1] = ' ';
         			showedWord = new String(temparr);
         			speechWord.setText(showedWord);
+        			
         			I.putExtra("workingWord", workingWord);
         			LinearLayout toastLayout = new LinearLayout(context);
         				LinearLayout.LayoutParams layoutToastParams =
@@ -432,12 +434,12 @@ class RemindTask extends TimerTask {
       			else if(time > 100&&time<=200)
       			{
       				  ((ShapeDrawable)background).getPaint().setColor(Color.GRAY);
-      				  showTime.setTextColor(Color.YELLOW);
+      				showTime.setTextColor(Color.GREEN);
       			}
       			else if(time > 200&&time<=300 )
       			{
       				  ((ShapeDrawable)background).getPaint().setColor(Color.GRAY);
-      				  showTime.setTextColor(0x99B40404);
+      				showTime.setTextColor(Color.YELLOW);
       			}
       			else if(time > 300 ){
       				  ((ShapeDrawable)background).getPaint().setColor(Color.RED);
@@ -452,11 +454,11 @@ class RemindTask extends TimerTask {
         	  
         	  if(time<=50)
         	  {
-        		  showTime.setText(String.format("%02d", time/60)+":"+String.format("%02d", time%60)+"(+25 points)");
+        		  showTime.setText(String.format("%02d", time/60)+":"+String.format("%02d", time%60)+"\n(+25 points)");
   			}
   			else if(time > 50&&time<=100)
   			{
-  				showTime.setText(String.format("%02d", time/60)+":"+String.format("%02d", time%60)+"(+20 points)");
+  				showTime.setText(String.format("%02d", time/60)+":"+String.format("%02d", time%60)+"\n(+20 points)");
   			}
   			else if(time > 100&&time<=150 )
   			{

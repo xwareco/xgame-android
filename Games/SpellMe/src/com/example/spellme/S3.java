@@ -15,7 +15,7 @@ public class S3 implements IstateActions {
 	public void onStateEntry(LinearLayout layout, Intent I, Context C,HeadPhone H) {
 		I.putExtra("Action", "Right");
 		level = I.getIntExtra("level", 0);
-		level++;
+		level +=1;
 		I.putExtra("level", level);
 		I.putExtra("fail", 0);
 			int score = I.getIntExtra("Score", 0);
@@ -56,15 +56,9 @@ public class S3 implements IstateActions {
 				
 				I.putExtra("Action", "NONE");
 				I.putExtra("State", "S1");
-		        //Toast.makeText(C, "great this letter correct, now spell remaining letter", Toast.LENGTH_SHORT).show();
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				System.out.print("can not use thread");
-				e.printStackTrace();
+		       
 			}
-			}
+			
 			
 		
 		

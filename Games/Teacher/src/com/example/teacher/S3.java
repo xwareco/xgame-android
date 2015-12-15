@@ -209,11 +209,10 @@ public void createUI(LinearLayout layout, final Intent I, final Context c) {
 			HP.setRightLevel(1);
 			if (HP.detectHeadPhones() == true)
 				HP.play(Path, 0);
-			if(I.getIntExtra("level", 0) == 2)
+			if(I.getIntExtra("level", 0) == 4)
 			{
-				
-				I.putExtra("Score",100);
-				I.putExtra("Count", 20);
+				I.putExtra("Action", "NONE");
+				I.putExtra("State", "S4");
 			}else
 			{
 			int level = I.getIntExtra("level", 0);
