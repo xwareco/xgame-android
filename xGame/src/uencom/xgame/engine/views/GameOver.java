@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.Locale;
 import uencom.xgame.engine.Scorer;
 import uencom.xgame.engine.xGameParser;
-import uencom.xgame.engine.web.User;
 import uencom.xgame.xgame.R;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -21,6 +19,9 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
@@ -48,11 +49,42 @@ public class GameOver extends SherlockActivity {
 	ArrayList<Scorer> gameTopScorers;
 	String userRank;
 	boolean cheer;
+	RelativeLayout mapLay;
+	LinearLayout scorer1, scorer2, scorer3, scorer4;
+	TextView scorer1Rank, scorer1Email, scorer1Score, scorer2Rank,
+			scorer2Email, scorer2Score, scorer3Rank, scorer3Email,
+			scorer3Score, scorer4Rank, scorer4Email, scorer4Score;
+	ProgressBar one , two, three, four;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		FacebookSdk.sdkInitialize(getApplicationContext());
 		setContentView(R.layout.game_over_view);
+		mapLay = (RelativeLayout)findViewById(R.id.mapLay);
+		
+		scorer1 = (LinearLayout)findViewById(R.id.scorer1);
+		scorer2 = (LinearLayout)findViewById(R.id.scorer2);
+		scorer3 = (LinearLayout)findViewById(R.id.scorer3);
+		scorer4 = (LinearLayout)findViewById(R.id.scorer4);
+		
+		scorer1Rank = (TextView)findViewById(R.id.scorer1Rank);
+		scorer2Rank = (TextView)findViewById(R.id.scorer2Rank);
+		scorer3Rank = (TextView)findViewById(R.id.scorer3Rank);
+		scorer4Rank = (TextView)findViewById(R.id.scorer4Rank);
+		scorer1Email = (TextView)findViewById(R.id.scorer1Email);
+		scorer2Email = (TextView)findViewById(R.id.scorer2Email);
+		scorer3Email = (TextView)findViewById(R.id.scorer3Email);
+		scorer4Email = (TextView)findViewById(R.id.scorer4Email);
+		scorer1Score = (TextView)findViewById(R.id.scorer1Score);
+		scorer2Score = (TextView)findViewById(R.id.scorer2Score);
+		scorer3Score = (TextView)findViewById(R.id.scorer3Score);
+		scorer4Score = (TextView)findViewById(R.id.scorer4Score);
+		
+		one = (ProgressBar)findViewById(R.id.progressBar1);
+		two = (ProgressBar)findViewById(R.id.progressBar2);
+		three = (ProgressBar)findViewById(R.id.progressBar3);
+		four = (ProgressBar)findViewById(R.id.progressBar4);
+		
 		cheer = getIntent().getBooleanExtra("cheer", false);
 		cheerForUser = (ImageView) findViewById(R.id.img3);
 		cheerForUser.bringToFront();
@@ -142,6 +174,7 @@ public class GameOver extends SherlockActivity {
 			if (!loginButton.getText().equals("Log out"))
 				loginButton.setVisibility(View.VISIBLE);
 			gamescore.setVisibility(View.VISIBLE);
+			
 			String topJSon = appSharedPrefs.getString("scorers", "");
 			Gson g = new Gson();
 			java.lang.reflect.Type type = new TypeToken<ArrayList<Scorer>>() {
@@ -156,40 +189,34 @@ public class GameOver extends SherlockActivity {
 			userRank = getIntent().getStringExtra("rank");
 			String userRankFacebook = "";
 			gameOver.setVisibility(View.GONE);
-			if (userRank.equals("1"))
-			{
+			if (userRank.equals("1")) {
 				userRankFacebook = userRank + "st";
 				rank.setText(userRankFacebook);
 				rank.setTextColor(Color.parseColor("#FFD700"));
 				rank.setContentDescription("First place");
 			}
-			
-			else if (userRank.equals("2"))
-			{
+
+			else if (userRank.equals("2")) {
 				userRankFacebook = userRank + "nd";
 				rank.setText(userRankFacebook);
 				rank.setTextColor(Color.parseColor("#C0C0C0"));
 				rank.setContentDescription("Second place");
-			}
-			else if (userRank.equals("3"))
-			{
+			} else if (userRank.equals("3")) {
 				userRankFacebook = userRank + "rd";
 				rank.setText(userRankFacebook);
 				rank.setTextColor(Color.parseColor("#CD7F32"));
 				rank.setContentDescription("Third place");
-			}
-			else
-			{
+			} else {
 				userRankFacebook = userRank + "th";
 				rank.setText(userRankFacebook);
 				rank.setTextColor(Color.parseColor("#FF808000"));
 				rank.setContentDescription(userRankFacebook);
 			}
-			
+			gameOver.setVisibility(View.GONE);
 			rank.setVisibility(View.VISIBLE);
 
 			ShareLinkContent linkContent = new ShareLinkContent.Builder()
-					.setContentTitle(userRankFacebook + "Place")
+					.setContentTitle(userRankFacebook + " Place")
 					.setContentDescription(
 							"I have played "
 									+ appSharedPrefs.getString("game", "")
@@ -219,70 +246,39 @@ public class GameOver extends SherlockActivity {
 
 			@Override
 			public void onClick(View v) {
-				Intent I;
-				SharedPreferences appSharedPrefs = PreferenceManager
-						.getDefaultSharedPreferences(getApplicationContext());
-				Editor prefsEditor = appSharedPrefs.edit();
-				String uID = appSharedPrefs.getString("uID", "");
-				String uName = appSharedPrefs.getString("uName", "");
-				String uPass = appSharedPrefs.getString("uPass", "");
-				System.out.println(uID + " " + uName + " " + uPass);
-				if (!uID.equals("") && !uName.equals("")) {
-					Toast.makeText(
-							getApplicationContext(),
-							"Welcome "
-									+ uName
-									+ " ,We are very glad to hear your feedback",
-							Toast.LENGTH_LONG).show();
-					I = new Intent(getApplicationContext(), ContactUs.class);// score
-																				// board
-					I.putExtra("ID", uID);
-					I.putExtra("Name", uName);
-
-				} else {
-					String fileContents = User.readFromFile();
-					if (fileContents.equals("")) {
-						I = new Intent(getApplicationContext(), Register.class);
-						I.putExtra("TAG", "gameover");
-						Toast.makeText(
-								getApplicationContext(),
-								"You need to register first before you can contact us",
-								Toast.LENGTH_LONG).show();
+				Animation fadeOut = AnimationUtils.loadAnimation(GameOver.this, R.anim.fadeout);
+				fadeOut.setAnimationListener(new Animation.AnimationListener() {
+					
+					@Override
+					public void onAnimationStart(Animation arg0) {
+						// TODO Auto-generated method stub
+						
 					}
-					// 9,ali,123
-					else {
-						uID = fileContents.substring(0,
-								fileContents.indexOf(','));
-						uName = fileContents.substring(
-								fileContents.indexOf(',') + 1,
-								fileContents.lastIndexOf(','));
-						uPass = fileContents.substring(
-								fileContents.lastIndexOf(',') + 1,
-								fileContents.length() - 1);
-						System.out.println(uID + " " + uName + " Pass: "
-								+ uPass);
-						prefsEditor.putString("uID", uID);
-						prefsEditor.putString("uName", uName);
-						prefsEditor.putString("uPass", uPass);
-						prefsEditor.commit();
-						Toast.makeText(
-								getApplicationContext(),
-								"Welcome "
-										+ uName
-										+ " ,We are very glad to hear your feedback",
-								Toast.LENGTH_LONG).show();
-						I = new Intent(getApplicationContext(), ContactUs.class);// contact
-						I.putExtra("ID", uID);
-						I.putExtra("Name", uName);
-						I.putExtra("Pass", uPass);
+					
+					@Override
+					public void onAnimationRepeat(Animation arg0) {
+						// TODO Auto-generated method stub
+						
 					}
+					
+					@Override
+					public void onAnimationEnd(Animation arg0) {
+						rank.setVisibility(View.GONE);
+						scorer1.setVisibility(View.VISIBLE);
+						scorer2.setVisibility(View.VISIBLE);
+						scorer3.setVisibility(View.VISIBLE);
+						scorer4.setVisibility(View.VISIBLE);
+						Animation fadeIn = AnimationUtils.loadAnimation(GameOver.this, R.anim.fadein);
+						mapLay.startAnimation(fadeIn);
+						
+					}
+				});
+				mapLay.startAnimation(fadeOut);
 
 				}
-				// Close the drawer
-				// mDrawerLayout.closeDrawer(mDrawerPane);
-				startActivity(I);
+				
 
-			}
+			
 		});
 		String name = getIntent().getStringExtra("gamename");
 		System.out.println(name);
