@@ -34,9 +34,9 @@
         android:layout_below="@id/imageView3"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:visibility="visible"
         android:contentDescription="Game over"
-        android:src="@drawable/gaov" />
+        android:src="@drawable/gaov"
+        android:visibility="visible" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
@@ -53,7 +53,7 @@
         android:id="@+id/share_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-         android:layout_above="@id/imageView2"
+        android:layout_above="@id/imageView2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:visibility="gone" />
@@ -62,7 +62,7 @@
         android:id="@+id/imageView2"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-         android:layout_alignParentBottom="true"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:contentDescription="Try again"
@@ -88,7 +88,6 @@
             style="@style/textShadow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
             android:text=""
@@ -98,13 +97,13 @@
 
         <LinearLayout
             android:id="@+id/scorer1"
-            android:layout_below="@id/imageView3"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_below="@id/imageView3"
             android:layout_marginTop="10dp"
-            android:visibility="gone"
+            android:gravity="center"
             android:orientation="horizontal"
+            android:visibility="gone"
             android:weightSum="150" >
 
             <TextView
@@ -113,23 +112,25 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"
-                android:layout_weight="40"
-                android:text="150"
+                android:layout_weight="13"
+                android:paddingRight="0dp"
+                android:text="1"
                 android:textSize="40sp" />
 
             <LinearLayout
+                android:id="@+id/subLay1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="124"
                 android:gravity="center"
-                android:layout_weight="90"
                 android:orientation="vertical" >
 
                 <TextView
-                     android:id="@+id/scorer1Email"
+                    android:id="@+id/scorer1Email"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="yuy@gmail.com"
                     android:layout_weight="50"
+                    android:text="yuy@gmail.com"
                     android:textSize="15sp" />
 
                 <ProgressBar
@@ -143,28 +144,29 @@
             </LinearLayout>
 
             <TextView
-                 android:id="@+id/scorer1Score"
+                android:id="@+id/scorer1Score"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="5dp"
-                android:layout_weight="20"
+                android:layout_weight="13"
                 android:gravity="right"
-                android:text="150"
-                android:textSize="20sp" />
+                android:text="105"
+                android:textSize="15sp" />
         </LinearLayout>
+
         <LinearLayout
-             android:id="@+id/scorer2"
-            android:layout_below="@id/scorer1"
+            android:id="@+id/scorer2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/scorer1"
             android:gravity="center"
-            android:visibility="gone"
             android:orientation="horizontal"
+            android:visibility="gone"
             android:weightSum="150" >
 
             <TextView
-                 android:id="@+id/scorer2Rank"
+                android:id="@+id/scorer2Rank"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -174,18 +176,19 @@
                 android:textSize="40sp" />
 
             <LinearLayout
+                android:id="@+id/subLay2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="90"
+                android:gravity="center"
                 android:orientation="vertical" >
 
                 <TextView
-                     android:id="@+id/scorer2Email"
+                    android:id="@+id/scorer2Email"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="yuy@gmail.com"
                     android:layout_weight="50"
+                    android:text="yuy@gmail.com"
                     android:textSize="15sp" />
 
                 <ProgressBar
@@ -199,7 +202,7 @@
             </LinearLayout>
 
             <TextView
-                 android:id="@+id/scorer2Score"
+                android:id="@+id/scorer2Score"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -207,20 +210,21 @@
                 android:layout_weight="20"
                 android:gravity="right"
                 android:text="150"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
         </LinearLayout>
+
         <LinearLayout
-             android:id="@+id/scorer3"
-            android:layout_below="@id/scorer2"
+            android:id="@+id/scorer3"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/scorer2"
             android:gravity="center"
-            android:visibility="gone"
             android:orientation="horizontal"
+            android:visibility="gone"
             android:weightSum="150" >
 
             <TextView
-                 android:id="@+id/scorer3Rank"
+                android:id="@+id/scorer3Rank"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -230,18 +234,19 @@
                 android:textSize="40sp" />
 
             <LinearLayout
+                android:id="@+id/subLay3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="90"
+                android:gravity="center"
                 android:orientation="vertical" >
 
                 <TextView
-                     android:id="@+id/scorer3Email"
+                    android:id="@+id/scorer3Email"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="yuy@gmail.com"
                     android:layout_weight="50"
+                    android:text="yuy@gmail.com"
                     android:textSize="15sp" />
 
                 <ProgressBar
@@ -255,7 +260,7 @@
             </LinearLayout>
 
             <TextView
-                 android:id="@+id/scorer3Score"
+                android:id="@+id/scorer3Score"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -263,20 +268,21 @@
                 android:layout_weight="20"
                 android:gravity="right"
                 android:text="150"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
         </LinearLayout>
+
         <LinearLayout
-             android:id="@+id/scorer4"
-            android:layout_below="@id/scorer3"
+            android:id="@+id/scorer4"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/scorer3"
             android:gravity="center"
-            android:visibility="gone"
             android:orientation="horizontal"
+            android:visibility="gone"
             android:weightSum="150" >
 
             <TextView
-                 android:id="@+id/scorer4Rank"
+                android:id="@+id/scorer4Rank"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -286,18 +292,19 @@
                 android:textSize="40sp" />
 
             <LinearLayout
+                android:id="@+id/subLay4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="90"
+                android:gravity="center"
                 android:orientation="vertical" >
 
                 <TextView
-                     android:id="@+id/scorer4Email"
+                    android:id="@+id/scorer4Email"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="yuy@gmail.com"
                     android:layout_weight="50"
+                    android:text="yuy@gmail.com"
                     android:textSize="15sp" />
 
                 <ProgressBar
@@ -311,7 +318,7 @@
             </LinearLayout>
 
             <TextView
-                 android:id="@+id/scorer4Score"
+                android:id="@+id/scorer4Score"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -319,7 +326,7 @@
                 android:layout_weight="20"
                 android:gravity="right"
                 android:text="150"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
         </LinearLayout>
     </RelativeLayout>
 

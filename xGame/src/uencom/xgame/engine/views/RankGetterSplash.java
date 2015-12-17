@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 public class RankGetterSplash extends Activity {
 
@@ -26,11 +25,10 @@ public class RankGetterSplash extends Activity {
 				.getDefaultSharedPreferences(getApplicationContext());
 		userID = appPrefs.getString("uID", "");
 		score = getIntent().getIntExtra("Score", 0);
-		Toast.makeText(this, "Score = " + score, Toast.LENGTH_LONG).show();
 		folder = getIntent().getStringExtra("Folder");
 		gameName = getIntent().getStringExtra("gamename");
 		String s = String.valueOf(score);
-		loading = (ImageView)findViewById(R.id.imageView1);
+		loading = (ImageView) findViewById(R.id.imageView1);
 		new User(RankGetterSplash.this, gameID, s, userID, folder, gameName,
 				null, null).execute("score");
 		super.onCreate(savedInstanceState);

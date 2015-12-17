@@ -11,6 +11,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -50,41 +52,84 @@ public class GameOver extends SherlockActivity {
 	String userRank;
 	boolean cheer;
 	RelativeLayout mapLay;
-	LinearLayout scorer1, scorer2, scorer3, scorer4;
+	LinearLayout scorer1, scorer2, scorer3, scorer4, subLay1, subLay2, subLay3,
+			subLay4;
 	TextView scorer1Rank, scorer1Email, scorer1Score, scorer2Rank,
 			scorer2Email, scorer2Score, scorer3Rank, scorer3Email,
 			scorer3Score, scorer4Rank, scorer4Email, scorer4Score;
-	ProgressBar one , two, three, four;
+	ProgressBar one, two, three, four;
+	Thread scorer1Thread, scorer2Thread, scorer3Thread, scorer4Thread;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		FacebookSdk.sdkInitialize(getApplicationContext());
 		setContentView(R.layout.game_over_view);
-		mapLay = (RelativeLayout)findViewById(R.id.mapLay);
-		
-		scorer1 = (LinearLayout)findViewById(R.id.scorer1);
-		scorer2 = (LinearLayout)findViewById(R.id.scorer2);
-		scorer3 = (LinearLayout)findViewById(R.id.scorer3);
-		scorer4 = (LinearLayout)findViewById(R.id.scorer4);
-		
-		scorer1Rank = (TextView)findViewById(R.id.scorer1Rank);
-		scorer2Rank = (TextView)findViewById(R.id.scorer2Rank);
-		scorer3Rank = (TextView)findViewById(R.id.scorer3Rank);
-		scorer4Rank = (TextView)findViewById(R.id.scorer4Rank);
-		scorer1Email = (TextView)findViewById(R.id.scorer1Email);
-		scorer2Email = (TextView)findViewById(R.id.scorer2Email);
-		scorer3Email = (TextView)findViewById(R.id.scorer3Email);
-		scorer4Email = (TextView)findViewById(R.id.scorer4Email);
-		scorer1Score = (TextView)findViewById(R.id.scorer1Score);
-		scorer2Score = (TextView)findViewById(R.id.scorer2Score);
-		scorer3Score = (TextView)findViewById(R.id.scorer3Score);
-		scorer4Score = (TextView)findViewById(R.id.scorer4Score);
-		
-		one = (ProgressBar)findViewById(R.id.progressBar1);
-		two = (ProgressBar)findViewById(R.id.progressBar2);
-		three = (ProgressBar)findViewById(R.id.progressBar3);
-		four = (ProgressBar)findViewById(R.id.progressBar4);
-		
+		mapLay = (RelativeLayout) findViewById(R.id.mapLay);
+
+		scorer1 = (LinearLayout) findViewById(R.id.scorer1);
+		scorer2 = (LinearLayout) findViewById(R.id.scorer2);
+		scorer3 = (LinearLayout) findViewById(R.id.scorer3);
+		scorer4 = (LinearLayout) findViewById(R.id.scorer4);
+		subLay1 = (LinearLayout) findViewById(R.id.subLay1);
+		subLay2 = (LinearLayout) findViewById(R.id.subLay2);
+		subLay3 = (LinearLayout) findViewById(R.id.subLay3);
+		subLay4 = (LinearLayout) findViewById(R.id.subLay4);
+
+		scorer1Rank = (TextView) findViewById(R.id.scorer1Rank);
+		scorer2Rank = (TextView) findViewById(R.id.scorer2Rank);
+		scorer3Rank = (TextView) findViewById(R.id.scorer3Rank);
+		scorer4Rank = (TextView) findViewById(R.id.scorer4Rank);
+		scorer1Email = (TextView) findViewById(R.id.scorer1Email);
+		scorer2Email = (TextView) findViewById(R.id.scorer2Email);
+		scorer3Email = (TextView) findViewById(R.id.scorer3Email);
+		scorer4Email = (TextView) findViewById(R.id.scorer4Email);
+		scorer1Score = (TextView) findViewById(R.id.scorer1Score);
+		scorer2Score = (TextView) findViewById(R.id.scorer2Score);
+		scorer3Score = (TextView) findViewById(R.id.scorer3Score);
+		scorer4Score = (TextView) findViewById(R.id.scorer4Score);
+
+		one = (ProgressBar) findViewById(R.id.progressBar1);
+		two = (ProgressBar) findViewById(R.id.progressBar2);
+		three = (ProgressBar) findViewById(R.id.progressBar3);
+		four = (ProgressBar) findViewById(R.id.progressBar4);
+
+		scorer1Thread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				updateScorer1();
+
+			}
+
+		});
+		scorer2Thread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				updateScorer2();
+
+			}
+
+		});
+		scorer3Thread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				updateScorer3();
+
+			}
+
+		});
+		scorer4Thread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				updateScorer4();
+
+			}
+
+		});
+
 		cheer = getIntent().getBooleanExtra("cheer", false);
 		cheerForUser = (ImageView) findViewById(R.id.img3);
 		cheerForUser.bringToFront();
@@ -174,7 +219,7 @@ public class GameOver extends SherlockActivity {
 			if (!loginButton.getText().equals("Log out"))
 				loginButton.setVisibility(View.VISIBLE);
 			gamescore.setVisibility(View.VISIBLE);
-			
+
 			String topJSon = appSharedPrefs.getString("scorers", "");
 			Gson g = new Gson();
 			java.lang.reflect.Type type = new TypeToken<ArrayList<Scorer>>() {
@@ -246,39 +291,55 @@ public class GameOver extends SherlockActivity {
 
 			@Override
 			public void onClick(View v) {
-				Animation fadeOut = AnimationUtils.loadAnimation(GameOver.this, R.anim.fadeout);
+				Animation fadeOut = AnimationUtils.loadAnimation(GameOver.this,
+						R.anim.fadeout);
 				fadeOut.setAnimationListener(new Animation.AnimationListener() {
-					
+
 					@Override
 					public void onAnimationStart(Animation arg0) {
 						// TODO Auto-generated method stub
-						
+
 					}
-					
+
 					@Override
 					public void onAnimationRepeat(Animation arg0) {
 						// TODO Auto-generated method stub
-						
+
 					}
-					
+
 					@Override
 					public void onAnimationEnd(Animation arg0) {
 						rank.setVisibility(View.GONE);
-						scorer1.setVisibility(View.VISIBLE);
-						scorer2.setVisibility(View.VISIBLE);
-						scorer3.setVisibility(View.VISIBLE);
-						scorer4.setVisibility(View.VISIBLE);
-						Animation fadeIn = AnimationUtils.loadAnimation(GameOver.this, R.anim.fadein);
+						if (gameTopScorers.size() == 0) {
+							gameOver.setVisibility(View.VISIBLE);
+							Toast.makeText(GameOver.this,
+									"Cannot get scorers now", Toast.LENGTH_LONG)
+									.show();
+						} else if (gameTopScorers.size() == 1) {
+							scorer1Thread.start();
+						} else if (gameTopScorers.size() == 2) {
+							scorer1Thread.start();
+							scorer2Thread.start();
+						} else if (gameTopScorers.size() == 3) {
+							scorer1Thread.start();
+							scorer2Thread.start();
+							scorer3Thread.start();
+						} else if (gameTopScorers.size() == 4) {
+							scorer1Thread.start();
+							scorer2Thread.start();
+							scorer3Thread.start();
+							scorer4Thread.start();
+						}
+						Animation fadeIn = AnimationUtils.loadAnimation(
+								GameOver.this, R.anim.fadein);
 						mapLay.startAnimation(fadeIn);
-						
+
 					}
 				});
 				mapLay.startAnimation(fadeOut);
 
-				}
-				
+			}
 
-			
 		});
 		String name = getIntent().getStringExtra("gamename");
 		System.out.println(name);
@@ -336,5 +397,416 @@ public class GameOver extends SherlockActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		callbackManager.onActivityResult(requestCode, resultCode, data);
+	}
+
+	private void updateScorer1() {
+		// update data
+		scorer1Rank.setText(gameTopScorers.get(0).getRank());
+		scorer1Email.setText(gameTopScorers.get(0).getUserMail());
+		scorer1Score.setText(gameTopScorers.get(0).getScore());
+		one.setMax(105);
+		one.setProgress(0);
+		// update weight
+		if (Integer.parseInt(gameTopScorers.get(0).getRank()) > 999) {
+			scorer1Rank.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 50f));
+			subLay1.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 87f));
+			scorer1Score.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 13f));
+		} else if (Integer.parseInt(gameTopScorers.get(0).getRank()) > 99) {
+			scorer1Rank.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 35f));
+			subLay1.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 102f));
+			scorer1Score.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 13f));
+
+		} else if (Integer.parseInt(gameTopScorers.get(0).getRank()) > 9) {
+			scorer1Rank.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 25f));
+			subLay1.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 112f));
+			scorer1Score.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 13f));
+
+		} else if (Integer.parseInt(gameTopScorers.get(0).getRank()) <= 9) {
+			scorer1Rank.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 13f));
+			subLay1.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 124f));
+			scorer1Score.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 13f));
+
+		}
+		/*
+		 * System.out .println("weight1: " + ((LinearLayout.LayoutParams)
+		 * scorer1Rank .getLayoutParams()).weight + " weight2: " +
+		 * ((LinearLayout.LayoutParams) subLay1 .getLayoutParams()).weight +
+		 * " weight3: " + ((LinearLayout.LayoutParams) scorer1Score
+		 * .getLayoutParams()).weight);
+		 */
+		// update drawable
+		if (gameTopScorers.get(0).getRank().equals("1")) {
+			Drawable d = getResources().getDrawable(
+					R.drawable.custom_progressbar);
+			one.setProgressDrawable(d);
+		} else if (gameTopScorers.get(0).getRank().equals("2")) {
+			Drawable d = getResources().getDrawable(
+					R.drawable.custom_progressbar2);
+			one.setProgressDrawable(d);
+		} else if (gameTopScorers.get(0).getRank().equals("3")) {
+			Drawable d = getResources().getDrawable(
+					R.drawable.custom_progressbar3);
+			one.setProgressDrawable(d);
+		} else {
+			Drawable d = getResources().getDrawable(
+					R.drawable.custom_progressbar4);
+			one.setProgressDrawable(d);
+		}
+		if (appSharedPrefs.getString("uName", "").equals(
+				gameTopScorers.get(0).getUserMail())
+				&& Integer.parseInt(gameTopScorers.get(0).getRank()) > 3) {
+			Drawable d = getResources().getDrawable(
+					R.drawable.custom_progressbar5);
+			one.setProgressDrawable(d);
+		}
+		if (appSharedPrefs.getString("uName", "").equals(
+				gameTopScorers.get(0).getUserMail())) {
+			scorer1Email.setText("you");
+			scorer1Email.setTypeface(null, Typeface.BOLD);
+		}
+		// show
+		runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				scorer1.setVisibility(View.VISIBLE);
+
+			}
+		});
+
+		// animate progress
+		int Duration = 6000;
+		long interval = Duration
+				/ Integer.parseInt(gameTopScorers.get(0).getScore());
+		for (int i = 0; i < Integer.parseInt(gameTopScorers.get(0).getScore()); i++) {
+			one.setProgress(i);
+			try {
+				Thread.sleep(interval);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void updateScorer2() {
+		// update data
+		scorer2Rank.setText(gameTopScorers.get(1).getRank());
+		scorer2Email.setText(gameTopScorers.get(1).getUserMail());
+		scorer2Score.setText(gameTopScorers.get(1).getScore());
+		two.setMax(105);
+		two.setProgress(0);
+		// update weight
+		if (Integer.parseInt(gameTopScorers.get(1).getRank()) > 999) {
+			scorer2Rank.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 50f));
+			subLay2.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 87f));
+			scorer2Score.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 13f));
+		} else if (Integer.parseInt(gameTopScorers.get(1).getRank()) > 99) {
+			scorer2Rank.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 35f));
+			subLay2.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 102f));
+			scorer2Score.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 13f));
+
+		} else if (Integer.parseInt(gameTopScorers.get(1).getRank()) > 9) {
+			scorer2Rank.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 25f));
+			subLay2.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 112f));
+			scorer2Score.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 13f));
+
+		} else if (Integer.parseInt(gameTopScorers.get(1).getRank()) <= 9) {
+			scorer2Rank.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 13f));
+			subLay2.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 124f));
+			scorer2Score.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 13f));
+
+		}
+		/*
+		 * System.out .println("weight1: " + ((LinearLayout.LayoutParams)
+		 * scorer1Rank .getLayoutParams()).weight + " weight2: " +
+		 * ((LinearLayout.LayoutParams) subLay1 .getLayoutParams()).weight +
+		 * " weight3: " + ((LinearLayout.LayoutParams) scorer1Score
+		 * .getLayoutParams()).weight);
+		 */
+		// update drawable
+		if (gameTopScorers.get(1).getRank().equals("1")) {
+			Drawable d = getResources().getDrawable(
+					R.drawable.custom_progressbar);
+			two.setProgressDrawable(d);
+		} else if (gameTopScorers.get(1).getRank().equals("2")) {
+			Drawable d = getResources().getDrawable(
+					R.drawable.custom_progressbar2);
+			two.setProgressDrawable(d);
+		} else if (gameTopScorers.get(1).getRank().equals("3")) {
+			Drawable d = getResources().getDrawable(
+					R.drawable.custom_progressbar3);
+			two.setProgressDrawable(d);
+		} else {
+			Drawable d = getResources().getDrawable(
+					R.drawable.custom_progressbar4);
+			two.setProgressDrawable(d);
+		}
+		if (appSharedPrefs.getString("uName", "").equals(
+				gameTopScorers.get(1).getUserMail())
+				&& Integer.parseInt(gameTopScorers.get(1).getRank()) > 3) {
+			Drawable d = getResources().getDrawable(
+					R.drawable.custom_progressbar5);
+			two.setProgressDrawable(d);
+		}
+		if (appSharedPrefs.getString("uName", "").equals(
+				gameTopScorers.get(1).getUserMail())) {
+			scorer2Email.setText("you");
+			scorer2Email.setTypeface(null, Typeface.BOLD);
+		}
+		// show
+		runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				scorer2.setVisibility(View.VISIBLE);
+
+			}
+		});
+
+		// animate progress
+		int Duration = 6000;
+		long interval = Duration
+				/ Integer.parseInt(gameTopScorers.get(1).getScore());
+		for (int i = 0; i < Integer.parseInt(gameTopScorers.get(1).getScore()); i++) {
+			two.setProgress(i);
+			try {
+				Thread.sleep(interval);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	private void updateScorer3() {
+		// update data
+		scorer3Rank.setText(gameTopScorers.get(2).getRank());
+		scorer3Email.setText(gameTopScorers.get(2).getUserMail());
+		scorer3Score.setText(gameTopScorers.get(2).getScore());
+		three.setMax(105);
+		three.setProgress(0);
+		// update weight
+		if (Integer.parseInt(gameTopScorers.get(2).getRank()) > 999) {
+			scorer3Rank.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 50f));
+			subLay3.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 87f));
+			scorer3Score.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 13f));
+		} else if (Integer.parseInt(gameTopScorers.get(2).getRank()) > 99) {
+			scorer3Rank.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 35f));
+			subLay3.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 102f));
+			scorer3Score.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 13f));
+
+		} else if (Integer.parseInt(gameTopScorers.get(2).getRank()) > 9) {
+			scorer3Rank.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 25f));
+			subLay3.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 112f));
+			scorer3Score.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 13f));
+
+		} else if (Integer.parseInt(gameTopScorers.get(2).getRank()) <= 9) {
+			scorer3Rank.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 13f));
+			subLay3.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 124f));
+			scorer3Score.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 13f));
+
+		}
+		/*
+		 * System.out .println("weight1: " + ((LinearLayout.LayoutParams)
+		 * scorer1Rank .getLayoutParams()).weight + " weight2: " +
+		 * ((LinearLayout.LayoutParams) subLay1 .getLayoutParams()).weight +
+		 * " weight3: " + ((LinearLayout.LayoutParams) scorer1Score
+		 * .getLayoutParams()).weight);
+		 */
+		// update drawable
+		if (gameTopScorers.get(2).getRank().equals("1")) {
+			Drawable d = getResources().getDrawable(
+					R.drawable.custom_progressbar);
+			three.setProgressDrawable(d);
+		} else if (gameTopScorers.get(2).getRank().equals("2")) {
+			Drawable d = getResources().getDrawable(
+					R.drawable.custom_progressbar2);
+			three.setProgressDrawable(d);
+		} else if (gameTopScorers.get(2).getRank().equals("3")) {
+			Drawable d = getResources().getDrawable(
+					R.drawable.custom_progressbar3);
+			three.setProgressDrawable(d);
+		} else {
+			Drawable d = getResources().getDrawable(
+					R.drawable.custom_progressbar4);
+			three.setProgressDrawable(d);
+		}
+		if (appSharedPrefs.getString("uName", "").equals(
+				gameTopScorers.get(2).getUserMail())
+				&& Integer.parseInt(gameTopScorers.get(2).getRank()) > 3) {
+			Drawable d = getResources().getDrawable(
+					R.drawable.custom_progressbar5);
+			three.setProgressDrawable(d);
+		}
+		if (appSharedPrefs.getString("uName", "").equals(
+				gameTopScorers.get(2).getUserMail())) {
+			scorer3Email.setText("you");
+			scorer3Email.setTypeface(null, Typeface.BOLD);
+		}
+		// show
+		runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				scorer3.setVisibility(View.VISIBLE);
+
+			}
+		});
+
+		// animate progress
+		int Duration = 6000;
+		long interval = Duration
+				/ Integer.parseInt(gameTopScorers.get(2).getScore());
+		for (int i = 0; i < Integer.parseInt(gameTopScorers.get(2).getScore()); i++) {
+			three.setProgress(i);
+			try {
+				Thread.sleep(interval);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	private void updateScorer4() {
+		// update data
+		scorer4Rank.setText(gameTopScorers.get(3).getRank());
+		scorer4Email.setText(gameTopScorers.get(3).getUserMail());
+		scorer4Score.setText(gameTopScorers.get(3).getScore());
+		four.setMax(105);
+		four.setProgress(0);
+		// update weight
+		if (Integer.parseInt(gameTopScorers.get(3).getRank()) > 999) {
+			scorer4Rank.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 50f));
+			subLay4.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 87f));
+			scorer4Score.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 13f));
+		} else if (Integer.parseInt(gameTopScorers.get(3).getRank()) > 99) {
+			scorer4Rank.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 35f));
+			subLay4.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 102f));
+			scorer4Score.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 13f));
+
+		} else if (Integer.parseInt(gameTopScorers.get(3).getRank()) > 9) {
+			scorer4Rank.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 25f));
+			subLay4.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 112f));
+			scorer4Score.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 13f));
+
+		} else if (Integer.parseInt(gameTopScorers.get(3).getRank()) <= 9) {
+			scorer4Rank.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 13f));
+			subLay4.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 124f));
+			scorer4Score.setLayoutParams(new LinearLayout.LayoutParams(0,
+					LayoutParams.WRAP_CONTENT, 13f));
+
+		}
+		/*
+		 * System.out .println("weight1: " + ((LinearLayout.LayoutParams)
+		 * scorer1Rank .getLayoutParams()).weight + " weight2: " +
+		 * ((LinearLayout.LayoutParams) subLay1 .getLayoutParams()).weight +
+		 * " weight3: " + ((LinearLayout.LayoutParams) scorer1Score
+		 * .getLayoutParams()).weight);
+		 */
+		// update drawable
+		if (gameTopScorers.get(3).getRank().equals("1")) {
+			Drawable d = getResources().getDrawable(
+					R.drawable.custom_progressbar);
+			four.setProgressDrawable(d);
+		} else if (gameTopScorers.get(3).getRank().equals("2")) {
+			Drawable d = getResources().getDrawable(
+					R.drawable.custom_progressbar2);
+			four.setProgressDrawable(d);
+		} else if (gameTopScorers.get(3).getRank().equals("3")) {
+			Drawable d = getResources().getDrawable(
+					R.drawable.custom_progressbar3);
+			four.setProgressDrawable(d);
+		} else {
+			Drawable d = getResources().getDrawable(
+					R.drawable.custom_progressbar4);
+			four.setProgressDrawable(d);
+		}
+		if (appSharedPrefs.getString("uName", "").equals(
+				gameTopScorers.get(3).getUserMail())
+				&& Integer.parseInt(gameTopScorers.get(3).getRank()) > 3) {
+			Drawable d = getResources().getDrawable(
+					R.drawable.custom_progressbar5);
+			four.setProgressDrawable(d);
+		}
+		if (appSharedPrefs.getString("uName", "").equals(
+				gameTopScorers.get(3).getUserMail())) {
+			scorer4Email.setText("you");
+			scorer4Email.setTypeface(null, Typeface.BOLD);
+		}
+		// show
+		runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				scorer4.setVisibility(View.VISIBLE);
+
+			}
+		});
+
+		// animate progress
+		int Duration = 6000;
+		long interval = Duration
+				/ Integer.parseInt(gameTopScorers.get(3).getScore());
+		for (int i = 0; i < Integer.parseInt(gameTopScorers.get(3).getScore()); i++) {
+			four.setProgress(i);
+			try {
+				Thread.sleep(interval);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 	}
 }

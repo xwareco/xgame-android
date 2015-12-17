@@ -689,9 +689,10 @@ public class User extends AsyncTask<String, Void, Void> {
 					JSONObject mailJSON = scoreJSON.getJSONObject("user");
 					String scorerScore = scoreJSON.getString("score");
 					String scorerEmail = mailJSON.getString("email");
+					String scorerRank = scoreJSON.getString("row");
 
 					Scorer scorer = new Scorer();
-					scorer.setRank(Integer.toString(i + 1));
+					scorer.setRank(scorerRank);
 					scorer.setScore(scorerScore);
 					scorer.setUserMail(scorerEmail);
 					topScorers.add(scorer);
