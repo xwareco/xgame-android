@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer name="ga_sessionTimeout">300</integer>
+
+    <bool name="ga_autoActivityTracking">true</bool>
+
+    <screenName name="uencom.xgame.engine.views.MainView">Main View Activity</screenName>
+    <screenName name="uencom.xgame.engine.views.AboutUs">About us Activity</screenName>
+    <screenName name="uencom.xgame.engine.views.AudioRecoreder">Recording audio Activity</screenName>
+    <screenName name="uencom.xgame.engine.views.ContactUs">Contact us Activity</screenName>
+    <screenName name="uencom.xgame.engine.views.Edit">Email edit Activity</screenName>
+    <screenName name="uencom.xgame.engine.views.GameOver">Game over Activity</screenName>
+    <screenName name="uencom.xgame.engine.views.GameView">Pre game Activity</screenName>
+    <screenName name="uencom.xgame.engine.views.HeadphoneTester">Headphone test Activity</screenName>
+    <screenName name="uencom.xgame.engine.views.RankGetterSplash">pre Score Activity</screenName>
+    <screenName name="uencom.xgame.engine.views.Register">Register Activity</screenName>
+    <screenName name="uencom.xgame.engine.views.SplashActivity">Splash Activity</screenName>
+    <screenName name="uencom.xgame.engine.views.TextMessageSender">Text messaging Activity</screenName>
+
+    <string name="ga_trackingId">UA-71175621-1</string>
+    <string name="ga_appName">xGame</string>
+
+</resources>

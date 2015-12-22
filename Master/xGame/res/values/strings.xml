@@ -41,18 +41,12 @@
     <string name="logbtn">Login</string>
     <string name="regbtn">Register</string>
     <string name="pwd">Password:</string>
-    <string name="usr">User Name:</string>
-
-    <string-array name="nav_actions">
-        <item>xGame</item>
-        <item>About Us</item>
-        <item></item>
-    </string-array>
-
+    <string name="usr">E-mail:</string>
     <string name="game_cnt">The game icon</string>
     <string name="down_cnt">Download</string>
     <string name="LoginOrReegister">Login  |  Register</string>
-    <string name="loading">Loading Data</string>
+    <string name="loading">Loading ..</string>
+    <string name="conerror">Connection Error</string>
     <string name="plyagn">Play again</string>
     <string name="ent_name">Enter your name here</string>
     <string name="ent_pass">Enter your password here</string>
@@ -60,4 +54,31 @@
     <string name="refresh">Refresh button</string>
     <string name="error">Error</string>
     <string name="bar">Loading your games</string>
+    <string name="test">This is to test the proper postioning of your headphones, Please tap anywhere on the screen to start the test.</string>
+    <string name="righttest">Right</string>
+    <string name="lefttest">Left</string>
+    <string name="cats">Categories</string>
+    <string name="HeadTest">Test your headphones</string>
+    <string name="drawer_open">Options</string>
+    <string name="offline">play offline</string>
+    <string name="offlinestate">You are offline now</string>
+    <string name="type">Type your message ..</string>
+    <string name="send">via text</string>
+    <string name="record">Via voice</string>
+    <string name="send2">Send</string>
+    <string name="delete">Delete</string>
+    <string name="recording">Waiting..</string>
+    <string name="pau">pause button</string>
+    <string name="pla">play button</string>
+    <string name="rec">Record button</string>
+    <string name="cancel">close this dialog</string>
+    <string name="cntctustitle">How do you want to send us your feedback?</string>
+    <string name="viatxt">Via Text</string>
+    <string name="viasnd">Via Voice</string>
+    <string name="forgot"><u>forgot your password..?</u></string>
+    <string name="facebook_app_id">1928673774025481</string>
+    <string name="com_facebook_loginview_log_in_button_long">Log in with Facebook to share your rank</string>
+    <string name="com_facebook_loginview_log_in_button">Log in with Facebook to share your rank</string>
+    <string name="com_facebook_share_button_text">Share your rank now</string>
+
 </resources>

@@ -1,83 +1,348 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gameover"
+    android:background="@drawable/lstbg"
+    android:contentDescription="Game over"
     android:orientation="vertical" >
-   
-    
-    <LinearLayout
-        android:id="@+id/gslay"
-        android:layout_width="237dp"
-        android:layout_height="106dp"
-        android:background="@drawable/bggs"
-        android:layout_gravity="center_horizontal"
-        android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#0f540f" />
 
     <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:layout_gravity="center_horizontal"
-            android:contentDescription="@string/sb"
-            android:src="@drawable/gamescores" />
-</LinearLayout>
-
-    <LinearLayout
+        android:id="@+id/imageView3"
         android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginTop="100dp"
-        android:id="@+id/scoreLay"
-        android:background="@drawable/bggs"
-        
-        android:orientation="vertical" >
+        android:layout_height="80dp"
+        android:layout_below="@id/textView1"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:contentDescription="View your rank map"
+        android:src="@drawable/gamescores"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="fill_parent"
+        android:layout_height="250dp"
+        android:layout_below="@id/imageView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:contentDescription="Game over"
+        android:src="@drawable/gaov"
+        android:visibility="visible" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/imageView2"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
+        android:visibility="gone" />
+
+    <com.facebook.share.widget.ShareButton
+        android:id="@+id/share_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/imageView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:contentDescription="Try again"
+        android:src="@drawable/tryagain" />
+
+    <ImageView
+        android:id="@+id/img3"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:alpha="0.5"
+        android:src="@drawable/cheer"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/mapLay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageView3" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/textView2"
+            style="@style/textShadow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="120sp"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/scorer1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-           android:gravity="center"
+            android:layout_below="@id/imageView3"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:text=""
-            android:textSize="25sp"
-            android:textColor="@android:color/white"
-            android:textStyle="bold|italic"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-    
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="150" >
+
+            <TextView
+                android:id="@+id/scorer1Rank"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="13"
+                android:paddingRight="0dp"
+                android:text="1"
+                android:textSize="40sp" />
+
+            <LinearLayout
+                android:id="@+id/subLay1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="124"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/scorer1Email"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="yuy@gmail.com"
+                    android:textSize="15sp" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar1"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight="50"
+                    android:importantForAccessibility="no"
+                    android:progress="50"
+                    android:progressDrawable="@drawable/custom_progressbar" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/scorer1Score"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"
+                android:layout_weight="13"
+                android:gravity="right"
+                android:text="105"
+                android:textSize="15sp" />
         </LinearLayout>
 
-    <Button
-         android:id="@+id/button1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textColor="#ffffff"
-        android:textSize="30sp"
-        android:textStyle="bold|italic"
-        android:layout_marginTop="104dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:background="#1ea463"
-        android:contentDescription="@string/plyagn"
-        android:text="@string/plyagn" />
+        <LinearLayout
+            android:id="@+id/scorer2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/scorer1"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="150" >
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textColor="#ffffff"
-        android:textSize="30sp"
-        android:textStyle="bold|italic"
-        android:layout_marginTop="5dp"
-         android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:background="#1ea463"
-        android:layout_marginBottom="5dp"
-        android:contentDescription="@string/home"
-        android:text="@string/home" />
-    
-</LinearLayout>
+            <TextView
+                android:id="@+id/scorer2Rank"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="40"
+                android:text="150"
+                android:textSize="40sp" />
+
+            <LinearLayout
+                android:id="@+id/subLay2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="90"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/scorer2Email"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="yuy@gmail.com"
+                    android:textSize="15sp" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar2"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight="50"
+                    android:importantForAccessibility="no"
+                    android:progress="50"
+                    android:progressDrawable="@drawable/custom_progressbar" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/scorer2Score"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"
+                android:layout_weight="20"
+                android:gravity="right"
+                android:text="150"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/scorer3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/scorer2"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="150" >
+
+            <TextView
+                android:id="@+id/scorer3Rank"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="40"
+                android:text="150"
+                android:textSize="40sp" />
+
+            <LinearLayout
+                android:id="@+id/subLay3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="90"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/scorer3Email"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="yuy@gmail.com"
+                    android:textSize="15sp" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar3"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight="50"
+                    android:importantForAccessibility="no"
+                    android:progress="50"
+                    android:progressDrawable="@drawable/custom_progressbar" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/scorer3Score"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"
+                android:layout_weight="20"
+                android:gravity="right"
+                android:text="150"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/scorer4"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/scorer3"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="150" >
+
+            <TextView
+                android:id="@+id/scorer4Rank"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="40"
+                android:text="150"
+                android:textSize="40sp" />
+
+            <LinearLayout
+                android:id="@+id/subLay4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="90"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/scorer4Email"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="yuy@gmail.com"
+                    android:textSize="15sp" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar4"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight="50"
+                    android:importantForAccessibility="no"
+                    android:progress="50"
+                    android:progressDrawable="@drawable/custom_progressbar" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/scorer4Score"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"
+                android:layout_weight="20"
+                android:gravity="right"
+                android:text="150"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -3,14 +3,8 @@
     android:id="@+id/gameLay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
-    android:orientation="vertical" >
-    
-    <LinearLayout
-    android:id="@+id/gameLay2"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/laybg"
+    android:background="@drawable/lstbg"
+    android:contentDescription="Play the game now"
     android:orientation="vertical" >
 
     <TextView
@@ -19,11 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="25dp"
-        android:text="@string/name"
+        android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@android:color/white"
-        android:textSize="50sp"
-        android:textStyle="bold|italic" />
+        android:textColor="#0f540f"
+        android:textSize="50sp" />
 
     <ImageView
         android:id="@+id/imageView1"
@@ -31,36 +24,26 @@
         android:layout_height="400dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:contentDescription="@string/game"
-        android:src="@drawable/loading2" />
+        android:contentDescription="@string/game" />
 
-    
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="25dp"
-        android:text="@string/app_name"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@android:color/white"
-        android:textSize="50sp"
-        android:textStyle="bold|italic" />
-
-    <Button
-        android:id="@+id/button1"
+    <ImageView
+        android:id="@+id/img"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textColor="#ffffff"
-        android:textSize="45sp"
-        android:textStyle="bold|italic"
-        android:layout_marginTop="20dp"
-        android:background="#1ea463"
-        android:layout_marginLeft ="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:text="@string/play" />
+        android:layout_marginTop="10dp"
+        android:contentDescription="@string/play"
+        android:src="@drawable/playrec" />
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/img2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:contentDescription="Return to Games List"
+        android:src="@drawable/home" />
+
 </LinearLayout>

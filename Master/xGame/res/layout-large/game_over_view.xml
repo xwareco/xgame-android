@@ -1,79 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gameover"
+    android:background="@drawable/lstbg"
+    android:contentDescription="Game over"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/gslay"
+    <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/bggs"
-        android:orientation="vertical" >
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#0f540f" />
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:contentDescription="@string/sb"
-            android:src="@drawable/gamescores" />
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_below="@id/textView1"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:contentDescription="View your rank map"
+        android:src="@drawable/gamescores"
+        android:visibility="gone" />
 
-    <LinearLayout
-        android:id="@+id/scoreLay"
+    <ImageView
+        android:id="@+id/imageView1"
         android:layout_width="fill_parent"
-        android:layout_height="67dp"
-        android:layout_marginTop="160dp"
-        android:background="@drawable/bggs"
-        android:orientation="vertical" >
+        android:layout_height="400dp"
+        android:layout_below="@id/imageView3"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="5dp"
+        android:contentDescription="Game over"
+        android:src="@drawable/gaov" />
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:text=""
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@android:color/white"
-            android:textSize="25sp"
-            android:textStyle="bold|italic" />
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="fill_parent"
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/imageView1"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="190dp"
-        android:background="#1ea463"
-        android:text="@string/plyagn"
-        android:textColor="#ffffff"
-        android:textSize="30sp"
-        android:contentDescription="@string/plyagn"
-        android:textStyle="bold|italic" />
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
+        android:visibility="gone" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="fill_parent"
+    <com.facebook.share.widget.ShareButton
+        android:id="@+id/share_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_below="@id/login_button"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:background="#1ea463"
-        android:text="@string/home"
-        android:contentDescription="@string/home"
-        android:textColor="#ffffff"
-        android:textSize="30sp"
-        android:textStyle="bold|italic" />
+        android:visibility="gone" />
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/share_button"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:contentDescription="Try again"
+        android:src="@drawable/tryagain" />
+
+    <ImageView
+        android:id="@+id/img3"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:alpha="0.5"
+        android:src="@drawable/cheer"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/imageView3"
+        android:layout_centerHorizontal="true"
+        style="@style/textShadow"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="120sp"
+        android:visibility="gone" />
+
+</RelativeLayout>

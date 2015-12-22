@@ -12,16 +12,16 @@ import uencom.xgame.sound.HeadPhone;
 public class S1 implements IstateActions {
 
 	@Override
-	public void onStateEntry(LinearLayout layout , Intent I) {
+	public void onStateEntry(LinearLayout layout , Intent I, Context C,HeadPhone H) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public Intent loopBack(Context c , Intent I) {
+	public Intent loopBack(Context c , Intent I,HeadPhone H) {
 		int count = I.getIntExtra("Count", 0);
 		count++;
-		String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/Catch the Peeb/Sound/beep.mp3";
+		String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/Catch The Beeb/Sound/beep.mp3";
 		System.out.println(Path);
 		HeadPhone HP = new HeadPhone(c);
 		//Intent I = new Intent();
@@ -57,9 +57,9 @@ public class S1 implements IstateActions {
 	}
 
 	@Override
-	public void onStateExit(Context c , Intent I) {
+	public void onStateExit(Context c , Intent I,HeadPhone H) {
 		int Score = I.getIntExtra("Score", 0);
-		Score++;
+		Score +=5;
 		I.putExtra("Score", Score);
 
 	}
