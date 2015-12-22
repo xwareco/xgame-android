@@ -6,8 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Locale;
 
-import uencom.xgame.xgame.R;
 import xware.xgame.engine.web.User;
+import xware.xgame.xgame.R;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -46,7 +46,7 @@ public class AudioRecorder extends Activity {
 		arabic = Typeface.createFromAsset(getAssets(),
 				"fonts/Kharabeesh Font.ttf");
 		english = Typeface.createFromAsset(getAssets(),
-				"fonts/DJB Stinky Marker.ttf");
+				"fonts/klavika-regular-opentype.otf");
 		Locale current = getResources().getConfiguration().locale;
 
 		outputFile = Environment.getExternalStorageDirectory()

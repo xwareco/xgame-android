@@ -1,7 +1,7 @@
 package xware.xgame.demos;
 
-import uencom.xgame.xgame.R;
 import xware.xgame.gestures.HandGestures;
+import xware.xgame.xgame.R;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;

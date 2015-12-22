@@ -7,18 +7,9 @@ import java.util.ArrayList;
 
 import org.json.JSONObject;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-import uencom.xgame.xgame.R;
-import uencom.xgame.xgame.R.drawable;
 import xware.xgame.engine.web.Game;
 import xware.xgame.engine.web.Server;
+import xware.xgame.xgame.R;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -33,8 +24,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TableRow;
-//import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+//import android.widget.ImageView;
 
 public class xGameList extends ArrayAdapter<Game> {
 
@@ -49,7 +49,7 @@ public class xGameList extends ArrayAdapter<Game> {
 		this.context = context;
 		this.games = games;
 		font = Typeface.createFromAsset(context.getAssets(),
-				"fonts/DJB Stinky Marker.ttf");
+				"fonts/klavika-regular-opentype.otf");
 		item = (TableRow) context.findViewById(R.id.TR);
 		// UNIVERSAL IMAGE LOADER SETUP
 		DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
@@ -71,9 +71,9 @@ public class xGameList extends ArrayAdapter<Game> {
 		LayoutInflater inflater = context.getLayoutInflater();
 		View rowView = inflater.inflate(R.layout.xgame_list_item, null, true);
 		if (position % 2 == 0)
-			rowView.setBackgroundResource(drawable.even);
+			rowView.setBackgroundResource(R.drawable.even);
 		else
-			rowView.setBackgroundResource(drawable.odd);
+			rowView.setBackgroundResource(R.drawable.odd);
 		TextView txtTitle = (TextView) rowView.findViewById(R.id.text);
 		txtTitle.setTypeface(font);
 		String path = Environment.getExternalStorageDirectory()

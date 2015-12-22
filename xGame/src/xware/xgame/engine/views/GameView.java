@@ -1,13 +1,10 @@
 package xware.xgame.engine.views;
 
 import java.util.Locale;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import uencom.xgame.xgame.R;
+
 import xware.xgame.engine.xGameParser;
 import xware.xgame.gestures.HandGestures;
+import xware.xgame.xgame.R;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -25,6 +22,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 
 public class GameView extends SherlockActivity {
 
@@ -48,7 +50,7 @@ public class GameView extends SherlockActivity {
 		ed.commit();
 		System.out.println("Game_View: " + name);
 		english = Typeface.createFromAsset(getAssets(),
-				"fonts/DJB Stinky Marker.ttf");
+				"fonts/klavika-regular-opentype.otf");
 		Locale current = getResources().getConfiguration().locale;
 		play = (ImageView) findViewById(R.id.img);
 		home = (ImageView) findViewById(R.id.img2);

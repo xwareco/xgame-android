@@ -2,8 +2,8 @@ package xware.xgame.engine;
 
 import java.io.File;
 import java.util.ArrayList;
-import uencom.xgame.xgame.R;
-import uencom.xgame.xgame.R.drawable;
+
+import xware.xgame.xgame.R;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Typeface;
@@ -31,7 +31,7 @@ public class offlinexGameList extends ArrayAdapter<String> {
 		this.games = games;
 		this.context = context;
 		font = Typeface.createFromAsset(context.getAssets(),
-				"fonts/DJB Stinky Marker.ttf");
+				"fonts/klavika-regular-opentype.otf");
 		item = (TableRow) context.findViewById(R.id.TR);
 
 	}
@@ -50,18 +50,16 @@ public class offlinexGameList extends ArrayAdapter<String> {
 		if (logoFileOnDevice.exists()) {
 			Drawable bg = Drawable.createFromPath(file);
 			icon.setImageDrawable(bg);
-		}
-		else
-		{
+		} else {
 			icon.setImageResource(R.drawable.icon);
 		}
 		if (position % 2 == 0)
-			rowView.setBackgroundResource(drawable.even);
+			rowView.setBackgroundResource(R.drawable.even);
 		else
-			rowView.setBackgroundResource(drawable.odd);
+			rowView.setBackgroundResource(R.drawable.odd);
 		TextView txtTitle = (TextView) rowView.findViewById(R.id.text);
 		txtTitle.getLayoutParams().height = 50;
-		//txtTitle.setTextSize(30);
+		// txtTitle.setTextSize(30);
 		txtTitle.setTypeface(font);
 		txtTitle.setText(games.get(position));
 

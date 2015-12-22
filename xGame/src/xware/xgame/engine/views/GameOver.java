@@ -1,13 +1,19 @@
 package xware.xgame.engine.views;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Locale;
-import uencom.xgame.xgame.R;
 import xware.xgame.engine.Scorer;
 import xware.xgame.engine.xGameParser;
+import xware.xgame.xgame.R;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.Signature;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -16,6 +22,8 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -26,6 +34,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuInflater;
@@ -45,7 +54,7 @@ public class GameOver extends SherlockActivity {
 
 	ImageView gamescore, tryAgain, cheerForUser, gameOver;
 	TextView gameName, rank;
-	Typeface english;
+	Typeface english, nums;
 	CallbackManager callbackManager;
 	SharedPreferences appSharedPrefs;
 	ArrayList<Scorer> gameTopScorers;
@@ -65,6 +74,25 @@ public class GameOver extends SherlockActivity {
 		FacebookSdk.sdkInitialize(getApplicationContext());
 		setContentView(R.layout.game_over_view);
 		mapLay = (RelativeLayout) findViewById(R.id.mapLay);
+		String TAG = "xware.xgame.xgame";
+		try {
+			Log.d(TAG, "keyHash: start");
+			PackageInfo info = this.getPackageManager().getPackageInfo(TAG,
+					PackageManager.GET_SIGNATURES);
+			for (Signature signature : info.signatures) {
+				MessageDigest md = MessageDigest.getInstance("SHA");
+				md.update(signature.toByteArray());
+				String keyHash = Base64.encodeToString(md.digest(),
+						Base64.DEFAULT);
+				Log.d(TAG, "keyHash: " + keyHash);
+
+			}
+			Log.d(TAG, "keyHash: end");
+		} catch (NameNotFoundException e) {
+			Log.d(TAG, "keyHash: name:" + e);
+		} catch (NoSuchAlgorithmException e) {
+			Log.d(TAG, "keyHash: name:" + e);
+		}
 
 		scorer1 = (LinearLayout) findViewById(R.id.scorer1);
 		scorer2 = (LinearLayout) findViewById(R.id.scorer2);
@@ -204,7 +232,17 @@ public class GameOver extends SherlockActivity {
 		}
 
 		english = Typeface.createFromAsset(getAssets(),
-				"fonts/DJB Stinky Marker.ttf");
+				"fonts/klavika-regular-opentype.otf");
+		nums = Typeface.createFromAsset(getAssets(), "fonts/DigitalDream.ttf");
+		scorer1Rank.setTypeface(nums);
+		scorer2Rank.setTypeface(nums);
+		scorer3Rank.setTypeface(nums);
+		scorer4Rank.setTypeface(nums);
+		scorer1Score.setTypeface(nums);
+		scorer2Score.setTypeface(nums);
+		scorer3Score.setTypeface(nums);
+		scorer4Score.setTypeface(nums);
+
 		Locale current = getResources().getConfiguration().locale;
 		gameName = (TextView) findViewById(R.id.textView1);
 		rank = (TextView) findViewById(R.id.textView2);
@@ -293,6 +331,7 @@ public class GameOver extends SherlockActivity {
 			public void onClick(View v) {
 				Animation fadeOut = AnimationUtils.loadAnimation(GameOver.this,
 						R.anim.fadeout);
+
 				fadeOut.setAnimationListener(new Animation.AnimationListener() {
 
 					@Override
@@ -309,26 +348,39 @@ public class GameOver extends SherlockActivity {
 
 					@Override
 					public void onAnimationEnd(Animation arg0) {
-						rank.setVisibility(View.GONE);
-						if (gameTopScorers.size() == 0) {
-							gameOver.setVisibility(View.VISIBLE);
-							Toast.makeText(GameOver.this,
-									"Cannot get scorers now", Toast.LENGTH_LONG)
-									.show();
-						} else if (gameTopScorers.size() == 1) {
-							scorer1Thread.start();
-						} else if (gameTopScorers.size() == 2) {
-							scorer1Thread.start();
-							scorer2Thread.start();
-						} else if (gameTopScorers.size() == 3) {
-							scorer1Thread.start();
-							scorer2Thread.start();
-							scorer3Thread.start();
-						} else if (gameTopScorers.size() == 4) {
-							scorer1Thread.start();
-							scorer2Thread.start();
-							scorer3Thread.start();
-							scorer4Thread.start();
+						if (rank.getVisibility() == View.VISIBLE) {
+							rank.setVisibility(View.GONE);
+							if (gameTopScorers.size() == 0) {
+								gameOver.setVisibility(View.VISIBLE);
+								Toast.makeText(GameOver.this,
+										"Cannot get scorers now",
+										Toast.LENGTH_LONG).show();
+							} else if (gameTopScorers.size() == 1) {
+								scorer1Thread.start();
+							} else if (gameTopScorers.size() == 2) {
+								scorer1Thread.start();
+								scorer2Thread.start();
+							} else if (gameTopScorers.size() == 3) {
+								scorer1Thread.start();
+								scorer2Thread.start();
+								scorer3Thread.start();
+							} else if (gameTopScorers.size() == 4) {
+								scorer1Thread.start();
+								scorer2Thread.start();
+								scorer3Thread.start();
+								scorer4Thread.start();
+							}
+						} else {
+							rank.setVisibility(View.VISIBLE);
+							scorer1.setVisibility(View.GONE);
+							scorer2.setVisibility(View.GONE);
+							scorer3.setVisibility(View.GONE);
+							scorer4.setVisibility(View.GONE);
+							scorer1Thread.interrupt();
+							scorer2Thread.interrupt();
+							scorer3Thread.interrupt();
+							scorer4Thread.interrupt();
+							gamescore.setClickable(false);
 						}
 						Animation fadeIn = AnimationUtils.loadAnimation(
 								GameOver.this, R.anim.fadein);
@@ -451,18 +503,26 @@ public class GameOver extends SherlockActivity {
 			Drawable d = getResources().getDrawable(
 					R.drawable.custom_progressbar);
 			one.setProgressDrawable(d);
+			scorer1Rank.setTextColor(Color.parseColor("#FFD700"));
+			scorer1Score.setTextColor(Color.parseColor("#FFD700"));
 		} else if (gameTopScorers.get(0).getRank().equals("2")) {
 			Drawable d = getResources().getDrawable(
 					R.drawable.custom_progressbar2);
 			one.setProgressDrawable(d);
+			scorer1Rank.setTextColor(Color.parseColor("#C0C0C0"));
+			scorer1Score.setTextColor(Color.parseColor("#C0C0C0"));
 		} else if (gameTopScorers.get(0).getRank().equals("3")) {
 			Drawable d = getResources().getDrawable(
 					R.drawable.custom_progressbar3);
 			one.setProgressDrawable(d);
+			scorer1Rank.setTextColor(Color.parseColor("#CD7F32"));
+			scorer1Score.setTextColor(Color.parseColor("#CD7F32"));
 		} else {
 			Drawable d = getResources().getDrawable(
 					R.drawable.custom_progressbar5);
 			one.setProgressDrawable(d);
+			scorer1Rank.setTextColor(Color.BLACK);
+			scorer1Score.setTextColor(Color.BLACK);
 		}
 		if (appSharedPrefs.getString("uName", "").equals(
 				gameTopScorers.get(0).getUserMail())
@@ -470,6 +530,8 @@ public class GameOver extends SherlockActivity {
 			Drawable d = getResources().getDrawable(
 					R.drawable.custom_progressbar4);
 			one.setProgressDrawable(d);
+			scorer1Rank.setTextColor(Color.GREEN);
+			scorer1Score.setTextColor(Color.GREEN);
 		}
 		if (appSharedPrefs.getString("uName", "").equals(
 				gameTopScorers.get(0).getUserMail())) {
@@ -553,18 +615,26 @@ public class GameOver extends SherlockActivity {
 			Drawable d = getResources().getDrawable(
 					R.drawable.custom_progressbar);
 			two.setProgressDrawable(d);
+			scorer2Rank.setTextColor(Color.parseColor("#FFD700"));
+			scorer2Score.setTextColor(Color.parseColor("#FFD700"));
 		} else if (gameTopScorers.get(1).getRank().equals("2")) {
 			Drawable d = getResources().getDrawable(
 					R.drawable.custom_progressbar2);
 			two.setProgressDrawable(d);
+			scorer2Rank.setTextColor(Color.parseColor("#C0C0C0"));
+			scorer2Score.setTextColor(Color.parseColor("#C0C0C0"));
 		} else if (gameTopScorers.get(1).getRank().equals("3")) {
 			Drawable d = getResources().getDrawable(
 					R.drawable.custom_progressbar3);
 			two.setProgressDrawable(d);
+			scorer2Rank.setTextColor(Color.parseColor("#CD7F32"));
+			scorer2Score.setTextColor(Color.parseColor("#CD7F32"));
 		} else {
 			Drawable d = getResources().getDrawable(
 					R.drawable.custom_progressbar4);
 			two.setProgressDrawable(d);
+			scorer2Rank.setTextColor(Color.BLACK);
+			scorer2Score.setTextColor(Color.BLACK);
 		}
 		if (appSharedPrefs.getString("uName", "").equals(
 				gameTopScorers.get(1).getUserMail())
@@ -572,6 +642,8 @@ public class GameOver extends SherlockActivity {
 			Drawable d = getResources().getDrawable(
 					R.drawable.custom_progressbar5);
 			two.setProgressDrawable(d);
+			scorer2Rank.setTextColor(Color.GREEN);
+			scorer2Score.setTextColor(Color.GREEN);
 		}
 		if (appSharedPrefs.getString("uName", "").equals(
 				gameTopScorers.get(1).getUserMail())) {
@@ -589,7 +661,7 @@ public class GameOver extends SherlockActivity {
 		});
 
 		// animate progress
-		int Duration = 6000;
+		int Duration = 3000;
 		long interval = Duration
 				/ Integer.parseInt(gameTopScorers.get(1).getScore());
 		for (int i = 0; i < Integer.parseInt(gameTopScorers.get(1).getScore()); i++) {
@@ -656,18 +728,26 @@ public class GameOver extends SherlockActivity {
 			Drawable d = getResources().getDrawable(
 					R.drawable.custom_progressbar);
 			three.setProgressDrawable(d);
+			scorer3Rank.setTextColor(Color.parseColor("#FFD700"));
+			scorer3Score.setTextColor(Color.parseColor("#FFD700"));
 		} else if (gameTopScorers.get(2).getRank().equals("2")) {
 			Drawable d = getResources().getDrawable(
 					R.drawable.custom_progressbar2);
 			three.setProgressDrawable(d);
+			scorer3Rank.setTextColor(Color.parseColor("#C0C0C0"));
+			scorer3Score.setTextColor(Color.parseColor("#C0C0C0"));
 		} else if (gameTopScorers.get(2).getRank().equals("3")) {
 			Drawable d = getResources().getDrawable(
 					R.drawable.custom_progressbar3);
 			three.setProgressDrawable(d);
+			scorer3Rank.setTextColor(Color.parseColor("#CD7F32"));
+			scorer3Score.setTextColor(Color.parseColor("#CD7F32"));
 		} else {
 			Drawable d = getResources().getDrawable(
 					R.drawable.custom_progressbar4);
 			three.setProgressDrawable(d);
+			scorer3Rank.setTextColor(Color.BLACK);
+			scorer3Score.setTextColor(Color.BLACK);
 		}
 		if (appSharedPrefs.getString("uName", "").equals(
 				gameTopScorers.get(2).getUserMail())
@@ -675,6 +755,8 @@ public class GameOver extends SherlockActivity {
 			Drawable d = getResources().getDrawable(
 					R.drawable.custom_progressbar5);
 			three.setProgressDrawable(d);
+			scorer3Rank.setTextColor(Color.GREEN);
+			scorer3Score.setTextColor(Color.GREEN);
 		}
 		if (appSharedPrefs.getString("uName", "").equals(
 				gameTopScorers.get(2).getUserMail())) {
@@ -692,7 +774,7 @@ public class GameOver extends SherlockActivity {
 		});
 
 		// animate progress
-		int Duration = 6000;
+		int Duration = 3000;
 		long interval = Duration
 				/ Integer.parseInt(gameTopScorers.get(2).getScore());
 		for (int i = 0; i < Integer.parseInt(gameTopScorers.get(2).getScore()); i++) {
@@ -759,18 +841,26 @@ public class GameOver extends SherlockActivity {
 			Drawable d = getResources().getDrawable(
 					R.drawable.custom_progressbar);
 			four.setProgressDrawable(d);
+			scorer4Rank.setTextColor(Color.parseColor("#FFD700"));
+			scorer4Score.setTextColor(Color.parseColor("#FFD700"));
 		} else if (gameTopScorers.get(3).getRank().equals("2")) {
 			Drawable d = getResources().getDrawable(
 					R.drawable.custom_progressbar2);
 			four.setProgressDrawable(d);
+			scorer4Rank.setTextColor(Color.parseColor("#C0C0C0"));
+			scorer4Score.setTextColor(Color.parseColor("#C0C0C0"));
 		} else if (gameTopScorers.get(3).getRank().equals("3")) {
 			Drawable d = getResources().getDrawable(
 					R.drawable.custom_progressbar3);
 			four.setProgressDrawable(d);
+			scorer4Rank.setTextColor(Color.parseColor("#CD7F32"));
+			scorer4Score.setTextColor(Color.parseColor("#CD7F32"));
 		} else {
 			Drawable d = getResources().getDrawable(
 					R.drawable.custom_progressbar4);
 			four.setProgressDrawable(d);
+			scorer4Rank.setTextColor(Color.BLACK);
+			scorer4Score.setTextColor(Color.BLACK);
 		}
 		if (appSharedPrefs.getString("uName", "").equals(
 				gameTopScorers.get(3).getUserMail())
@@ -778,6 +868,8 @@ public class GameOver extends SherlockActivity {
 			Drawable d = getResources().getDrawable(
 					R.drawable.custom_progressbar5);
 			four.setProgressDrawable(d);
+			scorer4Rank.setTextColor(Color.GREEN);
+			scorer4Score.setTextColor(Color.GREEN);
 		}
 		if (appSharedPrefs.getString("uName", "").equals(
 				gameTopScorers.get(3).getUserMail())) {
@@ -795,7 +887,7 @@ public class GameOver extends SherlockActivity {
 		});
 
 		// animate progress
-		int Duration = 6000;
+		int Duration = 3000;
 		long interval = Duration
 				/ Integer.parseInt(gameTopScorers.get(3).getScore());
 		for (int i = 0; i < Integer.parseInt(gameTopScorers.get(3).getScore()); i++) {

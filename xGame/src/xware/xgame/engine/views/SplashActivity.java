@@ -2,10 +2,9 @@ package xware.xgame.engine.views;
 
 import java.util.Locale;
 
-import uencom.xgame.xgame.R;
-import uencom.xgame.xgame.R.drawable;
 import xware.xgame.engine.web.Server;
 import xware.xgame.gestures.HandGestures;
+import xware.xgame.xgame.R;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -47,7 +46,7 @@ public class SplashActivity extends Activity {
 		arabic = Typeface.createFromAsset(getAssets(),
 				"fonts/Kharabeesh Font.ttf");
 		english = Typeface.createFromAsset(getAssets(),
-				"fonts/DJB Stinky Marker.ttf");
+				"fonts/klavika-regular-opentype.otf");
 		Locale current = getResources().getConfiguration().locale;
 		if (current.getDisplayLanguage().equals("Arabic")) {
 			loading.setTypeface(arabic);
@@ -134,7 +133,7 @@ public class SplashActivity extends Activity {
 		new Handler().postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				bg.setBackgroundResource(drawable.bg1);
+				bg.setBackgroundResource(R.drawable.bg1);
 				trans.setVisibility(View.VISIBLE);
 				trans.startAnimation(fadeIn);
 				bar.setVisibility(View.VISIBLE);

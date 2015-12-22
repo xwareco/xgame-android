@@ -1,7 +1,7 @@
 package xware.xgame.engine.views;
 
-import uencom.xgame.xgame.R;
 import xware.xgame.engine.web.User;
+import xware.xgame.xgame.R;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;

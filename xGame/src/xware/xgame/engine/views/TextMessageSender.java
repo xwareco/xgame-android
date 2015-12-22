@@ -1,8 +1,9 @@
 package xware.xgame.engine.views;
 
 import java.util.Locale;
-import uencom.xgame.xgame.R;
+
 import xware.xgame.engine.web.User;
+import xware.xgame.xgame.R;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -36,7 +37,7 @@ public class TextMessageSender extends Activity {
 		arabic = Typeface.createFromAsset(getAssets(),
 				"fonts/Kharabeesh Font.ttf");
 		english = Typeface.createFromAsset(getAssets(),
-				"fonts/DJB Stinky Marker.ttf");
+				"fonts/klavika-regular-opentype.otf");
 		Locale current = getResources().getConfiguration().locale;
 		if (current.getDisplayLanguage().equals("Arabic")) {
 			titleTV.setTypeface(arabic);

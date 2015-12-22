@@ -3,8 +3,7 @@ package xware.xgame.engine;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import uencom.xgame.xgame.R;
-
+import xware.xgame.xgame.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
@@ -28,7 +27,7 @@ public class navxgameAdapter extends BaseAdapter {
 		arabic = Typeface.createFromAsset(context.getAssets(),
 				"fonts/Kharabeesh Font.ttf");
 		english = Typeface.createFromAsset(context.getAssets(),
-				"fonts/DJB Stinky Marker.ttf");
+				"fonts/klavika-regular-opentype.otf");
 		current = context.getResources().getConfiguration().locale;
 	}
 

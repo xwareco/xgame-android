@@ -2,12 +2,10 @@ package xware.xgame.engine;
 
 
 
-import uencom.xgame.xgame.R;
-
+import xware.xgame.xgame.R;
+import android.app.Application;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
-
-import android.app.Application;
 
 public class xGame extends Application {
 	

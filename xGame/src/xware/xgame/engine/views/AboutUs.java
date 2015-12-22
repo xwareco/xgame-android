@@ -1,9 +1,6 @@
 package xware.xgame.engine.views;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import uencom.xgame.xgame.R;
+import xware.xgame.xgame.R;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -16,6 +13,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
 public class AboutUs extends SherlockActivity {
 	ImageView logo;
 	LinearLayout lay;
@@ -26,7 +27,7 @@ public class AboutUs extends SherlockActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.aboutus);
 		english = Typeface.createFromAsset(getAssets(),
-				"fonts/DJB Stinky Marker.ttf");
+				"fonts/klavika-regular-opentype.otf");
 		lay = (LinearLayout)findViewById(R.id.lay);
 		logo = (ImageView)findViewById(R.id.imageView1);
 		name = (TextView)findViewById(R.id.textView1);

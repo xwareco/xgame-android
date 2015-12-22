@@ -11,10 +11,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import uencom.xgame.xgame.R;
+
 import xware.xgame.engine.offlinexGameList;
 import xware.xgame.engine.onDeviceGameChecker;
 import xware.xgame.engine.views.GameView;
+import xware.xgame.xgame.R;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;

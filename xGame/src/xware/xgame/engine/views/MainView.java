@@ -10,17 +10,6 @@ import java.util.Locale;
 
 import org.json.JSONObject;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import uencom.xgame.xgame.R;
 import xware.xgame.engine.navxgameAdapter;
 import xware.xgame.engine.navxgameList;
 import xware.xgame.engine.onDeviceGameChecker;
@@ -31,6 +20,7 @@ import xware.xgame.engine.web.Installer;
 import xware.xgame.engine.web.Server;
 import xware.xgame.engine.web.User;
 import xware.xgame.gestures.HandGestures;
+import xware.xgame.xgame.R;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -59,6 +49,17 @@ import android.widget.RelativeLayout;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class MainView extends SherlockActivity implements OnNavigationListener,
 		SwipeRefreshLayout.OnRefreshListener {
@@ -91,16 +92,36 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 	HandGestures CatHG;
 	Tracker mTracker;
 	xGame application;
+
 	// xGameAPI api;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.main_view);
-		
+
 		application = (xGame) getApplication();
 		mTracker = application.getDefaultTracker();
 		mTracker.setScreenName("Home");
 		mTracker.send(new HitBuilders.AppViewBuilder().build());
+
+		String fileContents = User.readFromFile();
+		if (!fileContents.equals("")) {
+			String uName = fileContents.substring(
+					fileContents.indexOf(',') + 1,
+					fileContents.lastIndexOf(','));
+			String uID = fileContents.substring(0, fileContents.indexOf(','));
+
+			String uPass = fileContents.substring(
+					fileContents.lastIndexOf(',') + 1,
+					fileContents.length() - 1);
+			SharedPreferences appSharedPrefs = PreferenceManager
+					.getDefaultSharedPreferences(getApplicationContext());
+			Editor edit = appSharedPrefs.edit();
+			edit.putString("uID", uID);
+			edit.putString("uName", uName);
+			edit.putString("uPass", uPass);
+			edit.commit();
+		}
 
 		CatHG = new HandGestures(this) {
 			@Override
@@ -229,7 +250,7 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 		arabic = Typeface.createFromAsset(getAssets(),
 				"fonts/Kharabeesh Font.ttf");
 		english = Typeface.createFromAsset(getAssets(),
-				"fonts/DJB Stinky Marker.ttf");
+				"fonts/klavika-regular-opentype.otf");
 		Locale current = getResources().getConfiguration().locale;
 
 		Intent I = getIntent();
@@ -366,7 +387,8 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 						+ "/xGame/Games/" + games.get(arg2).getName();
 
 				if (!new File(ifGameExistsLocation).exists()) {
-					mTracker.setScreenName(games.get(arg2).getName() + "(Download)");
+					mTracker.setScreenName(games.get(arg2).getName()
+							+ "(Download)");
 					mTracker.send(new HitBuilders.AppViewBuilder().build());
 					arg1.setClickable(true);
 					arg1.setBackgroundColor(Color.LTGRAY);
@@ -433,8 +455,10 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 
 						else {
 							arg1.setClickable(true);
-							mTracker.setScreenName(games.get(arg2).getName() + "(Update)");
-							mTracker.send(new HitBuilders.AppViewBuilder().build());
+							mTracker.setScreenName(games.get(arg2).getName()
+									+ "(Update)");
+							mTracker.send(new HitBuilders.AppViewBuilder()
+									.build());
 							arg1.setBackgroundColor(Color.LTGRAY);
 							Toast.makeText(MainView.this, "Updating..",
 									Toast.LENGTH_LONG).show();
@@ -610,10 +634,21 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 						uName = fileContents.substring(
 								fileContents.indexOf(',') + 1,
 								fileContents.lastIndexOf(','));
+						String uID = fileContents.substring(0,
+								fileContents.indexOf(','));
+
+						String uPass = fileContents.substring(
+								fileContents.lastIndexOf(',') + 1,
+								fileContents.length() - 1);
 						String uNameSideMenu = uName.substring(0,
 								uName.indexOf('@'));
 						mNavItems.add(new navxgameList(uNameSideMenu,
 								R.drawable.reg));
+						Editor edit = appSharedPrefs.edit();
+						edit.putString("uID", uID);
+						edit.putString("uName", uName);
+						edit.putString("uPass", uPass);
+						edit.commit();
 
 					}
 				}
@@ -832,13 +867,13 @@ public class MainView extends SherlockActivity implements OnNavigationListener,
 		}
 		return ver;
 	}
-	
+
 	@Override
 	protected void onStart() {
 		GoogleAnalytics.getInstance(MainView.this).reportActivityStart(this);
 		super.onStart();
 	}
-	
+
 	@Override
 	protected void onStop() {
 		GoogleAnalytics.getInstance(MainView.this).reportActivityStop(this);

@@ -4,16 +4,13 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-
-import uencom.xgame.xgame.R;
 import xware.xgame.engine.views.GameOver;
 import xware.xgame.engine.views.RankGetterSplash;
 import xware.xgame.gestures.HandGestures;
 import xware.xgame.interfaces.IStateListener;
 import xware.xgame.sensors.Accelerometer;
 import xware.xgame.sound.HeadPhone;
+import xware.xgame.xgame.R;
 import xware.xgame.xml.State;
 import xware.xgame.xml.StateEvent;
 import xware.xgame.xml.Transition;
@@ -29,12 +26,15 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnHoverListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.View.OnHoverListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 public class xGameParser extends Activity implements IStateListener {
 

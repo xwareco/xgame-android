@@ -6,13 +6,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
-import uencom.xgame.xgame.R;
+
 import xware.xgame.gestures.HandGestures;
 import xware.xgame.interfaces.IStateListener;
 import xware.xgame.interfaces.IstateActions;
 import xware.xgame.sensors.Accelerometer;
 import xware.xgame.sound.HeadPhone;
-import dalvik.system.DexClassLoader;
+import xware.xgame.xgame.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +24,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import dalvik.system.DexClassLoader;
 
 @SuppressLint("NewApi")
 public class State implements IstateActions {
@@ -204,7 +205,7 @@ public class State implements IstateActions {
 		arabic = Typeface.createFromAsset(ctx.getAssets(),
 				"fonts/Kharabeesh Font.ttf");
 		english = Typeface.createFromAsset(ctx.getAssets(),
-				"fonts/DJB Stinky Marker.ttf");
+				"fonts/klavika-regular-opentype.otf");
 		Locale current = ctx.getResources().getConfiguration().locale;
 		if (current.getDisplayLanguage().equals("Arabic")) {
 			gameTextView.setTypeface(arabic);

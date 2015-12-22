@@ -16,6 +16,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -30,7 +31,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import uencom.xgame.xgame.R;
 import xware.xgame.engine.Scorer;
 import xware.xgame.engine.views.ContactUs;
 import xware.xgame.engine.views.GameOver;
@@ -38,8 +38,7 @@ import xware.xgame.jsonconverters.ChangeEmailJsonConverter;
 import xware.xgame.jsonconverters.LoadUserMessagesJsonParameter;
 import xware.xgame.jsonconverters.RegisterJsonParameterConverter;
 import xware.xgame.jsonconverters.ScoreJsonParameterConverter;
-
-import com.google.gson.Gson;
+import xware.xgame.xgame.R;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -55,6 +54,8 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 public class User extends AsyncTask<String, Void, Void> {
 
@@ -650,7 +651,7 @@ public class User extends AsyncTask<String, Void, Void> {
 		try {
 			urlEncodedParams = URLEncoder.encode(JsonParams, "utf-8");
 		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
+			System.out.println("ME2!");
 			e1.printStackTrace();
 		}
 		String url = urlPrefix + "addUserScore?req_data=" + urlEncodedParams;
@@ -667,6 +668,7 @@ public class User extends AsyncTask<String, Void, Void> {
 			postRequest.addHeader("Authorization", Auth);
 			postRequest.addHeader("Content-Type", "application/json");
 			postRequest.addHeader("Accept", "application/json");
+			
 			result = httpclient.execute(postRequest, handler);
 			System.out.println(result);
 			boolean cheer = false;
@@ -722,11 +724,22 @@ public class User extends AsyncTask<String, Void, Void> {
 				System.out.println(state.compareTo("true"));
 			}
 		} catch (Exception e) {
+			System.out.println("ME!");
 			String newToken = xGameAPI.getNewToken("user");
+			System.out.println("TOK: " + newToken);
 			postRequest.setHeader("Authorization", newToken);
 			Editor prefEditor2 = appSharedPrefs.edit();
 			prefEditor2.putString("access_token", newToken);
 			prefEditor2.commit();
+			try {
+				result = httpclient.execute(postRequest, handler);
+			} catch (ClientProtocolException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
 		}
 	}
