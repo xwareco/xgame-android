@@ -36,10 +36,10 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import uencom.xgame.interfaces.IstateActions;
-import uencom.xgame.sound.HeadPhone;
-import uencom.xgame.sound.TTS;
-import uencom.xgame.speech.SpeechRecognition;
+import xware.xgame.interfaces.IstateActions;
+import xware.xgame.sound.HeadPhone;
+import xware.xgame.sound.TTS;
+import xware.xgame.speech.SpeechRecognition;
 
 public class S1  implements IstateActions {
 	HeadPhone pre = null;

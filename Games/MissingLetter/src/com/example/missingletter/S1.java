@@ -5,8 +5,6 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import uencom.xgame.interfaces.IstateActions;
-import uencom.xgame.sound.HeadPhone;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -30,6 +28,8 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import xware.xgame.interfaces.IstateActions;
+import xware.xgame.sound.HeadPhone;
 
 public class S1  implements IstateActions {
 	String[] words = new String[]{"egypt","peace","greeting","shake","product","world","option",

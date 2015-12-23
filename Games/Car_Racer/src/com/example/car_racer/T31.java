@@ -1,7 +1,7 @@
 package com.example.car_racer;
 
 import android.content.Intent;
-import uencom.xgame.interfaces.ItransitionActions;
+import xware.xgame.interfaces.ItransitionActions;
 
 public class T31 implements ItransitionActions {
 

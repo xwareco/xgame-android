@@ -21,8 +21,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-import uencom.xgame.interfaces.IstateActions;
-import uencom.xgame.sound.HeadPhone;
+import xware.xgame.interfaces.IstateActions;
+import xware.xgame.sound.HeadPhone;
 
 public class S2 implements IstateActions {
 

@@ -10,8 +10,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CyclicBarrier;
 
-import uencom.xgame.interfaces.IstateActions;
-import uencom.xgame.sound.HeadPhone;
+import xware.xgame.interfaces.IstateActions;
+import xware.xgame.sound.HeadPhone;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
