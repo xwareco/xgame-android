@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/lay"
+    android:layout_height="match_parent"
+    android:background="@drawable/lstbg"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        android:weightSum="100" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="80"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#389e99" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/editMail"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="20"
+            android:src="@drawable/edit" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp"
+        android:text="@string/logout"
+        android:textColor="#389e99"
+        android:textSize="15sp"
+         />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/enterMail"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#389e99"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:paddingLeft="3dp"
+        android:contentDescription="@string/enterMail"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:textColor="#389e99"
+        android:background="@drawable/edittextttyle"
+        android:textStyle="bold"
+        android:visibility="gone" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/enterPass"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#389e99"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:paddingLeft="3dp"
+        android:ems="10"
+        android:contentDescription="@string/enterPass"
+        android:inputType="textPassword"
+        android:textColor="#389e99"
+        android:textStyle="bold"
+        android:background="@drawable/edittextttyle"
+        android:visibility="gone" >
+    </EditText>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:background="#389e99"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp"
+        android:text="@string/updateButtText"
+        android:textColor="#ffffff"
+        android:textSize="23sp"
+        android:visibility="gone" />
+
+</LinearLayout><!-- From: file:/home/aly/StudioProjects/xGame1/app/src/main/res/layout/edit.xml -->

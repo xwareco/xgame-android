@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_user"
+        android:icon="@drawable/notloggedinicon"
+        app:showAsAction="always"
+        android:title="@string/mem"
+        />
+
+    <item
+        android:id="@+id/action_testhead"
+        android:icon="@drawable/head"
+        app:showAsAction="ifRoom"
+        android:title="@string/tsthpn_cntdsc"/>
+
+    <item
+        android:id="@+id/action_langSelection"
+        android:icon="@drawable/geography"
+        app:showAsAction="ifRoom"
+        android:title="@string/selectYourLang"/>
+    
+
+
+</menu><!-- From: file:/home/aly/StudioProjects/xGame1/app/src/main/res/menu/actionbar.xml -->

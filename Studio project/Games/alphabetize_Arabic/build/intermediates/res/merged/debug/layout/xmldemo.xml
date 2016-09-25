@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:id="@+id/lLayout"
+    android:background="@android:color/black">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text=""
+        android:textStyle="bold|italic"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    
+</LinearLayout>
+<!-- From: file:/home/aly/StudioProjects/xGame1/engine-lib/src/main/res/layout/xmldemo.xml --><!-- From: file:/home/aly/StudioProjects/xGame1/alphabetize_Arabic/build/intermediates/exploded-aar/xware.engine_lib/engine-lib/1.0.0/res/layout/xmldemo.xml -->

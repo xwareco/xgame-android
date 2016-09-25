@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg1"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="230dp"
+        android:gravity="center_horizontal"
+        android:text="@string/GPS_TV"
+        android:textColor="@android:color/white"
+        android:textStyle="bold|italic"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:text="@string/ACC_TV"
+        android:textColor="@android:color/white"
+        android:textStyle="bold|italic"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:text="@string/Gyro_TV"
+        android:textColor="@android:color/white"
+        android:textStyle="bold|italic"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+</LinearLayout>
+<!-- From: file:/home/aly/StudioProjects/xGame1/app/src/main/res/layout/sensorsdemo.xml -->

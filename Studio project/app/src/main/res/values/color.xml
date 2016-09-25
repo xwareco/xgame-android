@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="Gold">#FFD700</color>
+    <color name="silver">#C0C0C0</color>
+    <color name="Bronze">#CD7F32</color>
+    <color name="Olive">#FF808000</color>
+    <color name="Teal">#009688</color>
+    <color name="DarkTeal">#00796B</color>
+    <color name="LightTeal">#B2DFDB</color>
+    <color name="White">#FFFFFF</color>
+    <color name="LightGreen">#4CAF50</color>
+    <color name="DarkGray">#212121</color>
+    <color name="Gray">#727272</color>
+    <color name="LightGray">#B6B6B6</color>
+    <color name="primary">#8BC34A</color>
+    <color name="primary_dark">#689F38</color>
+    <color name="accent">#4CAF50</color>
+    <color name="text_primary">#FFFFFF</color>
+
+</resources>

@@ -1,0 +1,7 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context="xware.engine_lib.MainActivity">
+    <item android:id="@+id/action_settings" android:title="@string/action_settings"
+        android:orderInCategory="100" app:showAsAction="never" />
+</menu>
+<!-- From: file:/home/aly/StudioProjects/xGame1/engine-lib/src/main/res/menu/menu_main.xml --><!-- From: file:/home/aly/StudioProjects/xGame1/word_Master_Arabic/build/intermediates/exploded-aar/xware.engine_lib/engine-lib/1.0.0/res/menu/menu_main.xml -->

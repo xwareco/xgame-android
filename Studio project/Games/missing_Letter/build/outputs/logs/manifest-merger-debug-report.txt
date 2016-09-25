@@ -1,0 +1,95 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/aly/StudioProjects/xGame1/missing_Letter/src/main/AndroidManifest.xml:2:1-22:12
+	package
+		ADDED from /home/aly/StudioProjects/xGame1/missing_Letter/src/main/AndroidManifest.xml:3:5-40
+		INJECTED from /home/aly/StudioProjects/xGame1/missing_Letter/src/main/AndroidManifest.xml
+		INJECTED from /home/aly/StudioProjects/xGame1/missing_Letter/src/main/AndroidManifest.xml
+	android:versionName
+		ADDED from /home/aly/StudioProjects/xGame1/missing_Letter/src/main/AndroidManifest.xml:5:5-30
+	android:versionCode
+		ADDED from /home/aly/StudioProjects/xGame1/missing_Letter/src/main/AndroidManifest.xml:4:5-28
+		INJECTED from /home/aly/StudioProjects/xGame1/missing_Letter/src/main/AndroidManifest.xml
+		INJECTED from /home/aly/StudioProjects/xGame1/missing_Letter/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/aly/StudioProjects/xGame1/missing_Letter/src/main/AndroidManifest.xml:2:11-69
+uses-sdk
+ADDED from /home/aly/StudioProjects/xGame1/missing_Letter/src/main/AndroidManifest.xml:7:5-9:41
+MERGED from [xware.engine_lib:engine-lib:1.0.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/xware.engine_lib/engine-lib/1.0.0/AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:appcompat-v7:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.2.0/AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:support-vector-drawable:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.2.0/AndroidManifest.xml:21:5-43
+MERGED from [com.android.support:support-compat:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:animated-vector-drawable:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/24.2.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.2.0/AndroidManifest.xml:21:5-43
+MERGED from [com.android.support:support-compat:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-v4:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-v4/24.2.0/AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-compat:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-utils:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.0/AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-compat:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-media-compat:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.0/AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-compat:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-ui:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.0/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-fragment:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.0/AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-compat:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-utils:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.0/AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-compat:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-media-compat:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.0/AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-compat:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-ui:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.0/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/AndroidManifest.xml:21:5-23:58
+	tools:overrideLibrary
+		ADDED from [com.android.support:appcompat-v7:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.2.0/AndroidManifest.xml:23:9-75
+	android:targetSdkVersion
+		ADDED from /home/aly/StudioProjects/xGame1/missing_Letter/src/main/AndroidManifest.xml:9:9-38
+		INJECTED from /home/aly/StudioProjects/xGame1/missing_Letter/src/main/AndroidManifest.xml
+		INJECTED from /home/aly/StudioProjects/xGame1/missing_Letter/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		ADDED from /home/aly/StudioProjects/xGame1/missing_Letter/src/main/AndroidManifest.xml:8:9-35
+		INJECTED from /home/aly/StudioProjects/xGame1/missing_Letter/src/main/AndroidManifest.xml
+		INJECTED from /home/aly/StudioProjects/xGame1/missing_Letter/src/main/AndroidManifest.xml
+application
+ADDED from /home/aly/StudioProjects/xGame1/missing_Letter/src/main/AndroidManifest.xml:11:5-20:19
+MERGED from [xware.engine_lib:engine-lib:1.0.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/xware.engine_lib/engine-lib/1.0.0/AndroidManifest.xml:11:5-18:19
+MERGED from [com.android.support:appcompat-v7:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.2.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-vector-drawable:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.2.0/AndroidManifest.xml:23:5-20
+MERGED from [com.android.support:support-compat:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:animated-vector-drawable:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/24.2.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-vector-drawable:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.2.0/AndroidManifest.xml:23:5-20
+MERGED from [com.android.support:support-compat:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-v4:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-v4/24.2.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-fragment:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:24.2.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/AndroidManifest.xml:25:5-20
+	android:label
+		ADDED from /home/aly/StudioProjects/xGame1/missing_Letter/src/main/AndroidManifest.xml:14:9-41
+	android:allowBackup
+		ADDED from /home/aly/StudioProjects/xGame1/missing_Letter/src/main/AndroidManifest.xml:12:9-35
+	android:icon
+		ADDED from /home/aly/StudioProjects/xGame1/missing_Letter/src/main/AndroidManifest.xml:13:9-45
+	android:theme
+		ADDED from /home/aly/StudioProjects/xGame1/missing_Letter/src/main/AndroidManifest.xml:15:9-40
+activity#com.example.missingletter.MainActivity
+ADDED from /home/aly/StudioProjects/xGame1/missing_Letter/src/main/AndroidManifest.xml:16:9-19:20
+	android:label
+		ADDED from /home/aly/StudioProjects/xGame1/missing_Letter/src/main/AndroidManifest.xml:18:13-56
+	android:name
+		ADDED from /home/aly/StudioProjects/xGame1/missing_Letter/src/main/AndroidManifest.xml:17:13-41
+activity#xware.engine_lib.MainActivity
+ADDED from [xware.engine_lib:engine-lib:1.0.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/xware.engine_lib/engine-lib/1.0.0/AndroidManifest.xml:14:9-17:20
+	android:label
+		ADDED from [xware.engine_lib:engine-lib:1.0.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/xware.engine_lib/engine-lib/1.0.0/AndroidManifest.xml:16:13-56
+	android:name
+		ADDED from [xware.engine_lib:engine-lib:1.0.0] /home/aly/StudioProjects/xGame1/missing_Letter/build/intermediates/exploded-aar/xware.engine_lib/engine-lib/1.0.0/AndroidManifest.xml:15:13-57
