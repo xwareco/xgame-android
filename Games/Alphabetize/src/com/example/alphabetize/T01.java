@@ -2,7 +2,7 @@ package com.example.alphabetize;
 
 import android.content.Intent;
 import android.widget.Toast;
-import uencom.xgame.interfaces.ItransitionActions;
+import xware.xgame.interfaces.ItransitionActions;
 
 public class T01 implements ItransitionActions {
 

@@ -29,8 +29,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-import uencom.xgame.interfaces.IstateActions;
-import uencom.xgame.sound.HeadPhone;
+import xware.xgame.interfaces.IstateActions;
+import xware.xgame.sound.HeadPhone;
 
 public class S1  implements IstateActions {
 	String[] words = new String[]{"how old are you","what is your name","study your lessons firstly",

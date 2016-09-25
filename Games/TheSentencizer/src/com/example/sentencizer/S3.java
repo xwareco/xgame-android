@@ -7,8 +7,8 @@ import android.os.Environment;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-import uencom.xgame.interfaces.IstateActions;
-import uencom.xgame.sound.HeadPhone;
+import xware.xgame.interfaces.IstateActions;
+import xware.xgame.sound.HeadPhone;
 
 public class S3 implements IstateActions {
 	    static LinearLayout layout;
@@ -34,11 +34,12 @@ public class S3 implements IstateActions {
 		I.putExtra("fail", 0);
 		if (HP.detectHeadPhones() == true)
 			HP.play(Path, 0);
+		int timeInSecond = I.getIntExtra("timeInSecond", 0);
+		Toast.makeText(C, "لقد استهلكت : "+ timeInSecond+" ثانية ", Toast.LENGTH_SHORT).show();
 		int level = I.getIntExtra("Level", 0);
 		I.putExtra("Level", ++level);
 		if(level == 4)
 		{
-			int timeInSecond = I.getIntExtra("timeInSecond", 0);
 			int Score = I.getIntExtra("Score", 0);
 			if(timeInSecond <= 50)
 				Score +=20;

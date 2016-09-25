@@ -1,7 +1,7 @@
 package com.example.hunttheduck;
 
 import android.content.Intent;
-import uencom.xgame.interfaces.ItransitionActions;
+import xware.xgame.interfaces.ItransitionActions;
 
 public class T01 implements ItransitionActions {
 

@@ -7,8 +7,8 @@ import android.os.Environment;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-import uencom.xgame.interfaces.IstateActions;
-import uencom.xgame.sound.HeadPhone;
+import xware.xgame.interfaces.IstateActions;
+import xware.xgame.sound.HeadPhone;
 
 public class S3 implements IstateActions {
 	    static LinearLayout layout;
@@ -19,7 +19,7 @@ public class S3 implements IstateActions {
 		// TODO Auto-generated method stub
         I.putExtra("Action", "Right");
         int Score = I.getIntExtra("Score", 0);
-        Score += 8;
+        Score += 7.5;
 		I.putExtra("Score", Score);
 		int level = I.getIntExtra("Level", 0);
 			

@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
 import android.widget.LinearLayout;
-import uencom.xgame.interfaces.IstateActions;
-import uencom.xgame.sound.HeadPhone;
+import xware.xgame.interfaces.IstateActions;
+import xware.xgame.sound.HeadPhone;
 
 public class S4 implements IstateActions {
 
