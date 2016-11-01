@@ -3,8 +3,10 @@ package com.example.spellme;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.graphics.drawable.StateListDrawable;
+import android.support.annotation.Keep;
 import android.util.StateSet;
 
+@Keep
 public class GridItem<T> {
 
     public static final int ICON_OFFSET = 10;
@@ -20,13 +22,13 @@ public class GridItem<T> {
     public void setIcon(Drawable d) {
         if (null == d) {
             mIcon = null;
-        }else if(d instanceof StateListDrawable) {
+        } else if (d instanceof StateListDrawable) {
             mIcon = (StateListDrawable) d;
         } else {
             InsetDrawable d1 = new InsetDrawable(d, 0, 0, ICON_OFFSET, ICON_OFFSET);
             InsetDrawable d2 = new InsetDrawable(d, ICON_OFFSET, ICON_OFFSET, 0, 0);
             mIcon = new StateListDrawable();
-            mIcon.addState(new int[] { android.R.attr.state_pressed }, d2);
+            mIcon.addState(new int[]{android.R.attr.state_pressed}, d2);
             mIcon.addState(StateSet.WILD_CARD, d1);
             //This won't help either: mIcon.addState(new int[]{}, d1);
         }

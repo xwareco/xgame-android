@@ -2,11 +2,12 @@ package com.example.spellme;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.Keep;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import xware.engine_lib.interfaces.IstateActions;
 import xware.engine_lib.sound.HeadPhone;
-
+@Keep
 public class S0 implements IstateActions {
 
 	@Override
@@ -14,8 +15,7 @@ public class S0 implements IstateActions {
 		// TODO Auto-generated method stub
 		TextView tv = (TextView)layout.getChildAt(0);
 	     tv.setText("A random word will be generated and spoken out for you, you have to spell the word by choosing the letters from a menu, "
-	    		 + " Take care of the time, you will lose 10 points if you took more than 5 minutes to finish the game, otherwise you will be rewarded points according to your time."
-		     		+ ", swipe left when you are ready to start the game");
+		     		+ "To quit the game anytime, press the back button, now, choose the difficulty of the game, if you are a beginner, swipe left, if you are Intermediate, swipe right, if you are an expert, swipe down");
 
 	}
 

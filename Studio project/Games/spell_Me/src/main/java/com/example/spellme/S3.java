@@ -3,80 +3,74 @@ package com.example.spellme;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
+import android.support.annotation.Keep;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import xware.engine_lib.interfaces.IstateActions;
 import xware.engine_lib.sound.HeadPhone;
 
+@Keep
 public class S3 implements IstateActions {
-	int level ;
+    int level;
 
-	@Override
-	public void onStateEntry(LinearLayout layout, Intent I, Context C,HeadPhone H) {
-		I.putExtra("Action", "Right");
-		level = I.getIntExtra("level", 0);
-		level +=1;
-		I.putExtra("level", level);
-		I.putExtra("fail", 0);
-			int score = I.getIntExtra("Score", 0);
-			score += 25;
-			I.putExtra("Score",score);
-			
-			System.out.print(score);
-			if(level == 3)
-			{
-				int timeInSecond = I.getIntExtra("timeInSecond", 0);
-				int Score = I.getIntExtra("Score", 0);
-				if(timeInSecond <= 50)
-					Score +=25;
-				else if(timeInSecond <= 100&& timeInSecond>50)
-					Score +=20;
-				else if(timeInSecond <= 150&&timeInSecond>100)
-					Score +=15;
-				else if(timeInSecond <=200&&timeInSecond>150)
-					Score +=10;
-				else if(timeInSecond<=300&&timeInSecond>200)
-					Score += 5;
-				else
-					Score -=5;
-		
-				
-				I.putExtra("Score", Score);
-				I.putExtra("Count", 20);
-			}else
-			{
-				Toast.makeText(C, "your time till now: "+ I.getIntExtra("timeInSecond", 1)+" second go on you can do it", Toast.LENGTH_SHORT).show();
-				String Path = Environment.getExternalStorageDirectory().toString() + "/xGame/Games/Spell Me/Sound/correct.mp3";
-				//score sound
-				HeadPhone HP = new HeadPhone(C);
-				HP.setLeftLevel(1);
-				HP.setRightLevel(1);
-				if (HP.detectHeadPhones() == true)
-					HP.play(Path, 0);
-				
-				I.putExtra("Action", "NONE");
-				I.putExtra("State", "S1");
-		       
-			}
-			
-			
-		
-		
-		
-	}
+    @Override
+    public void onStateEntry(LinearLayout layout, Intent I, Context C,
+                             HeadPhone H) {
+        I.putExtra("Action", "Right");
+        level = I.getIntExtra("level", 0);
+        level++;
+        if (level >= 3)
+            level = 0;
+        I.putExtra("level", level);
+        I.putExtra("fail", 0);
+        int score = I.getIntExtra("Score", 0);
+        score += 25;
+        I.putExtra("Score", score);
+        String Path = Environment.getExternalStorageDirectory().toString()
+                + "/xGame/Games/Spell me/Sound/correct.mp3";
+        // score sound
+        HeadPhone HP = new HeadPhone(C);
+        HP.setLeftLevel(1);
+        HP.setRightLevel(1);
+        HP.play(Path, 0);
+        System.out.print(score);
+        int failnum = I.getIntExtra("failnum", 0);
+        int gameTime = I.getIntExtra("GameTime", 0);
+        int timeInSecond = I.getIntExtra("timeInSecond", 0);
 
-	
-	@Override
-	public Intent loopBack(Context c, Intent I,HeadPhone H) {
-		// TODO Auto-generated method stub
-		return I;
-	}
 
-	@Override
-	public void onStateExit(Context c, Intent I,HeadPhone H) {
-		// TODO Auto-generated method stub
+        if (failnum == 0 && timeInSecond >= (gameTime / 2)) {
+            Toast.makeText(C, "Well done!, 30 seconds have been added as a reward",
+                    Toast.LENGTH_LONG).show();
+            timeInSecond = timeInSecond - 30;
+            I.putExtra("timeInSecond", timeInSecond);
+            I.putExtra("Action", "NONE");
+            I.putExtra("State", "S1");
+        } else if (failnum == 0 && timeInSecond >= (gameTime * 0.75)) {
+            Toast.makeText(C, "Well done!, 60 seconds have been added as a reward",
+                    Toast.LENGTH_LONG).show();
+            timeInSecond = timeInSecond - 60;
+            I.putExtra("timeInSecond", timeInSecond);
+            I.putExtra("Action", "NONE");
+            I.putExtra("State", "S1");
+        } else {
+            I.putExtra("Action", "NONE");
+            I.putExtra("State", "S1");
+        }
 
-	}
+    }
 
-	
+    @Override
+    public Intent loopBack(Context c, Intent I, HeadPhone H) {
+        // TODO Auto-generated method stub
+        return I;
+    }
+
+    @Override
+    public void onStateExit(Context c, Intent I, HeadPhone H) {
+        // TODO Auto-generated method stub
+
+    }
+
 }

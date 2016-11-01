@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+     <translate 
+         android:fromXDelta="0%"
+         android:toXDelta="100%"
+         android:duration="1000"
+     />
+
+</set>
+<!-- From: file:/home/aly/StudioProjects/xGame1/engine-lib/src/main/res/anim/transition7.xml --><!-- From: file:/home/aly/StudioProjects/xGame1/word_Master/build/intermediates/exploded-aar/xware.engine_lib/engine-lib/1.0.0/res/anim/transition7.xml -->
